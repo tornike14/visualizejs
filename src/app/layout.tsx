@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppTheme } from "@/components/layout/AppTheme";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
@@ -30,10 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <div className="flex min-h-screen">
+        <AppTheme>
           <Sidebar />
-          <main className="flex-1 overflow-x-hidden">{children}</main>
-        </div>
+          <main className="flex-1 overflow-x-hidden pt-16 lg:pt-0">
+            {children}
+          </main>
+        </AppTheme>
       </body>
     </html>
   );

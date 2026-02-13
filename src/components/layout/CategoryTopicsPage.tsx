@@ -48,10 +48,10 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
   const config = CATEGORY_CONFIG[category];
 
   return (
-    <div className="flex flex-col gap-10 p-6 lg:p-12">
-      <section className="flex flex-col items-center gap-5 pt-8 text-center lg:pt-16">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
+      <section className="app-surface flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center lg:px-10 lg:py-12">
         <div
-          className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${config.accentGradient}`}
+          className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-slate-300/30 bg-gradient-to-br ${config.accentGradient}`}
         >
           <span className="text-2xl font-bold text-black">{config.icon}</span>
         </div>
@@ -59,7 +59,7 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
           <span className={config.accentText}>{config.highlightedWord}</span>{" "}
           {config.titleTail}
         </h1>
-        <p className="max-w-xl text-base text-muted-foreground lg:text-lg">
+        <p className="max-w-xl text-base text-[color:var(--app-text-secondary)] lg:text-lg">
           {config.description}
         </p>
       </section>
@@ -69,7 +69,7 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
         <div className="grid gap-4 sm:grid-cols-2">
           {topics.map((topic) => (
             <Link key={topic.id} href={topic.route}>
-              <Card className="group h-full cursor-pointer transition-all hover:border-foreground/20 hover:shadow-lg">
+              <Card className="app-surface group h-full cursor-pointer rounded-3xl border-[color:var(--app-border)] py-5 transition-all hover:border-pink-300/35 hover:shadow-[0_0_24px_rgba(244,114,182,0.16)]">
                 <CardHeader className="flex flex-row items-center gap-3 pb-2">
                   <span className="text-2xl">{topic.icon}</span>
                   <div className="flex flex-1 items-center justify-between gap-2">
@@ -83,7 +83,7 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-[color:var(--app-text-secondary)]">
                     {topic.description}
                   </p>
                 </CardContent>

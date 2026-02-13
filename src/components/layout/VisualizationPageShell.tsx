@@ -19,15 +19,15 @@ export function VisualizationPageShell({
     topic.category === "javascript" ? "/javascript" : "/react";
   const categoryClass =
     topic.category === "javascript"
-      ? "bg-yellow-500/10 text-yellow-300 border-yellow-500/20"
-      : "bg-cyan-500/10 text-cyan-300 border-cyan-500/20";
+      ? "border-yellow-400/35 bg-yellow-400/10 text-yellow-200"
+      : "border-cyan-400/35 bg-cyan-400/10 text-cyan-200";
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-6 lg:p-10">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
       <header className="flex flex-col gap-4">
         <Link
           href={categoryRoute}
-          className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex w-fit items-center gap-2 text-sm text-[color:var(--app-text-secondary)] transition-colors hover:text-[color:var(--app-text-primary)]"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to {categoryLabel} topics
@@ -49,14 +49,14 @@ export function VisualizationPageShell({
             <h1 className="text-3xl font-semibold tracking-tight lg:text-4xl">
               {topic.title}
             </h1>
-            <p className="max-w-2xl text-sm text-muted-foreground lg:text-base">
+            <p className="max-w-2xl text-sm text-[color:var(--app-text-secondary)] lg:text-base">
               {topic.description}
             </p>
           </div>
         </div>
       </header>
 
-      <section className="rounded-2xl border border-border bg-card/50 p-4 shadow-sm backdrop-blur-sm lg:p-6">
+      <section className="app-surface rounded-3xl p-4 lg:p-6">
         {children}
       </section>
     </div>

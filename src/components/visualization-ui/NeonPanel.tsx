@@ -50,13 +50,13 @@ export function NeonPanel({
   return (
     <section
       className={cn(
-        "overflow-hidden rounded-2xl border border-slate-700/65 bg-[#0d1528]/90 shadow-[0_12px_30px_rgba(2,6,23,0.45)] backdrop-blur-sm",
+        "overflow-hidden rounded-3xl border border-[color:var(--app-border)] bg-[color:var(--app-surface-strong)]/90 shadow-[0_12px_30px_rgba(2,6,23,0.45)] backdrop-blur-sm",
         className
       )}
     >
       <header
         className={cn(
-          "flex items-center gap-3 border-b border-slate-700/65 px-4 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100",
+          "flex items-center gap-3 border-b border-[color:var(--app-border)] px-4 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100",
           toneStyles.header
         )}
       >

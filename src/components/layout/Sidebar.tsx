@@ -25,16 +25,16 @@ function TopicLink({ topic, isActive }: { topic: Topic; isActive: boolean }) {
   return (
     <Link
       href={topic.route}
-      className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all ${
+      className={`group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-all ${
         isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+          ? "border border-pink-400/35 bg-[rgba(31,45,74,0.65)] text-[color:var(--app-text-primary)] shadow-[0_0_18px_rgba(244,114,182,0.14)]"
+          : "border border-transparent text-[color:var(--app-text-secondary)] hover:border-[rgba(71,85,105,0.55)] hover:bg-[rgba(22,33,59,0.62)] hover:text-[color:var(--app-text-primary)]"
       }`}
     >
       <span className="text-base">{topic.icon}</span>
       <div className="flex flex-1 flex-col gap-1">
         <span className="font-medium">{topic.title}</span>
-        <span className="text-xs text-muted-foreground line-clamp-1">
+        <span className="line-clamp-1 text-xs text-[color:var(--app-text-secondary)]">
           {topic.description}
         </span>
       </div>
@@ -68,11 +68,11 @@ function SidebarContent({
           className="flex items-center gap-2"
           onClick={onLinkClick}
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-yellow-400 to-cyan-400">
-            <span className="text-sm font-bold text-black">V</span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/45 bg-gradient-to-br from-cyan-300/25 to-pink-400/25 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+            <span className="text-sm font-bold text-slate-100">V</span>
           </div>
-          <span className="text-lg font-bold tracking-tight">
-            Visualize<span className="text-yellow-400">JS</span>
+          <span className="text-lg font-semibold tracking-tight text-slate-100">
+            Visualize<span className="text-pink-300">JS</span>
           </span>
         </Link>
       </div>
@@ -84,7 +84,7 @@ function SidebarContent({
         />
       </div>
 
-      <Separator />
+      <Separator className="bg-[rgba(71,85,105,0.55)]" />
 
       <ScrollArea className="flex-1 px-3 py-3">
         <nav className="flex flex-col gap-1" aria-label="Topics">
@@ -96,10 +96,10 @@ function SidebarContent({
         </nav>
       </ScrollArea>
 
-      <Separator />
+      <Separator className="bg-[rgba(71,85,105,0.55)]" />
 
       <div className="px-4 py-3">
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-[color:var(--app-text-secondary)]">
           {filteredTopics.length} topic{filteredTopics.length !== 1 && "s"} in{" "}
           {activeCategory === "javascript" ? "JavaScript" : "React"}
         </p>
@@ -125,7 +125,7 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex lg:w-72 lg:flex-col lg:border-r lg:border-border bg-card h-screen sticky top-0">
+      <aside className="app-surface hidden h-screen bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-72 lg:flex-col lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
         <SidebarContent
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}
@@ -136,7 +136,11 @@ export function Sidebar() {
       <div className="fixed top-4 left-4 z-50 lg:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="h-10 w-10">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 border-[rgba(71,85,105,0.65)] bg-[rgba(13,21,40,0.95)] text-slate-100 shadow-[0_10px_24px_rgba(2,6,23,0.45)]"
+            >
               <svg
                 width="18"
                 height="18"
@@ -154,7 +158,10 @@ export function Sidebar() {
               <span className="sr-only">Open menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-72 p-0">
+          <SheetContent
+            side="left"
+            className="app-surface w-72 border-r-[rgba(71,85,105,0.65)] bg-[color:var(--app-surface-strong)] p-0"
+          >
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <SidebarContent
               activeCategory={activeCategory}

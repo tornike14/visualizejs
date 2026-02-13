@@ -401,10 +401,10 @@ export function EventLoop() {
     }, SPEED_TO_DELAY_MS[speedLevel]);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isPlaying, speedLevel]);
+  }, [currentStepIndex, isPlaying, speedLevel]);
 
   return (
-    <section className="relative isolate overflow-hidden rounded-3xl border border-slate-700/60 bg-[#090f1f] p-4 text-slate-100 sm:p-6 lg:p-8">
+    <section className="relative flex flex-col gap-6 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
       <style>{`
         .el-code-line {
           display: flex;
@@ -543,20 +543,7 @@ export function EventLoop() {
         }
       `}</style>
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.22),_transparent_42%),radial-gradient(circle_at_18%_88%,_rgba(236,72,153,0.14),_transparent_44%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[radial-gradient(rgba(255,255,255,0.9)_0.5px,_transparent_0.6px)] bg-[length:3px_3px]" />
-
-      <div className="relative z-10 flex flex-col gap-6">
-        <header className="space-y-2 text-center">
-          <h2 className="bg-gradient-to-r from-rose-300 via-pink-300 to-violet-300 bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl">
-            ⚡ JavaScript Event Loop
-          </h2>
-          <p className="text-sm text-slate-400 sm:text-base">
-            Interactive visualization of how JavaScript executes asynchronous
-            code
-          </p>
-        </header>
-
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3">
           <TransportControls
             isPlaying={isPlaying}
@@ -569,13 +556,13 @@ export function EventLoop() {
             onSpeedLevelChange={setSpeedLevel}
           />
 
-          <p className="inline-flex items-center gap-2 rounded-full border border-slate-700/75 bg-[#0f1a30]/75 px-4 py-1.5 font-mono text-xs text-slate-300">
+          <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
             {isPlaying ? <span className="el-playing-dot" /> : null}
             Step {Math.max(currentStepIndex + 1, 0)} / {STEPS.length}
           </p>
         </div>
 
-        <div className="mx-auto w-full max-w-4xl rounded-full border border-slate-700/75 bg-[#0f1a30]/78 px-4 py-3">
+        <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-3">
           <p
             className="el-step-desc text-center text-sm text-slate-300"
             dangerouslySetInnerHTML={{
