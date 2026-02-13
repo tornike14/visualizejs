@@ -2,17 +2,17 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import {
-  Play,
-  Pause,
-  SkipForward,
-  RotateCcw,
   ChevronDown,
   ArrowUp,
   AlertTriangle,
   Info,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { NeonPanel, type NeonTone } from "@/components/visualization-ui/NeonPanel";
+import {
+  TransportControls,
+  type PlaybackSpeedLevel,
+} from "@/components/visualization-ui/TransportControls";
 import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -437,12 +437,29 @@ function kindLabel(kind: HoistingKind): string {
   }
 }
 
+const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
+  1: 2400,
+  2: 1800,
+  3: 1300,
+  4: 850,
+  5: 500,
+};
+
+const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
+  1: "0.5x",
+  2: "0.75x",
+  3: "1x",
+  4: "1.5x",
+  5: "2x",
+};
+
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
 
 function CodePanel({
   title,
+  tone,
   lines,
   highlightIds,
   floatingIds,
@@ -450,6 +467,7 @@ function CodePanel({
   isHoistedView,
 }: {
   title: string;
+  tone: NeonTone;
   lines: (CodeLine | HoistedLine)[];
   highlightIds: string[];
   floatingIds: string[];
@@ -457,19 +475,12 @@ function CodePanel({
   isHoistedView: boolean;
 }) {
   return (
-    <div className="flex flex-1 flex-col overflow-hidden rounded-lg border border-border bg-card">
-      {/* Panel header */}
-      <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-        <div className="flex gap-1.5">
-          <span className="block h-2.5 w-2.5 rounded-full bg-red-500/70" />
-          <span className="block h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
-          <span className="block h-2.5 w-2.5 rounded-full bg-green-500/70" />
-        </div>
-        <span className="ml-2 text-xs font-medium text-muted-foreground">{title}</span>
-      </div>
-
-      {/* Code lines */}
-      <div className="flex-1 overflow-auto p-4 font-mono text-sm leading-relaxed">
+    <NeonPanel
+      title={title}
+      tone={tone}
+      bodyClassName="min-h-[24rem] overflow-auto p-0 font-mono text-sm leading-relaxed"
+    >
+      <div className="space-y-1 p-4">
         {lines.map((line, idx) => {
           const isHighlighted = highlightIds.includes(line.id);
           const isFloating = floatingIds.includes(line.id);
@@ -481,38 +492,30 @@ function CodePanel({
             <div
               key={`${line.id}-${idx}`}
               className={cn(
-                "flex items-start gap-3 rounded-md px-2 py-0.5 transition-all duration-500",
-                isHighlighted && "bg-yellow-500/10",
-                isInTDZ && "bg-red-500/10",
-                isFloating &&
-                  "animate-[floatUp_0.8s_ease-out_forwards] bg-emerald-500/10",
-                !isHighlighted && !isInTDZ && !isFloating && "bg-transparent"
+                "flex items-start gap-3 rounded-lg px-2 py-1 transition-all duration-300",
+                isFloating && "ho-floating bg-emerald-500/10 ring-1 ring-emerald-400/20",
+                isInTDZ && "bg-red-500/10 ring-1 ring-red-400/20",
+                isHighlighted && !isInTDZ && "bg-amber-400/10 ring-1 ring-amber-300/20"
               )}
             >
-              {/* Line number */}
-              <span className="w-5 shrink-0 select-none text-right text-xs text-muted-foreground/50">
+              <span className="w-5 shrink-0 select-none text-right text-xs text-slate-500/65">
                 {idx + 1}
               </span>
 
-              {/* Indicators */}
               <span className="w-4 shrink-0">
-                {isFloating && (
-                  <ArrowUp className="h-3.5 w-3.5 animate-[floatUp_0.8s_ease-out_forwards] text-emerald-400" />
-                )}
+                {isFloating && <ArrowUp className="ho-floating h-3.5 w-3.5 text-emerald-300" />}
                 {isInTDZ && !isFloating && (
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-400" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300" />
                 )}
               </span>
 
-              {/* Code text */}
               <span
                 className={cn(
                   "flex-1 whitespace-pre",
-                  isHoistedLine && "text-emerald-400",
-                  isInTDZ && "text-red-400",
-                  !isHoistedLine &&
-                    !isInTDZ &&
-                    (line.text === "" ? "opacity-0" : "text-foreground")
+                  line.text === "" && "opacity-0",
+                  isHoistedLine && "text-emerald-300",
+                  isInTDZ && "text-red-300",
+                  !isHoistedLine && !isInTDZ && line.text !== "" && "text-slate-100"
                 )}
               >
                 {"  ".repeat(line.indent)}
@@ -522,19 +525,20 @@ function CodePanel({
           );
         })}
       </div>
-    </div>
+    </NeonPanel>
   );
 }
 
 function ConsolePanel({ output }: { output: string[] }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-card">
-      <div className="flex items-center gap-2 border-b border-border px-4 py-2">
-        <span className="text-xs font-medium text-muted-foreground">Console</span>
-      </div>
-      <div className="min-h-[4rem] flex-1 overflow-auto p-3 font-mono text-xs leading-relaxed">
+    <NeonPanel
+      title="Console Output"
+      tone="slate"
+      bodyClassName="min-h-[8.5rem] overflow-auto p-3 font-mono text-xs leading-relaxed"
+    >
+      <div className="space-y-1">
         {output.length === 0 ? (
-          <span className="text-muted-foreground/50">
+          <span className="text-slate-500/70">
             {"// output will appear here"}
           </span>
         ) : (
@@ -546,17 +550,17 @@ function ConsolePanel({ output }: { output: string[] }) {
                 key={idx}
                 className={cn(
                   "py-0.5",
-                  isError ? "text-red-400" : "text-emerald-400"
+                  isError ? "text-red-300" : "text-emerald-300"
                 )}
               >
-                <span className="mr-2 text-muted-foreground/40">&gt;</span>
+                <span className="mr-2 text-slate-500/60">&gt;</span>
                 {line}
               </div>
             );
           })
         )}
       </div>
-    </div>
+    </NeonPanel>
   );
 }
 
@@ -595,21 +599,21 @@ function ExampleSelector({
         type="button"
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent",
-          open && "ring-2 ring-ring/50"
+          "app-surface-subtle flex min-w-[16rem] items-center justify-between gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-100 transition-all hover:border-pink-300/35 hover:bg-[rgba(22,33,59,0.72)]",
+          open && "ring-2 ring-pink-300/50"
         )}
       >
         <span>{active?.title ?? "Select example"}</span>
         <ChevronDown
           className={cn(
-            "h-4 w-4 text-muted-foreground transition-transform duration-200",
+            "h-4 w-4 text-slate-400 transition-transform duration-200",
             open && "rotate-180"
           )}
         />
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-50 mt-1 w-72 overflow-hidden rounded-lg border border-border bg-card shadow-xl">
+        <div className="app-surface absolute left-0 top-full z-50 mt-2 w-[22rem] overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]">
           {examples.map((ex) => (
             <button
               key={ex.id}
@@ -619,17 +623,19 @@ function ExampleSelector({
                 setOpen(false);
               }}
               className={cn(
-                "flex w-full flex-col gap-1 px-4 py-3 text-left text-sm transition-colors hover:bg-accent",
-                ex.id === activeId && "bg-accent"
+                "flex w-full flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm transition-all",
+                ex.id === activeId
+                  ? "border-pink-300/30 bg-[rgba(31,45,74,0.65)]"
+                  : "hover:border-[rgba(71,85,105,0.6)] hover:bg-[rgba(22,33,59,0.62)]"
               )}
             >
               <div className="flex items-center gap-2">
-                <span className="font-medium">{ex.title}</span>
+                <span className="font-medium text-slate-100">{ex.title}</span>
                 <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(ex.kind))}>
                   {kindLabel(ex.kind)}
                 </Badge>
               </div>
-              <span className="text-xs text-muted-foreground line-clamp-2">
+              <span className="line-clamp-2 text-xs text-slate-400">
                 {ex.description}
               </span>
             </button>
@@ -655,15 +661,27 @@ function StepIndicator({
           className={cn(
             "h-1.5 rounded-full transition-all duration-300",
             idx === current
-              ? "w-6 bg-yellow-400"
+              ? "w-7 bg-amber-300"
               : idx < current
-                ? "w-3 bg-yellow-400/40"
-                : "w-3 bg-muted"
+                ? "w-3 bg-amber-300/45"
+                : "w-3 bg-slate-700/80"
           )}
         />
       ))}
     </div>
   );
+}
+
+function explanationTone(kind: StepKind): NeonTone {
+  if (kind === "tdz-error") {
+    return "pink";
+  }
+
+  if (kind === "hoist") {
+    return "green";
+  }
+
+  return "slate";
 }
 
 // ---------------------------------------------------------------------------
@@ -672,132 +690,136 @@ function StepIndicator({
 
 export function Hoisting() {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const playIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(3);
 
   const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
-  const step = example.steps[currentStep];
-  const isLastStep = currentStep >= example.steps.length - 1;
-
-  // Auto-play logic
-  const clearAutoPlay = useCallback(() => {
-    if (playIntervalRef.current !== null) {
-      clearInterval(playIntervalRef.current);
-      playIntervalRef.current = null;
-    }
-    setIsPlaying(false);
-  }, []);
+  const totalSteps = example.steps.length;
+  const lastStepIndex = totalSteps - 1;
+  const step = example.steps[currentStepIndex] ?? example.steps[0];
+  const canStep = currentStepIndex < lastStepIndex;
 
   useEffect(() => {
-    if (!isPlaying) return;
-
-    playIntervalRef.current = setInterval(() => {
-      setCurrentStep((prev) => {
-        const next = prev + 1;
-        if (next >= example.steps.length) {
-          clearAutoPlay();
-          return prev;
-        }
-        return next;
-      });
-    }, 1800);
-
-    return () => {
-      if (playIntervalRef.current !== null) {
-        clearInterval(playIntervalRef.current);
-        playIntervalRef.current = null;
-      }
-    };
-  }, [isPlaying, example.steps.length, clearAutoPlay]);
-
-  const handlePlay = useCallback(() => {
-    if (isLastStep) {
-      setCurrentStep(0);
+    if (!isPlaying) {
+      return;
     }
-    setIsPlaying(true);
-  }, [isLastStep]);
 
-  const handlePause = useCallback(() => {
-    clearAutoPlay();
-  }, [clearAutoPlay]);
+    const timeoutId = window.setTimeout(() => {
+      setCurrentStepIndex((previousStep) => {
+        if (previousStep >= lastStepIndex) {
+          setIsPlaying(false);
+          return previousStep;
+        }
 
-  const handleStepForward = useCallback(() => {
-    clearAutoPlay();
-    setCurrentStep((prev) => Math.min(prev + 1, example.steps.length - 1));
-  }, [example.steps.length, clearAutoPlay]);
+        const nextStep = previousStep + 1;
+        if (nextStep >= lastStepIndex) {
+          setIsPlaying(false);
+        }
+
+        return nextStep;
+      });
+    }, SPEED_TO_DELAY_MS[speedLevel]);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [currentStepIndex, isPlaying, lastStepIndex, speedLevel]);
+
+  const handleTogglePlay = useCallback(() => {
+    setIsPlaying((previousPlaying) => {
+      if (previousPlaying) {
+        return false;
+      }
+
+      setCurrentStepIndex((previousStep) => {
+        if (previousStep >= lastStepIndex) {
+          return 0;
+        }
+
+        return previousStep;
+      });
+
+      return true;
+    });
+  }, [lastStepIndex]);
+
+  const handleStep = useCallback(() => {
+    setIsPlaying(false);
+    setCurrentStepIndex((previousStep) =>
+      Math.min(previousStep + 1, lastStepIndex)
+    );
+  }, [lastStepIndex]);
 
   const handleReset = useCallback(() => {
-    clearAutoPlay();
-    setCurrentStep(0);
-  }, [clearAutoPlay]);
+    setIsPlaying(false);
+    setCurrentStepIndex(0);
+  }, []);
 
   const handleExampleChange = useCallback(
     (id: string) => {
-      clearAutoPlay();
+      setIsPlaying(false);
       setActiveExampleId(id);
-      setCurrentStep(0);
+      setCurrentStepIndex(0);
     },
-    [clearAutoPlay]
+    []
   );
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Header row: selector + controls */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <ExampleSelector
-          examples={EXAMPLES}
-          activeId={activeExampleId}
-          onSelect={handleExampleChange}
-        />
+    <section className="relative flex flex-col gap-6 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
+      <style>{`
+        .ho-floating {
+          animation: ho-float-up 0.7s ease-out;
+        }
 
-        <div className="flex items-center gap-2">
-          {isPlaying ? (
-            <Button variant="outline" size="sm" onClick={handlePause}>
-              <Pause className="h-4 w-4" />
-              <span className="sr-only sm:not-sr-only">Pause</span>
-            </Button>
-          ) : (
-            <Button variant="outline" size="sm" onClick={handlePlay}>
-              <Play className="h-4 w-4" />
-              <span className="sr-only sm:not-sr-only">Play</span>
-            </Button>
-          )}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleStepForward}
-            disabled={isLastStep}
-          >
-            <SkipForward className="h-4 w-4" />
-            <span className="sr-only sm:not-sr-only">Step</span>
-          </Button>
-          <Button variant="outline" size="sm" onClick={handleReset}>
-            <RotateCcw className="h-4 w-4" />
-            <span className="sr-only sm:not-sr-only">Reset</span>
-          </Button>
+        @keyframes ho-float-up {
+          from {
+            opacity: 0.25;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
 
-          <div className="ml-2 hidden sm:block">
-            <StepIndicator total={example.steps.length} current={currentStep} />
-          </div>
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <ExampleSelector
+            examples={EXAMPLES}
+            activeId={activeExampleId}
+            onSelect={handleExampleChange}
+          />
+          <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
+            {kindLabel(example.kind)}
+          </Badge>
+        </div>
+
+        <div className="flex flex-col items-center gap-3">
+          <TransportControls
+            isPlaying={isPlaying}
+            canStep={canStep}
+            speedLevel={speedLevel}
+            speedLabel={SPEED_LABELS[speedLevel]}
+            onTogglePlay={handleTogglePlay}
+            onStep={handleStep}
+            onReset={handleReset}
+            onSpeedLevelChange={setSpeedLevel}
+          />
+          <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
+            Step {currentStepIndex + 1} / {totalSteps}
+          </p>
         </div>
       </div>
 
-      {/* Mobile step indicator */}
-      <div className="block sm:hidden">
-        <StepIndicator total={example.steps.length} current={currentStep} />
+      <div className="app-surface-subtle flex items-start gap-2 rounded-2xl px-4 py-3 text-sm text-slate-300">
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
+        <p>{example.description}</p>
       </div>
 
-      {/* Description badge */}
-      <div className="flex items-start gap-2 rounded-lg border border-border bg-card/50 p-3">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">{example.description}</p>
-      </div>
-
-      {/* Split code panels */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 xl:grid-cols-2">
         <CodePanel
           title="Original Code"
+          tone="amber"
           lines={example.original}
           highlightIds={step.highlightOriginal}
           floatingIds={[]}
@@ -806,6 +828,7 @@ export function Hoisting() {
         />
         <CodePanel
           title="How JS Sees It (After Hoisting)"
+          tone="cyan"
           lines={example.hoisted}
           highlightIds={step.highlightHoisted}
           floatingIds={step.floatingLineIds}
@@ -814,41 +837,40 @@ export function Hoisting() {
         />
       </div>
 
-      {/* Explanation */}
-      <div
-        className={cn(
-          "rounded-lg border px-4 py-3 text-sm transition-colors duration-300",
-          step.kind === "tdz-error"
-            ? "border-red-500/30 bg-red-500/5 text-red-300"
-            : step.kind === "hoist"
-              ? "border-emerald-500/30 bg-emerald-500/5 text-emerald-300"
-              : "border-border bg-card/50 text-muted-foreground"
-        )}
-      >
-        <div className="flex items-start gap-2">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem]">
+        <NeonPanel
+          title="Step Explanation"
+          tone={explanationTone(step.kind)}
+          bodyClassName="min-h-[8.5rem] flex items-start gap-2 text-sm"
+        >
           {step.kind === "tdz-error" && (
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
           )}
           {step.kind === "hoist" && (
-            <ArrowUp className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+            <ArrowUp className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
           )}
-          <p>{step.explanation}</p>
+          <p
+            className={cn(
+              step.kind === "tdz-error" && "text-red-200",
+              step.kind === "hoist" && "text-emerald-200",
+              step.kind !== "tdz-error" && step.kind !== "hoist" && "text-slate-300"
+            )}
+          >
+            {step.explanation}
+          </p>
+        </NeonPanel>
+        <div>
+          <ConsolePanel output={step.consoleOutput} />
         </div>
       </div>
 
-      {/* Console */}
-      <ConsolePanel output={step.consoleOutput} />
-
-      {/* Step counter text */}
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>
-          Step {currentStep + 1} of {example.steps.length}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <StepIndicator total={totalSteps} current={currentStepIndex} />
+        <span className="text-xs text-[color:var(--app-text-secondary)]">
+          Hoisting pass first, execution pass second.
         </span>
-        <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
-          {kindLabel(example.kind)}
-        </Badge>
       </div>
-    </div>
+    </section>
   );
 }
 
