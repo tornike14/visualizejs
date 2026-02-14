@@ -8,7 +8,6 @@ export const topics: Topic[] = [
     route: "/javascript/event-loop",
     description: "Visualize how JavaScript handles asynchronous operations",
     difficulty: "intermediate",
-    icon: "🔄",
   },
   {
     id: "hoisting",
@@ -17,25 +16,15 @@ export const topics: Topic[] = [
     route: "/javascript/hoisting",
     description: "Understand variable and function hoisting behavior",
     difficulty: "beginner",
-    icon: "⬆️",
   },
   {
-    id: "virtual-dom",
-    title: "Virtual DOM",
-    category: "react",
-    route: "/react/virtual-dom",
-    description: "See how React efficiently updates the DOM",
+    id: "execution-context-scope-chain",
+    title: "Execution Context + Scope Chain",
+    category: "javascript",
+    route: "/javascript/execution-context-scope-chain",
+    description:
+      "Track execution contexts, lexical environments, and scope lookups step by step.",
     difficulty: "intermediate",
-    icon: "🌳",
-  },
-  {
-    id: "jwt",
-    title: "JWT Authentication",
-    category: "react",
-    route: "/react/jwt",
-    description: "Visualize JWT token-based authentication flow",
-    difficulty: "advanced",
-    icon: "🔐",
   },
 ];
 

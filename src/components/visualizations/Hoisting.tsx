@@ -873,5 +873,3 @@ export function Hoisting() {
     </section>
   );
 }
-
-export default Hoisting;

@@ -6,25 +6,25 @@ import { VisualizationLoading } from "@/components/visualizations/VisualizationL
 import { createTopicMetadata } from "@/lib/metadata";
 import { getTopicOrThrow } from "@/lib/topics";
 
-const virtualDomTopic = getTopicOrThrow("virtual-dom");
+const executionContextTopic = getTopicOrThrow("execution-context-scope-chain");
 
-const VirtualDomVisualization = dynamic(
+const ExecutionContextScopeChainVisualization = dynamic(
   () =>
-    import("@/components/visualizations/VirtualDOM").then(
-      (module) => module.VirtualDOM
+    import("@/components/visualizations/ExecutionContextScopeChain").then(
+      (module) => module.ExecutionContextScopeChain
     ),
   {
     loading: () => <VisualizationLoading />,
   }
 );
 
-export const metadata: Metadata = createTopicMetadata(virtualDomTopic);
+export const metadata: Metadata = createTopicMetadata(executionContextTopic);
 
-export default function VirtualDomPage() {
+export default function ExecutionContextScopeChainPage() {
   return (
-    <VisualizationPageShell topic={virtualDomTopic}>
+    <VisualizationPageShell topic={executionContextTopic}>
       <ErrorBoundary>
-        <VirtualDomVisualization />
+        <ExecutionContextScopeChainVisualization />
       </ErrorBoundary>
     </VisualizationPageShell>
   );

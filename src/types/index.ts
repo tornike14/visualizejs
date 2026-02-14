@@ -9,5 +9,4 @@ export interface Topic {
   route: string;
   description: string;
   difficulty: Difficulty;
-  icon: string;
 }

@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
 import type { Topic } from "@/types";
 
 interface VisualizationPageShellProps {
@@ -17,10 +15,6 @@ export function VisualizationPageShell({
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
   const categoryRoute =
     topic.category === "javascript" ? "/javascript" : "/react";
-  const categoryClass =
-    topic.category === "javascript"
-      ? "border-yellow-400/35 bg-yellow-400/10 text-yellow-200"
-      : "border-cyan-400/35 bg-cyan-400/10 text-cyan-200";
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
@@ -35,17 +29,6 @@ export function VisualizationPageShell({
 
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className={categoryClass}>
-                {categoryLabel}
-              </Badge>
-              <Badge
-                variant="outline"
-                className={`text-[10px] ${DIFFICULTY_COLORS[topic.difficulty]}`}
-              >
-                {topic.difficulty}
-              </Badge>
-            </div>
             <h1 className="text-3xl font-semibold tracking-tight lg:text-4xl">
               {topic.title}
             </h1>

@@ -82,11 +82,17 @@ function SidebarContent({
 
       <ScrollArea className="flex-1 px-3 py-3">
         <nav className="flex flex-col gap-2" aria-label="Topics">
-          {filteredTopics.map((topic) => (
-            <div key={topic.id} onClick={onLinkClick}>
-              <TopicLink topic={topic} isActive={pathname === topic.route} />
+          {filteredTopics.length === 0 ? (
+            <div className="rounded-2xl border border-[rgba(71,85,105,0.45)] bg-[rgba(13,21,40,0.62)] px-3 py-3 text-xs text-[color:var(--app-text-secondary)]">
+              New topics coming soon.
             </div>
-          ))}
+          ) : (
+            filteredTopics.map((topic) => (
+              <div key={topic.id} onClick={onLinkClick}>
+                <TopicLink topic={topic} isActive={pathname === topic.route} />
+              </div>
+            ))
+          )}
         </nav>
       </ScrollArea>
 

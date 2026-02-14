@@ -302,9 +302,6 @@ const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
   5: "2x",
 };
 
-const START_DESCRIPTION =
-  "Press <strong>Play</strong> to animate or <strong>Step</strong> to move one state at a time.";
-
 const QUEUE_ITEM_STYLES: Record<QueueTone, string> = {
   stack:
     "border-amber-300/35 bg-amber-400/10 text-amber-200 shadow-[0_0_14px_rgba(251,191,36,0.07)]",
@@ -562,14 +559,16 @@ export function EventLoop() {
           </p>
         </div>
 
-        <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-3">
-          <p
-            className="el-step-desc text-center text-sm text-slate-300"
-            dangerouslySetInnerHTML={{
-              __html: currentStep?.descriptionHtml ?? START_DESCRIPTION,
-            }}
-          />
-        </div>
+        {currentStep ? (
+          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-3">
+            <p
+              className="el-step-desc text-center text-sm text-slate-300"
+              dangerouslySetInnerHTML={{
+                __html: currentStep.descriptionHtml,
+              }}
+            />
+          </div>
+        ) : null}
 
         <div className="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
           <NeonPanel
