@@ -37,6 +37,8 @@ Scripts:
 - `/javascript` -> JavaScript landing page
 - `/javascript/event-loop` -> Event Loop visualization
 - `/javascript/hoisting` -> Hoisting visualization
+- `/javascript/closures` -> Closures visualization
+- `/javascript/promises` -> Promises visualization
 - `/react` -> React "Coming Soon" page
 
 Removed routes:
@@ -59,6 +61,8 @@ src/
       page.tsx
       event-loop/page.tsx
       hoisting/page.tsx
+      closures/page.tsx
+      promises/page.tsx
     react/
       page.tsx
   components/
@@ -80,6 +84,8 @@ src/
     visualizations/
       EventLoop.tsx
       Hoisting.tsx
+      Closures.tsx
+      Promises.tsx
       VisualizationLoading.tsx
   hooks/
     useStepPlayback.ts
@@ -114,6 +120,7 @@ docs/
 - **NeonPanel**: Themed container with tone-colored headers (amber, cyan, green, violet, pink, slate).
 - **Step data model**: Each visualization has a hardcoded STEPS array of full-state snapshots. No deltas.
 - **External docs link**: Each topic has a `docsUrl` field. The shell renders a small external-link icon next to the title that opens the authoritative documentation page.
+- **Responsive source code column**: The two-column visualization grid uses `xl:grid-cols-[auto_minmax(0,1fr)]`. The source code panel sizes to fit its content (no fixed width), preventing long lines from being clipped. The right column fills remaining space.
 - **No emojis**: All UI text uses `<strong>` tags for emphasis, never emojis.
 
 ---
@@ -135,6 +142,8 @@ Latest generated routes:
 - `/`
 - `/_not-found`
 - `/javascript`
+- `/javascript/closures`
 - `/javascript/event-loop`
 - `/javascript/hoisting`
+- `/javascript/promises`
 - `/react`

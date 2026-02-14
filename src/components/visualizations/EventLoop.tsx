@@ -410,7 +410,7 @@ export function EventLoop() {
           }
         `}</style>
 
-        <div className="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
           <NeonPanel
             title={VISUALIZATION_PANEL_TITLES.sourceCode}
             tone="amber"

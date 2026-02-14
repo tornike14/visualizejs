@@ -20,6 +20,28 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
   },
+  {
+    id: "closures",
+    title: "Closures",
+    category: "javascript",
+    route: "/javascript/closures",
+    description:
+      "See how inner functions retain access to outer scope variables",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures",
+  },
+  {
+    id: "promises",
+    title: "Promises",
+    category: "javascript",
+    route: "/javascript/promises",
+    description:
+      "Understand Promise states, chaining, microtask scheduling, and async/await",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {

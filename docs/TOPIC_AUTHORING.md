@@ -296,7 +296,7 @@ export function Closures() {
 
       {/* Main visualization (inside the surface card) */}
       <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        <div className="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
           <NeonPanel
             title={VISUALIZATION_PANEL_TITLES.sourceCode}
             tone="amber"
