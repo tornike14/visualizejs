@@ -1,19 +1,20 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   ChevronDown,
   ArrowUp,
   AlertTriangle,
-  Info,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { NeonPanel, type NeonTone } from "@/components/visualization-ui/NeonPanel";
-import {
-  TransportControls,
-  type PlaybackSpeedLevel,
-} from "@/components/visualization-ui/TransportControls";
+import { CodeLine as CodeLineComponent } from "@/components/visualization-ui/CodeLine";
+import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
+import { TransportControls } from "@/components/visualization-ui/TransportControls";
+import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 import { cn } from "@/lib/utils";
+import { VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES } from "@/lib/visualization/uiCopy";
+import { useStepPlayback } from "@/hooks/useStepPlayback";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -437,22 +438,6 @@ function kindLabel(kind: HoistingKind): string {
   }
 }
 
-const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
-  1: 2400,
-  2: 1800,
-  3: 1300,
-  4: 850,
-  5: 500,
-};
-
-const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
-  1: "0.5x",
-  2: "0.75x",
-  3: "1x",
-  4: "1.5x",
-  5: "2x",
-};
-
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
@@ -464,7 +449,6 @@ function CodePanel({
   highlightIds,
   floatingIds,
   tdzIds,
-  isHoistedView,
 }: {
   title: string;
   tone: NeonTone;
@@ -478,87 +462,36 @@ function CodePanel({
     <NeonPanel
       title={title}
       tone={tone}
-      bodyClassName="min-h-[24rem] overflow-auto p-0 font-mono text-sm leading-relaxed"
+      bodyClassName="overflow-auto font-mono text-[13px] leading-[1.9] text-slate-200"
     >
-      <div className="space-y-1 p-4">
+      <div className="space-y-0.5">
         {lines.map((line, idx) => {
           const isHighlighted = highlightIds.includes(line.id);
           const isFloating = floatingIds.includes(line.id);
           const isInTDZ = tdzIds.includes(line.id);
-          const isHoistedLine =
-            isHoistedView && "isHoisted" in line && line.isHoisted;
+
+          const icon = isFloating ? (
+            <ArrowUp className="viz-float-up h-3.5 w-3.5 text-emerald-300" />
+          ) : isInTDZ ? (
+            <AlertTriangle className="h-3.5 w-3.5 text-red-300" />
+          ) : null;
+
+          const lineClass = cn(
+            isFloating && "viz-float-up is-floating",
+            isInTDZ && "is-tdz",
+            isHighlighted && !isInTDZ && !isFloating && "is-highlighted",
+          );
 
           return (
-            <div
+            <CodeLineComponent
               key={`${line.id}-${idx}`}
-              className={cn(
-                "flex items-start gap-3 rounded-lg px-2 py-1 transition-all duration-300",
-                isFloating && "ho-floating bg-emerald-500/10 ring-1 ring-emerald-400/20",
-                isInTDZ && "bg-red-500/10 ring-1 ring-red-400/20",
-                isHighlighted && !isInTDZ && "bg-amber-400/10 ring-1 ring-amber-300/20"
-              )}
-            >
-              <span className="w-5 shrink-0 select-none text-right text-xs text-slate-500/65">
-                {idx + 1}
-              </span>
-
-              <span className="w-4 shrink-0">
-                {isFloating && <ArrowUp className="ho-floating h-3.5 w-3.5 text-emerald-300" />}
-                {isInTDZ && !isFloating && (
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-300" />
-                )}
-              </span>
-
-              <span
-                className={cn(
-                  "flex-1 whitespace-pre",
-                  line.text === "" && "opacity-0",
-                  isHoistedLine && "text-emerald-300",
-                  isInTDZ && "text-red-300",
-                  !isHoistedLine && !isInTDZ && line.text !== "" && "text-slate-100"
-                )}
-              >
-                {"  ".repeat(line.indent)}
-                {line.text || " "}
-              </span>
-            </div>
+              lineNumber={idx + 1}
+              text={"  ".repeat(line.indent) + line.text}
+              leftSlot={icon}
+              className={lineClass}
+            />
           );
         })}
-      </div>
-    </NeonPanel>
-  );
-}
-
-function ConsolePanel({ output }: { output: string[] }) {
-  return (
-    <NeonPanel
-      title="Console Output"
-      tone="slate"
-      bodyClassName="min-h-[8.5rem] overflow-auto p-3 font-mono text-xs leading-relaxed"
-    >
-      <div className="space-y-1">
-        {output.length === 0 ? (
-          <span className="text-slate-500/70">
-            {"// output will appear here"}
-          </span>
-        ) : (
-          output.map((line, idx) => {
-            const isError =
-              line.startsWith("ReferenceError") || line.startsWith("TypeError");
-            return (
-              <div
-                key={idx}
-                className={cn(
-                  "py-0.5",
-                  isError ? "text-red-300" : "text-emerald-300"
-                )}
-              >
-                <span className="mr-2 text-slate-500/60">&gt;</span>
-                {line}
-              </div>
-            );
-          })
-        )}
       </div>
     </NeonPanel>
   );
@@ -646,230 +579,113 @@ function ExampleSelector({
   );
 }
 
-function StepIndicator({
-  total,
-  current,
-}: {
-  total: number;
-  current: number;
-}) {
-  return (
-    <div className="flex items-center gap-1.5">
-      {Array.from({ length: total }).map((_, idx) => (
-        <div
-          key={idx}
-          className={cn(
-            "h-1.5 rounded-full transition-all duration-300",
-            idx === current
-              ? "w-7 bg-amber-300"
-              : idx < current
-                ? "w-3 bg-amber-300/45"
-                : "w-3 bg-slate-700/80"
-          )}
-        />
-      ))}
-    </div>
-  );
-}
-
-function explanationTone(kind: StepKind): NeonTone {
-  if (kind === "tdz-error") {
-    return "pink";
-  }
-
-  if (kind === "hoist") {
-    return "green";
-  }
-
-  return "slate";
-}
-
 // ---------------------------------------------------------------------------
 // Main Component
 // ---------------------------------------------------------------------------
 
 export function Hoisting() {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(3);
 
   const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
-  const totalSteps = example.steps.length;
-  const lastStepIndex = totalSteps - 1;
-  const step = example.steps[currentStepIndex] ?? example.steps[0];
-  const canStep = currentStepIndex < lastStepIndex;
 
-  useEffect(() => {
-    if (!isPlaying) {
-      return;
-    }
+  const {
+    currentStepIndex,
+    isPlaying,
+    speedLevel,
+    speedLabel,
+    canStep,
+    canStepBack,
+    togglePlay,
+    step: handleStep,
+    stepBack: handleStepBack,
+    reset: handleReset,
+    setSpeedLevel,
+  } = useStepPlayback({
+    totalSteps: example.steps.length,
+    initialStep: 0,
+    resetKey: activeExampleId,
+  });
 
-    const timeoutId = window.setTimeout(() => {
-      setCurrentStepIndex((previousStep) => {
-        if (previousStep >= lastStepIndex) {
-          setIsPlaying(false);
-          return previousStep;
-        }
+  const currentStep = example.steps[currentStepIndex] ?? example.steps[0];
 
-        const nextStep = previousStep + 1;
-        if (nextStep >= lastStepIndex) {
-          setIsPlaying(false);
-        }
-
-        return nextStep;
-      });
-    }, SPEED_TO_DELAY_MS[speedLevel]);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [currentStepIndex, isPlaying, lastStepIndex, speedLevel]);
-
-  const handleTogglePlay = useCallback(() => {
-    setIsPlaying((previousPlaying) => {
-      if (previousPlaying) {
-        return false;
-      }
-
-      setCurrentStepIndex((previousStep) => {
-        if (previousStep >= lastStepIndex) {
-          return 0;
-        }
-
-        return previousStep;
-      });
-
-      return true;
-    });
-  }, [lastStepIndex]);
-
-  const handleStep = useCallback(() => {
-    setIsPlaying(false);
-    setCurrentStepIndex((previousStep) =>
-      Math.min(previousStep + 1, lastStepIndex)
-    );
-  }, [lastStepIndex]);
-
-  const handleReset = useCallback(() => {
-    setIsPlaying(false);
-    setCurrentStepIndex(0);
-  }, []);
-
-  const handleExampleChange = useCallback(
-    (id: string) => {
-      setIsPlaying(false);
-      setActiveExampleId(id);
-      setCurrentStepIndex(0);
-    },
-    []
-  );
+  const handleExampleChange = (id: string) => {
+    setActiveExampleId(id);
+  };
 
   return (
-    <section className="relative flex flex-col gap-6 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-      <style>{`
-        .ho-floating {
-          animation: ho-float-up 0.7s ease-out;
-        }
+    <>
+      {/* Toolbar: portaled above the surface card */}
+      <ToolbarPortal>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <ExampleSelector
+                examples={EXAMPLES}
+                activeId={activeExampleId}
+                onSelect={handleExampleChange}
+              />
+              <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
+                {kindLabel(example.kind)}
+              </Badge>
+              <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
+                {isPlaying ? <span className="viz-pulse-dot" /> : null}
+                Step {currentStepIndex + 1} / {example.steps.length}
+              </p>
+            </div>
 
-        @keyframes ho-float-up {
-          from {
-            opacity: 0.25;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+            <TransportControls
+              isPlaying={isPlaying}
+              canStep={canStep}
+              canStepBack={canStepBack}
+              speedLevel={speedLevel}
+              speedLabel={speedLabel}
+              onTogglePlay={togglePlay}
+              onStep={handleStep}
+              onStepBack={handleStepBack}
+              onReset={handleReset}
+              onSpeedLevelChange={setSpeedLevel}
+            />
+          </div>
 
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex flex-wrap items-center gap-3">
-          <ExampleSelector
-            examples={EXAMPLES}
-            activeId={activeExampleId}
-            onSelect={handleExampleChange}
-          />
-          <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
-            {kindLabel(example.kind)}
-          </Badge>
-        </div>
-
-        <div className="flex flex-col items-center gap-3">
-          <TransportControls
-            isPlaying={isPlaying}
-            canStep={canStep}
-            speedLevel={speedLevel}
-            speedLabel={SPEED_LABELS[speedLevel]}
-            onTogglePlay={handleTogglePlay}
-            onStep={handleStep}
-            onReset={handleReset}
-            onSpeedLevelChange={setSpeedLevel}
-          />
-          <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
-            Step {currentStepIndex + 1} / {totalSteps}
-          </p>
-        </div>
-      </div>
-
-      <div className="app-surface-subtle flex items-start gap-2 rounded-2xl px-4 py-3 text-sm text-slate-300">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
-        <p>{example.description}</p>
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-2">
-        <CodePanel
-          title="Original Code"
-          tone="amber"
-          lines={example.original}
-          highlightIds={step.highlightOriginal}
-          floatingIds={[]}
-          tdzIds={[]}
-          isHoistedView={false}
-        />
-        <CodePanel
-          title="How JS Sees It (After Hoisting)"
-          tone="cyan"
-          lines={example.hoisted}
-          highlightIds={step.highlightHoisted}
-          floatingIds={step.floatingLineIds}
-          tdzIds={step.tdzLineIds}
-          isHoistedView={true}
-        />
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <NeonPanel
-          title="Step Explanation"
-          tone={explanationTone(step.kind)}
-          bodyClassName="min-h-[8.5rem] flex items-start gap-2 text-sm"
-        >
-          {step.kind === "tdz-error" && (
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
-          )}
-          {step.kind === "hoist" && (
-            <ArrowUp className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
-          )}
-          <p
-            className={cn(
-              step.kind === "tdz-error" && "text-red-200",
-              step.kind === "hoist" && "text-emerald-200",
-              step.kind !== "tdz-error" && step.kind !== "hoist" && "text-slate-300"
+          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+            {currentStep.explanation ? (
+              <p className="viz-step-desc text-center text-sm text-slate-300">
+                {currentStep.explanation}
+              </p>
+            ) : (
+              <p className="text-center text-sm text-slate-500">
+                {VISUALIZATION_EMPTY_STATES.stepDescription}
+              </p>
             )}
-          >
-            {step.explanation}
-          </p>
-        </NeonPanel>
-        <div>
-          <ConsolePanel output={step.consoleOutput} />
+          </div>
         </div>
-      </div>
+      </ToolbarPortal>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <StepIndicator total={totalSteps} current={currentStepIndex} />
-        <span className="text-xs text-[color:var(--app-text-secondary)]">
-          Hoisting pass first, execution pass second.
-        </span>
-      </div>
-    </section>
+      {/* Main visualization */}
+      <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
+        <div className="grid gap-4 xl:grid-cols-2">
+          <CodePanel
+            title={VISUALIZATION_PANEL_TITLES.sourceCode}
+            tone="amber"
+            lines={example.original}
+            highlightIds={currentStep.highlightOriginal}
+            floatingIds={[]}
+            tdzIds={[]}
+            isHoistedView={false}
+          />
+          <CodePanel
+            title="How JS Sees It (After Hoisting)"
+            tone="cyan"
+            lines={example.hoisted}
+            highlightIds={currentStep.highlightHoisted}
+            floatingIds={currentStep.floatingLineIds}
+            tdzIds={currentStep.tdzLineIds}
+            isHoistedView={true}
+          />
+        </div>
+
+        <ConsoleOutput lines={currentStep.consoleOutput} />
+      </section>
+    </>
   );
 }

@@ -1,22 +1,21 @@
-# VisualizeJS Ultimate Project Document
+# VisualizeJS Project Status
 
-## 1) Project Summary
+## 1) Project Snapshot
 
-VisualizeJS is a Next.js App Router project for interactive JavaScript and React concept visualizations.
+VisualizeJS is a Next.js App Router project focused on interactive JavaScript concept visualizations.
 
-Current scope implemented:
-- Category-based navigation (`JavaScript`, `React`)
-- Dedicated topic pages per concept
-- Interactive visualization components
-- Metadata + route-level loading/error handling
-- Category landing pages (`/javascript`, `/react`)
-- Root redirect from `/` to `/javascript`
+Current product scope:
+- JavaScript track is active with interactive concept pages.
+- React track is intentionally reduced to a "Coming Soon" page.
+- UI theme has been unified across shell, sidebar, pages, and visualizations using shared design tokens and reusable visualization primitives.
 
-Status: app builds and lints successfully.
+Status:
+- `npm run lint` passes
+- `npm run build` passes
 
 ---
 
-## 2) Tech Stack (Current)
+## 2) Tech Stack
 
 - Next.js `16.1.6` (App Router, webpack mode)
 - React `19.2.3`
@@ -35,148 +34,107 @@ Scripts:
 ## 3) Current Route Map
 
 - `/` -> redirects to `/javascript`
-- `/javascript` -> JavaScript topics landing page
+- `/javascript` -> JavaScript landing page
 - `/javascript/event-loop` -> Event Loop visualization
 - `/javascript/hoisting` -> Hoisting visualization
-- `/react` -> React topics landing page
-- `/react/virtual-dom` -> Virtual DOM visualization
-- `/react/jwt` -> JWT visualization
+- `/react` -> React "Coming Soon" page
+
+Removed routes:
+- `/react/virtual-dom`
+- `/react/jwt`
+- `/javascript/execution-context-scope-chain`
 
 ---
 
-## 4) Architecture Overview
-
-### App shell
-- `src/app/layout.tsx`
-  - Global metadata (site-level title/description/OG/Twitter)
-  - Persistent sidebar + main content layout
-  - Hydration warning suppression on `<html>` and `<body>` to avoid false mismatches from extension-injected attributes
-
-### Navigation
-- `src/components/layout/Sidebar.tsx`
-  - URL-driven active category
-  - `TopicToggle` switches by route (`/javascript` or `/react`)
-  - Mobile sheet + desktop sidebar
-  - Topic list filtered by active category
-
-### Topic data model
-- `src/lib/topics.ts`
-  - Central topic definitions (id/title/category/route/description/difficulty/icon)
-  - `getTopicsByCategory`, `getTopicById`, `getTopicOrThrow`
-
-### Visualization page composition
-- Each topic page wraps a dynamic visualization import with:
-  - `VisualizationPageShell` (header, badges, back navigation)
-  - `ErrorBoundary`
-  - `VisualizationLoading`
-  - route metadata from `createTopicMetadata`
-
----
-
-## 5) Major Work Completed
-
-### A. Foundation and routing
-- Implemented category route groups and pages.
-- Added dedicated routes for all 4 visualizations.
-- Added category index pages and removed dependency on `/` as a content landing page.
-- Added root redirect to `/javascript`.
-
-### B. Sidebar/toggle behavior fixes
-- Fixed incorrect category toggle behavior by making category derived from pathname.
-- Toggle now consistently navigates between category roots and updates visible topics.
-
-### C. Hydration issues addressed
-- Fixed prior server/client mismatch causes related to category state derivation.
-- Added hydration suppression on root HTML/body for extension-injected attributes (example: `cz-shortcut-listen`).
-
-### D. Visualization integration
-- Added and wired all visualization components:
-  - Event Loop
-  - Hoisting
-  - Virtual DOM
-  - JWT
-
-### E. Event Loop redesign (artifact-aligned)
-- Rebuilt Event Loop UI and interaction model to closely match Claude artifact style.
-- Added reusable design primitives:
-  - `src/components/visualization-ui/NeonPanel.tsx`
-  - `src/components/visualization-ui/TransportControls.tsx`
-- Added reusable playback speed control with levels:
-  - `0.5x`, `0.75x`, `1x`, `1.5x`, `2x`
-- Implemented artifact-style layout:
-  - Source code panel
-  - Call Stack / Web APIs / Microtask Queue / Task Queue / Event Loop ring
-  - Console output
-  - Step description capsule and animated state transitions
-
----
-
-## 6) Current Key File Structure
+## 4) Current Key File Structure
 
 ```txt
 src/
   app/
     layout.tsx
     page.tsx
+    globals.css
     loading.tsx
     javascript/
       page.tsx
-      layout.tsx
       event-loop/page.tsx
       hoisting/page.tsx
     react/
       page.tsx
-      layout.tsx
-      virtual-dom/page.tsx
-      jwt/page.tsx
   components/
     ErrorBoundary.tsx
     layout/
+      AppTheme.tsx
       Sidebar.tsx
       TopicToggle.tsx
       CategoryTopicsPage.tsx
       VisualizationPageShell.tsx
+      ToolbarPortal.tsx
     visualization-ui/
       NeonPanel.tsx
       TransportControls.tsx
+      Tooltip.tsx
+      CodeBlock.tsx
+      CodeLine.tsx
+      ConsoleOutput.tsx
     visualizations/
       EventLoop.tsx
       Hoisting.tsx
-      VirtualDOM.tsx
-      JWT.tsx
       VisualizationLoading.tsx
+  hooks/
+    useStepPlayback.ts
   lib/
     topics.ts
     metadata.ts
     constants.ts
     utils.ts
+    visualization/
+      syntax.ts
+      uiCopy.ts
   types/
     index.ts
+public/
+  icons/
+    javascript.svg
+    react.svg
+  brand/
+    visualizejs-logo.png
+docs/
+  ultimate.md          (this file, current status)
+  TOPIC_AUTHORING.md   (guide for wiring new topics)
 ```
 
 ---
 
-## 7) Verification
+## 5) Architecture Patterns
 
-Latest verification run:
-- `npm run lint` -> pass
-- `npm run build` -> pass
-- Static routes generated for all category and topic pages
-
----
-
-## 8) Documentation Organization
-
-This `docs/` folder now contains:
-- `docs/ultimate.md` (this file)
-- `docs/README.md` (copied project readme snapshot)
-- `docs/visualizejs-project-brief.md` (copied original project brief)
+- **ToolbarPortal**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. The shell provides `ToolbarProvider` + `ToolbarSlot`; visualizations use `ToolbarPortal`.
+- **useStepPlayback**: Shared hook for step-driven playback (play, pause, step, reset, speed). All visualizations use it.
+- **Syntax tokenizer**: Lightweight regex tokenizer in `syntax.ts`. `CodeBlock` / `CodeLine` components auto-tokenize plain text into colored spans.
+- **NeonPanel**: Themed container with tone-colored headers (amber, cyan, green, violet, pink, slate).
+- **Step data model**: Each visualization has a hardcoded STEPS array of full-state snapshots. No deltas.
+- **External docs link**: Each topic has a `docsUrl` field. The shell renders a small external-link icon next to the title that opens the authoritative documentation page.
+- **No emojis**: All UI text uses `<strong>` tags for emphasis, never emojis.
 
 ---
 
-## 9) Recommended Next Steps
+## 6) Conventions
 
-1. Apply the new `NeonPanel` + `TransportControls` design system to `Hoisting`, `VirtualDOM`, and `JWT` for full visual consistency.
-2. Refresh root `README.md` from template text to project-specific setup, architecture, and contribution docs.
-3. Add minimal route-level smoke tests (Play/Step/Reset behavior for visualizations).
+1. Keep one H1 at page shell level.
+2. Use `NeonPanel` + `TransportControls` for interactive visualizations.
+3. Use step data models (not hardcoded DOM-driven behavior).
+4. Code line fading guard: `isDone && !isActive` (never fade active lines).
+5. `description` field on topics is used for SEO metadata and category landing cards only, not shown on the visualization page.
+6. See `docs/TOPIC_AUTHORING.md` for the full wiring guide.
 
+---
+
+## 7) Verification Snapshot
+
+Latest generated routes:
+- `/`
+- `/_not-found`
+- `/javascript`
+- `/javascript/event-loop`
+- `/javascript/hoisting`
+- `/react`

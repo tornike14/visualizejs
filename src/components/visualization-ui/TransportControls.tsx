@@ -1,95 +1,171 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { Tooltip } from "./Tooltip";
 
 export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5;
 
 interface TransportControlsProps {
   isPlaying: boolean;
   canStep: boolean;
+  canStepBack: boolean;
   speedLevel: PlaybackSpeedLevel;
   speedLabel: string;
   onTogglePlay: () => void;
   onStep: () => void;
+  onStepBack: () => void;
   onReset: () => void;
   onSpeedLevelChange: (level: PlaybackSpeedLevel) => void;
   className?: string;
 }
 
-const rangeMin = 1;
-const rangeMax = 5;
+const SPEED_OPTIONS: { level: PlaybackSpeedLevel; label: string }[] = [
+  { level: 1, label: "0.5x" },
+  { level: 2, label: "0.75x" },
+  { level: 3, label: "1x" },
+  { level: 4, label: "1.5x" },
+  { level: 5, label: "2x" },
+];
 
-function toSpeedLevel(value: number): PlaybackSpeedLevel {
-  if (value <= 1) return 1;
-  if (value === 2) return 2;
-  if (value === 3) return 3;
-  if (value === 4) return 4;
-  return 5;
-}
+const iconBtnBase =
+  "inline-flex cursor-pointer items-center justify-center rounded-lg border p-2 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0";
+
+const iconBtnDefault =
+  "border-slate-600/85 bg-slate-900/65 text-slate-100 hover:border-slate-500";
+
+const iconBtnPrimary =
+  "border-amber-300/45 bg-gradient-to-br from-amber-500/30 to-violet-400/18 text-slate-100 hover:border-amber-300/70 hover:shadow-[0_0_16px_rgba(251,191,36,0.2)]";
 
 export function TransportControls({
   isPlaying,
   canStep,
+  canStepBack,
   speedLevel,
   speedLabel,
   onTogglePlay,
   onStep,
+  onStepBack,
   onReset,
   onSpeedLevelChange,
   className,
 }: TransportControlsProps) {
+  const [speedOpen, setSpeedOpen] = useState(false);
+  const speedRef = useRef<HTMLDivElement>(null);
+
+  // Close speed dropdown on outside click
+  useEffect(() => {
+    if (!speedOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (speedRef.current && !speedRef.current.contains(e.target as Node)) {
+        setSpeedOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [speedOpen]);
+
   return (
-    <div className={cn("flex flex-wrap items-center justify-center gap-3", className)}>
-      <button
-        type="button"
-        onClick={onTogglePlay}
-        className="inline-flex items-center gap-2 rounded-xl border border-amber-300/45 bg-gradient-to-br from-amber-500/30 to-violet-400/18 px-4 py-2 font-mono text-sm font-medium text-slate-100 transition-all hover:-translate-y-0.5 hover:border-amber-300/70 hover:shadow-[0_0_16px_rgba(251,191,36,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70"
-        aria-pressed={isPlaying}
-      >
-        {isPlaying ? <PauseIcon /> : <PlayIcon />}
-        {isPlaying ? "Pause" : "Play"}
-      </button>
+    <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
+      {/* Reset */}
+      <Tooltip label="Reset">
+        <button
+          type="button"
+          onClick={onReset}
+          className={cn(iconBtnBase, iconBtnDefault)}
+        >
+          <ResetIcon />
+        </button>
+      </Tooltip>
 
-      <button
-        type="button"
-        onClick={onStep}
-        disabled={!canStep || isPlaying}
-        className="inline-flex items-center gap-2 rounded-xl border border-slate-600/85 bg-slate-900/65 px-4 py-2 font-mono text-sm font-medium text-slate-100 transition-all hover:-translate-y-0.5 hover:border-slate-500 disabled:cursor-not-allowed disabled:opacity-45"
-      >
-        <StepIcon />
-        Step
-      </button>
+      {/* Step Back */}
+      <Tooltip label="Step Back">
+        <button
+          type="button"
+          onClick={onStepBack}
+          disabled={!canStepBack || isPlaying}
+          className={cn(iconBtnBase, iconBtnDefault)}
+        >
+          <StepBackIcon />
+        </button>
+      </Tooltip>
 
-      <button
-        type="button"
-        onClick={onReset}
-        className="inline-flex items-center gap-2 rounded-xl border border-slate-600/85 bg-slate-900/65 px-4 py-2 font-mono text-sm font-medium text-slate-100 transition-all hover:-translate-y-0.5 hover:border-slate-500"
-      >
-        <ResetIcon />
-        Reset
-      </button>
+      {/* Play / Pause */}
+      <Tooltip label={isPlaying ? "Pause" : "Play"}>
+        <button
+          type="button"
+          onClick={onTogglePlay}
+          aria-pressed={isPlaying}
+          className={cn(iconBtnBase, iconBtnPrimary, "px-3")}
+        >
+          {isPlaying ? <PauseIcon /> : <PlayIcon />}
+        </button>
+      </Tooltip>
 
-      <label className="ml-1 inline-flex items-center gap-2 font-mono text-sm text-slate-300">
-        <span>Speed:</span>
-        <input
-          type="range"
-          min={rangeMin}
-          max={rangeMax}
-          value={speedLevel}
-          onChange={(event) =>
-            onSpeedLevelChange(toSpeedLevel(Number(event.currentTarget.value)))
-          }
-          aria-label="Playback speed"
-          className="h-1.5 w-24 cursor-pointer rounded-lg bg-slate-700"
-          style={{ accentColor: "#f472b6" }}
-        />
-        <span className="w-8 text-right text-slate-200">{speedLabel}</span>
-      </label>
+      {/* Step Forward */}
+      <Tooltip label="Step Forward">
+        <button
+          type="button"
+          onClick={onStep}
+          disabled={!canStep || isPlaying}
+          className={cn(iconBtnBase, iconBtnDefault)}
+        >
+          <StepIcon />
+        </button>
+      </Tooltip>
+
+      {/* Speed Dropdown */}
+      <div ref={speedRef} className="relative">
+        <Tooltip label="Playback Speed">
+          <button
+            type="button"
+            onClick={() => setSpeedOpen((v) => !v)}
+            className={cn(
+              iconBtnBase,
+              iconBtnDefault,
+              "gap-1 px-2.5 font-mono text-xs",
+              speedOpen && "ring-2 ring-pink-300/50"
+            )}
+          >
+            <span>{speedLabel}</span>
+            <ChevronIcon open={speedOpen} />
+          </button>
+        </Tooltip>
+
+        {speedOpen && (
+          <div className="app-surface absolute right-0 top-full z-50 mt-1.5 min-w-[5.5rem] overflow-hidden rounded-xl border-[color:var(--app-border)] p-1 shadow-[0_12px_28px_rgba(2,6,23,0.5)]">
+            {SPEED_OPTIONS.map((opt) => (
+              <button
+                key={opt.level}
+                type="button"
+                onClick={() => {
+                  onSpeedLevelChange(opt.level);
+                  setSpeedOpen(false);
+                }}
+                className={cn(
+                  "flex w-full cursor-pointer items-center rounded-lg px-3 py-1.5 font-mono text-xs transition-colors",
+                  opt.level === speedLevel
+                    ? "bg-pink-400/15 text-pink-300"
+                    : "text-slate-300 hover:bg-slate-700/50 hover:text-slate-100"
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
+// ---------------------------------------------------------------------------
+// Icons (16x16 viewBox)
+// ---------------------------------------------------------------------------
+
 function PlayIcon() {
   return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
+    <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
       <path d="M4 2.5v11l8.5-5.5z" />
     </svg>
   );
@@ -97,7 +173,7 @@ function PlayIcon() {
 
 function PauseIcon() {
   return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
+    <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
       <path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z" />
     </svg>
   );
@@ -111,10 +187,30 @@ function StepIcon() {
   );
 }
 
+function StepBackIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
+      <path d="M13.5 2.5v11L6.5 8zM5 2H2.5v12H5z" />
+    </svg>
+  );
+}
+
 function ResetIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
       <path d="M8 1.5A6.5 6.5 0 1014.5 8 6.5 6.5 0 008 1.5zm0 1.5A5 5 0 113 8 5 5 0 018 3zm-.75 1.5h1.5v3.25H11v1.5H7.25z" />
+    </svg>
+  );
+}
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={cn("size-3 text-slate-400 transition-transform duration-200", open && "rotate-180")}
+    >
+      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

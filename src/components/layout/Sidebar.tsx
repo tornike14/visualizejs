@@ -46,29 +46,39 @@ function SidebarContent({
   activeCategory,
   onCategoryChange,
   onLinkClick,
+  onCollapse,
 }: {
   activeCategory: Category;
   onCategoryChange: (category: Category) => void;
   onLinkClick?: () => void;
+  onCollapse?: () => void;
 }) {
   const pathname = usePathname();
   const filteredTopics = getTopicsByCategory(activeCategory);
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2 px-4 py-5">
+      <div className="flex items-center justify-between gap-2 px-4 py-5">
         <Link
           href={categoryRoute(activeCategory)}
-          className="flex items-center gap-2"
+          className="group inline-flex px-1 py-1 transition-all"
           onClick={onLinkClick}
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/45 bg-gradient-to-br from-cyan-300/25 to-pink-400/25 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-            <span className="text-sm font-bold text-slate-100">V</span>
-          </div>
-          <span className="text-lg font-semibold tracking-tight text-slate-100">
-            Visualize<span className="text-pink-300">JS</span>
+          <span className="bg-gradient-to-r from-cyan-300 via-sky-300 via-violet-300 to-amber-300 bg-clip-text text-[1.55rem] font-black tracking-[0.02em] text-transparent drop-shadow-[0_0_14px_rgba(34,211,238,0.24)] transition-all group-hover:drop-shadow-[0_0_20px_rgba(244,114,182,0.3)]">
+            VisualizeJS
           </span>
         </Link>
+
+        {onCollapse && (
+          <button
+            type="button"
+            onClick={onCollapse}
+            title="Collapse sidebar"
+            className="cursor-pointer rounded-lg border border-slate-600/50 bg-slate-800/40 p-1.5 text-slate-400 transition-all hover:border-slate-500/70 hover:bg-slate-700/50 hover:text-slate-200"
+          >
+            <CollapseIcon />
+          </button>
+        )}
       </div>
 
       <div className="px-4 pb-3">
@@ -108,8 +118,37 @@ function SidebarContent({
   );
 }
 
+/** Collapsed sidebar — just the VJS logo mark + expand button */
+function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
+  return (
+    <aside className="app-surface hidden h-screen flex-col items-center bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-16 lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
+      <div className="flex flex-col items-center gap-4 pt-5">
+        <Link
+          href="/"
+          className="group inline-flex transition-all"
+          title="VisualizeJS"
+        >
+          <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-amber-300 bg-clip-text text-sm font-black tracking-tight text-transparent drop-shadow-[0_0_14px_rgba(34,211,238,0.24)] transition-all group-hover:drop-shadow-[0_0_20px_rgba(244,114,182,0.3)]">
+            VJS
+          </span>
+        </Link>
+
+        <button
+          type="button"
+          onClick={onExpand}
+          title="Expand sidebar"
+          className="cursor-pointer rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-700/40 hover:text-slate-200"
+        >
+          <ExpandIcon />
+        </button>
+      </div>
+    </aside>
+  );
+}
+
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const activeCategory = categoryFromPathname(pathname);
@@ -125,12 +164,17 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="app-surface hidden h-screen bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-72 lg:flex-col lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
-        <SidebarContent
-          activeCategory={activeCategory}
-          onCategoryChange={handleCategoryChange}
-        />
-      </aside>
+      {collapsed ? (
+        <CollapsedSidebar onExpand={() => setCollapsed(false)} />
+      ) : (
+        <aside className="app-surface hidden h-screen bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-72 lg:flex-col lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
+          <SidebarContent
+            activeCategory={activeCategory}
+            onCategoryChange={handleCategoryChange}
+            onCollapse={() => setCollapsed(true)}
+          />
+        </aside>
+      )}
 
       {/* Mobile hamburger + sheet */}
       <div className="fixed top-4 left-4 z-50 lg:hidden">
@@ -172,5 +216,27 @@ export function Sidebar() {
         </Sheet>
       </div>
     </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Icons
+// ---------------------------------------------------------------------------
+
+/** Left-pointing chevron (collapse) */
+function CollapseIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" className="size-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 3L5 8l5 5" />
+    </svg>
+  );
+}
+
+/** Right-pointing chevron (expand) */
+function ExpandIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" className="size-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 3l5 5-5 5" />
+    </svg>
   );
 }

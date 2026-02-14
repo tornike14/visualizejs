@@ -8,6 +8,7 @@ export const topics: Topic[] = [
     route: "/javascript/event-loop",
     description: "Visualize how JavaScript handles asynchronous operations",
     difficulty: "intermediate",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
   },
   {
     id: "hoisting",
@@ -16,15 +17,8 @@ export const topics: Topic[] = [
     route: "/javascript/hoisting",
     description: "Understand variable and function hoisting behavior",
     difficulty: "beginner",
-  },
-  {
-    id: "execution-context-scope-chain",
-    title: "Execution Context + Scope Chain",
-    category: "javascript",
-    route: "/javascript/execution-context-scope-chain",
-    description:
-      "Track execution contexts, lexical environments, and scope lookups step by step.",
-    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
   },
 ];
 
