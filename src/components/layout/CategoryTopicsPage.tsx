@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
+import { DIFFICULTY_COLORS, SITE_URL } from "@/lib/constants";
 import { getTopicsByCategory } from "@/lib/topics";
 import type { Category } from "@/types";
 
@@ -51,9 +51,31 @@ const CATEGORY_CONFIG: Record<
 export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
   const topics = getTopicsByCategory(category);
   const config = CATEGORY_CONFIG[category];
+  const categoryUrl = `${SITE_URL}/${category}`;
+  const categorySchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: config.title,
+    description: config.description,
+    url: categoryUrl,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: topics.map((topic, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: topic.title,
+        url: `${SITE_URL}${topic.route}`,
+        description: topic.description,
+      })),
+    },
+  };
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
+      />
       <section className="app-surface flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center lg:px-10 lg:py-12">
         <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${config.iconShellClass}`}>
           <Image

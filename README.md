@@ -28,12 +28,15 @@ Open [http://localhost:3000](http://localhost:3000). The app redirects to `/java
 - `/javascript/closures` — Closures visualization
 - `/javascript/promises` — Promises visualization
 - `/javascript/prototypal-inheritance` — Prototypal Inheritance visualization
+- `/javascript/this-keyword` — this Keyword visualization
+- `/javascript/scope-chain` — Scope Chain visualization
 - `/react` — React (coming soon)
 
 ## Project Docs
 
 - [`docs/ultimate.md`](docs/ultimate.md) — architecture, file structure, conventions, and current status
 - [`docs/TOPIC_AUTHORING.md`](docs/TOPIC_AUTHORING.md) — guide for adding new visualization topics
+- [`docs/seo.md`](docs/seo.md) — implemented SEO setup, metadata strategy, and deployment checklist
 
 ## Tech Stack
 

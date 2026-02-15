@@ -1,0 +1,107 @@
+# SEO Documentation
+
+This document describes the SEO work currently implemented in VisualizeJS.
+
+## Canonical Domain
+
+- Production site URL: `https://visualizejs.com`
+- Source of truth: `SITE_URL` in `src/lib/constants.ts`
+- Current default:
+  - `process.env.NEXT_PUBLIC_SITE_URL || "https://visualizejs.com"`
+
+## Implemented SEO Features
+
+### 1) Page Metadata (Next.js Metadata API)
+
+- Root metadata is configured in `src/app/layout.tsx`:
+  - `metadataBase`
+  - default/title template
+  - description
+  - root keywords
+  - canonical for `/`
+  - robots directives
+  - Open Graph + Twitter cards
+- Topic metadata is generated in `src/lib/metadata.ts` via `createTopicMetadata(topic)`:
+  - title
+  - description
+  - category
+  - merged keywords
+  - canonical URL
+  - robots directives
+  - Open Graph + Twitter cards
+- Category pages define targeted metadata:
+  - `src/app/javascript/page.tsx`
+  - `src/app/react/page.tsx`
+
+### 2) Keyword Strategy
+
+- Centralized keyword composition in `src/lib/metadata.ts`:
+  - `GLOBAL_KEYWORDS`
+  - `CATEGORY_KEYWORDS`
+  - `TOPIC_KEYWORDS`
+  - dedupe helper
+- `getTopicKeywords(topic)` builds final topic keywords from all groups.
+- Includes intent-style query coverage, for example:
+  - `var vs let vs const`
+  - `execution context javascript`
+  - `this binding rules`
+  - `microtask queue vs macrotask queue`
+
+### 3) Structured Data (JSON-LD)
+
+- Global schemas in `src/app/layout.tsx`:
+  - `WebSite`
+  - `Organization` (with LinkedIn profile in `sameAs`)
+- Topic page schemas in `src/components/layout/VisualizationPageShell.tsx`:
+  - `TechArticle`
+  - `BreadcrumbList`
+- Category listing schema in `src/components/layout/CategoryTopicsPage.tsx`:
+  - `CollectionPage` with `ItemList` of topic URLs
+
+### 4) Crawl and Index Controls
+
+- Robots file route: `src/app/robots.ts`
+  - Generates `/robots.txt`
+  - allows crawling
+  - declares sitemap URL
+- Sitemap route: `src/app/sitemap.ts`
+  - Generates `/sitemap.xml`
+  - includes static routes and all topic routes from `topics`
+
+## Files Involved
+
+- `src/lib/constants.ts`
+- `src/lib/metadata.ts`
+- `src/app/layout.tsx`
+- `src/components/layout/VisualizationPageShell.tsx`
+- `src/components/layout/CategoryTopicsPage.tsx`
+- `src/app/javascript/page.tsx`
+- `src/app/react/page.tsx`
+- `src/app/robots.ts`
+- `src/app/sitemap.ts`
+
+## Vercel Environment Variables
+
+Recommended for production:
+
+- `NEXT_PUBLIC_SITE_URL=https://visualizejs.com`
+  - Recommended even though there is a default, to avoid accidental wrong canonicals between environments.
+- `NEXT_PUBLIC_CREATOR_LINKEDIN_URL`
+  - Optional. Set if you want to override the built-in fallback.
+- `NEXT_PUBLIC_CREATOR_AVATAR_SRC`
+  - Optional. Set if avatar asset path/domain changes.
+- `NEXT_PUBLIC_CREATOR_AVATAR_FALLBACK`
+  - Optional.
+
+Notes:
+- `NEXT_PUBLIC_*` variables are exposed to the browser, so do not place secrets there.
+- Configure Production, Preview, and Development values separately in Vercel as needed.
+
+## Post-Deploy SEO Checklist
+
+1. Confirm `https://visualizejs.com/robots.txt` loads and references sitemap.
+2. Confirm `https://visualizejs.com/sitemap.xml` includes all topic URLs.
+3. Inspect rendered `<head>` on a topic page for canonical, OG, Twitter, and keywords.
+4. Validate JSON-LD in Google Rich Results Test or Schema Markup Validator.
+5. Add and verify domain in Google Search Console, then submit sitemap.
+6. Wait for crawl/indexing and monitor query impressions.

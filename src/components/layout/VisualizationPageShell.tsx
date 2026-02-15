@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { getTopicKeywords } from "@/lib/metadata";
 import type { Topic } from "@/types";
 
 const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
@@ -27,10 +29,62 @@ export function VisualizationPageShell({
   const toolbarSkeletonVariant = SELECTOR_TOOLBAR_TOPIC_IDS.has(topic.id)
     ? "selector"
     : "simple";
+  const canonicalUrl = `${SITE_URL}${topic.route}`;
+  const topicKeywords = getTopicKeywords(topic);
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: `${topic.title} Visualization`,
+    description: topic.description,
+    url: canonicalUrl,
+    keywords: topicKeywords.join(", "),
+    inLanguage: "en-US",
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    mainEntityOfPage: canonicalUrl,
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: `${categoryLabel} Concepts`,
+        item: `${SITE_URL}${categoryRoute}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: topic.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
 
   return (
     <ToolbarProvider>
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 pb-6 pt-3 lg:px-6 lg:pb-8 lg:pt-6">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+
         <header className="flex flex-col gap-3">
           <Link
             href={categoryRoute}

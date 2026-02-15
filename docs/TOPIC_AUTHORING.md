@@ -262,16 +262,13 @@ export function Closures() {
       {/* Toolbar: portaled above the surface card */}
       <ToolbarPortal>
         <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
-              {isPlaying ? <span className="viz-pulse-dot" /> : null}
-              Step {Math.max(currentStepIndex + 1, 0)} / {STEPS.length}
-            </p>
-
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <TransportControls
               isPlaying={isPlaying}
               canStep={canStep}
               canStepBack={canStepBack}
+              stepIndex={currentStepIndex}
+              totalSteps={STEPS.length}
               speedLevel={speedLevel}
               speedLabel={speedLabel}
               onTogglePlay={togglePlay}
@@ -340,7 +337,7 @@ Each visualization returns a **fragment** with two parts:
 ```
 <>
   <ToolbarPortal>          (portaled above the surface card)
-    controls-row           (step counter left, TransportControls right)
+    controls-row           (transport controls, optional selector/badges)
     explanation-pill        (centered, rounded-full, max-w-4xl)
   </ToolbarPortal>
 
@@ -353,6 +350,10 @@ Each visualization returns a **fragment** with two parts:
 </>
 ```
 
+Row alignment convention:
+- Without selector: center the controls row (`justify-center`) so controls stay visually anchored.
+- With selector: use a two-side row (`justify-between`) with selector/badges on the left and transport controls on the right.
+
 ---
 
 ## Toolbar Portal Pattern
@@ -361,9 +362,9 @@ Each visualization returns a **fragment** with two parts:
 
 The toolbar (transport controls + step explanation) is rendered *outside* the surface card to maximize vertical space for visualization panels. This is achieved via a React context + portal pattern:
 
-1. **`ToolbarProvider`** — wraps the shell, provides a shared ref via context.
-2. **`ToolbarSlot`** — empty `<div>` with the ref, placed between header and card in the shell.
-3. **`ToolbarPortal`** — uses `createPortal` to render children into the `ToolbarSlot` from anywhere in the tree.
+1. **`ToolbarProvider`** — wraps the shell and stores the mount node + toolbar readiness state in context.
+2. **`ToolbarSlot`** — placed between header and card in the shell. Renders a skeleton (`simple` or `selector`) until portaled content mounts.
+3. **`ToolbarPortal`** — uses `createPortal` to render children into the `ToolbarSlot` from anywhere in the tree and toggles slot readiness.
 
 The shell sets up the provider and slot automatically. Visualizations just wrap their toolbar JSX in `<ToolbarPortal>`:
 
@@ -373,12 +374,10 @@ import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 // Inside your visualization component:
 <ToolbarPortal>
   <div className="flex flex-col gap-3">
-    {/* step counter + transport controls + explanation pill */}
+    {/* controls row + explanation pill */}
   </div>
 </ToolbarPortal>
 ```
-
-The portal renders after the component mounts (uses a `useEffect` + `useState` guard to avoid SSR mismatches).
 
 ---
 
@@ -401,7 +400,7 @@ The portal renders after the component mounts (uses a `useEffect` + `useState` g
 | Class | Use |
 |---|---|
 | `.app-surface` | Main cards — gradient bg, border, shadow, blur |
-| `.app-surface-subtle` | Lighter containers — step counter, explanation pill |
+| `.app-surface-subtle` | Lighter containers — controls row and explanation pill |
 | `.app-surface-flat` | Minimal surface — inline code backgrounds |
 
 ### Difficulty Badge Colors
@@ -484,7 +483,7 @@ import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
 
 ### TransportControls
 
-Playback buttons: Reset, Step Back, Play/Pause, Step Forward, Speed dropdown. Each button has a custom `Tooltip` for hover labels.
+Playback buttons: Reset, Step Back, Play/Pause, Step Forward, Speed dropdown. Step position is rendered inside this component (left of Reset) when `stepIndex` and `totalSteps` are provided.
 
 ```typescript
 import { TransportControls } from "@/components/visualization-ui/TransportControls";
@@ -493,6 +492,8 @@ import { TransportControls } from "@/components/visualization-ui/TransportContro
   isPlaying={isPlaying}
   canStep={canStep}
   canStepBack={canStepBack}
+  stepIndex={currentStepIndex}
+  totalSteps={STEPS.length}
   speedLevel={speedLevel}
   speedLabel={speedLabel}
   onTogglePlay={togglePlay}
@@ -503,11 +504,11 @@ import { TransportControls } from "@/components/visualization-ui/TransportContro
 />
 ```
 
-All props come directly from the `useStepPlayback` hook return value.
+`stepIndex` and `totalSteps` are UI-only props for the inline step pill. The remaining control props come directly from `useStepPlayback`.
 
 ### ExampleSelector
 
-Shared dropdown for switching between sub-examples within a visualization. If your topic has multiple examples (like Hoisting, Promises, or PrototypalInheritance), use this component instead of building a custom dropdown.
+Shared dropdown for switching between sub-examples within a visualization. If your topic has multiple examples (like Hoisting, Promises, PrototypalInheritance, ScopeChain, or ThisKeyword), use this component instead of building a custom dropdown.
 
 ```typescript
 import { ExampleSelector, type ExampleOption } from "@/components/visualization-ui/ExampleSelector";
@@ -560,7 +561,7 @@ const { currentStepIndex, ... } = useStepPlayback({
 });
 ```
 
-The selector renders in the toolbar area (inside `<ToolbarPortal>`), typically left-aligned alongside the step counter. It uses the shared `useClickOutside` hook internally for outside-click and Escape key dismissal.
+The selector renders in the toolbar area (inside `<ToolbarPortal>`), typically left-aligned with badges while transport controls stay on the right. It uses the shared `useClickOutside` hook internally for outside-click and Escape key dismissal.
 
 ### Tooltip
 
@@ -575,6 +576,7 @@ import { Tooltip } from "@/components/visualization-ui/Tooltip";
 ```
 
 Supports `side="top"` (default) or `side="bottom"`.
+Tooltips auto-disable on touch / coarse-pointer devices.
 
 ---
 
@@ -590,8 +592,8 @@ import { useStepPlayback } from "@/hooks/useStepPlayback";
 const {
   currentStepIndex,  // -1 (not started) or 0..N
   isPlaying,         // auto-advance active
-  speedLevel,        // 1-5
-  speedLabel,        // "0.5x" .. "2x"
+  speedLevel,        // 1-6
+  speedLabel,        // "0.25x" .. "2x"
   canStep,           // can advance forward
   canStepBack,       // can go backward
   togglePlay,        // play/pause
@@ -615,15 +617,18 @@ const {
 | `initialStep` | `number` | `-1` | Starting index. Use `-1` for "press play to start", `0` for "first step shown immediately" |
 | `resetKey` | `string \| number` | `undefined` | When this changes, playback resets. Use for switching between sub-examples (like Hoisting's example selector) |
 
+Default speed level is `4` (`1x`).
+
 **Speed levels:**
 
 | Level | Label | Delay |
 |---|---|---|
-| 1 | 0.5x | 2500ms |
-| 2 | 0.75x | 1800ms |
-| 3 | 1x | 1200ms |
-| 4 | 1.5x | 700ms |
-| 5 | 2x | 400ms |
+| 1 | 0.25x | 5000ms |
+| 2 | 0.5x | 2500ms |
+| 3 | 0.75x | 1800ms |
+| 4 | 1x | 1200ms |
+| 5 | 1.5x | 700ms |
+| 6 | 2x | 400ms |
 
 ---
 
@@ -827,7 +832,7 @@ When adding a new topic, verify every item:
 - [ ] Component uses `useStepPlayback` hook for playback
 - [ ] Toolbar (controls + explanation) wrapped in `<ToolbarPortal>` (renders outside surface card)
 - [ ] Main visualization in a `<section>` (renders inside surface card)
-- [ ] Component renders `TransportControls` with all required props
+- [ ] Component renders `TransportControls` with all required props (`stepIndex` + `totalSteps` for inline step pill)
 - [ ] If topic has multiple examples, uses shared `ExampleSelector` (not a custom dropdown)
 - [ ] If using `ExampleSelector`, passes `resetKey: activeExampleId` to `useStepPlayback`
 - [ ] Source code displayed via `CodeBlock` or `CodeLine` (not raw HTML)

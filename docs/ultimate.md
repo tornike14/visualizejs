@@ -114,8 +114,7 @@ public/
   icons/
     javascript.svg
     react.svg
-  brand/
-    visualizejs-logo.png
+  personal-image.png
 docs/
   ultimate.md          (this file, current status)
   TOPIC_AUTHORING.md   (guide for wiring new topics)
@@ -125,16 +124,20 @@ docs/
 
 ## 5) Architecture Patterns
 
-- **ToolbarPortal**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. `ToolbarProvider` holds the mount-point node in state (set via a callback ref on `ToolbarSlot`) and exposes it through a second context. `ToolbarPortal` reads the node from context — no ref access during render.
-- **useStepPlayback**: Shared hook for step-driven playback (play, pause, step, reset, speed). All visualizations use it.
+- **ToolbarPortal + skeleton slot**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. `ToolbarSlot` shows a pre-hydration skeleton (simple or selector variant) to prevent layout jump on hard refresh, then swaps to real portaled content.
+- **TransportControls owns step pill**: Step position is rendered inline in `TransportControls` (left of Reset) via `stepIndex`/`totalSteps`; visualizations no longer render a separate step pill.
+- **useStepPlayback**: Shared hook for step-driven playback (play, pause, step, reset, speed). Speed options are `0.25x` to `2x`; default is `1x`.
 - **useClickOutside**: Shared hook that handles outside-click dismissal and Escape key for dropdowns. Used by `ExampleSelector` and `TransportControls`.
-- **ExampleSelector**: Shared dropdown component for switching between sub-examples within a visualization. Generic over any type extending `ExampleOption`. Supports a `renderBadge` render prop for custom badges. Used by Hoisting, Promises, and PrototypalInheritance.
-- **Syntax tokenizer**: Lightweight regex tokenizer in `syntax.ts`. `CodeBlock` / `CodeLine` components auto-tokenize plain text into colored spans.
+- **ExampleSelector**: Shared dropdown for switching sub-examples, with optional `renderBadge`. Used by Hoisting, Promises, Prototypal Inheritance, Scope Chain, and this Keyword.
+- **Tooltip behavior by device**: Tooltips render only on hover-capable devices (`(hover: hover) and (pointer: fine)`), so mobile/touch UIs stay clean.
+- **Sidebar footer and profile CTA**: Sidebar includes a compact LinkedIn follow pill with profile image and copyright.
+- **Mobile nav pattern**: On mobile, brand logo remains visible at top-left, burger is fixed top-right, and full sidebar content (including footer extras) opens in the sheet.
+- **Syntax tokenizer**: Lightweight regex tokenizer in `syntax.ts`. `CodeBlock` / `CodeLine` auto-tokenize plain text into colored spans.
 - **NeonPanel**: Themed container with tone-colored headers (amber, cyan, green, violet, pink, slate).
-- **Step data model**: Each visualization has a hardcoded STEPS array of full-state snapshots. No deltas.
-- **External docs link**: Each topic has a `docsUrl` field. The shell renders a small external-link icon next to the title that opens the authoritative documentation page.
-- **Responsive source code column**: The two-column visualization grid uses `xl:grid-cols-[auto_minmax(0,1fr)]`. The source code panel sizes to fit its content (no fixed width), preventing long lines from being clipped. The right column fills remaining space.
-- **No emojis**: All UI text uses `<strong>` tags for emphasis, never emojis.
+- **Step data model**: Each visualization uses hardcoded full-state snapshots (`STEPS` arrays), no deltas.
+- **External docs link**: Each topic has `docsUrl`; shell renders an external docs icon beside the title.
+- **Responsive source code column**: Layout uses `xl:grid-cols-[auto_minmax(0,1fr)]` so code can size to content while right column fills remaining space.
+- **No emojis**: UI text uses semantic emphasis (`<strong>`) and avoids emojis.
 
 ---
 

@@ -3,6 +3,10 @@ export const metadata: Metadata = {
   title: "React Concepts Coming Soon",
   description:
     "React visualizations are being redesigned and will be available soon.",
+  keywords: ["react concepts", "react fundamentals", "react visualizations"],
+  alternates: {
+    canonical: "/react",
+  },
 };
 
 export default function ReactIndexPage() {
