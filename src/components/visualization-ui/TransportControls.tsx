@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "./Tooltip";
 
@@ -51,26 +52,8 @@ export function TransportControls({
   className,
 }: TransportControlsProps) {
   const [speedOpen, setSpeedOpen] = useState(false);
-  const speedRef = useRef<HTMLDivElement>(null);
-
-  // Close speed dropdown on outside click or Escape
-  useEffect(() => {
-    if (!speedOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (speedRef.current && !speedRef.current.contains(e.target as Node)) {
-        setSpeedOpen(false);
-      }
-    }
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setSpeedOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [speedOpen]);
+  const handleSpeedClose = useCallback(() => setSpeedOpen(false), []);
+  const speedRef = useClickOutside<HTMLDivElement>(speedOpen, handleSpeedClose);
 
   return (
     <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
@@ -179,9 +162,6 @@ export function TransportControls({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Icons (16x16 viewBox)
-// ---------------------------------------------------------------------------
 
 function PlayIcon() {
   return (

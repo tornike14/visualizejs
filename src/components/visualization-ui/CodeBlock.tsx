@@ -4,15 +4,10 @@ import { CodeLine } from "./CodeLine";
 import { cn } from "@/lib/utils";
 
 export interface CodeBlockLine {
-  /** Unique key for React reconciliation. */
   key: string | number;
-  /** Line number displayed in the gutter. */
   lineNumber?: number;
-  /** The raw source text. */
   text: string;
-  /** Additional class names applied to this specific line. */
   className?: string;
-  /** Optional element rendered before the code (icons, indicators). */
   leftSlot?: ReactNode;
 }
 
@@ -21,10 +16,6 @@ interface CodeBlockProps {
   className?: string;
 }
 
-/**
- * Multi-line code display with syntax highlighting.
- * Bulk-tokenizes all lines via `useMemo`, then delegates to `<CodeLine>`.
- */
 export function CodeBlock({ lines, className }: CodeBlockProps) {
   const tokensByLine = useMemo<Token[][]>(
     () => lines.map((line) => tokenize(line.text)),

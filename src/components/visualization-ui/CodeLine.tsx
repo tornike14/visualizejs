@@ -3,15 +3,10 @@ import { tokenize, TOKEN_CLASS_MAP, type Token } from "@/lib/visualization/synta
 import { cn } from "@/lib/utils";
 
 interface CodeLineProps {
-  /** Line number displayed in the gutter. Omit to hide the gutter. */
   lineNumber?: number;
-  /** Plain source text for this line. */
   text: string;
-  /** Pre-computed tokens. If omitted, `text` is tokenized automatically. */
   tokens?: Token[];
-  /** Extra CSS classes on the line container (e.g. "is-active", "is-done"). */
   className?: string;
-  /** Optional element rendered in a fixed-width slot before the code (icons, etc.). */
   leftSlot?: ReactNode;
 }
 

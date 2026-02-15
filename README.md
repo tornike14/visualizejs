@@ -27,6 +27,7 @@ Open [http://localhost:3000](http://localhost:3000). The app redirects to `/java
 - `/javascript/hoisting` — Hoisting visualization
 - `/javascript/closures` — Closures visualization
 - `/javascript/promises` — Promises visualization
+- `/javascript/prototypal-inheritance` — Prototypal Inheritance visualization
 - `/react` — React (coming soon)
 
 ## Project Docs

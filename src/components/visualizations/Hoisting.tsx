@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
-  ChevronDown,
   ArrowUp,
   AlertTriangle,
 } from "lucide-react";
@@ -11,28 +10,23 @@ import { NeonPanel, type NeonTone } from "@/components/visualization-ui/NeonPane
 import { CodeLine as CodeLineComponent } from "@/components/visualization-ui/CodeLine";
 import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
 import { TransportControls } from "@/components/visualization-ui/TransportControls";
+import { ExampleSelector } from "@/components/visualization-ui/ExampleSelector";
 import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 import { cn } from "@/lib/utils";
 import { VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
 
 type HoistingKind = "var" | "function" | "let" | "const" | "function-expr";
 
 interface CodeLine {
   text: string;
   indent: number;
-  /** Semantic id so we can reference it in steps */
   id: string;
 }
 
 interface HoistedLine extends CodeLine {
-  /** Whether this line was injected by hoisting (shown with highlight) */
   isHoisted: boolean;
-  /** If this line is in the TDZ */
   isTDZ: boolean;
 }
 
@@ -45,16 +39,11 @@ type StepKind =
 
 interface ExecutionStep {
   kind: StepKind;
-  /** Line ids that are highlighted during this step */
   highlightOriginal: string[];
   highlightHoisted: string[];
-  /** The console output produced at this step (cumulative) */
   consoleOutput: string[];
-  /** Explanation shown below the code panels */
   explanation: string;
-  /** Lines that should appear "floating up" during this step */
   floatingLineIds: string[];
-  /** Lines in the TDZ zone during this step */
   tdzLineIds: string[];
 }
 
@@ -68,12 +57,8 @@ interface HoistingExample {
   steps: ExecutionStep[];
 }
 
-// ---------------------------------------------------------------------------
-// Preset Examples
-// ---------------------------------------------------------------------------
 
 const EXAMPLES: HoistingExample[] = [
-  // 1. var declarations
   {
     id: "var-basic",
     title: "var Declarations",
@@ -135,7 +120,6 @@ const EXAMPLES: HoistingExample[] = [
     ],
   },
 
-  // 2. function declarations
   {
     id: "func-decl",
     title: "Function Declarations",
@@ -190,7 +174,6 @@ const EXAMPLES: HoistingExample[] = [
     ],
   },
 
-  // 3. let/const  -- Temporal Dead Zone
   {
     id: "let-tdz",
     title: "let/const & TDZ",
@@ -274,7 +257,6 @@ const EXAMPLES: HoistingExample[] = [
     ],
   },
 
-  // 4. Function expressions with var
   {
     id: "func-expr",
     title: "Function Expressions",
@@ -366,9 +348,6 @@ const EXAMPLES: HoistingExample[] = [
   },
 ];
 
-// ---------------------------------------------------------------------------
-// Utility: Kind badge colors
-// ---------------------------------------------------------------------------
 
 function kindBadgeClass(kind: HoistingKind): string {
   switch (kind) {
@@ -399,9 +378,6 @@ function kindLabel(kind: HoistingKind): string {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
 
 function CodePanel({
   title,
@@ -458,107 +434,6 @@ function CodePanel({
   );
 }
 
-function ExampleSelector({
-  examples,
-  activeId,
-  onSelect,
-}: {
-  examples: HoistingExample[];
-  activeId: string;
-  onSelect: (id: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const active = examples.find((e) => e.id === activeId);
-
-  // Close dropdown on outside click or Escape
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-    }
-    if (open) {
-      document.addEventListener("mousedown", handleClick);
-      document.addEventListener("keydown", handleKey);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [open]);
-
-  return (
-    <div ref={containerRef} className="relative">
-      <button
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={`Select example: ${active?.title ?? "none selected"}`}
-        onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "app-surface-subtle flex min-w-[16rem] items-center justify-between gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-100 transition-all hover:border-pink-300/35 hover:bg-[rgba(22,33,59,0.72)]",
-          open && "ring-2 ring-pink-300/50"
-        )}
-      >
-        <span>{active?.title ?? "Select example"}</span>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 text-slate-400 transition-transform duration-200",
-            open && "rotate-180"
-          )}
-        />
-      </button>
-
-      {open && (
-        <div
-          role="listbox"
-          aria-label="Select example"
-          className="app-surface absolute left-0 top-full z-50 mt-2 w-[22rem] overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]"
-        >
-          {examples.map((ex) => (
-            <button
-              key={ex.id}
-              type="button"
-              role="option"
-              aria-selected={ex.id === activeId}
-              onClick={() => {
-                onSelect(ex.id);
-                setOpen(false);
-              }}
-              className={cn(
-                "flex w-full flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm transition-all",
-                ex.id === activeId
-                  ? "border-pink-300/30 bg-[rgba(31,45,74,0.65)]"
-                  : "hover:border-[rgba(71,85,105,0.6)] hover:bg-[rgba(22,33,59,0.62)]"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-100">{ex.title}</span>
-                <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(ex.kind))}>
-                  {kindLabel(ex.kind)}
-                </Badge>
-              </div>
-              <span className="line-clamp-2 text-xs text-slate-400">
-                {ex.description}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main Component
-// ---------------------------------------------------------------------------
 
 export function Hoisting() {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
@@ -600,6 +475,11 @@ export function Hoisting() {
                 examples={EXAMPLES}
                 activeId={activeExampleId}
                 onSelect={handleExampleChange}
+                renderBadge={(ex) => (
+                  <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(ex.kind))}>
+                    {kindLabel(ex.kind)}
+                  </Badge>
+                )}
               />
               <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
                 {kindLabel(example.kind)}

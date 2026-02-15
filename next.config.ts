@@ -15,12 +15,10 @@ const nextConfig: NextConfig = {
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            // Dev: webpack requires 'unsafe-eval' for module loading/source maps
             `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob:",
             "font-src 'self'",
-            // Dev: HMR uses WebSocket connections
             `connect-src 'self'${isDev ? " ws:" : ""}`,
             "frame-ancestors 'none'",
           ].join("; "),

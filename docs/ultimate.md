@@ -39,6 +39,7 @@ Scripts:
 - `/javascript/hoisting` -> Hoisting visualization
 - `/javascript/closures` -> Closures visualization
 - `/javascript/promises` -> Promises visualization
+- `/javascript/prototypal-inheritance` -> Prototypal Inheritance visualization
 - `/react` -> React "Coming Soon" page
 
 Removed routes:
@@ -63,6 +64,7 @@ src/
       hoisting/page.tsx
       closures/page.tsx
       promises/page.tsx
+      prototypal-inheritance/page.tsx
     react/
       page.tsx
   components/
@@ -77,6 +79,7 @@ src/
     visualization-ui/
       NeonPanel.tsx
       TransportControls.tsx
+      ExampleSelector.tsx
       Tooltip.tsx
       CodeBlock.tsx
       CodeLine.tsx
@@ -86,9 +89,11 @@ src/
       Hoisting.tsx
       Closures.tsx
       Promises.tsx
+      PrototypalInheritance.tsx
       VisualizationLoading.tsx
   hooks/
     useStepPlayback.ts
+    useClickOutside.ts
   lib/
     topics.ts
     metadata.ts
@@ -116,6 +121,8 @@ docs/
 
 - **ToolbarPortal**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. `ToolbarProvider` holds the mount-point node in state (set via a callback ref on `ToolbarSlot`) and exposes it through a second context. `ToolbarPortal` reads the node from context — no ref access during render.
 - **useStepPlayback**: Shared hook for step-driven playback (play, pause, step, reset, speed). All visualizations use it.
+- **useClickOutside**: Shared hook that handles outside-click dismissal and Escape key for dropdowns. Used by `ExampleSelector` and `TransportControls`.
+- **ExampleSelector**: Shared dropdown component for switching between sub-examples within a visualization. Generic over any type extending `ExampleOption`. Supports a `renderBadge` render prop for custom badges. Used by Hoisting, Promises, and PrototypalInheritance.
 - **Syntax tokenizer**: Lightweight regex tokenizer in `syntax.ts`. `CodeBlock` / `CodeLine` components auto-tokenize plain text into colored spans.
 - **NeonPanel**: Themed container with tone-colored headers (amber, cyan, green, violet, pink, slate).
 - **Step data model**: Each visualization has a hardcoded STEPS array of full-state snapshots. No deltas.
@@ -146,4 +153,5 @@ Latest generated routes:
 - `/javascript/event-loop`
 - `/javascript/hoisting`
 - `/javascript/promises`
+- `/javascript/prototypal-inheritance`
 - `/react`

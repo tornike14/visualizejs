@@ -9,6 +9,5 @@ export interface Topic {
   route: string;
   description: string;
   difficulty: Difficulty;
-  /** External URL to authoritative documentation for this topic. */
   docsUrl: string;
 }

@@ -1,9 +1,3 @@
-// ---------------------------------------------------------------------------
-// Lightweight JavaScript tokenizer for educational code snippets.
-// Covers keywords, builtins (objects + methods), strings, numbers, comments,
-// and punctuation.
-// Designed for small (5–15 line) hardcoded examples — not a general parser.
-// ---------------------------------------------------------------------------
 
 export type TokenType =
   | "keyword"
@@ -29,7 +23,6 @@ const KEYWORDS = new Set([
   "void", "delete", "in", "of",
 ]);
 
-/** Global objects & constructors — rendered with the "builtin" color */
 const BUILTIN_OBJECTS = new Set([
   "console", "Promise", "Array", "Object", "String", "Number",
   "Boolean", "Math", "JSON", "Date", "RegExp", "Map", "Set",
@@ -38,7 +31,6 @@ const BUILTIN_OBJECTS = new Set([
   "document", "globalThis",
 ]);
 
-/** Methods & property accessors — rendered with the "function" color */
 const BUILTIN_METHODS = new Set([
   "log", "warn", "error", "info", "debug",
   "setTimeout", "setInterval", "clearTimeout", "clearInterval",
@@ -50,17 +42,11 @@ const BUILTIN_METHODS = new Set([
   "require", "fetch",
 ]);
 
-/**
- * Tokenize a single line of JavaScript source code.
- * Returns an array of tokens preserving all whitespace so the original
- * string can be reconstructed by joining token values.
- */
 export function tokenize(text: string): Token[] {
   const tokens: Token[] = [];
   let i = 0;
 
   while (i < text.length) {
-    // 1. Whitespace
     if (/\s/.test(text[i])) {
       const start = i;
       while (i < text.length && /\s/.test(text[i])) i++;
@@ -68,14 +54,12 @@ export function tokenize(text: string): Token[] {
       continue;
     }
 
-    // 2. Single-line comment
     if (text[i] === "/" && text[i + 1] === "/") {
       tokens.push({ type: "comment", value: text.slice(i) });
       i = text.length;
       continue;
     }
 
-    // 3. String literals (single, double, backtick)
     if (text[i] === "'" || text[i] === '"' || text[i] === "`") {
       const quote = text[i];
       let j = i + 1;
@@ -89,7 +73,6 @@ export function tokenize(text: string): Token[] {
       continue;
     }
 
-    // 4. Number literals
     if (/\d/.test(text[i])) {
       const start = i;
       while (i < text.length && /[\d.]/.test(text[i])) i++;
@@ -97,7 +80,6 @@ export function tokenize(text: string): Token[] {
       continue;
     }
 
-    // 5. Words (identifiers / keywords / builtins)
     if (/[a-zA-Z_$]/.test(text[i])) {
       const start = i;
       while (i < text.length && /[a-zA-Z0-9_$]/.test(text[i])) i++;
@@ -115,14 +97,12 @@ export function tokenize(text: string): Token[] {
       continue;
     }
 
-    // 6. Arrow operator (=> as keyword)
     if (text[i] === "=" && text[i + 1] === ">") {
       tokens.push({ type: "keyword", value: "=>" });
       i += 2;
       continue;
     }
 
-    // 7. Punctuation / operators (single char)
     tokens.push({ type: "punctuation", value: text[i] });
     i++;
   }
@@ -130,7 +110,6 @@ export function tokenize(text: string): Token[] {
   return tokens;
 }
 
-/** Map token types to CSS class names */
 export const TOKEN_CLASS_MAP: Record<TokenType, string> = {
   keyword: "tok-kw",
   builtin: "tok-builtin",

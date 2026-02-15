@@ -3,9 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { PlaybackSpeedLevel } from "@/components/visualization-ui/TransportControls";
 
-// ---------------------------------------------------------------------------
-// Shared speed configuration used by every visualization
-// ---------------------------------------------------------------------------
 
 export const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
   1: 2500,
@@ -23,52 +20,25 @@ export const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
   5: "2x",
 };
 
-// ---------------------------------------------------------------------------
-// Hook
-// ---------------------------------------------------------------------------
 
 interface UseStepPlaybackOptions {
-  /** Total number of steps in the visualization. */
   totalSteps: number;
-  /**
-   * The initial step index before the user presses play/step.
-   * Use -1 for "no step shown yet" (EventLoop style) or 0 for
-   * "first step visible immediately" (Hoisting style).
-   * @default -1
-   */
   initialStep?: number;
-  /**
-   * When this value changes, playback resets to `initialStep` and stops.
-   * Useful when the visualization switches between different examples
-   * (e.g. Hoisting example selector).
-   */
   resetKey?: string | number;
 }
 
 interface UseStepPlaybackReturn {
-  /** Current step index. May be -1 if initialStep was -1 and user hasn't started. */
   currentStepIndex: number;
-  /** Whether auto-play is running. */
   isPlaying: boolean;
-  /** Current speed level (1–5). */
   speedLevel: PlaybackSpeedLevel;
-  /** Human-readable speed label for the current level. */
   speedLabel: string;
-  /** Whether the user can advance one more step. */
   canStep: boolean;
-  /** Whether the user can go back one step. */
   canStepBack: boolean;
-  /** Toggle play/pause. If at end, restarts from the beginning. */
   togglePlay: () => void;
-  /** Advance exactly one step (stops auto-play). */
   step: () => void;
-  /** Go back exactly one step (stops auto-play). */
   stepBack: () => void;
-  /** Reset to initial state (stops auto-play). */
   reset: () => void;
-  /** Change speed level. */
   setSpeedLevel: (level: PlaybackSpeedLevel) => void;
-  /** Jump to a specific step index (stops auto-play). */
   jumpTo: (index: number) => void;
 }
 
@@ -86,14 +56,12 @@ export function useStepPlayback({
   const canStep = currentStepIndex < lastStepIndex;
   const canStepBack = currentStepIndex > firstStep;
 
-  // Reset when resetKey changes (e.g. switching examples)
   useEffect(() => {
     setIsPlaying(false);
     setCurrentStepIndex(initialStep);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetKey]);
 
-  // Auto-advance timer
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -117,7 +85,6 @@ export function useStepPlayback({
   const togglePlay = useCallback(() => {
     setIsPlaying((prev) => {
       if (prev) return false;
-      // If at end or before start, restart from step 0
       setCurrentStepIndex((prevStep) => {
         if (prevStep < 0 || prevStep >= lastStepIndex) return 0;
         return prevStep;
@@ -129,7 +96,6 @@ export function useStepPlayback({
   const step = useCallback(() => {
     setIsPlaying(false);
     setCurrentStepIndex((prev) => {
-      // If before start, jump to 0; otherwise advance
       if (prev < 0) return 0;
       return Math.min(prev + 1, lastStepIndex);
     });

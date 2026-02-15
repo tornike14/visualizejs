@@ -118,7 +118,6 @@ function SidebarContent({
   );
 }
 
-/** Collapsed sidebar — just the VJS logo mark + expand button */
 function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
   return (
     <aside className="app-surface hidden h-screen flex-col items-center bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-16 lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
@@ -219,11 +218,7 @@ export function Sidebar() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Icons
-// ---------------------------------------------------------------------------
 
-/** Left-pointing chevron (collapse) */
 function CollapseIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" className="size-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -232,7 +227,6 @@ function CollapseIcon() {
   );
 }
 
-/** Right-pointing chevron (expand) */
 function ExpandIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" className="size-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

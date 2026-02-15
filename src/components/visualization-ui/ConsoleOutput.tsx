@@ -10,10 +10,6 @@ interface ConsoleOutputProps {
   className?: string;
 }
 
-/**
- * Shared Console Output panel used by all visualizations.
- * Renders inside a slate NeonPanel with a `›` prefix per line.
- */
 export function ConsoleOutput({ lines, className }: ConsoleOutputProps) {
   return (
     <NeonPanel

@@ -42,6 +42,17 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
   },
+  {
+    id: "prototypal-inheritance",
+    title: "Prototypal Inheritance",
+    category: "javascript",
+    route: "/javascript/prototypal-inheritance",
+    description:
+      "Trace how JavaScript objects delegate property lookups through the prototype chain",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {

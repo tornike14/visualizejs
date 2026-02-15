@@ -6,14 +6,9 @@ import { cn } from "@/lib/utils";
 interface TooltipProps {
   label: string;
   children: ReactNode;
-  /** Preferred placement. Defaults to "top". */
   side?: "top" | "bottom";
 }
 
-/**
- * Lightweight tooltip that renders on hover/focus.
- * CSS-only positioning — no portal, no Radix dependency.
- */
 export function Tooltip({ label, children, side = "top" }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);

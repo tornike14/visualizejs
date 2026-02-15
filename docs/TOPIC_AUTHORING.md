@@ -65,6 +65,7 @@ src/
       CodeBlock.tsx                 # Multi-line syntax-highlighted code
       CodeLine.tsx                  # Single line with gutter + tokens
       ConsoleOutput.tsx             # Shared console panel
+      ExampleSelector.tsx           # Dropdown for switching sub-examples
       NeonPanel.tsx                 # Themed container with tones
       TransportControls.tsx         # Playback buttons + speed dropdown
       Tooltip.tsx                   # Lightweight hover tooltip
@@ -75,6 +76,7 @@ src/
       AppTheme.tsx                  # Global theme wrapper
   hooks/
     useStepPlayback.ts              # Shared playback engine
+    useClickOutside.ts              # Outside-click + Escape dismiss hook
   lib/
     topics.ts                       # Topic registry
     constants.ts                    # Site-wide constants
@@ -196,6 +198,7 @@ import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
 import { CodeBlock, type CodeBlockLine } from "@/components/visualization-ui/CodeBlock";
 import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
 import { TransportControls } from "@/components/visualization-ui/TransportControls";
+import { ExampleSelector } from "@/components/visualization-ui/ExampleSelector"; // if multi-example
 import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 import { cn } from "@/lib/utils";
 import {
@@ -502,6 +505,63 @@ import { TransportControls } from "@/components/visualization-ui/TransportContro
 
 All props come directly from the `useStepPlayback` hook return value.
 
+### ExampleSelector
+
+Shared dropdown for switching between sub-examples within a visualization. If your topic has multiple examples (like Hoisting, Promises, or PrototypalInheritance), use this component instead of building a custom dropdown.
+
+```typescript
+import { ExampleSelector, type ExampleOption } from "@/components/visualization-ui/ExampleSelector";
+
+// Your examples must extend ExampleOption (id, title, description)
+interface MyExample extends ExampleOption {
+  kind: "basic" | "advanced";
+  codeLines: SourceLine[];
+  steps: MyStep[];
+}
+
+const EXAMPLES: MyExample[] = [
+  { id: "basic", title: "Basic", kind: "basic", description: "...", codeLines: [...], steps: [...] },
+  { id: "advanced", title: "Advanced", kind: "advanced", description: "...", codeLines: [...], steps: [...] },
+];
+
+// In your component:
+const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
+
+<ExampleSelector
+  examples={EXAMPLES}
+  activeId={activeExampleId}
+  onSelect={handleExampleChange}
+  renderBadge={(ex) => (
+    <Badge variant="outline" className={cn("text-[10px]", badgeClass(ex.kind))}>
+      {ex.kind}
+    </Badge>
+  )}
+/>
+```
+
+**Props:**
+
+| Prop | Type | Description |
+|---|---|---|
+| `examples` | `T[]` | Array of example objects (must extend `ExampleOption`) |
+| `activeId` | `string` | Currently selected example ID |
+| `onSelect` | `(id: string) => void` | Called when the user picks a different example |
+| `renderBadge` | `(example: T) => ReactNode` | Optional render prop for a badge next to each title in the dropdown |
+
+**Integration with playback:** When switching examples, reset playback using `useStepPlayback`'s `resetKey` option:
+
+```typescript
+const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
+
+const { currentStepIndex, ... } = useStepPlayback({
+  totalSteps: example.steps.length,
+  initialStep: -1,
+  resetKey: activeExampleId, // resets playback when the example changes
+});
+```
+
+The selector renders in the toolbar area (inside `<ToolbarPortal>`), typically left-aligned alongside the step counter. It uses the shared `useClickOutside` hook internally for outside-click and Escape key dismissal.
+
 ### Tooltip
 
 Custom hover tooltip with 400ms delay. Used internally by TransportControls, available for any button/icon.
@@ -768,6 +828,8 @@ When adding a new topic, verify every item:
 - [ ] Toolbar (controls + explanation) wrapped in `<ToolbarPortal>` (renders outside surface card)
 - [ ] Main visualization in a `<section>` (renders inside surface card)
 - [ ] Component renders `TransportControls` with all required props
+- [ ] If topic has multiple examples, uses shared `ExampleSelector` (not a custom dropdown)
+- [ ] If using `ExampleSelector`, passes `resetKey: activeExampleId` to `useStepPlayback`
 - [ ] Source code displayed via `CodeBlock` or `CodeLine` (not raw HTML)
 - [ ] Console output rendered via `ConsoleOutput`
 - [ ] Panels wrapped in `NeonPanel` with appropriate tones
