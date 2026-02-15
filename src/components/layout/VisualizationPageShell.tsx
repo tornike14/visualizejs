@@ -4,6 +4,14 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
 import type { Topic } from "@/types";
 
+const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
+  "hoisting",
+  "promises",
+  "prototypal-inheritance",
+  "scope-chain",
+  "this-keyword",
+]);
+
 interface VisualizationPageShellProps {
   topic: Topic;
   children: ReactNode;
@@ -16,6 +24,9 @@ export function VisualizationPageShell({
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
   const categoryRoute =
     topic.category === "javascript" ? "/javascript" : "/react";
+  const toolbarSkeletonVariant = SELECTOR_TOOLBAR_TOPIC_IDS.has(topic.id)
+    ? "selector"
+    : "simple";
 
   return (
     <ToolbarProvider>
@@ -47,7 +58,7 @@ export function VisualizationPageShell({
 
         <div className="h-px bg-[color:var(--app-border)]" />
 
-        <ToolbarSlot />
+        <ToolbarSlot variant={toolbarSkeletonVariant} />
 
         <section className="app-surface rounded-2xl p-3 lg:p-4">
           {children}
