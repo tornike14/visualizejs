@@ -1430,17 +1430,14 @@ export function ScopeChain() {
               >
                 {kindLabel(example.kind)}
               </Badge>
-              <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
-                {isPlaying ? <span className="viz-pulse-dot" /> : null}
-                Step {Math.max(currentStepIndex + 1, 0)} /{" "}
-                {example.steps.length}
-              </p>
             </div>
 
             <TransportControls
               isPlaying={isPlaying}
               canStep={canStep}
               canStepBack={canStepBack}
+              stepIndex={currentStepIndex}
+              totalSteps={example.steps.length}
               speedLevel={speedLevel}
               speedLabel={speedLabel}
               onTogglePlay={togglePlay}

@@ -5,12 +5,14 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "./Tooltip";
 
-export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5;
+export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface TransportControlsProps {
   isPlaying: boolean;
   canStep: boolean;
   canStepBack: boolean;
+  stepIndex?: number;
+  totalSteps?: number;
   speedLevel: PlaybackSpeedLevel;
   speedLabel: string;
   onTogglePlay: () => void;
@@ -22,11 +24,12 @@ interface TransportControlsProps {
 }
 
 const SPEED_OPTIONS: { level: PlaybackSpeedLevel; label: string }[] = [
-  { level: 1, label: "0.5x" },
-  { level: 2, label: "0.75x" },
-  { level: 3, label: "1x" },
-  { level: 4, label: "1.5x" },
-  { level: 5, label: "2x" },
+  { level: 1, label: "0.25x" },
+  { level: 2, label: "0.5x" },
+  { level: 3, label: "0.75x" },
+  { level: 4, label: "1x" },
+  { level: 5, label: "1.5x" },
+  { level: 6, label: "2x" },
 ];
 
 const iconBtnBase =
@@ -42,6 +45,8 @@ export function TransportControls({
   isPlaying,
   canStep,
   canStepBack,
+  stepIndex,
+  totalSteps,
   speedLevel,
   speedLabel,
   onTogglePlay,
@@ -54,9 +59,22 @@ export function TransportControls({
   const [speedOpen, setSpeedOpen] = useState(false);
   const handleSpeedClose = useCallback(() => setSpeedOpen(false), []);
   const speedRef = useClickOutside<HTMLDivElement>(speedOpen, handleSpeedClose);
+  const showStepPill = stepIndex != null && totalSteps != null;
+  const normalizedStepIndex = stepIndex ?? -1;
+  const normalizedTotalSteps = totalSteps ?? 0;
 
   return (
     <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
+      {showStepPill && (
+        <p
+          aria-live="polite"
+          className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-mono text-xs text-slate-300"
+        >
+          {isPlaying ? <span className="viz-pulse-dot" /> : null}
+          Step {Math.max(normalizedStepIndex + 1, 0)} / {normalizedTotalSteps}
+        </p>
+      )}
+
       {/* Reset */}
       <Tooltip label="Reset">
         <button

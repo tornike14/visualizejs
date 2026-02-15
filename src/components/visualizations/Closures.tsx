@@ -233,16 +233,13 @@ export function Closures() {
     <>
       <ToolbarPortal>
         <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs text-slate-300">
-              {isPlaying ? <span className="viz-pulse-dot" /> : null}
-              Step {Math.max(currentStepIndex + 1, 0)} / {STEPS.length}
-            </p>
-
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <TransportControls
               isPlaying={isPlaying}
               canStep={canStep}
               canStepBack={canStepBack}
+              stepIndex={currentStepIndex}
+              totalSteps={STEPS.length}
               speedLevel={speedLevel}
               speedLabel={speedLabel}
               onTogglePlay={togglePlay}

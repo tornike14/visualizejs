@@ -5,19 +5,21 @@ import type { PlaybackSpeedLevel } from "@/components/visualization-ui/Transport
 
 
 export const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
-  1: 2500,
-  2: 1800,
-  3: 1200,
-  4: 700,
-  5: 400,
+  1: 5000,
+  2: 2500,
+  3: 1800,
+  4: 1200,
+  5: 700,
+  6: 400,
 };
 
 export const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
-  1: "0.5x",
-  2: "0.75x",
-  3: "1x",
-  4: "1.5x",
-  5: "2x",
+  1: "0.25x",
+  2: "0.5x",
+  3: "0.75x",
+  4: "1x",
+  5: "1.5x",
+  6: "2x",
 };
 
 
@@ -49,7 +51,7 @@ export function useStepPlayback({
 }: UseStepPlaybackOptions): UseStepPlaybackReturn {
   const [currentStepIndex, setCurrentStepIndex] = useState(initialStep);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(3);
+  const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(4);
 
   const lastStepIndex = totalSteps - 1;
   const firstStep = initialStep < 0 ? 0 : initialStep;
