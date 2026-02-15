@@ -62,7 +62,7 @@ export function tokenize(text: string): Token[] {
   while (i < text.length) {
     // 1. Whitespace
     if (/\s/.test(text[i])) {
-      let start = i;
+      const start = i;
       while (i < text.length && /\s/.test(text[i])) i++;
       tokens.push({ type: "plain", value: text.slice(start, i) });
       continue;
@@ -91,7 +91,7 @@ export function tokenize(text: string): Token[] {
 
     // 4. Number literals
     if (/\d/.test(text[i])) {
-      let start = i;
+      const start = i;
       while (i < text.length && /[\d.]/.test(text[i])) i++;
       tokens.push({ type: "number", value: text.slice(start, i) });
       continue;
@@ -99,7 +99,7 @@ export function tokenize(text: string): Token[] {
 
     // 5. Words (identifiers / keywords / builtins)
     if (/[a-zA-Z_$]/.test(text[i])) {
-      let start = i;
+      const start = i;
       while (i < text.length && /[a-zA-Z0-9_$]/.test(text[i])) i++;
       const word = text.slice(start, i);
 

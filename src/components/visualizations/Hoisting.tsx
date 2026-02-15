@@ -471,7 +471,7 @@ function ExampleSelector({
   const containerRef = useRef<HTMLDivElement>(null);
   const active = examples.find((e) => e.id === activeId);
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click or Escape
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (
@@ -481,16 +481,26 @@ function ExampleSelector({
         setOpen(false);
       }
     }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
     if (open) {
       document.addEventListener("mousedown", handleClick);
+      document.addEventListener("keydown", handleKey);
     }
-    return () => document.removeEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
   }, [open]);
 
   return (
     <div ref={containerRef} className="relative">
       <button
         type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`Select example: ${active?.title ?? "none selected"}`}
         onClick={() => setOpen((v) => !v)}
         className={cn(
           "app-surface-subtle flex min-w-[16rem] items-center justify-between gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-100 transition-all hover:border-pink-300/35 hover:bg-[rgba(22,33,59,0.72)]",
@@ -507,11 +517,17 @@ function ExampleSelector({
       </button>
 
       {open && (
-        <div className="app-surface absolute left-0 top-full z-50 mt-2 w-[22rem] overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]">
+        <div
+          role="listbox"
+          aria-label="Select example"
+          className="app-surface absolute left-0 top-full z-50 mt-2 w-[22rem] overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]"
+        >
           {examples.map((ex) => (
             <button
               key={ex.id}
               type="button"
+              role="option"
+              aria-selected={ex.id === activeId}
               onClick={() => {
                 onSelect(ex.id);
                 setOpen(false);

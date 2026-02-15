@@ -53,7 +53,7 @@ export function TransportControls({
   const [speedOpen, setSpeedOpen] = useState(false);
   const speedRef = useRef<HTMLDivElement>(null);
 
-  // Close speed dropdown on outside click
+  // Close speed dropdown on outside click or Escape
   useEffect(() => {
     if (!speedOpen) return;
     function handleClick(e: MouseEvent) {
@@ -61,8 +61,15 @@ export function TransportControls({
         setSpeedOpen(false);
       }
     }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setSpeedOpen(false);
+    }
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
   }, [speedOpen]);
 
   return (
@@ -71,6 +78,7 @@ export function TransportControls({
       <Tooltip label="Reset">
         <button
           type="button"
+          aria-label="Reset"
           onClick={onReset}
           className={cn(iconBtnBase, iconBtnDefault)}
         >
@@ -82,6 +90,7 @@ export function TransportControls({
       <Tooltip label="Step Back">
         <button
           type="button"
+          aria-label="Step back"
           onClick={onStepBack}
           disabled={!canStepBack || isPlaying}
           className={cn(iconBtnBase, iconBtnDefault)}
@@ -94,6 +103,7 @@ export function TransportControls({
       <Tooltip label={isPlaying ? "Pause" : "Play"}>
         <button
           type="button"
+          aria-label={isPlaying ? "Pause" : "Play"}
           onClick={onTogglePlay}
           aria-pressed={isPlaying}
           className={cn(iconBtnBase, iconBtnPrimary, "px-3")}
@@ -106,6 +116,7 @@ export function TransportControls({
       <Tooltip label="Step Forward">
         <button
           type="button"
+          aria-label="Step forward"
           onClick={onStep}
           disabled={!canStep || isPlaying}
           className={cn(iconBtnBase, iconBtnDefault)}
@@ -119,6 +130,9 @@ export function TransportControls({
         <Tooltip label="Playback Speed">
           <button
             type="button"
+            aria-label={`Playback speed: ${speedLabel}`}
+            aria-haspopup="listbox"
+            aria-expanded={speedOpen}
             onClick={() => setSpeedOpen((v) => !v)}
             className={cn(
               iconBtnBase,
@@ -133,11 +147,17 @@ export function TransportControls({
         </Tooltip>
 
         {speedOpen && (
-          <div className="app-surface absolute right-0 top-full z-50 mt-1.5 min-w-[5.5rem] overflow-hidden rounded-xl border-[color:var(--app-border)] p-1 shadow-[0_12px_28px_rgba(2,6,23,0.5)]">
+          <div
+            role="listbox"
+            aria-label="Playback speed"
+            className="app-surface absolute right-0 top-full z-50 mt-1.5 min-w-[5.5rem] overflow-hidden rounded-xl border-[color:var(--app-border)] p-1 shadow-[0_12px_28px_rgba(2,6,23,0.5)]"
+          >
             {SPEED_OPTIONS.map((opt) => (
               <button
                 key={opt.level}
                 type="button"
+                role="option"
+                aria-selected={opt.level === speedLevel}
                 onClick={() => {
                   onSpeedLevelChange(opt.level);
                   setSpeedOpen(false);

@@ -3,19 +3,22 @@
 import {
   createContext,
   useContext,
-  useRef,
   useState,
-  useEffect,
+  useCallback,
   type ReactNode,
-  type RefObject,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import { createPortal } from "react-dom";
 
 // ---------------------------------------------------------------------------
-// Context: shares the toolbar mount-point ref across the tree
+// Context: shares the toolbar mount-point DOM node across the tree
 // ---------------------------------------------------------------------------
 
-const ToolbarContext = createContext<RefObject<HTMLDivElement | null> | null>(null);
+type SetContainer = Dispatch<SetStateAction<HTMLDivElement | null>>;
+
+const ToolbarContext = createContext<SetContainer | null>(null);
+const ToolbarNodeContext = createContext<HTMLDivElement | null>(null);
 
 /**
  * Wraps a section of the tree and provides a toolbar mount-point via context.
@@ -23,11 +26,13 @@ const ToolbarContext = createContext<RefObject<HTMLDivElement | null> | null>(nu
  * Place `<ToolbarPortal>` inside a descendant visualization to hoist content.
  */
 export function ToolbarProvider({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
   return (
-    <ToolbarContext value={ref}>
-      {children}
+    <ToolbarContext value={setContainer}>
+      <ToolbarNodeContext value={container}>
+        {children}
+      </ToolbarNodeContext>
     </ToolbarContext>
   );
 }
@@ -36,9 +41,16 @@ export function ToolbarProvider({ children }: { children: ReactNode }) {
  * Empty mount-point. Place where the toolbar should visually appear.
  */
 export function ToolbarSlot() {
-  const ref = useContext(ToolbarContext);
+  const setContainer = useContext(ToolbarContext);
 
-  return <div ref={ref} />;
+  const callbackRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      setContainer?.(node);
+    },
+    [setContainer]
+  );
+
+  return <div ref={callbackRef} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -51,14 +63,9 @@ export function ToolbarSlot() {
  * surface card without coupling to the shell's render tree.
  */
 export function ToolbarPortal({ children }: { children: ReactNode }) {
-  const ref = useContext(ToolbarContext);
-  const [mounted, setMounted] = useState(false);
+  const container = useContext(ToolbarNodeContext);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (!container) return null;
 
-  if (!mounted || !ref?.current) return null;
-
-  return createPortal(children, ref.current);
+  return createPortal(children, container);
 }

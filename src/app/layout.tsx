@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="font-sans antialiased" suppressHydrationWarning>
+      <body className="font-sans antialiased">
         <AppTheme>
           <Sidebar />
           <main className="flex-1 overflow-x-hidden pt-16 lg:pt-0">

@@ -10,8 +10,8 @@ Current product scope:
 - UI theme has been unified across shell, sidebar, pages, and visualizations using shared design tokens and reusable visualization primitives.
 
 Status:
-- `npm run lint` passes
-- `npm run build` passes
+- `npm run lint` — passes (0 errors)
+- `npm run build` — passes
 
 ---
 
@@ -114,7 +114,7 @@ docs/
 
 ## 5) Architecture Patterns
 
-- **ToolbarPortal**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. The shell provides `ToolbarProvider` + `ToolbarSlot`; visualizations use `ToolbarPortal`.
+- **ToolbarPortal**: Transport controls and step explanations render outside the surface card via React context + `createPortal`. `ToolbarProvider` holds the mount-point node in state (set via a callback ref on `ToolbarSlot`) and exposes it through a second context. `ToolbarPortal` reads the node from context — no ref access during render.
 - **useStepPlayback**: Shared hook for step-driven playback (play, pause, step, reset, speed). All visualizations use it.
 - **Syntax tokenizer**: Lightweight regex tokenizer in `syntax.ts`. `CodeBlock` / `CodeLine` components auto-tokenize plain text into colored spans.
 - **NeonPanel**: Themed container with tone-colored headers (amber, cyan, green, violet, pink, slate).

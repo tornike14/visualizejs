@@ -1,7 +1,8 @@
 export const SITE_NAME = "VisualizeJS";
 export const SITE_DESCRIPTION =
   "Free, interactive platform for visualizing JavaScript and React concepts through animated demonstrations.";
-export const SITE_URL = "https://visualizejs.com";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://visualizejs.com";
 
 export const DIFFICULTY_COLORS = {
   beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",

@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   headers: async () => [
     {
@@ -13,11 +15,13 @@ const nextConfig: NextConfig = {
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            // Dev: webpack requires 'unsafe-eval' for module loading/source maps
+            `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob:",
             "font-src 'self'",
-            "connect-src 'self'",
+            // Dev: HMR uses WebSocket connections
+            `connect-src 'self'${isDev ? " ws:" : ""}`,
             "frame-ancestors 'none'",
           ].join("; "),
         },
