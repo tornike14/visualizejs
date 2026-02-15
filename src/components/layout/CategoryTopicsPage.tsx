@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +11,12 @@ interface CategoryTopicsPageProps {
   category: Category;
 }
 
+type HeroStyle = CSSProperties & {
+  "--hero-accent": string;
+  "--hero-accent-soft": string;
+  "--hero-secondary": string;
+};
+
 const CATEGORY_CONFIG: Record<
   Category,
   {
@@ -20,19 +27,32 @@ const CATEGORY_CONFIG: Record<
     highlightedWord: string;
     titleTail: string;
     description: string;
-    accentText: string;
+    titleAccentClass: string;
+    kicker: string;
+    kickerClass: string;
+    heroStyle: HeroStyle;
   }
 > = {
   javascript: {
     iconSrc: "/icons/javascript.svg",
     iconAlt: "JavaScript logo",
-    iconShellClass: "bg-[#f7df1e] p-1 shadow-[0_0_20px_rgba(247,223,30,0.3)]",
+    iconShellClass:
+      "bg-[#f7df1e] p-1.5 shadow-[0_0_28px_rgba(247,223,30,0.46)]",
     title: "JavaScript Concepts",
     highlightedWord: "JavaScript",
     titleTail: "Concepts",
     description:
       "Core JavaScript internals and runtime behavior, visualized step by step.",
-    accentText: "text-yellow-400",
+    titleAccentClass:
+      "bg-gradient-to-r from-amber-200 via-yellow-300 to-yellow-500 bg-clip-text text-transparent",
+    kicker: "Engine Room View",
+    kickerClass:
+      "border border-yellow-200/25 bg-yellow-200/10 text-yellow-100/90",
+    heroStyle: {
+      "--hero-accent": "247 223 30",
+      "--hero-accent-soft": "253 230 138",
+      "--hero-secondary": "56 189 248",
+    },
   },
   react: {
     iconSrc: "/icons/react.svg",
@@ -44,7 +64,15 @@ const CATEGORY_CONFIG: Record<
     titleTail: "Concepts",
     description:
       "React rendering, reconciliation, and auth flows with interactive diagrams.",
-    accentText: "text-cyan-400",
+    titleAccentClass:
+      "bg-gradient-to-r from-cyan-200 via-sky-200 to-cyan-400 bg-clip-text text-transparent",
+    kicker: "Rendering Playground",
+    kickerClass: "border border-cyan-200/25 bg-cyan-200/10 text-cyan-100/90",
+    heroStyle: {
+      "--hero-accent": "34 211 238",
+      "--hero-accent-soft": "103 232 249",
+      "--hero-secondary": "192 132 252",
+    },
   },
 };
 
@@ -76,23 +104,48 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
       />
-      <section className="app-surface flex flex-col items-center gap-5 rounded-3xl px-6 py-10 text-center lg:px-10 lg:py-12">
-        <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${config.iconShellClass}`}>
-          <Image
-            src={config.iconSrc}
-            alt={config.iconAlt}
-            width={48}
-            height={48}
-            className="h-12 w-12 object-contain"
-          />
+      <section
+        className="category-hero rounded-3xl px-6 pb-4 pt-10 text-center lg:px-10 lg:pb-6 lg:pt-12"
+        style={config.heroStyle}
+      >
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="category-hero-grid absolute inset-0" />
+          <div className="category-hero-beam absolute -left-1/3 top-1/2 h-56 w-[70%] -translate-y-1/2" />
+          <div className="category-hero-orb category-hero-orb-primary absolute -top-20 left-1/2 h-64 w-64 -translate-x-1/2" />
+          <div className="category-hero-orb category-hero-orb-secondary absolute -right-14 top-6 h-48 w-48" />
+          <div className="category-hero-orb category-hero-orb-secondary category-hero-orb-delayed absolute -left-16 bottom-0 h-44 w-44" />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
-          <span className={config.accentText}>{config.highlightedWord}</span>{" "}
-          {config.titleTail}
-        </h1>
-        <p className="max-w-xl text-base text-[color:var(--app-text-secondary)] lg:text-lg">
-          {config.description}
-        </p>
+
+        <div className="relative z-[1] flex flex-col items-center gap-5">
+          <p
+            className={`category-hero-kicker rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${config.kickerClass}`}
+          >
+            {config.kicker}
+          </p>
+
+          <div className="category-hero-icon-shell">
+            <span aria-hidden className="category-hero-icon-ring" />
+            <div
+              className={`relative z-[1] flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-3xl ${config.iconShellClass}`}
+            >
+              <Image
+                src={config.iconSrc}
+                alt={config.iconAlt}
+                width={48}
+                height={48}
+                className="h-12 w-12 object-contain"
+              />
+            </div>
+          </div>
+
+          <h1 className="category-hero-title text-4xl font-bold tracking-tight lg:text-6xl">
+            <span className={config.titleAccentClass}>{config.highlightedWord}</span>{" "}
+            <span className="text-slate-100/90">{config.titleTail}</span>
+          </h1>
+          <p className="max-w-2xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
+            {config.description}
+          </p>
+        </div>
       </section>
 
       <section className="flex flex-col gap-4">
