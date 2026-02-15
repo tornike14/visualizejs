@@ -40,6 +40,8 @@ Scripts:
 - `/javascript/closures` -> Closures visualization
 - `/javascript/promises` -> Promises visualization
 - `/javascript/prototypal-inheritance` -> Prototypal Inheritance visualization
+- `/javascript/this-keyword` -> this Keyword visualization
+- `/javascript/scope-chain` -> Scope Chain visualization
 - `/react` -> React "Coming Soon" page
 
 Removed routes:
@@ -65,6 +67,8 @@ src/
       closures/page.tsx
       promises/page.tsx
       prototypal-inheritance/page.tsx
+      this-keyword/page.tsx
+      scope-chain/page.tsx
     react/
       page.tsx
   components/
@@ -90,6 +94,8 @@ src/
       Closures.tsx
       Promises.tsx
       PrototypalInheritance.tsx
+      ThisKeyword.tsx
+      ScopeChain.tsx
       VisualizationLoading.tsx
   hooks/
     useStepPlayback.ts
@@ -154,4 +160,6 @@ Latest generated routes:
 - `/javascript/hoisting`
 - `/javascript/promises`
 - `/javascript/prototypal-inheritance`
+- `/javascript/this-keyword`
+- `/javascript/scope-chain`
 - `/react`

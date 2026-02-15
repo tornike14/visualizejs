@@ -1,8 +1,10 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Linkedin } from "lucide-react";
 import { TopicToggle } from "./TopicToggle";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -10,7 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getTopicsByCategory } from "@/lib/topics";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
+import {
+  CREATOR_AVATAR_FALLBACK,
+  CREATOR_AVATAR_SRC,
+  CREATOR_LINKEDIN_URL,
+  DIFFICULTY_COLORS,
+} from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import type { Category, Topic } from "@/types";
 
 function categoryRoute(category: Category): string {
@@ -42,19 +50,74 @@ function TopicLink({ topic, isActive }: { topic: Topic; isActive: boolean }) {
   );
 }
 
+function FollowLinkedInButton({
+  compact = false,
+  onClick,
+}: {
+  compact?: boolean;
+  onClick?: () => void;
+}) {
+  const [avatarError, setAvatarError] = useState(false);
+  const avatarText = CREATOR_AVATAR_FALLBACK.slice(0, 3).toUpperCase();
+
+  return (
+    <a
+      href={CREATOR_LINKEDIN_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onClick}
+      aria-label="Follow on LinkedIn"
+      className={cn(
+        "group inline-flex items-center rounded-full border transition-all",
+        compact
+          ? "gap-1.5 border-cyan-300/35 bg-[rgba(12,25,48,0.9)] p-1.5 text-cyan-100 hover:border-cyan-200/55 hover:shadow-[0_0_16px_rgba(34,211,238,0.22)]"
+          : "gap-2 border-cyan-300/25 bg-[linear-gradient(130deg,rgba(14,30,56,0.96),rgba(18,44,74,0.9))] px-2.5 py-1.5 text-slate-100 hover:border-cyan-200/50 hover:shadow-[0_0_22px_rgba(34,211,238,0.2)]",
+      )}
+    >
+      <span className="inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-full border border-cyan-200/35 bg-slate-900/80 text-[10px] font-semibold text-cyan-200">
+        {avatarError ? (
+          avatarText
+        ) : (
+          <Image
+            src={CREATOR_AVATAR_SRC}
+            alt="Profile"
+            width={28}
+            height={28}
+            className="h-full w-full object-cover"
+            onError={() => setAvatarError(true)}
+          />
+        )}
+      </span>
+
+      {!compact && (
+        <span className="text-xs font-semibold tracking-[0.08em] text-cyan-100/95">
+          Follow
+        </span>
+      )}
+
+      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/10 text-cyan-200">
+        <Linkedin className="h-3.5 w-3.5" />
+      </span>
+    </a>
+  );
+}
+
 function SidebarContent({
   activeCategory,
   onCategoryChange,
   onLinkClick,
   onCollapse,
+  showFooterExtras = true,
 }: {
   activeCategory: Category;
   onCategoryChange: (category: Category) => void;
   onLinkClick?: () => void;
   onCollapse?: () => void;
+  showFooterExtras?: boolean;
 }) {
   const pathname = usePathname();
   const filteredTopics = getTopicsByCategory(activeCategory);
+  const year = new Date().getFullYear();
 
   return (
     <div className="flex h-full flex-col">
@@ -108,11 +171,19 @@ function SidebarContent({
 
       <Separator className="bg-[rgba(71,85,105,0.55)]" />
 
-      <div className="px-4 py-3">
+      <div className="space-y-3 px-4 py-3">
         <p className="text-xs text-[color:var(--app-text-secondary)]">
           {filteredTopics.length} topic{filteredTopics.length !== 1 && "s"} in{" "}
           {activeCategory === "javascript" ? "JavaScript" : "React"}
         </p>
+        {showFooterExtras && (
+          <>
+            <FollowLinkedInButton onClick={onLinkClick} />
+            <p className="text-[10px] tracking-[0.1em] text-slate-500">
+              © {year} VisualizeJS
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
@@ -210,6 +281,7 @@ export function Sidebar() {
               activeCategory={activeCategory}
               onCategoryChange={handleCategoryChange}
               onLinkClick={() => setMobileOpen(false)}
+              showFooterExtras={false}
             />
           </SheetContent>
         </Sheet>

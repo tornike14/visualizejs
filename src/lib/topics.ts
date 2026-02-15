@@ -53,6 +53,28 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain",
   },
+  {
+    id: "this-keyword",
+    title: "this Keyword",
+    category: "javascript",
+    route: "/javascript/this-keyword",
+    description:
+      "Visualize how JavaScript determines the value of this using binding rules",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this",
+  },
+  {
+    id: "scope-chain",
+    title: "Scope Chain",
+    category: "javascript",
+    route: "/javascript/scope-chain",
+    description:
+      "Trace how JavaScript resolves variable names by walking the scope chain from inner to outer scopes",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Glossary/Scope",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {
