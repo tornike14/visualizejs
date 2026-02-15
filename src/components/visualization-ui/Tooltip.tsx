@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, type ReactNode } from "react";
+import { useState, useRef, useCallback, useEffect, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface TooltipProps {
@@ -11,7 +11,22 @@ interface TooltipProps {
 
 export function Tooltip({ label, children, side = "top" }: TooltipProps) {
   const [visible, setVisible] = useState(false);
+  const [isHoverDevice, setIsHoverDevice] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setIsHoverDevice(media.matches);
+    update();
+
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", update);
+      return () => media.removeEventListener("change", update);
+    }
+
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, []);
 
   const show = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -23,6 +38,10 @@ export function Tooltip({ label, children, side = "top" }: TooltipProps) {
     timeoutRef.current = null;
     setVisible(false);
   }, []);
+
+  if (!isHoverDevice) {
+    return <span className="inline-flex">{children}</span>;
+  }
 
   return (
     <span

@@ -247,7 +247,18 @@ export function Sidebar() {
       )}
 
       {/* Mobile hamburger + sheet */}
-      <div className="fixed top-4 left-4 z-50 lg:hidden">
+      <div className="absolute top-4 left-4 z-[60] lg:hidden">
+        <Link
+          href={categoryRoute(activeCategory)}
+          className="group inline-flex px-1 py-1 transition-all"
+        >
+          <span className="bg-gradient-to-r from-cyan-300 via-sky-300 via-violet-300 to-amber-300 bg-clip-text text-[1.55rem] font-black tracking-[0.02em] text-transparent drop-shadow-[0_0_14px_rgba(34,211,238,0.24)] transition-all group-hover:drop-shadow-[0_0_20px_rgba(244,114,182,0.3)]">
+            VisualizeJS
+          </span>
+        </Link>
+      </div>
+
+      <div className="fixed top-4 right-4 z-50 lg:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
             <Button
@@ -281,7 +292,6 @@ export function Sidebar() {
               activeCategory={activeCategory}
               onCategoryChange={handleCategoryChange}
               onLinkClick={() => setMobileOpen(false)}
-              showFooterExtras={false}
             />
           </SheetContent>
         </Sheet>
