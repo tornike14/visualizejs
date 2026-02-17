@@ -17,6 +17,7 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 
 type PromiseKind = "basic" | "chaining" | "async-await";
@@ -469,6 +470,16 @@ export function Promises() {
   const currentStep =
     currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      promises: currentStep?.promises,
+      microtasks: currentStep?.microtasks,
+      console: currentStep?.consoleOutput,
+    },
+    currentStepIndex,
+  );
+
   const handleExampleChange = (id: string) => {
     setActiveExampleId(id);
   };
@@ -514,7 +525,12 @@ export function Promises() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -562,6 +578,7 @@ export function Promises() {
               title="Promise State"
               tone="violet"
               bodyClassName="min-h-[10rem]"
+              className={flashes.promises ? "viz-change-flash" : undefined}
             >
               <PromiseCards promises={currentStep?.promises ?? []} />
             </NeonPanel>
@@ -570,11 +587,14 @@ export function Promises() {
               title="Microtask Queue"
               tone="violet"
               bodyClassName="min-h-[6rem]"
+              className={flashes.microtasks ? "viz-change-flash" : undefined}
             >
               <QueueItems items={currentStep?.microtasks ?? []} />
             </NeonPanel>
 
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>

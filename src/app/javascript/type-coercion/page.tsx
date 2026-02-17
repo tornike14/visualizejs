@@ -5,24 +5,22 @@ import { VisualizationLoading } from "@/components/visualizations/VisualizationL
 import { createTopicMetadata } from "@/lib/metadata";
 import { getTopicOrThrow } from "@/lib/topics";
 
-const topic = getTopicOrThrow("scope-chain");
+const topic = getTopicOrThrow("type-coercion");
 
-const ScopeChainVisualization = dynamic(
+const TypeCoercionVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ScopeChain").then(
-      (module) => module.ScopeChain
+    import("@/components/visualizations/TypeCoercion").then(
+      (module) => module.TypeCoercion
     ),
-  {
-    loading: () => <VisualizationLoading />,
-  }
+  { loading: () => <VisualizationLoading /> }
 );
 
 export const metadata: Metadata = createTopicMetadata(topic);
 
-export default function ScopeChainPage() {
+export default function TypeCoercionPage() {
   return (
     <VisualizationPageShell topic={topic}>
-      <ScopeChainVisualization />
+      <TypeCoercionVisualization />
     </VisualizationPageShell>
   );
 }

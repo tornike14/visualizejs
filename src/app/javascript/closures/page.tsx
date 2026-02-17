@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { VisualizationPageShell } from "@/components/layout/VisualizationPageShell";
 import { VisualizationLoading } from "@/components/visualizations/VisualizationLoading";
 import { createTopicMetadata } from "@/lib/metadata";
@@ -23,9 +22,7 @@ export const metadata: Metadata = createTopicMetadata(closuresTopic);
 export default function ClosuresPage() {
   return (
     <VisualizationPageShell topic={closuresTopic}>
-      <ErrorBoundary>
-        <ClosuresVisualization />
-      </ErrorBoundary>
+      <ClosuresVisualization />
     </VisualizationPageShell>
   );
 }

@@ -17,6 +17,7 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -973,6 +974,16 @@ export function ThisKeyword() {
   const currentStep =
     currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      thisBinding: currentStep?.thisBinding,
+      objects: currentStep?.objects,
+      console: currentStep?.consoleOutput,
+    },
+    currentStepIndex,
+  );
+
   const handleExampleChange = (id: string) => {
     setActiveExampleId(id);
   };
@@ -1021,7 +1032,12 @@ export function ThisKeyword() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -1069,6 +1085,7 @@ export function ThisKeyword() {
               title="this Binding"
               tone="pink"
               bodyClassName="min-h-[10rem]"
+              className={flashes.thisBinding ? "viz-change-flash" : undefined}
             >
               <ThisBindingCard
                 binding={currentStep?.thisBinding ?? null}
@@ -1079,11 +1096,14 @@ export function ThisKeyword() {
               title="Objects in Memory"
               tone="cyan"
               bodyClassName="min-h-[8rem]"
+              className={flashes.objects ? "viz-change-flash" : undefined}
             >
               <MemoryObjects objects={currentStep?.objects ?? []} />
             </NeonPanel>
 
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>

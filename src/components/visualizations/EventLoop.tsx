@@ -8,6 +8,7 @@ import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 import { cn } from "@/lib/utils";
 import { VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 interface SourceLine {
   num: number;
@@ -310,6 +311,18 @@ export function EventLoop() {
 
   const currentStep = currentStepIndex >= 0 ? STEPS[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      stack: currentStep?.stack,
+      webApis: currentStep?.webApis,
+      taskQueue: currentStep?.taskQueue,
+      microtaskQueue: currentStep?.microtaskQueue,
+      console: currentStep?.consoleOutput,
+    },
+    currentStepIndex,
+  );
+
   return (
     <>
       {/* Toolbar: portaled above the surface card */}
@@ -332,7 +345,12 @@ export function EventLoop() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -432,11 +450,11 @@ export function EventLoop() {
 
           <div className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <NeonPanel title="Call Stack" tone="amber" bodyClassName="min-h-[10rem]">
+              <NeonPanel title="Call Stack" tone="amber" bodyClassName="min-h-[10rem]" className={flashes.stack ? "viz-change-flash" : undefined}>
                 <QueueItems items={currentStep?.stack ?? []} tone="stack" />
               </NeonPanel>
 
-              <NeonPanel title="Web APIs" tone="cyan" bodyClassName="min-h-[10rem]">
+              <NeonPanel title="Web APIs" tone="cyan" bodyClassName="min-h-[10rem]" className={flashes.webApis ? "viz-change-flash" : undefined}>
                 <QueueItems items={currentStep?.webApis ?? []} tone="web" />
               </NeonPanel>
             </div>
@@ -446,11 +464,12 @@ export function EventLoop() {
                 title="Microtask Queue"
                 tone="violet"
                 bodyClassName="min-h-[10rem]"
+                className={flashes.microtaskQueue ? "viz-change-flash" : undefined}
               >
                 <QueueItems items={currentStep?.microtaskQueue ?? []} tone="micro" />
               </NeonPanel>
 
-              <NeonPanel title="Task Queue" tone="green" bodyClassName="min-h-[10rem]">
+              <NeonPanel title="Task Queue" tone="green" bodyClassName="min-h-[10rem]" className={flashes.taskQueue ? "viz-change-flash" : undefined}>
                 <QueueItems items={currentStep?.taskQueue ?? []} tone="task" />
               </NeonPanel>
 
@@ -473,7 +492,9 @@ export function EventLoop() {
               </NeonPanel>
             </div>
 
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>
