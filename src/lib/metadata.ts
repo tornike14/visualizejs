@@ -96,6 +96,16 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "setInterval memory leak",
     "closure memory leak javascript",
   ],
+  generators: [
+    "javascript generators explained",
+    "yield keyword javascript",
+    "iterator protocol javascript",
+    "function* generator",
+    "generator next() method",
+    "for of loop generator",
+    "two-way data flow generator",
+    "Symbol.iterator javascript",
+  ],
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

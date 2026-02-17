@@ -17,6 +17,7 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "reference-value",
   "heap-stack",
   "garbage-collection",
+  "generators",
 ]);
 
 interface VisualizationPageShellProps {
