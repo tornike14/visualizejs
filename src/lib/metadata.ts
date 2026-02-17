@@ -64,6 +64,38 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "global function block scope",
     "identifier lookup javascript",
   ],
+  "type-coercion": [
+    "javascript type coercion explained",
+    "== vs === javascript",
+    "truthy falsy values javascript",
+    "NaN javascript",
+    "null vs undefined javascript",
+    "loose equality vs strict equality",
+  ],
+  "reference-value": [
+    "javascript pass by reference vs value",
+    "javascript object reference explained",
+    "shallow copy vs deep copy javascript",
+    "structuredClone javascript",
+    "spread operator shallow copy",
+    "javascript mutation explained",
+  ],
+  "heap-stack": [
+    "javascript heap vs stack",
+    "javascript memory model explained",
+    "stack frame javascript",
+    "javascript garbage collection",
+    "javascript memory allocation",
+    "call stack memory javascript",
+  ],
+  "garbage-collection": [
+    "javascript garbage collection explained",
+    "mark and sweep javascript",
+    "javascript memory leak",
+    "WeakRef javascript",
+    "setInterval memory leak",
+    "closure memory leak javascript",
+  ],
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

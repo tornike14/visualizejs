@@ -1,15 +1,7 @@
 import type { Topic } from "@/types";
 
 export const topics: Topic[] = [
-  {
-    id: "event-loop",
-    title: "Event Loop",
-    category: "javascript",
-    route: "/javascript/event-loop",
-    description: "Visualize how JavaScript handles asynchronous operations",
-    difficulty: "intermediate",
-    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
-  },
+  /* ── Beginner: language fundamentals ── */
   {
     id: "hoisting",
     title: "Hoisting",
@@ -19,6 +11,40 @@ export const topics: Topic[] = [
     difficulty: "beginner",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
+  },
+  {
+    id: "type-coercion",
+    title: "Type Coercion",
+    category: "javascript",
+    route: "/javascript/type-coercion",
+    description:
+      "Visualize how JavaScript converts types with == vs ===, truthy/falsy values, and edge cases like NaN and null",
+    difficulty: "beginner",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality",
+  },
+  {
+    id: "reference-value",
+    title: "Reference vs Value",
+    category: "javascript",
+    route: "/javascript/reference-value",
+    description:
+      "Visualize how primitives are copied by value, objects by reference, and how shallow and deep copy work",
+    difficulty: "beginner",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+  },
+  /* ── Intermediate: scope, functions & objects ── */
+  {
+    id: "scope-chain",
+    title: "Scope Chain",
+    category: "javascript",
+    route: "/javascript/scope-chain",
+    description:
+      "Trace how JavaScript resolves variable names by walking the scope chain from inner to outer scopes",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Glossary/Scope",
   },
   {
     id: "closures",
@@ -32,15 +58,15 @@ export const topics: Topic[] = [
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures",
   },
   {
-    id: "promises",
-    title: "Promises",
+    id: "this-keyword",
+    title: "this Keyword",
     category: "javascript",
-    route: "/javascript/promises",
+    route: "/javascript/this-keyword",
     description:
-      "Understand Promise states, chaining, microtask scheduling, and async/await",
+      "Visualize how JavaScript determines the value of this using binding rules",
     difficulty: "intermediate",
     docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this",
   },
   {
     id: "prototypal-inheritance",
@@ -53,27 +79,49 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain",
   },
+  /* ── Intermediate: memory model ── */
   {
-    id: "this-keyword",
-    title: "this Keyword",
+    id: "heap-stack",
+    title: "Heap & Stack",
     category: "javascript",
-    route: "/javascript/this-keyword",
+    route: "/javascript/heap-stack",
     description:
-      "Visualize how JavaScript determines the value of this using binding rules",
+      "Visualize how JavaScript allocates primitives on the stack and objects on the heap, with function call frames and garbage collection",
     difficulty: "intermediate",
     docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
   },
   {
-    id: "scope-chain",
-    title: "Scope Chain",
+    id: "garbage-collection",
+    title: "Garbage Collection",
     category: "javascript",
-    route: "/javascript/scope-chain",
+    route: "/javascript/garbage-collection",
     description:
-      "Trace how JavaScript resolves variable names by walking the scope chain from inner to outer scopes",
+      "Visualize the mark-and-sweep algorithm, common memory leak patterns, and how WeakRef enables garbage collection",
     difficulty: "intermediate",
     docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Glossary/Scope",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
+  },
+  /* ── Intermediate: async ── */
+  {
+    id: "promises",
+    title: "Promises",
+    category: "javascript",
+    route: "/javascript/promises",
+    description:
+      "Understand Promise states, chaining, microtask scheduling, and async/await",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+  },
+  {
+    id: "event-loop",
+    title: "Event Loop",
+    category: "javascript",
+    route: "/javascript/event-loop",
+    description: "Visualize how JavaScript handles asynchronous operations",
+    difficulty: "intermediate",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
   },
 ];
 

@@ -26,7 +26,7 @@ const KEYWORDS = new Set([
 const BUILTIN_OBJECTS = new Set([
   "console", "Promise", "Array", "Object", "String", "Number",
   "Boolean", "Math", "JSON", "Date", "RegExp", "Map", "Set",
-  "WeakMap", "WeakSet", "Symbol", "Error", "TypeError",
+  "WeakMap", "WeakSet", "WeakRef", "Symbol", "Error", "TypeError",
   "ReferenceError", "SyntaxError", "RangeError", "window",
   "document", "globalThis",
 ]);
@@ -40,6 +40,8 @@ const BUILTIN_METHODS = new Set([
   "reduce", "forEach", "find", "includes", "indexOf", "slice",
   "keys", "values", "entries", "assign", "freeze",
   "require", "fetch",
+  "structuredClone", "isArray",
+  "deref", "fill",
 ]);
 
 export function tokenize(text: string): Token[] {

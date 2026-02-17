@@ -17,6 +17,7 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 
 type ExampleKind = "object-create" | "constructor" | "lookup";
@@ -1085,6 +1086,15 @@ export function PrototypalInheritance() {
   const currentStep =
     currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      chain: currentStep?.chain,
+      console: currentStep?.consoleOutput,
+    },
+    currentStepIndex,
+  );
+
   const handleExampleChange = (id: string) => {
     setActiveExampleId(id);
   };
@@ -1130,7 +1140,12 @@ export function PrototypalInheritance() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -1178,6 +1193,7 @@ export function PrototypalInheritance() {
               title="Prototype Chain"
               tone="violet"
               bodyClassName="min-h-[14rem]"
+              className={flashes.chain ? "viz-change-flash" : undefined}
             >
               <PrototypeChainDiagram
                 chain={currentStep?.chain ?? []}
@@ -1185,7 +1201,11 @@ export function PrototypalInheritance() {
               />
             </NeonPanel>
 
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div
+              className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}
+            >
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>

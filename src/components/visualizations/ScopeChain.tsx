@@ -17,6 +17,7 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -1400,6 +1401,16 @@ export function ScopeChain() {
   const currentStep =
     currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      scopes: currentStep?.scopes,
+      lookup: currentStep?.lookup,
+      console: currentStep?.consoleOutput,
+    },
+    currentStepIndex,
+  );
+
   const handleExampleChange = (id: string) => {
     setActiveExampleId(id);
   };
@@ -1448,7 +1459,12 @@ export function ScopeChain() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -1496,6 +1512,7 @@ export function ScopeChain() {
               title="Scope Chain"
               tone="violet"
               bodyClassName="min-h-[14rem]"
+              className={flashes.scopes ? "viz-change-flash" : undefined}
             >
               <ScopeChainDiagram
                 scopes={currentStep?.scopes ?? []}
@@ -1507,11 +1524,14 @@ export function ScopeChain() {
               title="Identifier Lookup"
               tone="pink"
               bodyClassName="min-h-[6rem]"
+              className={flashes.lookup ? "viz-change-flash" : undefined}
             >
               <LookupTracker lookup={currentStep?.lookup ?? null} />
             </NeonPanel>
 
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>

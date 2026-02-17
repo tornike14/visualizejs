@@ -15,12 +15,13 @@ How to wire a new visualization topic into VisualizeJS. This document covers the
 7. [Design System Reference](#design-system-reference)
 8. [Reusable Components](#reusable-components)
 9. [Playback Engine — useStepPlayback](#playback-engine--usestepplayback)
-10. [Syntax Highlighting — Tokenizer](#syntax-highlighting--tokenizer)
-11. [Animation System](#animation-system)
-12. [Step Data Modeling](#step-data-modeling)
-13. [Shared CSS Classes](#shared-css-classes)
-14. [UI Copy Constants](#ui-copy-constants)
-15. [Checklist](#checklist)
+10. [Change Flash — useChangeFlash](#change-flash--usechangeflash)
+11. [Syntax Highlighting — Tokenizer](#syntax-highlighting--tokenizer)
+12. [Animation System](#animation-system)
+13. [Step Data Modeling](#step-data-modeling)
+14. [Shared CSS Classes](#shared-css-classes)
+15. [UI Copy Constants](#ui-copy-constants)
+16. [Checklist](#checklist)
 
 ---
 
@@ -67,6 +68,7 @@ src/
       ConsoleOutput.tsx             # Shared console panel
       ExampleSelector.tsx           # Dropdown for switching sub-examples
       NeonPanel.tsx                 # Themed container with tones
+      TopicLink.tsx                 # Cross-topic navigation link
       TransportControls.tsx         # Playback buttons + speed dropdown
       Tooltip.tsx                   # Lightweight hover tooltip
     layout/
@@ -76,6 +78,7 @@ src/
       AppTheme.tsx                  # Global theme wrapper
   hooks/
     useStepPlayback.ts              # Shared playback engine
+    useChangeFlash.ts               # Detects per-channel data changes between steps
     useClickOutside.ts              # Outside-click + Escape dismiss hook
   lib/
     topics.ts                       # Topic registry
@@ -206,6 +209,7 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { useChangeFlash } from "@/hooks/useChangeFlash";
 
 // 1. Define your source code lines
 interface SourceLine {
@@ -257,6 +261,15 @@ export function Closures() {
 
   const currentStep = currentStepIndex >= 0 ? STEPS[currentStepIndex] : null;
 
+  const flashes = useChangeFlash(
+    {
+      description: currentStep?.descriptionHtml,
+      console: currentStep?.consoleOutput,
+      // ... add topic-specific channels (heap, roots, scope, etc.)
+    },
+    currentStepIndex,
+  );
+
   return (
     <>
       {/* Toolbar: portaled above the surface card */}
@@ -279,7 +292,12 @@ export function Closures() {
             />
           </div>
 
-          <div className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5">
+          <div
+            className={cn(
+              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+              flashes.description && "viz-change-flash-pill",
+            )}
+          >
             {currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
@@ -321,7 +339,9 @@ export function Closures() {
 
           <div className="space-y-4">
             {/* Topic-specific panels go here */}
-            <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+            </div>
           </div>
         </div>
       </section>
@@ -578,6 +598,37 @@ import { Tooltip } from "@/components/visualization-ui/Tooltip";
 Supports `side="top"` (default) or `side="bottom"`.
 Tooltips auto-disable on touch / coarse-pointer devices.
 
+### TopicLink
+
+Cross-topic navigation link. Use at the end of a visualization to guide users to related topics.
+
+```typescript
+import { TopicLink } from "@/components/visualization-ui/TopicLink";
+
+<TopicLink
+  href="/javascript/heap-stack"
+  label="See how Heap & Stack memory works"
+/>
+```
+
+**Props:**
+
+| Prop | Type | Description |
+|---|---|---|
+| `href` | `string` | Route to the related topic |
+| `label` | `string` | Descriptive link text |
+| `className` | `string?` | Optional extra classes |
+
+Renders as a pink pill with an arrow icon. Show it conditionally on the last step of a relevant example:
+
+```tsx
+{currentStepIndex === example.steps.length - 1 && (
+  <div className="flex justify-center pt-1">
+    <TopicLink href="/javascript/closures" label="Learn how Closures work" />
+  </div>
+)}
+```
+
 ---
 
 ## Playback Engine — useStepPlayback
@@ -632,6 +683,142 @@ Default speed level is `4` (`1x`).
 
 ---
 
+## Change Flash — useChangeFlash
+
+**File:** `src/hooks/useChangeFlash.ts`
+
+Some step transitions only change the description text (or only one panel's data), leaving the rest of the visualization identical. Without visual feedback, users may think the step didn't advance. The change flash system solves this by briefly highlighting whichever sections actually changed.
+
+### How it works
+
+`useChangeFlash` compares serialized "channels" of data between step transitions. Each channel maps to a named data slice (description, code, heap, etc.). When a channel's value changes, its flash flag becomes `true` for 850ms, then resets. Components conditionally apply CSS flash classes based on these flags.
+
+```typescript
+import { useChangeFlash } from "@/hooks/useChangeFlash";
+
+const flashes = useChangeFlash(
+  {
+    description: currentStep?.descriptionHtml,
+    roots: currentStep?.roots,
+    heap: currentStep?.heapObjects,
+    console: currentStep?.consoleOutput,
+  },
+  currentStepIndex,
+);
+// flashes.description === true for 850ms when descriptionHtml changes
+// flashes.heap === true for 850ms when heapObjects changes
+// etc.
+```
+
+**Parameters:**
+
+| Param | Type | Description |
+|---|---|---|
+| `channels` | `Record<K, unknown>` | Named data slices from the current step. Values are compared via `JSON.stringify` |
+| `stepIndex` | `number` | Current step index from `useStepPlayback`. Used as the effect trigger |
+
+**Returns:** `Record<K, boolean>` — same keys as `channels`, each `true` if that channel changed on the most recent step transition.
+
+**Behavior:**
+
+- The first real step (-1 to 0) does **not** flash — everything is new, there's no meaningful "previous state"
+- Reset (step goes back to -1) clears all flash state
+- A single timer clears all active flashes after 850ms
+- Rapid stepping cancels the previous timer and restarts
+
+### CSS Classes
+
+Two animation classes are available in `globals.css`:
+
+| Class | Effect | Apply to |
+|---|---|---|
+| `.viz-change-flash` | Outer pink glow pulse (`box-shadow`) | NeonPanels — via `className` prop |
+| `.viz-change-flash-pill` | Inset pink glow pulse (`box-shadow`) | Explanation pill wrapper — via `cn()` |
+
+Both animations run for 850ms with peak at 40%. They honor `prefers-reduced-motion`.
+
+### Applying to NeonPanels
+
+Pass the flash class via the `className` prop. Do **not** use a flash-based `key` prop — that remounts the panel and replays child entrance animations (`viz-slide-in`).
+
+```tsx
+<NeonPanel
+  title="Heap"
+  tone="violet"
+  className={flashes.heap ? "viz-change-flash" : undefined}
+>
+  <GCHeapPanel objects={...} />
+</NeonPanel>
+```
+
+### Applying to the explanation pill
+
+Use `cn()` to conditionally add the pill flash class:
+
+```tsx
+<div
+  className={cn(
+    "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
+    flashes.description && "viz-change-flash-pill",
+  )}
+>
+```
+
+### Applying to ConsoleOutput
+
+`ConsoleOutput` passes its `className` prop to the panel body, not the outer NeonPanel. Wrap it in a div for the outer glow:
+
+```tsx
+<div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
+  <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
+</div>
+```
+
+### Child entrance animations
+
+When a NeonPanel's data changes between steps, its children (heap objects, root cards, etc.) should replay their `viz-slide-in` entrance animation — but **only when a specific item's data actually changed**. Use a data fingerprint in the key instead of the step index:
+
+```tsx
+/** Stable fingerprint — changes only when the item's data changes. */
+function itemFingerprint(item: Item): string {
+  return `${item.label}|${item.tone}|${item.status}|${item.props.map((p) => `${p.key}:${p.value}`).join(",")}`;
+}
+
+function HeapItems({ items }: { items: Item[] }) {
+  return items.map((item) => (
+    <div key={`${item.id}-${itemFingerprint(item)}`} className="viz-slide-in ...">
+      {item.label}
+    </div>
+  ));
+}
+```
+
+**Why fingerprints instead of `stepKey`?** Using `stepKey={currentStepIndex}` in child keys causes **every** child to remount on **every** step — replaying entrance animations even when that item's data hasn't changed. With a data fingerprint, the key only changes when the item's actual data changes, so:
+
+- Items with unchanged data keep their DOM nodes (no animation replay)
+- Items whose data changed get a new key → remount → `viz-slide-in` replays
+- New items appearing get a fresh key → animate in
+- Removed items unmount cleanly
+
+The fingerprint should include all properties that visually affect the item (label, tone, status, props, etc.).
+
+### Choosing channels
+
+Each channel key should map to the data that drives a specific panel. Common channels:
+
+| Channel | Data | Panel |
+|---|---|---|
+| `description` | `descriptionHtml` | Explanation pill |
+| `stack` | `stackFrames` / `stack` | Call Stack NeonPanel |
+| `heap` | `heapObjects` / `heapAllocations` | Heap NeonPanel |
+| `console` | `consoleOutput` | Console Output |
+
+Add topic-specific channels as needed (e.g., `roots`, `scope`, `taskQueue`).
+
+**Note:** The Source Code panel does **not** need a flash channel. The active line highlight (yellow border) and done-line fading already provide a strong visual signal when the code pointer moves. Adding a flash glow would be redundant.
+
+---
+
 ## Syntax Highlighting — Tokenizer
 
 **File:** `src/lib/visualization/syntax.ts`
@@ -672,6 +859,8 @@ All animations are CSS-only (no Framer Motion). Shared keyframes live in `src/ap
 | `.viz-slide-in` | Slide in from left with spring | Queue items entering |
 | `.viz-float-up` | Float up with fade-in | Hoisted declarations moving to top |
 | `.viz-pulse-dot` | Pulse opacity (0.55 to 1) | Playing indicator dot |
+| `.viz-change-flash` | Outer pink glow pulse (850ms) | NeonPanels whose data changed between steps |
+| `.viz-change-flash-pill` | Inset pink glow pulse (850ms) | Explanation pill when description changed |
 
 ### Using `.viz-slide-in`
 
@@ -842,6 +1031,11 @@ When adding a new topic, verify every item:
 - [ ] Explanation pill visible at all times (empty state via `VISUALIZATION_EMPTY_STATES.stepDescription`)
 - [ ] Code line states use `isDone && !isActive` guard (never fade active lines)
 - [ ] Active lines removed from `doneLines` when re-executed by callbacks/event loop
+- [ ] `useChangeFlash` hook called with channels for each panel
+- [ ] `viz-change-flash-pill` applied to explanation pill wrapper via `cn()`
+- [ ] `viz-change-flash` applied to NeonPanels via `className` (no flash-based `key` props)
+- [ ] Child items use data fingerprints in keys (not step index) for selective `viz-slide-in` re-triggers
+- [ ] If related topics exist, `TopicLink` shown conditionally on last step of relevant example
 - [ ] No emojis in step descriptions or UI text
 - [ ] `npm run build` passes
 - [ ] Visual check on desktop and mobile

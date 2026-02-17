@@ -5,24 +5,22 @@ import { VisualizationLoading } from "@/components/visualizations/VisualizationL
 import { createTopicMetadata } from "@/lib/metadata";
 import { getTopicOrThrow } from "@/lib/topics";
 
-const topic = getTopicOrThrow("scope-chain");
+const topic = getTopicOrThrow("heap-stack");
 
-const ScopeChainVisualization = dynamic(
+const HeapStackVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ScopeChain").then(
-      (module) => module.ScopeChain
+    import("@/components/visualizations/HeapStack").then(
+      (module) => module.HeapStack
     ),
-  {
-    loading: () => <VisualizationLoading />,
-  }
+  { loading: () => <VisualizationLoading /> }
 );
 
 export const metadata: Metadata = createTopicMetadata(topic);
 
-export default function ScopeChainPage() {
+export default function HeapStackPage() {
   return (
     <VisualizationPageShell topic={topic}>
-      <ScopeChainVisualization />
+      <HeapStackVisualization />
     </VisualizationPageShell>
   );
 }

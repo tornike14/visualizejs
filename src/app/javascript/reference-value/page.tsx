@@ -5,24 +5,22 @@ import { VisualizationLoading } from "@/components/visualizations/VisualizationL
 import { createTopicMetadata } from "@/lib/metadata";
 import { getTopicOrThrow } from "@/lib/topics";
 
-const topic = getTopicOrThrow("scope-chain");
+const topic = getTopicOrThrow("reference-value");
 
-const ScopeChainVisualization = dynamic(
+const ReferenceValueVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ScopeChain").then(
-      (module) => module.ScopeChain
+    import("@/components/visualizations/ReferenceValue").then(
+      (module) => module.ReferenceValue
     ),
-  {
-    loading: () => <VisualizationLoading />,
-  }
+  { loading: () => <VisualizationLoading /> }
 );
 
 export const metadata: Metadata = createTopicMetadata(topic);
 
-export default function ScopeChainPage() {
+export default function ReferenceValuePage() {
   return (
     <VisualizationPageShell topic={topic}>
-      <ScopeChainVisualization />
+      <ReferenceValueVisualization />
     </VisualizationPageShell>
   );
 }

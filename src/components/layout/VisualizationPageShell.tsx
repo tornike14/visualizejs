@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { getTopicKeywords } from "@/lib/metadata";
@@ -12,6 +13,10 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "prototypal-inheritance",
   "scope-chain",
   "this-keyword",
+  "type-coercion",
+  "reference-value",
+  "heap-stack",
+  "garbage-collection",
 ]);
 
 interface VisualizationPageShellProps {
@@ -115,7 +120,9 @@ export function VisualizationPageShell({
         <ToolbarSlot variant={toolbarSkeletonVariant} />
 
         <section className="app-surface rounded-2xl p-3 lg:p-4">
-          {children}
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
         </section>
       </div>
     </ToolbarProvider>

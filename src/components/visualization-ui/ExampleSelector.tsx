@@ -58,7 +58,7 @@ export function ExampleSelector<T extends ExampleOption>({
         <div
           role="listbox"
           aria-label="Select example"
-          className="app-surface absolute left-0 top-full z-50 mt-2 w-[22rem] overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]"
+          className="app-surface absolute left-0 top-full z-50 mt-2 flex w-[22rem] flex-col gap-1 overflow-hidden rounded-2xl border-[color:var(--app-border)] p-1.5 shadow-[0_18px_36px_rgba(2,6,23,0.5)]"
         >
           {examples.map((ex) => (
             <button
@@ -71,7 +71,7 @@ export function ExampleSelector<T extends ExampleOption>({
                 setOpen(false);
               }}
               className={cn(
-                "flex w-full flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm transition-all",
+                "flex w-full cursor-pointer flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left text-sm transition-all",
                 ex.id === activeId
                   ? "border-pink-300/30 bg-[rgba(31,45,74,0.65)]"
                   : "hover:border-[rgba(71,85,105,0.6)] hover:bg-[rgba(22,33,59,0.62)]"

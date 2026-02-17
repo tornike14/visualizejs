@@ -93,7 +93,7 @@ export function TransportControls({
           type="button"
           aria-label="Step back"
           onClick={onStepBack}
-          disabled={!canStepBack || isPlaying}
+          disabled={!canStepBack}
           className={cn(iconBtnBase, iconBtnDefault)}
         >
           <StepBackIcon />
@@ -119,7 +119,7 @@ export function TransportControls({
           type="button"
           aria-label="Step forward"
           onClick={onStep}
-          disabled={!canStep || isPlaying}
+          disabled={!canStep}
           className={cn(iconBtnBase, iconBtnDefault)}
         >
           <StepIcon />
