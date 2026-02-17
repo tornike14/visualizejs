@@ -123,6 +123,17 @@ export const topics: Topic[] = [
     difficulty: "intermediate",
     docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
   },
+  {
+    id: "generators",
+    title: "Generators & Iterators",
+    category: "javascript",
+    route: "/javascript/generators",
+    description:
+      "Visualize how generator functions pause with yield, resume with .next(), and implement the iterator protocol",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {

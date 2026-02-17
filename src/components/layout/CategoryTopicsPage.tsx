@@ -1,6 +1,8 @@
-import type { CSSProperties } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import {
+  CategoryHero,
+  type CategoryHeroConfig,
+} from "@/components/layout/CategoryHero";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DIFFICULTY_COLORS, SITE_URL } from "@/lib/constants";
@@ -11,28 +13,7 @@ interface CategoryTopicsPageProps {
   category: Category;
 }
 
-type HeroStyle = CSSProperties & {
-  "--hero-accent": string;
-  "--hero-accent-soft": string;
-  "--hero-secondary": string;
-};
-
-const CATEGORY_CONFIG: Record<
-  Category,
-  {
-    iconSrc: string;
-    iconAlt: string;
-    iconShellClass: string;
-    title: string;
-    highlightedWord: string;
-    titleTail: string;
-    description: string;
-    titleAccentClass: string;
-    kicker: string;
-    kickerClass: string;
-    heroStyle: HeroStyle;
-  }
-> = {
+const CATEGORY_CONFIG: Record<Category, CategoryHeroConfig> = {
   javascript: {
     iconSrc: "/icons/javascript.svg",
     iconAlt: "JavaScript logo",
@@ -104,49 +85,7 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
       />
-      <section
-        className="category-hero rounded-3xl px-6 pb-4 pt-10 text-center lg:px-10 lg:pb-6 lg:pt-12"
-        style={config.heroStyle}
-      >
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="category-hero-grid absolute inset-0" />
-          <div className="category-hero-beam absolute -left-1/3 top-1/2 h-56 w-[70%] -translate-y-1/2" />
-          <div className="category-hero-orb category-hero-orb-primary absolute -top-20 left-1/2 h-64 w-64 -translate-x-1/2" />
-          <div className="category-hero-orb category-hero-orb-secondary absolute -right-14 top-6 h-48 w-48" />
-          <div className="category-hero-orb category-hero-orb-secondary category-hero-orb-delayed absolute -left-16 bottom-0 h-44 w-44" />
-        </div>
-
-        <div className="relative z-[1] flex flex-col items-center gap-5">
-          <p
-            className={`category-hero-kicker rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${config.kickerClass}`}
-          >
-            {config.kicker}
-          </p>
-
-          <div className="category-hero-icon-shell">
-            <span aria-hidden className="category-hero-icon-ring" />
-            <div
-              className={`relative z-[1] flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-3xl ${config.iconShellClass}`}
-            >
-              <Image
-                src={config.iconSrc}
-                alt={config.iconAlt}
-                width={48}
-                height={48}
-                className="h-12 w-12 object-contain"
-              />
-            </div>
-          </div>
-
-          <h1 className="category-hero-title text-4xl font-bold tracking-tight lg:text-6xl">
-            <span className={config.titleAccentClass}>{config.highlightedWord}</span>{" "}
-            <span className="text-slate-100/90">{config.titleTail}</span>
-          </h1>
-          <p className="max-w-2xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
-            {config.description}
-          </p>
-        </div>
-      </section>
+      <CategoryHero config={config} />
 
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">{config.title}</h2>
