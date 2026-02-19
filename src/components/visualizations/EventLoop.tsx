@@ -1,14 +1,31 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import { Play, RotateCcw, Pencil } from "lucide-react";
 import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
 import { CodeBlock, type CodeBlockLine } from "@/components/visualization-ui/CodeBlock";
 import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
 import { TransportControls } from "@/components/visualization-ui/TransportControls";
+import { Tooltip } from "@/components/visualization-ui/Tooltip";
 import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
+import { SandboxToggle } from "@/components/sandbox/SandboxToggle";
+import { SandboxErrorDisplay } from "@/components/sandbox/SandboxErrorDisplay";
 import { cn } from "@/lib/utils";
 import { VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
+import { useSandboxUIState } from "@/hooks/useSandboxUIState";
+import { SANDBOX_CONFIGS } from "@/lib/sandbox/configs";
+import { generateEventLoopSteps } from "@/lib/sandbox/generators/event-loop";
+
+const SandboxEditor = dynamic(
+  () => import("@/components/sandbox/SandboxEditor").then((m) => ({ default: m.SandboxEditor })),
+  { ssr: false, loading: () => <div className="h-[220px] animate-pulse rounded-lg bg-slate-800/50" /> },
+);
+
+/* ------------------------------------------------------------------ */
+/*  Static data (used when sandbox is OFF)                             */
+/* ------------------------------------------------------------------ */
 
 interface SourceLine {
   num: number;
@@ -259,6 +276,10 @@ const STEPS: EventLoopStep[] = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Shared sub-components                                              */
+/* ------------------------------------------------------------------ */
+
 const QUEUE_ITEM_STYLES: Record<QueueTone, string> = {
   stack:
     "border-amber-300/35 bg-amber-400/10 text-amber-200 shadow-[0_0_14px_rgba(251,191,36,0.07)]",
@@ -283,7 +304,7 @@ function QueueItems({ items, tone }: { items: string[]; tone: QueueTone }) {
         <div
           key={`${item}-${index}`}
           className={cn(
-            "viz-slide-in rounded-lg border px-3 py-2 font-mono text-xs",
+            "viz-slide-in overflow-hidden break-all rounded-lg border px-3 py-2 font-mono text-xs",
             QUEUE_ITEM_STYLES[tone]
           )}
         >
@@ -294,7 +315,33 @@ function QueueItems({ items, tone }: { items: string[]; tone: QueueTone }) {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Toolbar button styles (shared with TransportControls)              */
+/* ------------------------------------------------------------------ */
+
+const iconBtnBase =
+  "inline-flex cursor-pointer items-center justify-center rounded-lg border p-2 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0";
+
+/* ------------------------------------------------------------------ */
+/*  Main component                                                     */
+/* ------------------------------------------------------------------ */
+
+const sandboxConfig = SANDBOX_CONFIGS["event-loop"];
+
 export function EventLoop() {
+  const {
+    sandbox,
+    isEditing,
+    usingSandbox,
+    showHighlightedCode,
+    handleToggleSandbox,
+    handleGenerate,
+    handleEditCode,
+  } = useSandboxUIState(sandboxConfig, generateEventLoopSteps);
+
+  const activeSteps = usingSandbox ? sandbox.generatedSteps! : STEPS;
+  const activeCodeLines = usingSandbox ? sandbox.generatedCodeLines! : CODE_LINES;
+
   const {
     currentStepIndex,
     isPlaying,
@@ -307,9 +354,13 @@ export function EventLoop() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
-  } = useStepPlayback({ totalSteps: STEPS.length, initialStep: -1 });
+  } = useStepPlayback({
+    totalSteps: activeSteps.length,
+    initialStep: -1,
+    resetKey: usingSandbox ? `sandbox-${sandbox.generationId}` : "default",
+  });
 
-  const currentStep = currentStepIndex >= 0 ? STEPS[currentStepIndex] : null;
+  const currentStep = currentStepIndex >= 0 ? activeSteps[currentStepIndex] : null;
 
   const flashes = useChangeFlash(
     {
@@ -329,20 +380,75 @@ export function EventLoop() {
       <ToolbarPortal>
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <TransportControls
-              isPlaying={isPlaying}
-              canStep={canStep}
-              canStepBack={canStepBack}
-              stepIndex={currentStepIndex}
-              totalSteps={STEPS.length}
-              speedLevel={speedLevel}
-              speedLabel={speedLabel}
-              onTogglePlay={togglePlay}
-              onStep={handleStep}
-              onStepBack={handleStepBack}
-              onReset={handleReset}
-              onSpeedLevelChange={setSpeedLevel}
+            <SandboxToggle
+              isActive={sandbox.isSandboxActive}
+              onToggle={handleToggleSandbox}
             />
+
+            {sandbox.isSandboxActive && isEditing && (
+              <>
+                <Tooltip label="Generate visualization (Cmd+Enter)">
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    className={cn(
+                      iconBtnBase,
+                      "border-emerald-300/45 bg-gradient-to-br from-emerald-500/30 to-cyan-400/18 text-emerald-200 hover:border-emerald-300/70 hover:shadow-[0_0_16px_rgba(52,211,153,0.2)]",
+                    )}
+                    aria-label="Generate visualization"
+                  >
+                    <Play className="h-4 w-4 fill-current" />
+                  </button>
+                </Tooltip>
+
+                <Tooltip label="Reset to default code">
+                  <button
+                    type="button"
+                    onClick={sandbox.resetCode}
+                    className={cn(
+                      iconBtnBase,
+                      "border-slate-600/85 bg-slate-900/65 text-slate-100 hover:border-slate-500",
+                    )}
+                    aria-label="Reset code"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                  </button>
+                </Tooltip>
+              </>
+            )}
+
+            {sandbox.isSandboxActive && !isEditing && (
+              <Tooltip label="Edit code">
+                <button
+                  type="button"
+                  onClick={handleEditCode}
+                  className={cn(
+                    iconBtnBase,
+                    "border-emerald-300/45 bg-gradient-to-br from-emerald-500/30 to-cyan-400/18 text-emerald-200 hover:border-emerald-300/70 hover:shadow-[0_0_16px_rgba(52,211,153,0.2)]",
+                  )}
+                  aria-label="Edit code"
+                >
+                  <Pencil className="h-4 w-4" />
+                </button>
+              </Tooltip>
+            )}
+
+            {(showHighlightedCode || !sandbox.isSandboxActive) && (
+              <TransportControls
+                isPlaying={isPlaying}
+                canStep={canStep}
+                canStepBack={canStepBack}
+                stepIndex={currentStepIndex}
+                totalSteps={activeSteps.length}
+                speedLevel={speedLevel}
+                speedLabel={speedLabel}
+                onTogglePlay={togglePlay}
+                onStep={handleStep}
+                onStepBack={handleStepBack}
+                onReset={handleReset}
+                onSpeedLevelChange={setSpeedLevel}
+              />
+            )}
           </div>
 
           <div
@@ -351,7 +457,11 @@ export function EventLoop() {
               flashes.description && "viz-change-flash-pill",
             )}
           >
-            {currentStep ? (
+            {sandbox.isSandboxActive && isEditing ? (
+              <p className="text-center text-sm text-emerald-300/70">
+                Edit the code below and press <kbd className="mx-0.5 rounded border border-emerald-400/20 bg-emerald-400/10 px-1.5 py-0.5 font-mono text-xs">Generate</kbd> or <kbd className="mx-0.5 rounded border border-emerald-400/20 bg-emerald-400/10 px-1.5 py-0.5 font-mono text-xs">Cmd+Enter</kbd> to visualize.
+              </p>
+            ) : currentStep ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
                 dangerouslySetInnerHTML={{
@@ -425,28 +535,55 @@ export function EventLoop() {
           }
         `}</style>
 
-        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
-          <NeonPanel
-            title={VISUALIZATION_PANEL_TITLES.sourceCode}
-            tone="amber"
-            bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
-          >
-            <CodeBlock
-              lines={CODE_LINES.map((line): CodeBlockLine => {
-                const isActive = currentStep?.activeLine === line.num;
-                const isDone = currentStep?.doneLines.includes(line.num) ?? false;
-                return {
-                  key: line.num,
-                  lineNumber: line.num,
-                  text: line.text,
-                  className: cn(
-                    isActive && "is-active",
-                    isDone && !isActive && "is-done",
-                  ),
-                };
-              })}
-            />
-          </NeonPanel>
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,auto)_minmax(0,1fr)]">
+          {/* Source Code / Sandbox Editor panel */}
+          {sandbox.isSandboxActive && isEditing ? (
+            <NeonPanel
+              title="Sandbox"
+              tone="green"
+              bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
+              className="xl:max-w-sm"
+            >
+              <SandboxEditor
+                code={sandbox.userCode}
+                codeVersion={sandbox.codeVersion}
+                onChange={sandbox.setUserCode}
+                onGenerate={handleGenerate}
+                maxLines={sandboxConfig.maxCodeLines}
+              />
+              {sandbox.error && (
+                <SandboxErrorDisplay
+                  error={sandbox.error}
+                  supportedPatterns={sandboxConfig.supportedPatterns}
+                />
+              )}
+              <p className="mt-2 text-[11px] text-slate-500">
+                Limited to {sandboxConfig.maxCodeLines} lines &middot; {sandboxConfig.maxCodeLength} characters
+              </p>
+            </NeonPanel>
+          ) : (
+            <NeonPanel
+              title={VISUALIZATION_PANEL_TITLES.sourceCode}
+              tone="amber"
+              bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
+            >
+              <CodeBlock
+                lines={activeCodeLines.map((line): CodeBlockLine => {
+                  const isActive = currentStep?.activeLine === line.num;
+                  const isDone = currentStep?.doneLines.includes(line.num) ?? false;
+                  return {
+                    key: line.num,
+                    lineNumber: line.num,
+                    text: line.text,
+                    className: cn(
+                      isActive && "is-active",
+                      isDone && !isActive && "is-done",
+                    ),
+                  };
+                })}
+              />
+            </NeonPanel>
+          )}
 
           <div className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
