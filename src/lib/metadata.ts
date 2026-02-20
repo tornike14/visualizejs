@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import type { Topic } from "@/types";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import {
+  OPEN_GRAPH_IMAGE_URL,
+  SITE_NAME,
+  SITE_URL,
+  SOCIAL_IMAGE_ALT,
+  SOCIAL_IMAGE_HEIGHT,
+  SOCIAL_IMAGE_WIDTH,
+  TWITTER_IMAGE_URL,
+} from "@/lib/constants";
 
 const GLOBAL_KEYWORDS = [
   "VisualizeJS",
@@ -159,11 +167,20 @@ export function createTopicMetadata(topic: Topic): Metadata {
       siteName: SITE_NAME,
       type: "article",
       locale: "en_US",
+      images: [
+        {
+          url: OPEN_GRAPH_IMAGE_URL,
+          width: SOCIAL_IMAGE_WIDTH,
+          height: SOCIAL_IMAGE_HEIGHT,
+          alt: SOCIAL_IMAGE_ALT,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description: topic.description,
+      images: [TWITTER_IMAGE_URL],
     },
   };
 }
@@ -177,7 +194,7 @@ export function createTopicTheoryMetadata(topic: Topic): Metadata {
     THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
     [`${topic.id.replace(/-/g, " ")} theory`],
   );
-  const description = `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and practical FAQ.`;
+  const description = `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and interview questions.`;
 
   return {
     title,
@@ -202,11 +219,20 @@ export function createTopicTheoryMetadata(topic: Topic): Metadata {
       siteName: SITE_NAME,
       type: "article",
       locale: "en_US",
+      images: [
+        {
+          url: OPEN_GRAPH_IMAGE_URL,
+          width: SOCIAL_IMAGE_WIDTH,
+          height: SOCIAL_IMAGE_HEIGHT,
+          alt: SOCIAL_IMAGE_ALT,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description,
+      images: [TWITTER_IMAGE_URL],
     },
   };
 }

@@ -332,7 +332,9 @@ export function YourTopic() {
 | `callbackLabel(bodySource)` | Label like `() => console.log('x')` |
 | `getCallbackBody(node)` | Extract body from arrow/function expressions |
 | `extractCallbackFromArg(arg, source)` | Full callback info: label, body, lines |
-| `extractConsoleLogArg(node, source)` | Get the string arg from `console.log()` calls |
+| `extractConsoleLogArg(node, source, scope?)` | Get `console.log()` arg text with optional scope resolution |
+| `resolveNodeToString(node, source, scope?)` | Resolve literals/identifiers/template literals to display text |
+| `escapeHtml(value)` | Escape untrusted text before interpolating into HTML |
 | `createError(type, message, line?)` | Factory for `SandboxError` objects |
 
 Usage:
@@ -342,6 +344,7 @@ import {
   getLineRange,
   expressionToLabel,
   extractCallbackFromArg,
+  escapeHtml,
   createError,
 } from "@/lib/sandbox/generatorUtils";
 ```
@@ -396,6 +399,8 @@ return {
 - **No code execution** --- the sandbox parses AST only, never runs user code
 - **Acorn parser** --- standard ES2023 parsing, no evaluation
 - **CSP headers** --- production blocks `unsafe-eval` and `unsafe-inline`
+- **HTML safety** --- never inject raw user-derived strings into `descriptionHtml`; escape first with `escapeHtml`
+- **`dangerouslySetInnerHTML` discipline** --- only render trusted markup tags; treat all dynamic values as untrusted
 - **Input limits** --- configurable max lines and max character count
 - **localStorage** --- user code persisted locally, never sent to a server
 - **No network** --- sandbox is fully client-side, no API calls
@@ -420,6 +425,8 @@ Before shipping a new sandbox topic:
 - [ ] `TransportControls` hidden during editing mode
 - [ ] `resetKey` passed to `useStepPlayback` includes `sandbox.generationId`
 - [ ] `activeSteps` switches between generated and hardcoded based on `usingSandbox`
+- [ ] Any user-derived text interpolated into HTML is escaped via `escapeHtml`
 - [ ] Tested with valid code, invalid code, empty code, and unsupported patterns
+- [ ] Tested with malicious payload sample (e.g. `<img src=x onerror=alert(1)>`) to verify text rendering only
 - [ ] Queue item pills handle long text (overflow-hidden, break-all)
 - [ ] Build passes (`npm run build`)
