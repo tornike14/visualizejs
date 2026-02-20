@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/react",
   },
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: {
+      index: false,
+      follow: true,
+    },
+  },
 };
 
 export default function ReactIndexPage() {

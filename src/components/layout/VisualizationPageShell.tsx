@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, BookOpenText, ExternalLink } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
+import { hasTheoryContent } from "@/content/theory";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { getTopicKeywords } from "@/lib/metadata";
 import type { Topic } from "@/types";
@@ -37,6 +38,7 @@ export function VisualizationPageShell({
     : "simple";
   const canonicalUrl = `${SITE_URL}${topic.route}`;
   const topicKeywords = getTopicKeywords(topic);
+  const hasTheoryPage = hasTheoryContent(topic.id);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -100,19 +102,30 @@ export function VisualizationPageShell({
             Back to {categoryLabel} topics
           </Link>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-2.5">
             <h1 className="text-3xl font-semibold tracking-tight lg:text-4xl">
               {topic.title}
             </h1>
-            <a
-              href={topic.docsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-700/50 hover:text-slate-200"
-              aria-label={`Read ${topic.title} documentation`}
-            >
-              <ExternalLink className="h-5 w-5" />
-            </a>
+            <div className="flex items-center gap-2">
+              {hasTheoryPage && (
+                <Link
+                  href={`${topic.route}/theory`}
+                  className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/10 px-3 py-1.5 text-xs font-medium text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/14"
+                >
+                  <BookOpenText className="h-3.5 w-3.5" />
+                  Theory
+                </Link>
+              )}
+              <a
+                href={topic.docsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-700/50 hover:text-slate-200"
+                aria-label={`Read ${topic.title} documentation`}
+              >
+                <ExternalLink className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </header>
 

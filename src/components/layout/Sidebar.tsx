@@ -157,7 +157,13 @@ function ScrollableTopicList({
           ) : (
             filteredTopics.map((topic) => (
               <div key={topic.id} onClick={onLinkClick}>
-                <TopicLink topic={topic} isActive={pathname === topic.route} />
+                <TopicLink
+                  topic={topic}
+                  isActive={
+                    pathname === topic.route ||
+                    pathname.startsWith(`${topic.route}/`)
+                  }
+                />
               </div>
             ))
           )}

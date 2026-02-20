@@ -10,7 +10,15 @@
  * ```
  */
 
-import type { Node, ArrowFunctionExpression, FunctionExpression, Literal, Identifier, MemberExpression } from "acorn";
+import type {
+  Node,
+  ArrowFunctionExpression,
+  FunctionExpression,
+  Literal,
+  Identifier,
+  MemberExpression,
+  TemplateLiteral,
+} from "acorn";
 import type { SandboxError, SandboxErrorType } from "@/types/sandbox";
 
 /* ------------------------------------------------------------------ */
@@ -88,6 +96,36 @@ export function extractCallbackFromArg(
 /*  console.log detection                                              */
 /* ------------------------------------------------------------------ */
 
+/** Resolve a node into a display string, optionally using scoped identifier values. */
+export function resolveNodeToString(
+  node: Node,
+  source: string,
+  scope: Record<string, string> = {},
+): string {
+  if (node.type === "Literal") return String((node as Literal).value);
+
+  if (node.type === "Identifier") {
+    const name = (node as Identifier).name;
+    return scope[name] ?? name;
+  }
+
+  if (node.type === "TemplateLiteral") {
+    const tpl = node as unknown as TemplateLiteral;
+    let out = "";
+    for (let i = 0; i < tpl.quasis.length; i++) {
+      const quasi = tpl.quasis[i];
+      out += quasi.value.cooked ?? quasi.value.raw ?? "";
+      const expr = tpl.expressions[i];
+      if (expr) {
+        out += resolveNodeToString(expr as Node, source, scope);
+      }
+    }
+    return out;
+  }
+
+  return source.slice(node.start, node.end);
+}
+
 /**
  * If `node` is `console.log(arg)`, returns the string representation of the
  * first argument. Returns `null` otherwise.
@@ -95,6 +133,7 @@ export function extractCallbackFromArg(
 export function extractConsoleLogArg(
   node: { type: string; callee: Node; arguments: Node[] },
   source: string,
+  scope: Record<string, string> = {},
 ): string | null {
   const callee = node.callee;
   if (
@@ -103,13 +142,7 @@ export function extractConsoleLogArg(
     ((callee as unknown as MemberExpression).property as Identifier).name === "log"
   ) {
     if (node.arguments.length === 0) return "";
-    const arg = node.arguments[0];
-    if (arg.type === "Literal" && typeof (arg as Literal).value === "string") {
-      return (arg as Literal).value as string;
-    }
-    if (arg.type === "Literal") return String((arg as Literal).value);
-    if (arg.type === "Identifier") return (arg as Identifier).name;
-    return source.slice(arg.start, arg.end);
+    return resolveNodeToString(node.arguments[0], source, scope);
   }
   return null;
 }
@@ -126,4 +159,14 @@ export function createError(
   column?: number,
 ): SandboxError {
   return { type, message, ...(line != null ? { line } : {}), ...(column != null ? { column } : {}) };
+}
+
+/** Escape untrusted text before interpolating into HTML strings. */
+export function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
