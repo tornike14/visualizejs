@@ -3,9 +3,14 @@ import { AppTheme } from "@/components/layout/AppTheme";
 import { Sidebar } from "@/components/layout/Sidebar";
 import {
   CREATOR_LINKEDIN_URL,
+  OPEN_GRAPH_IMAGE_URL,
   SITE_DESCRIPTION,
+  SOCIAL_IMAGE_ALT,
+  SOCIAL_IMAGE_HEIGHT,
+  SOCIAL_IMAGE_WIDTH,
   SITE_NAME,
   SITE_URL,
+  TWITTER_IMAGE_URL,
 } from "@/lib/constants";
 import "./globals.css";
 
@@ -33,13 +38,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    url: SITE_URL,
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: OPEN_GRAPH_IMAGE_URL,
+        width: SOCIAL_IMAGE_WIDTH,
+        height: SOCIAL_IMAGE_HEIGHT,
+        alt: SOCIAL_IMAGE_ALT,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: [TWITTER_IMAGE_URL],
   },
 };
 

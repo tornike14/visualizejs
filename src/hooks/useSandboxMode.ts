@@ -23,6 +23,10 @@ interface SandboxModeReturn<TStep, TCodeLine> {
 
 const STORAGE_PREFIX = "vizjs-sandbox-";
 
+function normalizeCodeLength(code: string, maxCodeLength: number): string {
+  return code.length > maxCodeLength ? code.slice(0, maxCodeLength) : code;
+}
+
 function loadSavedCode(topicId: string): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -51,8 +55,11 @@ export function useSandboxMode<TStep, TCodeLine>(
   generator: StepGenerator<TStep, TCodeLine>,
 ): SandboxModeReturn<TStep, TCodeLine> {
   const [isSandboxActive, setIsSandboxActive] = useState(false);
-  const [userCode, setUserCode] = useState(
-    () => loadSavedCode(config.topicId) ?? config.defaultCode,
+  const [userCode, setUserCode] = useState(() =>
+    normalizeCodeLength(
+      loadSavedCode(config.topicId) ?? config.defaultCode,
+      config.maxCodeLength,
+    ),
   );
   const [generatedSteps, setGeneratedSteps] = useState<TStep[] | null>(null);
   const [generatedCodeLines, setGeneratedCodeLines] = useState<TCodeLine[] | null>(null);
@@ -66,7 +73,7 @@ export function useSandboxMode<TStep, TCodeLine>(
   const handleSetUserCode = useCallback(
     (code: string) => {
       // Enforce max length
-      const trimmed = code.length > config.maxCodeLength ? code.slice(0, config.maxCodeLength) : code;
+      const trimmed = normalizeCodeLength(code, config.maxCodeLength);
       setUserCode(trimmed);
       // Debounced save
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
@@ -80,6 +87,15 @@ export function useSandboxMode<TStep, TCodeLine>(
   /** Returns `true` when generation succeeds, `false` on error. */
   const generateSteps = useCallback((): boolean => {
     setError(null);
+
+    // Check code length
+    if (userCode.length > config.maxCodeLength) {
+      setError({
+        type: "code-too-long",
+        message: `Code is too long (${userCode.length} chars). Maximum is ${config.maxCodeLength} chars.`,
+      });
+      return false;
+    }
 
     // Check line count
     const lineCount = userCode.split("\n").length;
@@ -114,16 +130,20 @@ export function useSandboxMode<TStep, TCodeLine>(
     setGeneratedCodeLines(result.codeLines);
     setGenerationId((prev) => prev + 1);
     return true;
-  }, [userCode, config.maxCodeLines, generator]);
+  }, [userCode, config.maxCodeLength, config.maxCodeLines, generator]);
 
   const resetCode = useCallback(() => {
-    setUserCode(config.defaultCode);
-    saveCode(config.topicId, config.defaultCode);
+    const normalizedDefaultCode = normalizeCodeLength(
+      config.defaultCode,
+      config.maxCodeLength,
+    );
+    setUserCode(normalizedDefaultCode);
+    saveCode(config.topicId, normalizedDefaultCode);
     setError(null);
     setGeneratedSteps(null);
     setGeneratedCodeLines(null);
     setCodeVersion((prev) => prev + 1);
-  }, [config.defaultCode, config.topicId]);
+  }, [config.defaultCode, config.maxCodeLength, config.topicId]);
 
   const toggleSandbox = useCallback(() => {
     setIsSandboxActive((prev) => {

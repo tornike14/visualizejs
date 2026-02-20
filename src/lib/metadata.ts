@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import type { Topic } from "@/types";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import {
+  OPEN_GRAPH_IMAGE_URL,
+  SITE_NAME,
+  SITE_URL,
+  SOCIAL_IMAGE_ALT,
+  SOCIAL_IMAGE_HEIGHT,
+  SOCIAL_IMAGE_WIDTH,
+  TWITTER_IMAGE_URL,
+} from "@/lib/constants";
 
 const GLOBAL_KEYWORDS = [
   "VisualizeJS",
@@ -108,6 +116,15 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
   ],
 };
 
+const THEORY_INTENT_KEYWORDS = [
+  "theory",
+  "explained",
+  "guide",
+  "deep dive",
+  "common mistakes",
+  "faq",
+];
+
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
   return [...new Set(keywordGroups.flat().map((k) => k.trim()).filter(Boolean))];
 }
@@ -150,11 +167,72 @@ export function createTopicMetadata(topic: Topic): Metadata {
       siteName: SITE_NAME,
       type: "article",
       locale: "en_US",
+      images: [
+        {
+          url: OPEN_GRAPH_IMAGE_URL,
+          width: SOCIAL_IMAGE_WIDTH,
+          height: SOCIAL_IMAGE_HEIGHT,
+          alt: SOCIAL_IMAGE_ALT,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description: topic.description,
+      images: [TWITTER_IMAGE_URL],
+    },
+  };
+}
+
+export function createTopicTheoryMetadata(topic: Topic): Metadata {
+  const title = `${topic.title} Theory Guide`;
+  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const canonicalUrl = `${SITE_URL}${topic.route}/theory`;
+  const keywords = dedupeKeywords(
+    getTopicKeywords(topic),
+    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
+    [`${topic.id.replace(/-/g, " ")} theory`],
+  );
+  const description = `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and interview questions.`;
+
+  return {
+    title,
+    description,
+    category: categoryLabel,
+    keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: canonicalUrl,
+      siteName: SITE_NAME,
+      type: "article",
+      locale: "en_US",
+      images: [
+        {
+          url: OPEN_GRAPH_IMAGE_URL,
+          width: SOCIAL_IMAGE_WIDTH,
+          height: SOCIAL_IMAGE_HEIGHT,
+          alt: SOCIAL_IMAGE_ALT,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      images: [TWITTER_IMAGE_URL],
     },
   };
 }
