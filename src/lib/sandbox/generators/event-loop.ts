@@ -482,7 +482,7 @@ function processStatement(
       if (result !== "unhandled") return result;
     }
 
-    // Generic expression statement — treat as sync
+    // Generic expression statement - treat as sync
     const label = expressionToLabel(expr, source);
     const safeLabel = escapeHtml(label);
     state.stack.push(label);
@@ -509,7 +509,7 @@ function processStatement(
     );
     if (result !== "unhandled") return result;
 
-    // Generic call — treat as sync
+    // Generic call - treat as sync
     const label = expressionToLabel(node, source);
     const safeLabel = escapeHtml(label);
     state.stack.push(label);
@@ -541,7 +541,7 @@ function processStatement(
     return null;
   }
 
-  // Empty statement — silently skip
+  // Empty statement - silently skip
   if (node.type === "EmptyStatement") {
     markDone(state, lines);
     return null;
@@ -695,7 +695,7 @@ export function generateEventLoopSteps(
   const drainErr = drainQueues(state, source);
   if (drainErr) return { success: false, error: drainErr };
 
-  // Final "done" step — also hint if functions were declared but never called
+  // Final "done" step - also hint if functions were declared but never called
   const uncalledFunctions: string[] = [];
   for (const [name] of state.functions) {
     // Check if the function was actually called (appears in any step's stack)
@@ -713,7 +713,7 @@ export function generateEventLoopSteps(
     const names = uncalledFunctions
       .map((n) => `<code>${escapeHtml(`${n}()`)}</code>`)
       .join(", ");
-    doneHtml += ` <span class="text-amber-300/80">Hint: ${names} was declared but never called — add a call to see it execute.</span>`;
+    doneHtml += ` <span class="text-amber-300/80">Hint: ${names} was declared but never called - add a call to see it execute.</span>`;
   }
 
   pushStep(state, {

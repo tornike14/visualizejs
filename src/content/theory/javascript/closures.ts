@@ -67,5 +67,5 @@ next(); // 2`,
         "Async callbacks still use lexical scoping, so they read the captured bindings that exist when they eventually execute.",
     },
   ],
-  relatedTopicIds: ["scope-chain", "hoisting", "garbage-collection", "promises"],
+  relatedTopicIds: ["scope-chain", "execution-context", "hoisting", "garbage-collection", "promises"],
 };

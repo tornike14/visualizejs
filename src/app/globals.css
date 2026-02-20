@@ -589,17 +589,17 @@
 
   /* ── Shared visualization animations ── */
 
-  /* Slide-in from left — queue items, list entries */
+  /* Slide-in from left - queue items, list entries */
   .viz-slide-in {
     animation: viz-slide-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Float-up — hoisted declarations moving to top */
+  /* Float-up - hoisted declarations moving to top */
   .viz-float-up {
     animation: viz-float-up 0.7s ease-out;
   }
 
-  /* Pulse — playing indicator dot */
+  /* Pulse - playing indicator dot */
   .viz-pulse-dot {
     display: inline-block;
     height: 8px;
@@ -609,7 +609,7 @@
     animation: viz-pulse 1s ease infinite;
   }
 
-  /* Change flash — highlights sections whose content changed between steps */
+  /* Change flash - highlights sections whose content changed between steps */
   .viz-change-flash {
     animation: viz-change-flash 0.85s ease both;
   }
@@ -625,7 +625,7 @@
     }
   }
 
-  /* Step description — inline code and colored highlights */
+  /* Step description - inline code and colored highlights */
   .viz-step-desc code {
     border: 1px solid rgba(71, 85, 105, 0.7);
     background: rgba(15, 23, 42, 0.5);

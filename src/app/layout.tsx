@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { AppTheme } from "@/components/layout/AppTheme";
 import { Sidebar } from "@/components/layout/Sidebar";
 import {
@@ -97,6 +98,7 @@ export default function RootLayout({
             {children}
           </main>
         </AppTheme>
+        <Analytics />
       </body>
     </html>
   );

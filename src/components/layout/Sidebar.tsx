@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { track } from "@vercel/analytics";
 import { Linkedin } from "lucide-react";
 import { TopicToggle } from "./TopicToggle";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -60,12 +61,17 @@ function FollowLinkedInButton({
   const [avatarError, setAvatarError] = useState(false);
   const avatarText = CREATOR_AVATAR_FALLBACK.slice(0, 3).toUpperCase();
 
+  const handleClick = () => {
+    track("linkedin_follow_click", { location: compact ? "collapsed" : "sidebar" });
+    onClick?.();
+  };
+
   return (
     <a
       href={CREATOR_LINKEDIN_URL}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={onClick}
+      onClick={handleClick}
       aria-label="Follow on LinkedIn"
       className={cn(
         "group inline-flex items-center rounded-full border transition-all",
@@ -170,7 +176,7 @@ function ScrollableTopicList({
         </nav>
       </ScrollArea>
 
-      {/* Top fade — hints there's content above */}
+      {/* Top fade - hints there's content above */}
       <div
         className={cn(
           "pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-[var(--app-surface-strong)] to-transparent transition-opacity duration-300",
@@ -178,7 +184,7 @@ function ScrollableTopicList({
         )}
       />
 
-      {/* Bottom fade — hints there's content below */}
+      {/* Bottom fade - hints there's content below */}
       <div
         className={cn(
           "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-[var(--app-surface-strong)] to-transparent transition-opacity duration-300",

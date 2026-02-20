@@ -8,9 +8,9 @@ How to add interactive sandbox mode to a visualization topic. Users type code in
 
 1. [Architecture Overview](#architecture-overview)
 2. [File Structure](#file-structure)
-3. [Step 1 — Create the Generator](#step-1--create-the-generator)
-4. [Step 2 — Register the Config](#step-2--register-the-config)
-5. [Step 3 — Wire Into the Visualization](#step-3--wire-into-the-visualization)
+3. [Step 1 - Create the Generator](#step-1--create-the-generator)
+4. [Step 2 - Register the Config](#step-2--register-the-config)
+5. [Step 3 - Wire Into the Visualization](#step-3--wire-into-the-visualization)
 6. [Shared Utilities](#shared-utilities)
 7. [Editor Features](#editor-features)
 8. [Error Handling](#error-handling)
@@ -78,7 +78,7 @@ Everything else is shared and reusable.
 
 ---
 
-## Step 1 — Create the Generator
+## Step 1 - Create the Generator
 
 A generator is a function with this signature:
 
@@ -161,7 +161,7 @@ See `src/lib/sandbox/generators/event-loop.ts` for a complete example (~500 line
 
 ---
 
-## Step 2 — Register the Config
+## Step 2 - Register the Config
 
 Add an entry to `src/lib/sandbox/configs.ts`:
 
@@ -194,7 +194,7 @@ function outer() {
 
 ---
 
-## Step 3 — Wire Into the Visualization
+## Step 3 - Wire Into the Visualization
 
 In your visualization component, add sandbox support with minimal boilerplate:
 
@@ -209,7 +209,7 @@ import { useSandboxUIState } from "@/hooks/useSandboxUIState";
 import { SANDBOX_CONFIGS } from "@/lib/sandbox/configs";
 import { generateYourTopicSteps } from "@/lib/sandbox/generators/your-topic";
 
-// Dynamic import — CodeMirror only loads when sandbox is active
+// Dynamic import - CodeMirror only loads when sandbox is active
 const SandboxEditor = dynamic(
   () => import("@/components/sandbox/SandboxEditor").then((m) => ({ default: m.SandboxEditor })),
   { ssr: false, loading: () => <div className="h-[220px] animate-pulse rounded-lg bg-slate-800/50" /> },

@@ -66,6 +66,15 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "arrow function this",
     "call apply bind examples",
   ],
+  "execution-context": [
+    "javascript execution context explained",
+    "execution context stack",
+    "global execution context",
+    "function execution context",
+    "creation phase vs execution phase",
+    "variable environment javascript",
+    "lexical environment javascript",
+  ],
   "scope-chain": [
     "javascript scope chain",
     "execution context javascript",
