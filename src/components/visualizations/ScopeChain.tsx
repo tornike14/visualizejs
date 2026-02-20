@@ -217,7 +217,7 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 2: inner() called — 3 scopes now visible
+      // Step 2: inner() called - 3 scopes now visible
       {
         descriptionHtml:
           '<code>inner()</code> is called. Its scope has one local binding: <code>z</code>. The scope chain is now three levels deep: <strong>inner -> outer -> Global</strong>.',
@@ -253,10 +253,10 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 3: console.log(z) — lookup z, check inner
+      // Step 3: console.log(z) - lookup z, check inner
       {
         descriptionHtml:
-          '<code>console.log(z)</code> — the engine looks up <code>z</code>. It starts in the <strong>innermost</strong> scope: <code>inner()</code>.',
+          '<code>console.log(z)</code> - the engine looks up <code>z</code>. It starts in the <strong>innermost</strong> scope: <code>inner()</code>.',
         activeLine: 8,
         doneLines: [1, 3, 4, 6, 7, 13, 15],
         scopes: [
@@ -297,7 +297,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 4: z found in inner
       {
         descriptionHtml:
-          '<code>z</code> is found in <code>inner()</code> with value <code>"inner"</code>. Lookup complete — no need to check outer scopes.',
+          '<code>z</code> is found in <code>inner()</code> with value <code>"inner"</code>. Lookup complete - no need to check outer scopes.',
         activeLine: 8,
         doneLines: [1, 3, 4, 6, 7, 13, 15],
         scopes: [
@@ -336,10 +336,10 @@ const EXAMPLES: ScopeExample[] = [
         },
         consoleOutput: ['"inner"'],
       },
-      // Step 5: console.log(y) — lookup y, check inner (not found)
+      // Step 5: console.log(y) - lookup y, check inner (not found)
       {
         descriptionHtml:
-          '<code>console.log(y)</code> — looking up <code>y</code>. Check <code>inner()</code> first — <code>y</code> is not here.',
+          '<code>console.log(y)</code> - looking up <code>y</code>. Check <code>inner()</code> first - <code>y</code> is not here.',
         activeLine: 9,
         doneLines: [1, 3, 4, 6, 7, 8, 13, 15],
         scopes: [
@@ -418,10 +418,10 @@ const EXAMPLES: ScopeExample[] = [
         },
         consoleOutput: ['"inner"', '"outer"'],
       },
-      // Step 7: console.log(x) — lookup x, check inner (not found)
+      // Step 7: console.log(x) - lookup x, check inner (not found)
       {
         descriptionHtml:
-          '<code>console.log(x)</code> — looking up <code>x</code>. Not in <code>inner()</code>...',
+          '<code>console.log(x)</code> - looking up <code>x</code>. Not in <code>inner()</code>...',
         activeLine: 10,
         doneLines: [1, 3, 4, 6, 7, 8, 9, 13, 15],
         scopes: [
@@ -458,7 +458,7 @@ const EXAMPLES: ScopeExample[] = [
         },
         consoleOutput: ['"inner"', '"outer"'],
       },
-      // Step 8: x — not in outer either
+      // Step 8: x - not in outer either
       {
         descriptionHtml:
           'Not in <code>outer()</code> either. Continue walking up the chain...',
@@ -540,10 +540,10 @@ const EXAMPLES: ScopeExample[] = [
         },
         consoleOutput: ['"inner"', '"outer"', '"global"'],
       },
-      // Step 10: console.log(w) — lookup w, searching all scopes
+      // Step 10: console.log(w) - lookup w, searching all scopes
       {
         descriptionHtml:
-          '<code>console.log(w)</code> — looking up <code>w</code>. The engine checks <code>inner()</code>, <code>outer()</code>, and <code>Global</code>...',
+          '<code>console.log(w)</code> - looking up <code>w</code>. The engine checks <code>inner()</code>, <code>outer()</code>, and <code>Global</code>...',
         activeLine: 11,
         doneLines: [1, 3, 4, 6, 7, 8, 9, 10, 13, 15],
         scopes: [
@@ -580,7 +580,7 @@ const EXAMPLES: ScopeExample[] = [
         },
         consoleOutput: ['"inner"', '"outer"', '"global"'],
       },
-      // Step 11: w — ReferenceError
+      // Step 11: w - ReferenceError
       {
         descriptionHtml:
           '<code>w</code> was not found in <strong>any</strong> scope. The engine has exhausted the entire scope chain, so it throws a <code>ReferenceError: w is not defined</code>.',
@@ -706,7 +706,7 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 2: Enter if block — block scope created
+      // Step 2: Enter if block - block scope created
       {
         descriptionHtml:
           'Entering the <code>if</code> block. A new <strong>block scope</strong> is created. <code>let b = 20</code> creates a <strong>new</strong> <code>b</code> in this block scope, shadowing the outer <code>b</code>.',
@@ -739,10 +739,10 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 3: var a = 10 — overwrites function-scoped a
+      // Step 3: var a = 10 - overwrites function-scoped a
       {
         descriptionHtml:
-          '<code>var a = 10</code> — <code>var</code> is <strong>function-scoped</strong>, so this is the <strong>same</strong> <code>a</code> in <code>demo()</code>. It overwrites <code>1</code> with <code>10</code>. Notice: <code>a</code> is in the function scope, not the block scope.',
+          '<code>var a = 10</code> - <code>var</code> is <strong>function-scoped</strong>, so this is the <strong>same</strong> <code>a</code> in <code>demo()</code>. It overwrites <code>1</code> with <code>10</code>. Notice: <code>a</code> is in the function scope, not the block scope.',
         activeLine: 6,
         doneLines: [1, 2, 3, 5, 13],
         scopes: [
@@ -773,10 +773,10 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 4: let b = 20 — new b in block scope
+      // Step 4: let b = 20 - new b in block scope
       {
         descriptionHtml:
-          '<code>let b = 20</code> — <code>let</code> is <strong>block-scoped</strong>, so this creates a <strong>new</strong> <code>b</code> in the <code>if</code> block. The outer <code>b = 2</code> in <code>demo()</code> is untouched.',
+          '<code>let b = 20</code> - <code>let</code> is <strong>block-scoped</strong>, so this creates a <strong>new</strong> <code>b</code> in the <code>if</code> block. The outer <code>b = 2</code> in <code>demo()</code> is untouched.',
         activeLine: 7,
         doneLines: [1, 2, 3, 5, 6, 13],
         scopes: [
@@ -810,7 +810,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 5: console.log(a, b) inside block
       {
         descriptionHtml:
-          '<code>console.log(a, b)</code> inside the block. <code>a</code> is found in the function scope (<code>10</code>). <code>b</code> is found in the block scope (<code>20</code>) — it <strong>shadows</strong> the outer <code>b</code>.',
+          '<code>console.log(a, b)</code> inside the block. <code>a</code> is found in the function scope (<code>10</code>). <code>b</code> is found in the block scope (<code>20</code>) - it <strong>shadows</strong> the outer <code>b</code>.',
         activeLine: 8,
         doneLines: [1, 2, 3, 5, 6, 7, 13],
         scopes: [
@@ -842,10 +842,10 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: ["10, 20"],
       },
-      // Step 6: Exit block — block scope destroyed
+      // Step 6: Exit block - block scope destroyed
       {
         descriptionHtml:
-          'The <code>if</code> block ends. The block scope is <strong>destroyed</strong> — <code>let b = 20</code> is gone. But <code>var a = 10</code> persists because <code>var</code> lives in the function scope.',
+          'The <code>if</code> block ends. The block scope is <strong>destroyed</strong> - <code>let b = 20</code> is gone. But <code>var a = 10</code> persists because <code>var</code> lives in the function scope.',
         activeLine: 9,
         doneLines: [1, 2, 3, 5, 6, 7, 8, 13],
         scopes: [
@@ -872,7 +872,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 7: console.log(a, b) after block
       {
         descriptionHtml:
-          '<code>console.log(a, b)</code> after the block. <code>a</code> is <code>10</code> — <code>var</code> leaked the change out of the block. <code>b</code> is <code>2</code> — the block-scoped <code>b = 20</code> is gone.',
+          '<code>console.log(a, b)</code> after the block. <code>a</code> is <code>10</code> - <code>var</code> leaked the change out of the block. <code>b</code> is <code>2</code> - the block-scoped <code>b = 20</code> is gone.',
         activeLine: 11,
         doneLines: [1, 2, 3, 5, 6, 7, 8, 9, 13],
         scopes: [
@@ -900,7 +900,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 8: Summary
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> <code>var</code> is function-scoped — it ignores block boundaries and can leak values. <code>let</code> and <code>const</code> are block-scoped — they are confined to the nearest <code>{ }</code> block and destroyed when it exits.',
+          '<strong>Key takeaway:</strong> <code>var</code> is function-scoped - it ignores block boundaries and can leak values. <code>let</code> and <code>const</code> are block-scoped - they are confined to the nearest <code>{ }</code> block and destroyed when it exits.',
         activeLine: null,
         doneLines: [1, 2, 3, 5, 6, 7, 8, 9, 11, 13],
         scopes: [
@@ -1001,7 +1001,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 2: greet() called from inside wrapper
       {
         descriptionHtml:
-          '<code>greet()</code> is called from inside <code>wrapper()</code>. But where does <code>greet</code> look for variables? Its scope chain was set when it was <strong>defined</strong> — at the global level.',
+          '<code>greet()</code> is called from inside <code>wrapper()</code>. But where does <code>greet</code> look for variables? Its scope chain was set when it was <strong>defined</strong> - at the global level.',
         activeLine: 9,
         doneLines: [1, 3, 4, 5, 7, 8, 10, 11],
         scopes: [
@@ -1026,10 +1026,10 @@ const EXAMPLES: ScopeExample[] = [
         lookup: null,
         consoleOutput: [],
       },
-      // Step 3: Lookup name — searching greet()
+      // Step 3: Lookup name - searching greet()
       {
         descriptionHtml:
-          '<code>console.log(name)</code> — the engine looks up <code>name</code>. It starts in <code>greet()</code>\'s own scope — no <code>name</code> here.',
+          '<code>console.log(name)</code> - the engine looks up <code>name</code>. It starts in <code>greet()</code>\'s own scope - no <code>name</code> here.',
         activeLine: 4,
         doneLines: [1, 3, 5, 7, 8, 9, 10, 11],
         scopes: [
@@ -1061,7 +1061,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 4: name found in Global (NOT wrapper)
       {
         descriptionHtml:
-          'The engine walks up to <code>greet</code>\'s <strong>lexical</strong> parent — the <strong>Global</strong> scope (where <code>greet</code> was defined). It finds <code>name = "global"</code>. It does <strong>not</strong> look in <code>wrapper()</code> even though <code>wrapper</code> called <code>greet</code>.',
+          'The engine walks up to <code>greet</code>\'s <strong>lexical</strong> parent - the <strong>Global</strong> scope (where <code>greet</code> was defined). It finds <code>name = "global"</code>. It does <strong>not</strong> look in <code>wrapper()</code> even though <code>wrapper</code> called <code>greet</code>.',
         activeLine: 4,
         doneLines: [1, 3, 5, 7, 8, 9, 10, 11],
         scopes: [
@@ -1129,7 +1129,7 @@ const EXAMPLES: ScopeExample[] = [
       // Step 6: Key takeaway
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> JavaScript uses <strong>lexical scoping</strong>. A function\'s scope chain is determined at <strong>definition time</strong>, not call time. This is the foundation of closures — and the opposite of how <code>this</code> works (which is determined by the call site).',
+          '<strong>Key takeaway:</strong> JavaScript uses <strong>lexical scoping</strong>. A function\'s scope chain is determined at <strong>definition time</strong>, not call time. This is the foundation of closures - and the opposite of how <code>this</code> works (which is determined by the call site).',
         activeLine: null,
         doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11],
         scopes: [

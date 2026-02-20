@@ -66,5 +66,5 @@ showThis(); // undefined`,
         "When a bound function is called with new, constructor behavior takes priority and this points to the newly created instance.",
     },
   ],
-  relatedTopicIds: ["prototypal-inheritance", "scope-chain", "closures", "hoisting"],
+  relatedTopicIds: ["execution-context", "prototypal-inheritance", "scope-chain", "closures", "hoisting"],
 };

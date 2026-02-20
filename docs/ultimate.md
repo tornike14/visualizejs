@@ -10,8 +10,8 @@ Current product scope:
 - UI theme has been unified across shell, sidebar, pages, and visualizations using shared design tokens and reusable visualization primitives.
 
 Status:
-- `npm run lint` — passes (0 errors)
-- `npm run build` — passes
+- `npm run lint` - passes (0 errors)
+- `npm run build` - passes
 
 ---
 

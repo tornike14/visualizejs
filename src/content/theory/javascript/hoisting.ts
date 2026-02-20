@@ -64,5 +64,5 @@ let counter = 1;`,
         "It is better to write declarations in a clear top-down flow. Understanding hoisting helps debugging, but explicit ordering improves readability.",
     },
   ],
-  relatedTopicIds: ["scope-chain", "closures", "this-keyword", "type-coercion"],
+  relatedTopicIds: ["execution-context", "scope-chain", "closures", "this-keyword", "type-coercion"],
 };

@@ -479,7 +479,7 @@ export function EventLoop() {
 
       {/* Main visualization */}
       <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        {/* Event-loop-specific styles (orbit ring) — shared animations are in globals.css */}
+        {/* Event-loop-specific styles (orbit ring) - shared animations are in globals.css */}
         <style>{`
           .el-loop-ring {
             position: relative;

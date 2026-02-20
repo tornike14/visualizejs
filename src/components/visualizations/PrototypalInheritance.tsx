@@ -294,7 +294,7 @@ const EXAMPLES: ProtoExample[] = [
     steps: [
       {
         descriptionHtml:
-          `The <code>Animal</code> constructor is declared. Every function gets a <code>.prototype</code> object automatically — this will be the prototype of all <code>Animal</code> instances.`,
+          `The <code>Animal</code> constructor is declared. Every function gets a <code>.prototype</code> object automatically - this will be the prototype of all <code>Animal</code> instances.`,
         activeLine: 1,
         doneLines: [],
         chain: [
@@ -344,7 +344,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>Dog</code> is declared. Inside it, <code>Animal.call(this, name)</code> borrows <code>Animal</code>'s constructor logic — this is how the parent's instance setup runs for the child.`,
+          `<code>Dog</code> is declared. Inside it, <code>Animal.call(this, name)</code> borrows <code>Animal</code>'s constructor logic - this is how the parent's instance setup runs for the child.`,
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         chain: [
@@ -471,7 +471,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>rex.fetch()</code> — not on <code>rex</code>, found on <code>Dog.prototype</code>. Dog-specific methods live one level up. <code>this</code> is <code>rex</code>, so it logs <code>"Rex fetches!"</code>.`,
+          `<code>rex.fetch()</code> - not on <code>rex</code>, found on <code>Dog.prototype</code>. Dog-specific methods live one level up. <code>this</code> is <code>rex</code>, so it logs <code>"Rex fetches!"</code>.`,
         activeLine: 19,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         chain: [
@@ -513,7 +513,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>rex.speak()</code> — not on <code>rex</code>, not on <code>Dog.prototype</code>, but found on <code>Animal.prototype</code>. The chain walked <strong>two levels</strong> up. Inherited methods work seamlessly.`,
+          `<code>rex.speak()</code> - not on <code>rex</code>, not on <code>Dog.prototype</code>, but found on <code>Animal.prototype</code>. The chain walked <strong>two levels</strong> up. Inherited methods work seamlessly.`,
         activeLine: 20,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
         chain: [
@@ -556,7 +556,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>rex instanceof Dog</code> — the engine checks: is <code>Dog.prototype</code> anywhere in <code>rex</code>'s chain? Yes, one level up. Returns <code>true</code>.`,
+          `<code>rex instanceof Dog</code> - the engine checks: is <code>Dog.prototype</code> anywhere in <code>rex</code>'s chain? Yes, one level up. Returns <code>true</code>.`,
         activeLine: 21,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         chain: [
@@ -597,7 +597,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>rex instanceof Animal</code> — is <code>Animal.prototype</code> in the chain? Yes, <strong>two</strong> levels up. Also <code>true</code>. <strong>Key takeaway:</strong> <code>instanceof</code> walks the full chain, so <code>rex</code> is an instance of both <code>Dog</code> and <code>Animal</code>.`,
+          `<code>rex instanceof Animal</code> - is <code>Animal.prototype</code> in the chain? Yes, <strong>two</strong> levels up. Also <code>true</code>. <strong>Key takeaway:</strong> <code>instanceof</code> walks the full chain, so <code>rex</code> is an instance of both <code>Dog</code> and <code>Animal</code>.`,
         activeLine: 22,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
         chain: [
@@ -718,7 +718,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `Setting <code>child.greeting</code> creates an <strong>own property</strong> on <code>child</code>. This <strong>shadows</strong> the inherited <code>greeting</code> on <code>base</code> — it does not modify <code>base</code>.`,
+          `Setting <code>child.greeting</code> creates an <strong>own property</strong> on <code>child</code>. This <strong>shadows</strong> the inherited <code>greeting</code> on <code>base</code> - it does not modify <code>base</code>.`,
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         chain: [
@@ -750,7 +750,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>child.greeting</code> finds the own property on <code>child</code> first. The prototype's <code>greeting</code> is <strong>shadowed</strong> — never reached. Logs <code>"Hello from child"</code>.`,
+          `<code>child.greeting</code> finds the own property on <code>child</code> first. The prototype's <code>greeting</code> is <strong>shadowed</strong> - never reached. Logs <code>"Hello from child"</code>.`,
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         chain: [
@@ -816,7 +816,7 @@ const EXAMPLES: ProtoExample[] = [
       },
       {
         descriptionHtml:
-          `<code>delete child.greeting</code> removes the own property from <code>child</code>. The shadow is lifted — the inherited property on <code>base</code> is now reachable again.`,
+          `<code>delete child.greeting</code> removes the own property from <code>child</code>. The shadow is lifted - the inherited property on <code>base</code> is now reachable again.`,
         activeLine: 11,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         chain: [

@@ -79,7 +79,7 @@ const STEPS: ClosureStep[] = [
   },
   {
     descriptionHtml:
-      `The <code>inner</code> function is declared inside <code>outer</code>. It captures a reference to <code>outer</code>'s scope — this creates the <strong>closure</strong>.`,
+      `The <code>inner</code> function is declared inside <code>outer</code>. It captures a reference to <code>outer</code>'s scope - this creates the <strong>closure</strong>.`,
     activeLine: 3,
     doneLines: [1, 2],
     stack: ["outer()"],
@@ -88,7 +88,7 @@ const STEPS: ClosureStep[] = [
   },
   {
     descriptionHtml:
-      `<code>return inner</code> — <code>outer</code> returns the <code>inner</code> function. The execution context will be removed, but the scope is preserved because <code>inner</code> holds a reference to it.`,
+      `<code>return inner</code> - <code>outer</code> returns the <code>inner</code> function. The execution context will be removed, but the scope is preserved because <code>inner</code> holds a reference to it.`,
     activeLine: 7,
     doneLines: [1, 2, 3, 4, 5, 6],
     stack: ["outer()"],
@@ -124,7 +124,7 @@ const STEPS: ClosureStep[] = [
   },
   {
     descriptionHtml:
-      `<code>fn()</code> is called again. <code>count</code> is still <code>1</code> from the previous call — the closure preserves state between calls. It increments to <code>2</code>.`,
+      `<code>fn()</code> is called again. <code>count</code> is still <code>1</code> from the previous call - the closure preserves state between calls. It increments to <code>2</code>.`,
     activeLine: 4,
     doneLines: [1, 2, 3, 5, 9, 10],
     stack: ["fn() → inner()"],
