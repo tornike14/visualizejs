@@ -108,6 +108,15 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
   ],
 };
 
+const THEORY_INTENT_KEYWORDS = [
+  "theory",
+  "explained",
+  "guide",
+  "deep dive",
+  "common mistakes",
+  "faq",
+];
+
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
   return [...new Set(keywordGroups.flat().map((k) => k.trim()).filter(Boolean))];
 }
@@ -155,6 +164,49 @@ export function createTopicMetadata(topic: Topic): Metadata {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description: topic.description,
+    },
+  };
+}
+
+export function createTopicTheoryMetadata(topic: Topic): Metadata {
+  const title = `${topic.title} Theory Guide`;
+  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const canonicalUrl = `${SITE_URL}${topic.route}/theory`;
+  const keywords = dedupeKeywords(
+    getTopicKeywords(topic),
+    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
+    [`${topic.id.replace(/-/g, " ")} theory`],
+  );
+  const description = `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and practical FAQ.`;
+
+  return {
+    title,
+    description,
+    category: categoryLabel,
+    keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: canonicalUrl,
+      siteName: SITE_NAME,
+      type: "article",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
     },
   };
 }
