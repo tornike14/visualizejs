@@ -1,6 +1,7 @@
 import type { TopicTheoryContent } from "@/content/theory/types";
 import { closuresTheory } from "@/content/theory/javascript/closures";
 import { eventLoopTheory } from "@/content/theory/javascript/event-loop";
+import { executionContextTheory } from "@/content/theory/javascript/execution-context";
 import { garbageCollectionTheory } from "@/content/theory/javascript/garbage-collection";
 import { generatorsTheory } from "@/content/theory/javascript/generators";
 import { heapStackTheory } from "@/content/theory/javascript/heap-stack";
@@ -17,6 +18,7 @@ import type { Category, Topic } from "@/types";
 const THEORY_CONTENT_BY_TOPIC_ID: Record<string, TopicTheoryContent> = {
   closures: closuresTheory,
   "event-loop": eventLoopTheory,
+  "execution-context": executionContextTheory,
   "garbage-collection": garbageCollectionTheory,
   generators: generatorsTheory,
   "heap-stack": heapStackTheory,

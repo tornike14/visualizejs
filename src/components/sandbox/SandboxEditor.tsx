@@ -51,12 +51,12 @@ async function formatWithPrettier(view: EditorView) {
       });
     }
   } catch {
-    // Syntax errors or import failures — silently ignore
+    // Syntax errors or import failures - silently ignore
   }
 }
 
 interface SandboxEditorProps {
-  /** Current code string — when this changes externally (e.g. reset) the editor syncs. */
+  /** Current code string - when this changes externally (e.g. reset) the editor syncs. */
   code: string;
   onChange: (code: string) => void;
   onGenerate: () => void;
@@ -110,7 +110,7 @@ export function SandboxEditor({
               },
               preventDefault: true,
             },
-            // Cmd+Shift+F (Mac) / Ctrl+Shift+F (Win/Linux) — format with Prettier
+            // Cmd+Shift+F (Mac) / Ctrl+Shift+F (Win/Linux) - format with Prettier
             {
               key: "Mod-Shift-f",
               run: (view) => {
@@ -170,7 +170,7 @@ export function SandboxEditor({
   }, []);
 
   // Sync editor content when code changes externally (e.g. reset)
-  // We track `codeVersion` — it only bumps on external resets, not on every keystroke.
+  // We track `codeVersion` - it only bumps on external resets, not on every keystroke.
   useEffect(() => {
     const view = viewRef.current;
     if (!view) return;

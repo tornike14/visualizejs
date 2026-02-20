@@ -74,9 +74,9 @@ export function useSandboxUIState<TStep, TCodeLine>(
     usingSandbox,
     /** Whether to show highlighted code (usingSandbox && !isEditing) */
     showHighlightedCode,
-    /** Toggle sandbox on/off — always resets to editing mode */
+    /** Toggle sandbox on/off - always resets to editing mode */
     handleToggleSandbox,
-    /** Generate steps from current code — switches to view mode on success */
+    /** Generate steps from current code - switches to view mode on success */
     handleGenerate,
     /** Return to the code editor */
     handleEditCode,

@@ -868,12 +868,12 @@ const HEAP_TONE_MAP = {
 
 /* ── Sub-components ── */
 
-/** Stable fingerprint for a root — changes only when root data changes. */
+/** Stable fingerprint for a root - changes only when root data changes. */
 function rootFingerprint(root: GCRoot): string {
   return `${root.label}|${root.tone}|${root.refsTo.join(",")}`;
 }
 
-/** Stable fingerprint for a heap object — changes only when object data changes. */
+/** Stable fingerprint for a heap object - changes only when object data changes. */
 function heapFingerprint(obj: HeapObject): string {
   return `${obj.label}|${obj.tone}|${obj.status}|${obj.props.map((p) => `${p.key}:${p.value}`).join(",")}`;
 }

@@ -66,5 +66,5 @@ console.log(person.name); // "Ada"`,
         "Garbage collection reclaims heap objects that are no longer reachable from active roots.",
     },
   ],
-  relatedTopicIds: ["reference-value", "garbage-collection", "closures", "event-loop"],
+  relatedTopicIds: ["execution-context", "reference-value", "garbage-collection", "closures", "event-loop"],
 };

@@ -22,6 +22,17 @@ export const topics: Topic[] = [
       "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
   },
   {
+    id: "execution-context",
+    title: "Execution Context",
+    category: "javascript",
+    route: "/javascript/execution-context",
+    description:
+      "Visualize how JavaScript creates and manages execution contexts through creation and execution phases",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#function_context",
+  },
+  {
     id: "closures",
     title: "Closures",
     category: "javascript",

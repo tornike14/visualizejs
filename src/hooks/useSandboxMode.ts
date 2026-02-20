@@ -15,9 +15,9 @@ interface SandboxModeReturn<TStep, TCodeLine> {
   /** Returns `true` when generation succeeds, `false` on error. */
   generateSteps: () => boolean;
   resetCode: () => void;
-  /** Increments each time steps are regenerated — use as resetKey for useStepPlayback */
+  /** Increments each time steps are regenerated - use as resetKey for useStepPlayback */
   generationId: number;
-  /** Increments when code is reset externally (e.g. "Reset to default") — use to sync editor content */
+  /** Increments when code is reset externally (e.g. "Reset to default") - use to sync editor content */
   codeVersion: number;
 }
 
@@ -47,7 +47,7 @@ function saveCode(topicId: string, code: string) {
 
 /**
  * Generic sandbox mode hook.
- * Each topic provides its own step generator function — the hook handles
+ * Each topic provides its own step generator function - the hook handles
  * parsing, validation, localStorage persistence, and state management.
  */
 export function useSandboxMode<TStep, TCodeLine>(
@@ -148,7 +148,7 @@ export function useSandboxMode<TStep, TCodeLine>(
   const toggleSandbox = useCallback(() => {
     setIsSandboxActive((prev) => {
       if (prev) {
-        // Turning off — clear generated state
+        // Turning off - clear generated state
         setGeneratedSteps(null);
         setGeneratedCodeLines(null);
         setError(null);

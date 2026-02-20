@@ -8,15 +8,15 @@ How to wire a new visualization topic into VisualizeJS. This document covers the
 
 1. [Architecture Overview](#architecture-overview)
 2. [Directory Structure](#directory-structure)
-3. [Step 1 — Register the Topic](#step-1--register-the-topic)
-4. [Step 2 — Create the Route Page](#step-2--create-the-route-page)
-5. [Step 3 — Build the Visualization Component](#step-3--build-the-visualization-component)
+3. [Step 1 - Register the Topic](#step-1--register-the-topic)
+4. [Step 2 - Create the Route Page](#step-2--create-the-route-page)
+5. [Step 3 - Build the Visualization Component](#step-3--build-the-visualization-component)
 6. [Toolbar Portal Pattern](#toolbar-portal-pattern)
 7. [Design System Reference](#design-system-reference)
 8. [Reusable Components](#reusable-components)
-9. [Playback Engine — useStepPlayback](#playback-engine--usestepplayback)
-10. [Change Flash — useChangeFlash](#change-flash--usechangeflash)
-11. [Syntax Highlighting — Tokenizer](#syntax-highlighting--tokenizer)
+9. [Playback Engine - useStepPlayback](#playback-engine--usestepplayback)
+10. [Change Flash - useChangeFlash](#change-flash--usechangeflash)
+11. [Syntax Highlighting - Tokenizer](#syntax-highlighting--tokenizer)
 12. [Animation System](#animation-system)
 13. [Step Data Modeling](#step-data-modeling)
 14. [Shared CSS Classes](#shared-css-classes)
@@ -93,7 +93,7 @@ src/
 
 ---
 
-## Step 1 — Register the Topic
+## Step 1 - Register the Topic
 
 **File:** `src/lib/topics.ts`
 
@@ -141,7 +141,7 @@ export interface Topic {
 
 ---
 
-## Step 2 — Create the Route Page
+## Step 2 - Create the Route Page
 
 **File:** `src/app/javascript/closures/page.tsx`
 
@@ -184,11 +184,11 @@ Key points:
 - `VisualizationLoading` shows a spinner during chunk load.
 - `createTopicMetadata()` generates Open Graph and Twitter SEO tags automatically.
 - `ErrorBoundary` catches rendering errors gracefully.
-- No changes needed here for the toolbar — the shell already includes `ToolbarProvider` + `ToolbarSlot`.
+- No changes needed here for the toolbar - the shell already includes `ToolbarProvider` + `ToolbarSlot`.
 
 ---
 
-## Step 3 — Build the Visualization Component
+## Step 3 - Build the Visualization Component
 
 **File:** `src/components/visualizations/Closures.tsx`
 
@@ -382,9 +382,9 @@ Row alignment convention:
 
 The toolbar (transport controls + step explanation) is rendered *outside* the surface card to maximize vertical space for visualization panels. This is achieved via a React context + portal pattern:
 
-1. **`ToolbarProvider`** — wraps the shell and stores the mount node + toolbar readiness state in context.
-2. **`ToolbarSlot`** — placed between header and card in the shell. Renders a skeleton (`simple` or `selector`) until portaled content mounts.
-3. **`ToolbarPortal`** — uses `createPortal` to render children into the `ToolbarSlot` from anywhere in the tree and toggles slot readiness.
+1. **`ToolbarProvider`** - wraps the shell and stores the mount node + toolbar readiness state in context.
+2. **`ToolbarSlot`** - placed between header and card in the shell. Renders a skeleton (`simple` or `selector`) until portaled content mounts.
+3. **`ToolbarPortal`** - uses `createPortal` to render children into the `ToolbarSlot` from anywhere in the tree and toggles slot readiness.
 
 The shell sets up the provider and slot automatically. Visualizations just wrap their toolbar JSX in `<ToolbarPortal>`:
 
@@ -419,9 +419,9 @@ import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 
 | Class | Use |
 |---|---|
-| `.app-surface` | Main cards — gradient bg, border, shadow, blur |
-| `.app-surface-subtle` | Lighter containers — controls row and explanation pill |
-| `.app-surface-flat` | Minimal surface — inline code backgrounds |
+| `.app-surface` | Main cards - gradient bg, border, shadow, blur |
+| `.app-surface-subtle` | Lighter containers - controls row and explanation pill |
+| `.app-surface-flat` | Minimal surface - inline code backgrounds |
 
 ### Difficulty Badge Colors
 
@@ -476,7 +476,7 @@ import { CodeBlock, type CodeBlockLine } from "@/components/visualization-ui/Cod
 />
 ```
 
-**Important:** Always use `isDone && !isActive` — never apply both `is-active` and `is-done` to the same line. The `is-done` class sets `opacity: 0.4` which would visually override the active highlight. When the event loop or callbacks re-execute a line that was previously done, it must appear active (highlighted), not faded.
+**Important:** Always use `isDone && !isActive` - never apply both `is-active` and `is-done` to the same line. The `is-done` class sets `opacity: 0.4` which would visually override the active highlight. When the event loop or callbacks re-execute a line that was previously done, it must appear active (highlighted), not faded.
 
 `CodeLine` can be used individually for finer control:
 
@@ -631,7 +631,7 @@ Renders as a pink pill with an arrow icon. Show it conditionally on the last ste
 
 ---
 
-## Playback Engine — useStepPlayback
+## Playback Engine - useStepPlayback
 
 **File:** `src/hooks/useStepPlayback.ts`
 
@@ -683,7 +683,7 @@ Default speed level is `4` (`1x`).
 
 ---
 
-## Change Flash — useChangeFlash
+## Change Flash - useChangeFlash
 
 **File:** `src/hooks/useChangeFlash.ts`
 
@@ -717,11 +717,11 @@ const flashes = useChangeFlash(
 | `channels` | `Record<K, unknown>` | Named data slices from the current step. Values are compared via `JSON.stringify` |
 | `stepIndex` | `number` | Current step index from `useStepPlayback`. Used as the effect trigger |
 
-**Returns:** `Record<K, boolean>` — same keys as `channels`, each `true` if that channel changed on the most recent step transition.
+**Returns:** `Record<K, boolean>` - same keys as `channels`, each `true` if that channel changed on the most recent step transition.
 
 **Behavior:**
 
-- The first real step (-1 to 0) does **not** flash — everything is new, there's no meaningful "previous state"
+- The first real step (-1 to 0) does **not** flash - everything is new, there's no meaningful "previous state"
 - Reset (step goes back to -1) clears all flash state
 - A single timer clears all active flashes after 850ms
 - Rapid stepping cancels the previous timer and restarts
@@ -732,14 +732,14 @@ Two animation classes are available in `globals.css`:
 
 | Class | Effect | Apply to |
 |---|---|---|
-| `.viz-change-flash` | Outer pink glow pulse (`box-shadow`) | NeonPanels — via `className` prop |
-| `.viz-change-flash-pill` | Inset pink glow pulse (`box-shadow`) | Explanation pill wrapper — via `cn()` |
+| `.viz-change-flash` | Outer pink glow pulse (`box-shadow`) | NeonPanels - via `className` prop |
+| `.viz-change-flash-pill` | Inset pink glow pulse (`box-shadow`) | Explanation pill wrapper - via `cn()` |
 
 Both animations run for 850ms with peak at 40%. They honor `prefers-reduced-motion`.
 
 ### Applying to NeonPanels
 
-Pass the flash class via the `className` prop. Do **not** use a flash-based `key` prop — that remounts the panel and replays child entrance animations (`viz-slide-in`).
+Pass the flash class via the `className` prop. Do **not** use a flash-based `key` prop - that remounts the panel and replays child entrance animations (`viz-slide-in`).
 
 ```tsx
 <NeonPanel
@@ -776,10 +776,10 @@ Use `cn()` to conditionally add the pill flash class:
 
 ### Child entrance animations
 
-When a NeonPanel's data changes between steps, its children (heap objects, root cards, etc.) should replay their `viz-slide-in` entrance animation — but **only when a specific item's data actually changed**. Use a data fingerprint in the key instead of the step index:
+When a NeonPanel's data changes between steps, its children (heap objects, root cards, etc.) should replay their `viz-slide-in` entrance animation - but **only when a specific item's data actually changed**. Use a data fingerprint in the key instead of the step index:
 
 ```tsx
-/** Stable fingerprint — changes only when the item's data changes. */
+/** Stable fingerprint - changes only when the item's data changes. */
 function itemFingerprint(item: Item): string {
   return `${item.label}|${item.tone}|${item.status}|${item.props.map((p) => `${p.key}:${p.value}`).join(",")}`;
 }
@@ -793,7 +793,7 @@ function HeapItems({ items }: { items: Item[] }) {
 }
 ```
 
-**Why fingerprints instead of `stepKey`?** Using `stepKey={currentStepIndex}` in child keys causes **every** child to remount on **every** step — replaying entrance animations even when that item's data hasn't changed. With a data fingerprint, the key only changes when the item's actual data changes, so:
+**Why fingerprints instead of `stepKey`?** Using `stepKey={currentStepIndex}` in child keys causes **every** child to remount on **every** step - replaying entrance animations even when that item's data hasn't changed. With a data fingerprint, the key only changes when the item's actual data changes, so:
 
 - Items with unchanged data keep their DOM nodes (no animation replay)
 - Items whose data changed get a new key → remount → `viz-slide-in` replays
@@ -819,11 +819,11 @@ Add topic-specific channels as needed (e.g., `roots`, `scope`, `taskQueue`).
 
 ---
 
-## Syntax Highlighting — Tokenizer
+## Syntax Highlighting - Tokenizer
 
 **File:** `src/lib/visualization/syntax.ts`
 
-Lightweight regex tokenizer for educational JavaScript snippets. Not a general parser — designed for small (5-15 line) hardcoded examples.
+Lightweight regex tokenizer for educational JavaScript snippets. Not a general parser - designed for small (5-15 line) hardcoded examples.
 
 ### Token Types
 
@@ -844,7 +844,7 @@ Global objects/constructors (`console`, `Promise`, `Array`) render as **builtin*
 
 ### Usage
 
-Tokenization is handled automatically by `CodeLine` and `CodeBlock`. You only provide plain text — the components call `tokenize()` internally. You do not need to import the tokenizer directly unless building a custom renderer.
+Tokenization is handled automatically by `CodeLine` and `CodeBlock`. You only provide plain text - the components call `tokenize()` internally. You do not need to import the tokenizer directly unless building a custom renderer.
 
 ---
 
