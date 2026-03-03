@@ -94,7 +94,7 @@ export const topics: Topic[] = [
     route: "/javascript/prototypal-inheritance",
     description:
       "Trace how JavaScript objects delegate property lookups through the prototype chain",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain",
   },
@@ -116,7 +116,7 @@ export const topics: Topic[] = [
     route: "/javascript/heap-stack",
     description:
       "Visualize how JavaScript allocates primitives on the stack and objects on the heap, with function call frames and garbage collection",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
   },
@@ -127,7 +127,7 @@ export const topics: Topic[] = [
     route: "/javascript/garbage-collection",
     description:
       "Visualize the mark-and-sweep algorithm, common memory leak patterns, and how WeakRef enables garbage collection",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
   },
@@ -138,7 +138,7 @@ export const topics: Topic[] = [
     route: "/javascript/generators",
     description:
       "Visualize how generator functions pause with yield, resume with .next(), and implement the iterator protocol",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*",
   },
