@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("garbage-collection");
 
 const GarbageCollectionVisualization = dynamic(
   () =>
-    import("@/components/visualizations/GarbageCollection").then(
+    import("@/components/visualizations/garbage-collection").then(
       (module) => module.GarbageCollection
     ),
   { loading: () => <VisualizationLoading /> }

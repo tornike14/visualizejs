@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("heap-stack");
 
 const HeapStackVisualization = dynamic(
   () =>
-    import("@/components/visualizations/HeapStack").then(
+    import("@/components/visualizations/heap-stack").then(
       (module) => module.HeapStack
     ),
   { loading: () => <VisualizationLoading /> }

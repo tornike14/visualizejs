@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("reference-value");
 
 const ReferenceValueVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ReferenceValue").then(
+    import("@/components/visualizations/reference-value").then(
       (module) => module.ReferenceValue
     ),
   { loading: () => <VisualizationLoading /> }

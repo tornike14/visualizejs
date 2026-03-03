@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("prototypal-inheritance");
 
 const PrototypalInheritanceVisualization = dynamic(
   () =>
-    import("@/components/visualizations/PrototypalInheritance").then(
+    import("@/components/visualizations/prototypal-inheritance").then(
       (module) => module.PrototypalInheritance
     ),
   {

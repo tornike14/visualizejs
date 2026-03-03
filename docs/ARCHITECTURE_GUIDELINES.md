@@ -44,14 +44,16 @@ Feature components should compose these primitives instead of re-implementing th
 
 ## 4) Static Data Placement
 
-Do not keep large static data blobs inside view components.
+For **non-visualization** features (onboarding, config, copy), move large static
+data blobs into separate data modules under `src/content/static/<feature>/`.
 
-Required pattern:
-- move static arrays/maps/step configs into separate data modules under `src/content/static/<feature>/`
-- import data into components
-- keep components focused on state, events, and rendering
+Visualization step data (`EXAMPLES`, `STEPS`, `CODE_LINES`) is co-located
+inside each visualization component file. This is intentional — step data is
+tightly coupled to the component's local types and render logic, and
+co-location makes authoring and iterating faster. Extract only when a single
+file exceeds ~2,000 lines or when the same data is shared across components.
 
-Example:
+Example (non-visualization data):
 
 ```txt
 src/content/static/onboarding/

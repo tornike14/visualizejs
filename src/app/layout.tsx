@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { AppTheme } from "@/components/layout/AppTheme";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { Sidebar } from "@/components/layout/sidebar";
 import {
   CREATOR_LINKEDIN_URL,
   OPEN_GRAPH_IMAGE_URL,
