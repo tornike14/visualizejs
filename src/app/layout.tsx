@@ -13,6 +13,7 @@ import {
   SITE_URL,
   TWITTER_IMAGE_URL,
 } from "@/lib/constants";
+import { topics } from "@/lib/topics";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -81,6 +82,16 @@ export default function RootLayout({
     sameAs: [CREATOR_LINKEDIN_URL],
   };
 
+  const navigationSchema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    name: ["JavaScript Concepts", ...topics.map((t) => t.title)],
+    url: [
+      `${SITE_URL}/javascript`,
+      ...topics.map((t) => `${SITE_URL}${t.route}`),
+    ],
+  };
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
@@ -91,6 +102,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
         />
         <AppTheme>
           <Sidebar />

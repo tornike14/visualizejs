@@ -134,6 +134,35 @@ const THEORY_INTENT_KEYWORDS = [
   "faq",
 ];
 
+const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
+  "event-loop":
+    "Deep dive into how the JavaScript event loop works: call stack, task queue, microtask queue, setTimeout vs Promises, and common async pitfalls explained with examples.",
+  hoisting:
+    "Complete guide to JavaScript hoisting: how var, let, const, and function declarations behave during the creation phase, temporal dead zone rules, and common interview questions.",
+  "execution-context":
+    "Learn how JavaScript execution contexts work: global vs function context, creation and execution phases, variable environment, scope chain setup, and the this binding.",
+  closures:
+    "Master JavaScript closures: how inner functions capture outer variables, lexical scoping rules, practical closure patterns, memory considerations, and interview preparation.",
+  promises:
+    "Comprehensive guide to JavaScript Promises: states and transitions, .then/.catch/.finally chaining, microtask scheduling, async/await under the hood, and error handling patterns.",
+  "this-keyword":
+    "Complete guide to the JavaScript 'this' keyword: default, implicit, explicit, and new binding rules, arrow function behavior, call/apply/bind usage, and common gotchas.",
+  "scope-chain":
+    "Understand JavaScript scope chain resolution: global, function, and block scope, lexical environment linking, identifier lookup algorithm, and closures through the scope chain.",
+  "type-coercion":
+    "Deep dive into JavaScript type coercion: == vs === rules, Abstract Equality Algorithm, truthy/falsy chart, ToString/ToNumber/ToBoolean conversions, and tricky edge cases.",
+  "prototypal-inheritance":
+    "Learn JavaScript prototypal inheritance: prototype chain lookups, Object.create, constructor functions, class syntax under the hood, and instanceof behavior explained.",
+  "reference-value":
+    "Understand reference vs value types in JavaScript: primitive copying, object reference sharing, shallow vs deep copy methods, structuredClone API, and mutation pitfalls.",
+  "heap-stack":
+    "Learn the JavaScript memory model: stack frames for primitives and call execution, heap allocation for objects, memory lifecycle, and how the engine manages memory.",
+  "garbage-collection":
+    "Deep dive into JavaScript garbage collection: mark-and-sweep algorithm, reference counting, memory leak patterns with closures/timers/DOM, WeakRef, and FinalizationRegistry.",
+  generators:
+    "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
+};
+
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
   return [...new Set(keywordGroups.flat().map((k) => k.trim()).filter(Boolean))];
 }
@@ -152,10 +181,11 @@ export function createTopicMetadata(topic: Topic): Metadata {
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
   const canonicalUrl = `${SITE_URL}${topic.route}`;
   const keywords = getTopicKeywords(topic);
+  const description = topic.description;
 
   return {
     title,
-    description: topic.description,
+    description,
     category: categoryLabel,
     keywords,
     alternates: {
@@ -171,7 +201,7 @@ export function createTopicMetadata(topic: Topic): Metadata {
     },
     openGraph: {
       title: `${title} | ${SITE_NAME}`,
-      description: topic.description,
+      description,
       url: canonicalUrl,
       siteName: SITE_NAME,
       type: "article",
@@ -188,7 +218,7 @@ export function createTopicMetadata(topic: Topic): Metadata {
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
-      description: topic.description,
+      description,
       images: [TWITTER_IMAGE_URL],
     },
   };
@@ -203,7 +233,9 @@ export function createTopicTheoryMetadata(topic: Topic): Metadata {
     THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
     [`${topic.id.replace(/-/g, " ")} theory`],
   );
-  const description = `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and interview questions.`;
+  const description =
+    TOPIC_THEORY_DESCRIPTIONS[topic.id] ??
+    `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and interview questions.`;
 
   return {
     title,

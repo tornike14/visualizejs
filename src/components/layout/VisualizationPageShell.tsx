@@ -49,6 +49,12 @@ export function VisualizationPageShell({
     url: canonicalUrl,
     keywords: topicKeywords.join(", "),
     inLanguage: "en-US",
+    proficiencyLevel: topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
+    about: {
+      "@type": "Thing",
+      name: topic.title,
+      description: topic.description,
+    },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
