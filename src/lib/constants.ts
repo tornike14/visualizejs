@@ -1,6 +1,6 @@
 export const SITE_NAME = "VisualizeJS";
 export const SITE_DESCRIPTION =
-  "Free, interactive platform for visualizing JavaScript and React concepts through animated demonstrations.";
+  "Free interactive platform to visualize JavaScript concepts step by step. Explore the event loop, closures, hoisting, promises, scope chain, prototypes, garbage collection, and more with animated demonstrations.";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://visualizejs.com";
 export const SOCIAL_IMAGE_ALT =

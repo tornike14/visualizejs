@@ -79,11 +79,22 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
     },
   };
 
+  const navigationSchema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    name: topics.map((topic) => topic.title),
+    url: topics.map((topic) => `${SITE_URL}${topic.route}`),
+  };
+
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
       />
       <CategoryHero config={config} />
 
