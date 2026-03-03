@@ -7,14 +7,25 @@ import { Tooltip } from "@/components/visualization-ui/Tooltip";
 interface SandboxToggleProps {
   isActive: boolean;
   onToggle: () => void;
+  tooltipForceVisible?: boolean;
+  tooltipSide?: "top" | "bottom";
 }
 
 const btnBase =
   "inline-flex cursor-pointer items-center justify-center rounded-lg border p-2 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70";
 
-export function SandboxToggle({ isActive, onToggle }: SandboxToggleProps) {
+export function SandboxToggle({
+  isActive,
+  onToggle,
+  tooltipForceVisible = false,
+  tooltipSide = "top",
+}: SandboxToggleProps) {
   return (
-    <Tooltip label={isActive ? "Exit Sandbox" : "Try Sandbox"}>
+    <Tooltip
+      label={isActive ? "Exit Sandbox" : "Try Sandbox"}
+      forceVisible={tooltipForceVisible}
+      side={tooltipSide}
+    >
       <button
         type="button"
         onClick={onToggle}

@@ -6,6 +6,13 @@ import { cn } from "@/lib/utils";
 import { Tooltip } from "./Tooltip";
 
 export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5 | 6;
+type TooltipSide = "top" | "bottom";
+type TransportTooltipKey = "reset" | "stepBack" | "play" | "stepForward" | "speed";
+
+interface TransportTooltipConfig {
+  forceVisible?: boolean;
+  sides?: Partial<Record<TransportTooltipKey, TooltipSide>>;
+}
 
 interface TransportControlsProps {
   isPlaying: boolean;
@@ -20,6 +27,7 @@ interface TransportControlsProps {
   onStepBack: () => void;
   onReset: () => void;
   onSpeedLevelChange: (level: PlaybackSpeedLevel) => void;
+  tooltipConfig?: TransportTooltipConfig;
   className?: string;
 }
 
@@ -54,6 +62,7 @@ export function TransportControls({
   onStepBack,
   onReset,
   onSpeedLevelChange,
+  tooltipConfig,
   className,
 }: TransportControlsProps) {
   const [speedOpen, setSpeedOpen] = useState(false);
@@ -62,13 +71,15 @@ export function TransportControls({
   const showStepPill = stepIndex != null && totalSteps != null;
   const normalizedStepIndex = stepIndex ?? -1;
   const normalizedTotalSteps = totalSteps ?? 0;
+  const forceVisibleTooltips = tooltipConfig?.forceVisible ?? false;
+  const tooltipSides = tooltipConfig?.sides;
 
   return (
     <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
       {showStepPill && (
         <p
           aria-live="polite"
-          className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-mono text-xs text-slate-300"
+          className="app-surface-subtle inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-mono text-xs text-slate-300 whitespace-nowrap"
         >
           {isPlaying ? <span className="viz-pulse-dot" /> : null}
           Step {Math.max(normalizedStepIndex + 1, 0)} / {normalizedTotalSteps}
@@ -76,7 +87,11 @@ export function TransportControls({
       )}
 
       {/* Reset */}
-      <Tooltip label="Reset">
+      <Tooltip
+        label="Reset"
+        forceVisible={forceVisibleTooltips}
+        side={tooltipSides?.reset}
+      >
         <button
           type="button"
           aria-label="Reset"
@@ -88,7 +103,11 @@ export function TransportControls({
       </Tooltip>
 
       {/* Step Back */}
-      <Tooltip label="Step Back">
+      <Tooltip
+        label="Step Back"
+        forceVisible={forceVisibleTooltips}
+        side={tooltipSides?.stepBack}
+      >
         <button
           type="button"
           aria-label="Step back"
@@ -101,7 +120,11 @@ export function TransportControls({
       </Tooltip>
 
       {/* Play / Pause */}
-      <Tooltip label={isPlaying ? "Pause" : "Play"}>
+      <Tooltip
+        label={isPlaying ? "Pause" : "Play"}
+        forceVisible={forceVisibleTooltips}
+        side={tooltipSides?.play}
+      >
         <button
           type="button"
           aria-label={isPlaying ? "Pause" : "Play"}
@@ -114,7 +137,11 @@ export function TransportControls({
       </Tooltip>
 
       {/* Step Forward */}
-      <Tooltip label="Step Forward">
+      <Tooltip
+        label="Step Forward"
+        forceVisible={forceVisibleTooltips}
+        side={tooltipSides?.stepForward}
+      >
         <button
           type="button"
           aria-label="Step forward"
@@ -128,7 +155,11 @@ export function TransportControls({
 
       {/* Speed Dropdown */}
       <div ref={speedRef} className="relative">
-        <Tooltip label="Playback Speed">
+        <Tooltip
+          label="Playback Speed"
+          forceVisible={forceVisibleTooltips}
+          side={tooltipSides?.speed}
+        >
           <button
             type="button"
             aria-label={`Playback speed: ${speedLabel}`}

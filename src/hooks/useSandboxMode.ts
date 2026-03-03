@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { STORAGE_KEYS } from "@/content/static/storageKeys";
 import { parseUserCode } from "@/lib/sandbox/parser";
 import type { SandboxConfig, SandboxError, StepGenerator } from "@/types/sandbox";
 
@@ -21,7 +22,7 @@ interface SandboxModeReturn<TStep, TCodeLine> {
   codeVersion: number;
 }
 
-const STORAGE_PREFIX = "vizjs-sandbox-";
+const STORAGE_PREFIX = STORAGE_KEYS.sandboxPrefix;
 
 function normalizeCodeLength(code: string, maxCodeLength: number): string {
   return code.length > maxCodeLength ? code.slice(0, maxCodeLength) : code;

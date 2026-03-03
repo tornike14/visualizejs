@@ -1,12 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { track } from "@vercel/analytics";
-import { Linkedin } from "lucide-react";
 import { TopicToggle } from "./TopicToggle";
+import { FollowLinkedInButton } from "./FollowLinkedInButton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -14,9 +12,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getTopicsByCategory } from "@/lib/topics";
 import {
-  CREATOR_AVATAR_FALLBACK,
-  CREATOR_AVATAR_SRC,
-  CREATOR_LINKEDIN_URL,
   DIFFICULTY_COLORS,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -48,63 +43,6 @@ function TopicLink({ topic, isActive }: { topic: Topic; isActive: boolean }) {
         {topic.difficulty}
       </Badge>
     </Link>
-  );
-}
-
-function FollowLinkedInButton({
-  compact = false,
-  onClick,
-}: {
-  compact?: boolean;
-  onClick?: () => void;
-}) {
-  const [avatarError, setAvatarError] = useState(false);
-  const avatarText = CREATOR_AVATAR_FALLBACK.slice(0, 3).toUpperCase();
-
-  const handleClick = () => {
-    track("linkedin_follow_click", { location: compact ? "collapsed" : "sidebar" });
-    onClick?.();
-  };
-
-  return (
-    <a
-      href={CREATOR_LINKEDIN_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={handleClick}
-      aria-label="Follow on LinkedIn"
-      className={cn(
-        "group inline-flex items-center rounded-full border transition-all",
-        compact
-          ? "gap-1.5 border-cyan-300/35 bg-[rgba(12,25,48,0.9)] p-1.5 text-cyan-100 hover:border-cyan-200/55 hover:shadow-[0_0_16px_rgba(34,211,238,0.22)]"
-          : "gap-2 border-cyan-300/25 bg-[linear-gradient(130deg,rgba(14,30,56,0.96),rgba(18,44,74,0.9))] px-2.5 py-1.5 text-slate-100 hover:border-cyan-200/50 hover:shadow-[0_0_22px_rgba(34,211,238,0.2)]",
-      )}
-    >
-      <span className="inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-full border border-cyan-200/35 bg-slate-900/80 text-[10px] font-semibold text-cyan-200">
-        {avatarError ? (
-          avatarText
-        ) : (
-          <Image
-            src={CREATOR_AVATAR_SRC}
-            alt="Profile"
-            width={28}
-            height={28}
-            className="h-full w-full object-cover"
-            onError={() => setAvatarError(true)}
-          />
-        )}
-      </span>
-
-      {!compact && (
-        <span className="text-xs font-semibold tracking-[0.08em] text-cyan-100/95">
-          Follow
-        </span>
-      )}
-
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/10 text-cyan-200">
-        <Linkedin className="h-3.5 w-3.5" />
-      </span>
-    </a>
   );
 }
 
