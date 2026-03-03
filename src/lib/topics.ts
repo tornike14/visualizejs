@@ -96,7 +96,7 @@ export const topics: Topic[] = [
     route: "/javascript/prototypal-inheritance",
     description:
       "Trace JavaScript prototype chain lookups step by step. Visualize how objects delegate property access through __proto__, Object.create, and the instanceof operator.",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain",
   },
@@ -118,7 +118,7 @@ export const topics: Topic[] = [
     route: "/javascript/heap-stack",
     description:
       "Visualize the JavaScript memory model. See how primitives live on the stack, objects are allocated on the heap, and function call frames are created and destroyed.",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
   },
@@ -129,7 +129,7 @@ export const topics: Topic[] = [
     route: "/javascript/garbage-collection",
     description:
       "Visualize JavaScript garbage collection with the mark-and-sweep algorithm. Explore common memory leak patterns like closures, timers, and detached DOM nodes, plus WeakRef usage.",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management",
   },
@@ -140,7 +140,7 @@ export const topics: Topic[] = [
     route: "/javascript/generators",
     description:
       "Visualize JavaScript generator functions pausing with yield and resuming with .next(). Step through the iterator protocol, two-way data flow, and Symbol.iterator implementation.",
-    difficulty: "intermediate",
+    difficulty: "advanced",
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*",
   },
