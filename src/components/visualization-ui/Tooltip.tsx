@@ -1,31 +1,30 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect, type ReactNode } from "react";
+import { useIsHoverDevice } from "@/hooks/useIsHoverDevice";
 import { cn } from "@/lib/utils";
 
 interface TooltipProps {
   label: string;
   children: ReactNode;
   side?: "top" | "bottom";
+  forceVisible?: boolean;
 }
 
-export function Tooltip({ label, children, side = "top" }: TooltipProps) {
+export function Tooltip({
+  label,
+  children,
+  side = "top",
+  forceVisible = false,
+}: TooltipProps) {
   const [visible, setVisible] = useState(false);
-  const [isHoverDevice, setIsHoverDevice] = useState(false);
+  const isHoverDevice = useIsHoverDevice();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const update = () => setIsHoverDevice(media.matches);
-    update();
-
-    if (typeof media.addEventListener === "function") {
-      media.addEventListener("change", update);
-      return () => media.removeEventListener("change", update);
-    }
-
-    media.addListener(update);
-    return () => media.removeListener(update);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const show = useCallback(() => {
@@ -39,7 +38,7 @@ export function Tooltip({ label, children, side = "top" }: TooltipProps) {
     setVisible(false);
   }, []);
 
-  if (!isHoverDevice) {
+  if (!isHoverDevice && !forceVisible) {
     return <span className="inline-flex">{children}</span>;
   }
 
@@ -52,7 +51,7 @@ export function Tooltip({ label, children, side = "top" }: TooltipProps) {
       onBlur={hide}
     >
       {children}
-      {visible && (
+      {(visible || forceVisible) && (
         <span
           role="tooltip"
           className={cn(

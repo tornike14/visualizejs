@@ -14,8 +14,6 @@ export const CREATOR_LINKEDIN_URL =
   "https://www.linkedin.com/in/tornike-nizharadze/";
 export const CREATOR_AVATAR_SRC =
   process.env.NEXT_PUBLIC_CREATOR_AVATAR_SRC || "/personal-image.png";
-export const CREATOR_AVATAR_FALLBACK =
-  process.env.NEXT_PUBLIC_CREATOR_AVATAR_FALLBACK || "You";
 
 export const DIFFICULTY_COLORS = {
   beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",

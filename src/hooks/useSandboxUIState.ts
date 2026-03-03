@@ -47,7 +47,10 @@ export function useSandboxUIState<TStep, TCodeLine>(
   // If the editor IS focused, CodeMirror's Mod-Enter keybinding handles it
   // (and calls preventDefault, so we skip it here to avoid double-firing).
   const handleGenerateRef = useRef(handleGenerate);
-  handleGenerateRef.current = handleGenerate;
+
+  useEffect(() => {
+    handleGenerateRef.current = handleGenerate;
+  }, [handleGenerate]);
 
   useEffect(() => {
     if (!sandbox.isSandboxActive || !isEditing) return;
