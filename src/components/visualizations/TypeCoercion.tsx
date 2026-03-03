@@ -21,15 +21,12 @@ import {
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
+import type { SourceLine } from "@/types/visualization";
+import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
 
 /* ── Types ── */
 
 type CoercionKind = "equality" | "truthy" | "null" | "nan";
-
-interface SourceLine {
-  num: number;
-  text: string;
-}
 
 interface CoercionOperation {
   label: string;
@@ -421,31 +418,19 @@ const EXAMPLES: CoercionExample[] = [
 
 /* ── Helpers ── */
 
-function kindBadgeClass(kind: CoercionKind): string {
-  switch (kind) {
-    case "equality":
-      return "bg-amber-500/15 text-amber-400 border-amber-500/25";
-    case "truthy":
-      return "bg-emerald-500/15 text-emerald-400 border-emerald-500/25";
-    case "null":
-      return "bg-cyan-500/15 text-cyan-400 border-cyan-500/25";
-    case "nan":
-      return "bg-red-500/15 text-red-400 border-red-500/25";
-  }
-}
+const kindBadgeClass = createKindBadgeClass<CoercionKind>({
+  equality: "bg-amber-500/15 text-amber-400 border-amber-500/25",
+  truthy: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
+  null: "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
+  nan: "bg-red-500/15 text-red-400 border-red-500/25",
+});
 
-function kindLabel(kind: CoercionKind): string {
-  switch (kind) {
-    case "equality":
-      return "== vs ===";
-    case "truthy":
-      return "truthy/falsy";
-    case "null":
-      return "null/undefined";
-    case "nan":
-      return "NaN";
-  }
-}
+const kindLabel = createKindLabel<CoercionKind>({
+  equality: "== vs ===",
+  truthy: "truthy/falsy",
+  null: "null/undefined",
+  nan: "NaN",
+});
 
 const OP_COLOR_MAP = {
   amber: "border-amber-500/30 bg-amber-500/8 text-amber-300",

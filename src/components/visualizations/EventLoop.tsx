@@ -17,6 +17,7 @@ import { useChangeFlash } from "@/hooks/useChangeFlash";
 import { useSandboxUIState } from "@/hooks/useSandboxUIState";
 import { SANDBOX_CONFIGS } from "@/lib/sandbox/configs";
 import { generateEventLoopSteps } from "@/lib/sandbox/generators/event-loop";
+import type { SourceLine } from "@/types/visualization";
 
 const SandboxEditor = dynamic(
   () => import("@/components/sandbox/SandboxEditor").then((m) => ({ default: m.SandboxEditor })),
@@ -26,11 +27,6 @@ const SandboxEditor = dynamic(
 /* ------------------------------------------------------------------ */
 /*  Static data (used when sandbox is OFF)                             */
 /* ------------------------------------------------------------------ */
-
-interface SourceLine {
-  num: number;
-  text: string;
-}
 
 interface EventLoopStep {
   descriptionHtml: string;
