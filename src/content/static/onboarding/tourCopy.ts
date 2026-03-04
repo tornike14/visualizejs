@@ -56,9 +56,8 @@ export const ONBOARDING_TOUR_STEP_COPY: OnboardingTourStepCopy[] = [
     sectionLabel: "Updates",
     title: "Follow for new tips and releases",
     description:
-      "The LinkedIn follow CTA is available in the sidebar for updates, practical breakdowns, and new concept drops.",
+      "Follow for more updates, tips, and insights about web and AI in general.",
     mobileHighlights: [
-      "Use the sidebar follow button to get new content.",
       "Expect practical internals tips beyond current topics.",
       "Share feedback and feature ideas through LinkedIn.",
     ],
