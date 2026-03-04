@@ -15,6 +15,7 @@ import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
 import { cn } from "@/lib/utils";
 import { VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
+import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
 
 
 type HoistingKind = "var" | "function" | "let" | "const" | "function-expr";
@@ -349,34 +350,21 @@ const EXAMPLES: HoistingExample[] = [
 ];
 
 
-function kindBadgeClass(kind: HoistingKind): string {
-  switch (kind) {
-    case "var":
-      return "bg-amber-500/15 text-amber-400 border-amber-500/25";
-    case "function":
-      return "bg-emerald-500/15 text-emerald-400 border-emerald-500/25";
-    case "let":
-    case "const":
-      return "bg-red-500/15 text-red-400 border-red-500/25";
-    case "function-expr":
-      return "bg-purple-500/15 text-purple-400 border-purple-500/25";
-  }
-}
+const kindBadgeClass = createKindBadgeClass<HoistingKind>({
+  var: "bg-amber-500/15 text-amber-400 border-amber-500/25",
+  function: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
+  let: "bg-red-500/15 text-red-400 border-red-500/25",
+  const: "bg-red-500/15 text-red-400 border-red-500/25",
+  "function-expr": "bg-purple-500/15 text-purple-400 border-purple-500/25",
+});
 
-function kindLabel(kind: HoistingKind): string {
-  switch (kind) {
-    case "var":
-      return "var";
-    case "function":
-      return "function";
-    case "let":
-      return "let/const";
-    case "const":
-      return "const";
-    case "function-expr":
-      return "func expr";
-  }
-}
+const kindLabel = createKindLabel<HoistingKind>({
+  var: "var",
+  function: "function",
+  let: "let/const",
+  const: "const",
+  "function-expr": "func expr",
+});
 
 
 function CodePanel({

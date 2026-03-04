@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowLeft, BookOpenText, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { TopicTheoryButton } from "@/components/layout/TopicTheoryButton";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
 import { hasTheoryContent } from "@/content/theory";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
@@ -19,6 +20,8 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "heap-stack",
   "garbage-collection",
   "generators",
+  "destructuring",
+  "spread-rest",
 ]);
 
 interface VisualizationPageShellProps {
@@ -48,6 +51,12 @@ export function VisualizationPageShell({
     url: canonicalUrl,
     keywords: topicKeywords.join(", "),
     inLanguage: "en-US",
+    proficiencyLevel: topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
+    about: {
+      "@type": "Thing",
+      name: topic.title,
+      description: topic.description,
+    },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
@@ -108,13 +117,7 @@ export function VisualizationPageShell({
             </h1>
             <div className="flex items-center gap-2">
               {hasTheoryPage && (
-                <Link
-                  href={`${topic.route}/theory`}
-                  className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/10 px-3 py-1.5 text-xs font-medium text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/14"
-                >
-                  <BookOpenText className="h-3.5 w-3.5" />
-                  Theory
-                </Link>
+                <TopicTheoryButton href={`${topic.route}/theory`} />
               )}
               <a
                 href={topic.docsUrl}

@@ -18,14 +18,11 @@ import {
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
+import type { SourceLine } from "@/types/visualization";
+import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
 
 
 type PromiseKind = "basic" | "chaining" | "async-await";
-
-interface SourceLine {
-  num: number;
-  text: string;
-}
 
 interface PromiseObj {
   name: string;
@@ -339,27 +336,17 @@ const EXAMPLES: PromiseExample[] = [
 ];
 
 
-function kindBadgeClass(kind: PromiseKind): string {
-  switch (kind) {
-    case "basic":
-      return "bg-emerald-500/15 text-emerald-400 border-emerald-500/25";
-    case "chaining":
-      return "bg-cyan-500/15 text-cyan-400 border-cyan-500/25";
-    case "async-await":
-      return "bg-amber-500/15 text-amber-400 border-amber-500/25";
-  }
-}
+const kindBadgeClass = createKindBadgeClass<PromiseKind>({
+  basic: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
+  chaining: "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
+  "async-await": "bg-amber-500/15 text-amber-400 border-amber-500/25",
+});
 
-function kindLabel(kind: PromiseKind): string {
-  switch (kind) {
-    case "basic":
-      return "basic";
-    case "chaining":
-      return "chaining";
-    case "async-await":
-      return "async/await";
-  }
-}
+const kindLabel = createKindLabel<PromiseKind>({
+  basic: "basic",
+  chaining: "chaining",
+  "async-await": "async/await",
+});
 
 
 const QUEUE_ITEM_STYLE =

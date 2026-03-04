@@ -73,6 +73,18 @@ src/
       page.tsx
   components/
     ErrorBoundary.tsx
+    onboarding/
+      OnboardingTourModal.tsx
+      onboardingTourSteps.ts
+      onboardingTourStorage.ts
+      types.ts
+      components/
+        PreviewShell.tsx
+      previews/
+        ControlsPreview.tsx
+        SandboxPreview.tsx
+        TheoryPreview.tsx
+        LinkedInPreview.tsx
     layout/
       AppTheme.tsx
       Sidebar.tsx
@@ -88,6 +100,8 @@ src/
       CodeBlock.tsx
       CodeLine.tsx
       ConsoleOutput.tsx
+    ui/
+      StepCarousel.tsx
     visualizations/
       EventLoop.tsx
       Hoisting.tsx
@@ -100,6 +114,13 @@ src/
   hooks/
     useStepPlayback.ts
     useClickOutside.ts
+  content/
+    static/
+      onboarding/
+        tourCopy.ts
+      storageKeys.ts
+    theory/
+      ...
   lib/
     topics.ts
     metadata.ts
@@ -117,6 +138,7 @@ public/
   personal-image.png
 docs/
   ultimate.md          (this file, current status)
+  ARCHITECTURE_GUIDELINES.md (frontend architecture standards)
   TOPIC_AUTHORING.md   (guide for wiring new topics)
 ```
 
@@ -148,7 +170,10 @@ docs/
 3. Use step data models (not hardcoded DOM-driven behavior).
 4. Code line fading guard: `isDone && !isActive` (never fade active lines).
 5. `description` field on topics is used for SEO metadata and category landing cards only, not shown on the visualization page.
-6. See `docs/TOPIC_AUTHORING.md` for the full wiring guide.
+6. Use modular feature folders for complex UI: split components, helpers, types, and static data into separate files.
+7. Extract reusable controls/patterns (for example, carousels) into `src/components/ui`.
+8. Keep new React components in const form (`const Component = () =>`), not function declarations.
+9. See `docs/TOPIC_AUTHORING.md` for topic wiring and `docs/ARCHITECTURE_GUIDELINES.md` for architecture rules.
 
 ---
 

@@ -124,6 +124,17 @@
   --sidebar-ring: #f472b6;
 }
 
+@keyframes vjs-carousel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

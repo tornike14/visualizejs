@@ -9,7 +9,7 @@ const generatorsTopic = getTopicOrThrow("generators");
 
 const GeneratorsVisualization = dynamic(
   () =>
-    import("@/components/visualizations/Generators").then(
+    import("@/components/visualizations/generators").then(
       (module) => module.Generators
     ),
   {

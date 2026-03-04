@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("this-keyword");
 
 const ThisKeywordVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ThisKeyword").then(
+    import("@/components/visualizations/this-keyword").then(
       (module) => module.ThisKeyword
     ),
   {

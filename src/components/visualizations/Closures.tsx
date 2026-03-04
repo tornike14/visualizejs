@@ -15,11 +15,7 @@ import {
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
-
-interface SourceLine {
-  num: number;
-  text: string;
-}
+import type { SourceLine } from "@/types/visualization";
 
 interface ScopeEntry {
   name: string;

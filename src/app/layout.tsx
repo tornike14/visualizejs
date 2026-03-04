@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AppTheme } from "@/components/layout/AppTheme";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { Sidebar } from "@/components/layout/sidebar";
 import {
   CREATOR_LINKEDIN_URL,
   OPEN_GRAPH_IMAGE_URL,
@@ -13,6 +14,7 @@ import {
   SITE_URL,
   TWITTER_IMAGE_URL,
 } from "@/lib/constants";
+import { topics } from "@/lib/topics";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -81,6 +83,16 @@ export default function RootLayout({
     sameAs: [CREATOR_LINKEDIN_URL],
   };
 
+  const navigationSchema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    name: ["JavaScript Concepts", ...topics.map((t) => t.title)],
+    url: [
+      `${SITE_URL}/javascript`,
+      ...topics.map((t) => `${SITE_URL}${t.route}`),
+    ],
+  };
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
@@ -92,6 +104,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
+        />
         <AppTheme>
           <Sidebar />
           <main className="flex-1 overflow-x-hidden pt-16 lg:pt-0">
@@ -99,6 +115,7 @@ export default function RootLayout({
           </main>
         </AppTheme>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

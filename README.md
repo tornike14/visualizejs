@@ -35,6 +35,7 @@ Open [http://localhost:3000](http://localhost:3000). The app redirects to `/java
 ## Project Docs
 
 - [`docs/ultimate.md`](docs/ultimate.md) - architecture, file structure, conventions, and current status
+- [`docs/ARCHITECTURE_GUIDELINES.md`](docs/ARCHITECTURE_GUIDELINES.md) - frontend file/folder architecture conventions and maintainability rules
 - [`docs/TOPIC_AUTHORING.md`](docs/TOPIC_AUTHORING.md) - guide for adding new visualization topics
 - [`docs/seo.md`](docs/seo.md) - implemented SEO setup, metadata strategy, and deployment checklist
 

@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("scope-chain");
 
 const ScopeChainVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ScopeChain").then(
+    import("@/components/visualizations/scope-chain").then(
       (module) => module.ScopeChain
     ),
   {

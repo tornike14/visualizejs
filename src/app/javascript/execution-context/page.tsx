@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("execution-context");
 
 const ExecutionContextVisualization = dynamic(
   () =>
-    import("@/components/visualizations/ExecutionContext").then(
+    import("@/components/visualizations/execution-context").then(
       (module) => module.ExecutionContext
     ),
   {
