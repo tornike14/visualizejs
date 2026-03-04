@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const isDev = process.env.NODE_ENV === "development";
+
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig: NextConfig = {
   headers: async () => [
@@ -28,4 +33,4 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default nextConfig;
+export default withAnalyzer(nextConfig);
