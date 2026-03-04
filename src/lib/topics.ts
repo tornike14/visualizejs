@@ -90,6 +90,28 @@ export const topics: Topic[] = [
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality",
   },
   {
+    id: "destructuring",
+    title: "Destructuring",
+    category: "javascript",
+    route: "/javascript/destructuring",
+    description:
+      "Visualize JavaScript destructuring assignment step by step. Unpack arrays by position, extract object properties by name, use default values, nested patterns, and parameter destructuring.",
+    difficulty: "beginner",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment",
+  },
+  {
+    id: "spread-rest",
+    title: "Spread & Rest",
+    category: "javascript",
+    route: "/javascript/spread-rest",
+    description:
+      "Visualize JavaScript spread and rest syntax. See how spread expands arrays and objects, how rest parameters collect arguments, and how rest works in destructuring patterns.",
+    difficulty: "beginner",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax",
+  },
+  {
     id: "prototypal-inheritance",
     title: "Prototypal Inheritance",
     category: "javascript",
