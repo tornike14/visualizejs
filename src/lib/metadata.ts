@@ -137,6 +137,24 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "two-way data flow generator",
     "Symbol.iterator javascript",
   ],
+  destructuring: [
+    "javascript destructuring explained",
+    "array destructuring javascript",
+    "object destructuring javascript",
+    "nested destructuring",
+    "destructuring default values",
+    "destructuring function parameters",
+    "ES6 destructuring assignment",
+  ],
+  "spread-rest": [
+    "javascript spread operator explained",
+    "rest parameters javascript",
+    "spread vs rest javascript",
+    "object spread javascript",
+    "array spread javascript",
+    "rest in destructuring",
+    "ES6 spread rest syntax",
+  ],
 };
 
 const THEORY_INTENT_KEYWORDS = [
@@ -177,6 +195,10 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
   reconciliation:
     "Deep dive into React reconciliation: how the virtual DOM diffing algorithm compares element trees, same-type vs different-type updates, key-based list matching, and DOM commit optimizations.",
+  destructuring:
+    "Complete guide to JavaScript destructuring: array unpacking by position, object extraction by name, default values, nested patterns, renaming, and function parameter destructuring.",
+  "spread-rest":
+    "Deep dive into JavaScript spread and rest syntax: array and object spread for merging and copying, rest parameters for variadic functions, and rest in destructuring patterns.",
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

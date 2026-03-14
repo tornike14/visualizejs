@@ -26,7 +26,6 @@ export function SidebarContent({
 }) {
   const pathname = usePathname();
   const filteredTopics = getTopicsByCategory(activeCategory);
-  const year = new Date().getFullYear();
 
   return (
     <div className="flex h-full flex-col">
@@ -79,7 +78,15 @@ export function SidebarContent({
           <>
             <FollowLinkedInButton onClick={onLinkClick} />
             <p className="text-[10px] tracking-[0.1em] text-slate-500">
-              © {year} VisualizeJS
+              Made by{" "}
+              <a
+                href="https://www.linkedin.com/in/tornike-nizharadze/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-slate-400 hover:text-slate-300 transition-colors"
+              >
+                Tornike
+              </a>
             </p>
           </>
         )}
