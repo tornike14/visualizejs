@@ -13,3 +13,23 @@ export interface SourceLine {
  * (ScopeChain, PrototypalInheritance).
  */
 export type ChainHighlight = "active" | "searching" | "found" | "none";
+
+/**
+ * Highlight state used by tree-style visualizations
+ * (Reconciliation, Re-rendering, Fiber Architecture).
+ */
+export type TreeNodeHighlight =
+  | "unchanged"
+  | "updated"
+  | "added"
+  | "removed"
+  | "active";
+
+/** A single node in a component/element tree diagram. */
+export interface TreeNodeData {
+  id: string;
+  label: string;
+  props?: { key: string; value: string }[];
+  children?: TreeNodeData[];
+  highlight?: TreeNodeHighlight;
+}
