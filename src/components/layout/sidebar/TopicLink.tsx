@@ -7,6 +7,7 @@ export function TopicLink({ topic, isActive }: { topic: Topic; isActive: boolean
   return (
     <Link
       href={topic.route}
+      prefetch={false}
       className={`group flex items-center gap-3 rounded-2xl border px-3 py-2.5 text-sm transition-all ${
         isActive
           ? "border-pink-400/35 bg-[rgba(31,45,74,0.7)] text-[color:var(--app-text-primary)] shadow-[0_0_18px_rgba(244,114,182,0.14)]"

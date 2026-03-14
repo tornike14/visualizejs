@@ -12,6 +12,7 @@ export function TopicLink({ href, label, className }: TopicLinkProps) {
   return (
     <Link
       href={href}
+      prefetch={false}
       className={cn(
         "group inline-flex items-center gap-2 rounded-lg border border-pink-500/20 bg-pink-500/8 px-3.5 py-2 text-xs font-medium text-pink-300 transition-all hover:border-pink-400/40 hover:bg-pink-500/15 hover:text-pink-200",
         className
