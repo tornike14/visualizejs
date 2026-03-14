@@ -34,10 +34,13 @@ Open [http://localhost:3000](http://localhost:3000). The app redirects to `/java
 
 ## Project Docs
 
-- [`docs/ultimate.md`](docs/ultimate.md) - architecture, file structure, conventions, and current status
-- [`docs/ARCHITECTURE_GUIDELINES.md`](docs/ARCHITECTURE_GUIDELINES.md) - frontend file/folder architecture conventions and maintainability rules
-- [`docs/TOPIC_AUTHORING.md`](docs/TOPIC_AUTHORING.md) - guide for adding new visualization topics
-- [`docs/seo.md`](docs/seo.md) - implemented SEO setup, metadata strategy, and deployment checklist
+- [`docs/topic-authoring.md`](docs/topic-authoring.md) - JS topic creation workflow
+- [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) - React topic extensions
+- [`docs/component-reference.md`](docs/component-reference.md) - design system, reusable components, hooks, animations
+- [`docs/theory-authoring.md`](docs/theory-authoring.md) - theory page authoring
+- [`docs/sandbox-authoring.md`](docs/sandbox-authoring.md) - sandbox mode guide
+- [`docs/architecture.md`](docs/architecture.md) - frontend architecture rules
+- [`docs/seo.md`](docs/seo.md) - SEO implementation and deployment checklist
 
 ## Tech Stack
 

@@ -17,7 +17,7 @@ import type { SandboxConfig } from "@/types/sandbox";
  *    const { sandbox, isEditing, handleGenerate, ... } = useSandboxUIState(config, generator);
  *    ```
  *
- * See `docs/SANDBOX_AUTHORING.md` for the full guide.
+ * See `docs/sandbox-authoring.md` for the full guide.
  */
 export const SANDBOX_CONFIGS: Record<string, SandboxConfig> = {
   "event-loop": {
