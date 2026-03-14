@@ -166,6 +166,17 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*",
   },
+  /* ── React ── */
+  {
+    id: "reconciliation",
+    title: "Reconciliation",
+    category: "react",
+    route: "/react/reconciliation",
+    description:
+      "Visualize React's reconciliation algorithm step by step. See how virtual DOM diffing works: same-type updates, cross-type remounts, and key-based list matching.",
+    difficulty: "intermediate",
+    docsUrl: "https://react.dev/learn/preserving-and-resetting-state",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {

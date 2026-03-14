@@ -26,7 +26,13 @@ const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> = {
     "js runtime",
     "js internals",
   ],
-  react: ["react fundamentals", "react concepts"],
+  react: [
+    "react fundamentals",
+    "react concepts",
+    "react internals",
+    "react rendering",
+    "learn react visually",
+  ],
 };
 
 const TOPIC_KEYWORDS: Record<string, string[]> = {
@@ -113,6 +119,14 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "setInterval memory leak",
     "closure memory leak javascript",
   ],
+  reconciliation: [
+    "react reconciliation explained",
+    "virtual DOM diffing algorithm",
+    "react re-render explained",
+    "react key prop explained",
+    "react fiber reconciliation",
+    "react dom updates",
+  ],
   generators: [
     "javascript generators explained",
     "yield keyword javascript",
@@ -179,6 +193,8 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "Deep dive into JavaScript garbage collection: mark-and-sweep algorithm, reference counting, memory leak patterns with closures/timers/DOM, WeakRef, and FinalizationRegistry.",
   generators:
     "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
+  reconciliation:
+    "Deep dive into React reconciliation: how the virtual DOM diffing algorithm compares element trees, same-type vs different-type updates, key-based list matching, and DOM commit optimizations.",
   destructuring:
     "Complete guide to JavaScript destructuring: array unpacking by position, object extraction by name, default values, nested patterns, renaming, and function parameter destructuring.",
   "spread-rest":
