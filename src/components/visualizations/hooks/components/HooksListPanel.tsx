@@ -41,6 +41,11 @@ export function HooksListPanel({ hookNodes, errorMessage }: HooksListPanelProps)
           )}
         </div>
       ))}
+      {hookNodes.length > 0 && hookNodes.every((n) => n.status === "mounted") && (
+        <div className="mt-2 rounded-lg border border-emerald-500/30 bg-emerald-500/8 px-3 py-2 text-center text-xs font-semibold text-emerald-300">
+          Linked list complete
+        </div>
+      )}
       {errorMessage && (
         <div className="mt-2 rounded-lg border border-rose-500/30 bg-rose-500/8 px-3 py-2 text-xs text-rose-300">
           {errorMessage}

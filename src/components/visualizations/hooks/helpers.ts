@@ -18,6 +18,7 @@ const STATUS_STYLES: Record<HookNodeStatus, string> = {
   idle: "border-slate-500/30 bg-slate-500/8 text-slate-400",
   creating: "border-green-500/30 bg-green-500/8 text-green-300",
   reading: "border-cyan-500/30 bg-cyan-500/8 text-cyan-300",
+  mounted: "border-emerald-500/30 bg-emerald-500/8 text-emerald-300",
   error: "border-rose-500/30 bg-rose-500/8 text-rose-300",
 };
 

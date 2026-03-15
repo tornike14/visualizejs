@@ -5,7 +5,7 @@ export type HooksKind = "linked-list" | "order-violation";
 
 export type HookType = "useState" | "useEffect" | "useRef" | "useMemo";
 
-export type HookNodeStatus = "idle" | "creating" | "reading" | "error";
+export type HookNodeStatus = "idle" | "creating" | "reading" | "mounted" | "error";
 
 export interface HookNode {
   index: number;
@@ -17,6 +17,8 @@ export interface HookNode {
 export interface FiberHookState {
   fiberLabel: string;
   memoizedStatePointer: number | null;
+  hookCount?: number;
+  currentHookIndex?: number | null;
 }
 
 export interface HooksStep {
