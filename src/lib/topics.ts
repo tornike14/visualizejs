@@ -168,6 +168,16 @@ export const topics: Topic[] = [
   },
   /* ── React ── */
   {
+    id: "virtual-dom",
+    title: "Virtual DOM",
+    category: "react",
+    route: "/react/virtual-dom",
+    description:
+      "Visualize what JSX compiles to and how React.createElement builds a virtual DOM object tree. Step through the transform from JSX to plain objects to real DOM updates.",
+    difficulty: "beginner",
+    docsUrl: "https://react.dev/learn/writing-markup-with-jsx",
+  },
+  {
     id: "reconciliation",
     title: "Reconciliation",
     category: "react",
@@ -176,6 +186,16 @@ export const topics: Topic[] = [
       "Visualize React's reconciliation algorithm step by step. See how virtual DOM diffing works: same-type updates, cross-type remounts, and key-based list matching.",
     difficulty: "intermediate",
     docsUrl: "https://react.dev/learn/preserving-and-resetting-state",
+  },
+  {
+    id: "context-propagation",
+    title: "Context Propagation",
+    category: "react",
+    route: "/react/context-propagation",
+    description:
+      "Visualize how React Context works internally: provider value storage, consumer subscription, value propagation through the component tree, and why all consumers re-render on change.",
+    difficulty: "intermediate",
+    docsUrl: "https://react.dev/learn/passing-data-deeply-with-context",
   },
   {
     id: "fiber-tree",
