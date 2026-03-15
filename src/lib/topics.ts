@@ -177,6 +177,36 @@ export const topics: Topic[] = [
     difficulty: "intermediate",
     docsUrl: "https://react.dev/learn/preserving-and-resetting-state",
   },
+  {
+    id: "fiber-tree",
+    title: "Fiber Tree",
+    category: "react",
+    route: "/react/fiber-tree",
+    description:
+      "Visualize how React builds and traverses the fiber tree. Watch beginWork go down and completeWork go up as the work loop processes each fiber as a unit of work.",
+    difficulty: "advanced",
+    docsUrl: "https://react.dev/learn/render-and-commit",
+  },
+  {
+    id: "hooks",
+    title: "Hooks",
+    category: "react",
+    route: "/react/hooks",
+    description:
+      "Visualize how React hooks are stored as a linked list on each fiber. See why call order matters, how state is read on re-render, and what breaks when hooks are called conditionally.",
+    difficulty: "intermediate",
+    docsUrl: "https://react.dev/reference/rules/rules-of-hooks",
+  },
+  {
+    id: "render-cycle",
+    title: "Render Cycle",
+    category: "react",
+    route: "/react/render-cycle",
+    description:
+      "Visualize React's two-phase rendering model. Step through the render phase (pure, interruptible WIP tree construction) and the commit phase (synchronous DOM mutations, useLayoutEffect, paint, useEffect).",
+    difficulty: "advanced",
+    docsUrl: "https://react.dev/learn/render-and-commit",
+  },
 ];
 
 export function getTopicsByCategory(category: "javascript" | "react") {

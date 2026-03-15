@@ -3,51 +3,19 @@
 import { useState, useCallback } from "react";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { cn } from "@/lib/utils";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "../Tooltip";
+import type { TransportControlsProps } from "./types";
+import { SPEED_OPTIONS, iconBtnBase, iconBtnDefault, iconBtnPrimary } from "./constants";
+import {
+  PlayIcon,
+  PauseIcon,
+  StepIcon,
+  StepBackIcon,
+  ResetIcon,
+  ChevronIcon,
+} from "./icons";
 
-export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5 | 6;
-type TooltipSide = "top" | "bottom";
-type TransportTooltipKey = "reset" | "stepBack" | "play" | "stepForward" | "speed";
-
-interface TransportTooltipConfig {
-  forceVisible?: boolean;
-  sides?: Partial<Record<TransportTooltipKey, TooltipSide>>;
-}
-
-interface TransportControlsProps {
-  isPlaying: boolean;
-  canStep: boolean;
-  canStepBack: boolean;
-  stepIndex?: number;
-  totalSteps?: number;
-  speedLevel: PlaybackSpeedLevel;
-  speedLabel: string;
-  onTogglePlay: () => void;
-  onStep: () => void;
-  onStepBack: () => void;
-  onReset: () => void;
-  onSpeedLevelChange: (level: PlaybackSpeedLevel) => void;
-  tooltipConfig?: TransportTooltipConfig;
-  className?: string;
-}
-
-const SPEED_OPTIONS: { level: PlaybackSpeedLevel; label: string }[] = [
-  { level: 1, label: "0.25x" },
-  { level: 2, label: "0.5x" },
-  { level: 3, label: "0.75x" },
-  { level: 4, label: "1x" },
-  { level: 5, label: "1.5x" },
-  { level: 6, label: "2x" },
-];
-
-const iconBtnBase =
-  "inline-flex cursor-pointer items-center justify-center rounded-lg border p-2 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0";
-
-const iconBtnDefault =
-  "border-slate-600/85 bg-slate-900/65 text-slate-100 hover:border-slate-500";
-
-const iconBtnPrimary =
-  "border-amber-300/45 bg-gradient-to-br from-amber-500/30 to-violet-400/18 text-slate-100 hover:border-amber-300/70 hover:shadow-[0_0_16px_rgba(251,191,36,0.2)]";
+export type { PlaybackSpeedLevel } from "./types";
 
 export function TransportControls({
   isPlaying,
@@ -208,58 +176,5 @@ export function TransportControls({
         )}
       </div>
     </div>
-  );
-}
-
-
-function PlayIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
-      <path d="M4 2.5v11l8.5-5.5z" />
-    </svg>
-  );
-}
-
-function PauseIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
-      <path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z" />
-    </svg>
-  );
-}
-
-function StepIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
-      <path d="M2.5 2.5v11L9.5 8zM11 2h2.5v12H11z" />
-    </svg>
-  );
-}
-
-function StepBackIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
-      <path d="M13.5 2.5v11L6.5 8zM5 2H2.5v12H5z" />
-    </svg>
-  );
-}
-
-function ResetIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5">
-      <path d="M8 1.5A6.5 6.5 0 1014.5 8 6.5 6.5 0 008 1.5zm0 1.5A5 5 0 113 8 5 5 0 018 3zm-.75 1.5h1.5v3.25H11v1.5H7.25z" />
-    </svg>
-  );
-}
-
-function ChevronIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      className={cn("size-3 text-slate-400 transition-transform duration-200", open && "rotate-180")}
-    >
-      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

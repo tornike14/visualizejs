@@ -49,7 +49,7 @@ export function HeapPanel({
               {alloc.label}
             </span>
             {alloc.status === "unreachable" && (
-              <span className="rounded bg-red-500/20 px-1.5 py-0.5 text-[10px] text-red-300">
+              <span className="rounded bg-rose-500/20 px-1.5 py-0.5 text-[10px] text-rose-300">
                 unreachable
               </span>
             )}

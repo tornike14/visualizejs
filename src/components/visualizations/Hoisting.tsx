@@ -353,8 +353,8 @@ const EXAMPLES: HoistingExample[] = [
 const kindBadgeClass = createKindBadgeClass<HoistingKind>({
   var: "bg-amber-500/15 text-amber-400 border-amber-500/25",
   function: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
-  let: "bg-red-500/15 text-red-400 border-red-500/25",
-  const: "bg-red-500/15 text-red-400 border-red-500/25",
+  let: "bg-rose-500/15 text-rose-400 border-rose-500/25",
+  const: "bg-rose-500/15 text-rose-400 border-rose-500/25",
   "function-expr": "bg-purple-500/15 text-purple-400 border-purple-500/25",
 });
 
@@ -398,7 +398,7 @@ function CodePanel({
           const icon = isFloating ? (
             <ArrowUp className="viz-float-up h-3.5 w-3.5 text-emerald-300" />
           ) : isInTDZ ? (
-            <AlertTriangle className="h-3.5 w-3.5 text-red-300" />
+            <AlertTriangle className="h-3.5 w-3.5 text-rose-300" />
           ) : null;
 
           const lineClass = cn(

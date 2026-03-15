@@ -3,7 +3,7 @@ import type { GCKind, GCRoot, HeapObject } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<GCKind>({
   algorithm: "bg-violet-500/15 text-violet-400 border-violet-500/25",
-  leak: "bg-red-500/15 text-red-400 border-red-500/25",
+  leak: "bg-rose-500/15 text-rose-400 border-rose-500/25",
   weak: "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
 });
 
@@ -21,7 +21,7 @@ export const ROOT_TONE_MAP = {
 
 export const HEAP_STATUS_MAP = {
   alive: "",
-  unreachable: "opacity-50 ring-1 ring-red-400/40",
+  unreachable: "opacity-50 ring-1 ring-rose-400/40",
   collected: "hidden",
 } as const;
 

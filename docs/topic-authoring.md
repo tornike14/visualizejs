@@ -67,12 +67,19 @@ src/
     visualization-ui/
       CodeBlock.tsx                 # Multi-line syntax-highlighted code
       CodeLine.tsx                  # Single line with gutter + tokens
-      ComponentTreeDiagram.tsx      # Recursive tree visualization (React topics)
+      ComponentTreeDiagram/         # Recursive tree visualization (React topics)
+        index.tsx                   #   Main component with auto-scaling
+        TreeNode.tsx                #   Recursive tree node renderer
+        styles.ts                   #   Highlight, label, and connector style maps
       ConsoleOutput.tsx             # Shared console panel
       ExampleSelector.tsx           # Dropdown for switching sub-examples
       NeonPanel.tsx                 # Themed container with tones
       TopicLink.tsx                 # Cross-topic navigation link
-      TransportControls.tsx         # Playback buttons + speed dropdown
+      TransportControls/            # Playback buttons + speed dropdown
+        index.tsx                   #   Main component
+        types.ts                    #   PlaybackSpeedLevel, props interfaces
+        constants.ts                #   Speed options, button style classes
+        icons.tsx                   #   Play, Pause, Step, Reset, Chevron icons
       Tooltip.tsx                   # Lightweight hover tooltip
     layout/
       VisualizationPageShell.tsx    # Page wrapper with ToolbarSlot

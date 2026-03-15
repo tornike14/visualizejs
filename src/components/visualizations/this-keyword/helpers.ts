@@ -19,7 +19,7 @@ export function ruleColorClass(rule: BindingRule): string {
   switch (rule) {
     case "default":
     case "lost":
-      return "bg-red-500/20 text-red-300 border-red-500/25";
+      return "bg-rose-500/20 text-rose-300 border-rose-500/25";
     case "implicit":
       return "bg-emerald-500/20 text-emerald-300 border-emerald-500/25";
     case "explicit-call":

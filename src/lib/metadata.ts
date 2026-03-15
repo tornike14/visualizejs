@@ -155,6 +155,33 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "rest in destructuring",
     "ES6 spread rest syntax",
   ],
+  "fiber-tree": [
+    "react fiber tree explained",
+    "react fiber architecture",
+    "beginWork completeWork react",
+    "react work loop explained",
+    "react unit of work",
+    "react fiber node properties",
+    "react fiber traversal",
+  ],
+  hooks: [
+    "react hooks explained",
+    "react hooks linked list",
+    "rules of hooks react",
+    "useState internals react",
+    "why hooks order matters react",
+    "react hook call order",
+    "conditional hooks react error",
+  ],
+  "render-cycle": [
+    "react render cycle explained",
+    "react render vs commit phase",
+    "react two-phase rendering",
+    "react work-in-progress tree",
+    "react batched state updates",
+    "react useEffect execution order",
+    "react useLayoutEffect vs useEffect",
+  ],
 };
 
 const THEORY_INTENT_KEYWORDS = [
@@ -199,6 +226,12 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "Complete guide to JavaScript destructuring: array unpacking by position, object extraction by name, default values, nested patterns, renaming, and function parameter destructuring.",
   "spread-rest":
     "Deep dive into JavaScript spread and rest syntax: array and object spread for merging and copying, rest parameters for variadic functions, and rest in destructuring patterns.",
+  "fiber-tree":
+    "Deep dive into React's fiber tree architecture: how fibers represent components, the beginWork/completeWork work loop, child/sibling/return pointers, and unit-of-work processing.",
+  hooks:
+    "Complete guide to React hooks internals: how hooks are stored as a linked list on fibers, why call order matters, useState and useEffect processing, and the rules of hooks explained.",
+  "render-cycle":
+    "Deep dive into React's render cycle: the two-phase model with render (pure, interruptible) and commit (synchronous DOM mutations), useLayoutEffect vs useEffect timing, and automatic state update batching.",
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

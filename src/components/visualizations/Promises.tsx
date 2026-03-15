@@ -358,7 +358,7 @@ const PROMISE_STATE_BORDER: Record<PromiseObj["state"], string> = {
   fulfilled:
     "border-emerald-300/35 bg-emerald-400/10 text-emerald-200 shadow-[0_0_14px_rgba(52,211,153,0.08)]",
   rejected:
-    "border-red-300/35 bg-red-400/10 text-red-200 shadow-[0_0_14px_rgba(248,113,113,0.08)]",
+    "border-rose-300/35 bg-rose-400/10 text-rose-200 shadow-[0_0_14px_rgba(248,113,113,0.08)]",
 };
 
 
@@ -388,7 +388,7 @@ function PromiseCards({ promises }: { promises: PromiseObj[] }) {
                 "rounded-full px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider",
                 p.state === "pending" && "bg-slate-500/20 text-slate-400",
                 p.state === "fulfilled" && "bg-emerald-500/20 text-emerald-300",
-                p.state === "rejected" && "bg-red-500/20 text-red-300"
+                p.state === "rejected" && "bg-rose-500/20 text-rose-300"
               )}
             >
               {p.state}
