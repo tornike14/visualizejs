@@ -119,6 +119,22 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "setInterval memory leak",
     "closure memory leak javascript",
   ],
+  "virtual-dom": [
+    "react virtual dom explained",
+    "jsx compiles to what",
+    "react createElement explained",
+    "virtual dom vs real dom",
+    "how jsx works react",
+    "react element tree",
+  ],
+  "context-propagation": [
+    "react context explained",
+    "useContext internals react",
+    "react provider consumer pattern",
+    "context re-render problem react",
+    "react context propagation",
+    "createContext useContext react",
+  ],
   reconciliation: [
     "react reconciliation explained",
     "virtual DOM diffing algorithm",
@@ -220,6 +236,10 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "Deep dive into JavaScript garbage collection: mark-and-sweep algorithm, reference counting, memory leak patterns with closures/timers/DOM, WeakRef, and FinalizationRegistry.",
   generators:
     "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
+  "virtual-dom":
+    "Learn what JSX compiles to and how React.createElement builds virtual DOM objects. Understand the transform from JSX syntax to plain JavaScript objects to real DOM nodes, and how React diffs virtual trees on re-render.",
+  "context-propagation":
+    "Learn how React Context works under the hood: createContext and Provider value storage, useContext consumer subscription, value propagation through the component tree, and why all consumers re-render when the Provider value changes.",
   reconciliation:
     "Deep dive into React reconciliation: how the virtual DOM diffing algorithm compares element trees, same-type vs different-type updates, key-based list matching, and DOM commit optimizations.",
   destructuring:
