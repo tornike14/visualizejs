@@ -20,10 +20,10 @@ import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
 import { EXAMPLES } from "./data";
 import { kindBadgeClass, kindLabel } from "./helpers";
-import { GeneratorStatePanel } from "./components/GeneratorStatePanel";
-import { CallFlowPanel } from "./components/CallFlowPanel";
+import { PromiseCards } from "./components/PromiseCards";
+import { QueueItems } from "./components/QueueItems";
 
-export function Generators() {
+export function Promises() {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
 
   const example =
@@ -53,8 +53,8 @@ export function Generators() {
   const flashes = useChangeFlash(
     {
       description: currentStep?.descriptionHtml,
-      generatorState: currentStep?.generatorState,
-      callFlow: currentStep?.callFlow,
+      promises: currentStep?.promises,
+      microtasks: currentStep?.microtasks,
       console: currentStep?.consoleOutput,
     },
     currentStepIndex,
@@ -66,7 +66,6 @@ export function Generators() {
 
   return (
     <>
-      {/* Toolbar: portaled above the surface card */}
       <ToolbarPortal>
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -76,23 +75,14 @@ export function Generators() {
                 activeId={activeExampleId}
                 onSelect={handleExampleChange}
                 renderBadge={(ex) => (
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "text-[10px]",
-                      kindBadgeClass(ex.kind),
-                    )}
-                  >
+                  <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(ex.kind))}>
                     {kindLabel(ex.kind)}
                   </Badge>
                 )}
               />
               <Badge
                 variant="outline"
-                className={cn(
-                  "text-[10px]",
-                  kindBadgeClass(example.kind),
-                )}
+                className={cn("text-[10px]", kindBadgeClass(example.kind))}
               >
                 {kindLabel(example.kind)}
               </Badge>
@@ -115,12 +105,12 @@ export function Generators() {
           </div>
 
           <div
-            role="status"
-            aria-live="polite"
             className={cn(
               "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
               flashes.description && "viz-change-flash-pill",
             )}
+            aria-live="polite"
+            role="status"
           >
             {currentStep ? (
               <p
@@ -138,7 +128,6 @@ export function Generators() {
         </div>
       </ToolbarPortal>
 
-      {/* Main visualization */}
       <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
         <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
           <NeonPanel
@@ -157,7 +146,7 @@ export function Generators() {
                   text: line.text,
                   className: cn(
                     isActive && "is-active",
-                    isDone && !isActive && "is-done",
+                    isDone && !isActive && "is-done"
                   ),
                 };
               })}
@@ -166,34 +155,24 @@ export function Generators() {
 
           <div className="space-y-4">
             <NeonPanel
-              title="Generator State"
+              title="Promise State"
               tone="violet"
               bodyClassName="min-h-[10rem]"
-              className={
-                flashes.generatorState ? "viz-change-flash" : undefined
-              }
+              className={flashes.promises ? "viz-change-flash" : undefined}
             >
-              <GeneratorStatePanel
-                state={currentStep?.generatorState ?? null}
-              />
+              <PromiseCards promises={currentStep?.promises ?? []} />
             </NeonPanel>
 
             <NeonPanel
-              title="Call Flow"
-              tone="cyan"
-              bodyClassName="min-h-[8rem]"
-              className={flashes.callFlow ? "viz-change-flash" : undefined}
+              title="Microtask Queue"
+              tone="violet"
+              bodyClassName="min-h-[6rem]"
+              className={flashes.microtasks ? "viz-change-flash" : undefined}
             >
-              <CallFlowPanel entries={currentStep?.callFlow ?? []} />
+              <QueueItems items={currentStep?.microtasks ?? []} />
             </NeonPanel>
 
-            <div
-              className={
-                flashes.console
-                  ? "viz-change-flash rounded-3xl"
-                  : undefined
-              }
-            >
+            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
               <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
             </div>
           </div>

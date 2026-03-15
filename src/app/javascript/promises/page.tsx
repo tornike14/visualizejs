@@ -9,7 +9,7 @@ const promisesTopic = getTopicOrThrow("promises");
 
 const PromisesVisualization = dynamic(
   () =>
-    import("@/components/visualizations/Promises").then(
+    import("@/components/visualizations/promises").then(
       (module) => module.Promises
     ),
   {

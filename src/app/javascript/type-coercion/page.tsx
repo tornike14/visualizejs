@@ -9,7 +9,7 @@ const topic = getTopicOrThrow("type-coercion");
 
 const TypeCoercionVisualization = dynamic(
   () =>
-    import("@/components/visualizations/TypeCoercion").then(
+    import("@/components/visualizations/type-coercion").then(
       (module) => module.TypeCoercion
     ),
   { loading: () => <VisualizationLoading /> }

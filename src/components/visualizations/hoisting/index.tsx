@@ -2,11 +2,6 @@
 
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
-import {
-  CodeBlock,
-  type CodeBlockLine,
-} from "@/components/visualization-ui/CodeBlock";
 import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
 import { TransportControls } from "@/components/visualization-ui/TransportControls";
 import { ExampleSelector } from "@/components/visualization-ui/ExampleSelector";
@@ -17,17 +12,14 @@ import {
   VISUALIZATION_EMPTY_STATES,
 } from "@/lib/visualization/uiCopy";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
-import { useChangeFlash } from "@/hooks/useChangeFlash";
 import { EXAMPLES } from "./data";
 import { kindBadgeClass, kindLabel } from "./helpers";
-import { PrototypeChainDiagram } from "./components/PrototypeChainDiagram";
+import { CodePanel } from "./components/CodePanel";
 
-
-export function PrototypalInheritance() {
+export function Hoisting() {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
 
-  const example =
-    EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
+  const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
 
   const {
     currentStepIndex,
@@ -47,17 +39,7 @@ export function PrototypalInheritance() {
     resetKey: activeExampleId,
   });
 
-  const currentStep =
-    currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
-
-  const flashes = useChangeFlash(
-    {
-      description: currentStep?.descriptionHtml,
-      chain: currentStep?.chain,
-      console: currentStep?.consoleOutput,
-    },
-    currentStepIndex,
-  );
+  const currentStep = currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
 
   const handleExampleChange = (id: string) => {
     setActiveExampleId(id);
@@ -65,7 +47,6 @@ export function PrototypalInheritance() {
 
   return (
     <>
-      {/* Toolbar: portaled above the surface card */}
       <ToolbarPortal>
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -80,10 +61,7 @@ export function PrototypalInheritance() {
                   </Badge>
                 )}
               />
-              <Badge
-                variant="outline"
-                className={cn("text-[10px]", kindBadgeClass(example.kind))}
-              >
+              <Badge variant="outline" className={cn("text-[10px]", kindBadgeClass(example.kind))}>
                 {kindLabel(example.kind)}
               </Badge>
             </div>
@@ -105,19 +83,14 @@ export function PrototypalInheritance() {
           </div>
 
           <div
-            role="status"
+            className="app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5"
             aria-live="polite"
-            className={cn(
-              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
-              flashes.description && "viz-change-flash-pill",
-            )}
+            role="status"
           >
-            {currentStep ? (
+            {currentStep?.explanation ? (
               <p
                 className="viz-step-desc text-center text-sm text-slate-300"
-                dangerouslySetInnerHTML={{
-                  __html: currentStep.descriptionHtml,
-                }}
+                dangerouslySetInnerHTML={{ __html: currentStep.explanation }}
               />
             ) : (
               <p className="text-center text-sm text-slate-500">
@@ -128,52 +101,27 @@ export function PrototypalInheritance() {
         </div>
       </ToolbarPortal>
 
-      {/* Main visualization */}
       <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
-          <NeonPanel
+        <div className="grid gap-4 xl:grid-cols-2">
+          <CodePanel
             title={VISUALIZATION_PANEL_TITLES.sourceCode}
             tone="amber"
-            bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
-          >
-            <CodeBlock
-              lines={example.codeLines.map((line): CodeBlockLine => {
-                const isActive = currentStep?.activeLine === line.num;
-                const isDone =
-                  currentStep?.doneLines.includes(line.num) ?? false;
-                return {
-                  key: line.num,
-                  lineNumber: line.num,
-                  text: line.text,
-                  className: cn(
-                    isActive && "is-active",
-                    isDone && !isActive && "is-done"
-                  ),
-                };
-              })}
-            />
-          </NeonPanel>
-
-          <div className="space-y-4">
-            <NeonPanel
-              title="Prototype Chain"
-              tone="violet"
-              bodyClassName="min-h-[14rem]"
-              className={flashes.chain ? "viz-change-flash" : undefined}
-            >
-              <PrototypeChainDiagram
-                chain={currentStep?.chain ?? []}
-                activeLink={currentStep?.activeLink}
-              />
-            </NeonPanel>
-
-            <div
-              className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}
-            >
-              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
-            </div>
-          </div>
+            lines={example.original}
+            highlightIds={currentStep?.highlightOriginal ?? []}
+            floatingIds={[]}
+            tdzIds={[]}
+          />
+          <CodePanel
+            title="How JS Sees It (After Hoisting)"
+            tone="cyan"
+            lines={example.hoisted}
+            highlightIds={currentStep?.highlightHoisted ?? []}
+            floatingIds={currentStep?.floatingLineIds ?? []}
+            tdzIds={currentStep?.tdzLineIds ?? []}
+          />
         </div>
+
+        <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
       </section>
     </>
   );
