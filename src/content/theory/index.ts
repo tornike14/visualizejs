@@ -15,6 +15,9 @@ import { typeCoercionTheory } from "@/content/theory/javascript/type-coercion";
 import { reconciliationTheory } from "@/content/theory/react/reconciliation";
 import { destructuringTheory } from "@/content/theory/javascript/destructuring";
 import { spreadRestTheory } from "@/content/theory/javascript/spread-rest";
+import { fiberTreeTheory } from "@/content/theory/react/fiber-tree";
+import { hooksTheory } from "@/content/theory/react/hooks";
+import { renderCycleTheory } from "@/content/theory/react/render-cycle";
 import { getTopicById, getTopicsByCategory } from "@/lib/topics";
 import type { Category, Topic } from "@/types";
 
@@ -35,6 +38,9 @@ const THEORY_CONTENT_BY_TOPIC_ID: Record<string, TopicTheoryContent> = {
   reconciliation: reconciliationTheory,
   destructuring: destructuringTheory,
   "spread-rest": spreadRestTheory,
+  "fiber-tree": fiberTreeTheory,
+  hooks: hooksTheory,
+  "render-cycle": renderCycleTheory,
 };
 
 export function getTheoryContent(topicId: string): TopicTheoryContent | undefined {

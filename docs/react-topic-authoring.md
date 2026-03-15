@@ -15,7 +15,7 @@ Extensions for building React visualization topics. This guide assumes you have 
 
 ## ComponentTreeDiagram
 
-**File:** `src/components/visualization-ui/ComponentTreeDiagram.tsx`
+**File:** `src/components/visualization-ui/ComponentTreeDiagram/`
 
 React topics visualize component/element trees instead of linear structures (call stacks, scope chains). The `ComponentTreeDiagram` is a shared reusable component in `visualization-ui/` for this purpose.
 

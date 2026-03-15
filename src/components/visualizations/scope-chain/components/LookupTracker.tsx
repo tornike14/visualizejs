@@ -51,7 +51,7 @@ export function LookupTracker({ lookup }: { lookup: LookupState | null }) {
                   isFoundHere
                     ? "border-emerald-300/40 bg-emerald-400/10 text-emerald-300"
                     : isError
-                      ? "border-red-300/40 bg-red-400/10 text-red-300"
+                      ? "border-rose-300/40 bg-rose-400/10 text-rose-300"
                       : "border-slate-500/30 bg-slate-800/30 text-slate-400",
                 )}
               >
@@ -70,7 +70,7 @@ export function LookupTracker({ lookup }: { lookup: LookupState | null }) {
           </span>
         )}
         {lookup.result === "error" && (
-          <span className="rounded-full border border-red-500/25 bg-red-500/15 px-2.5 py-0.5 font-mono text-[10px] font-medium text-red-300">
+          <span className="rounded-full border border-rose-500/25 bg-rose-500/15 px-2.5 py-0.5 font-mono text-[10px] font-medium text-rose-300">
             ReferenceError
           </span>
         )}

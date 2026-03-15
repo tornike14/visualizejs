@@ -23,6 +23,9 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "reconciliation",
   "destructuring",
   "spread-rest",
+  "fiber-tree",
+  "hooks",
+  "render-cycle",
 ]);
 
 interface VisualizationPageShellProps {
