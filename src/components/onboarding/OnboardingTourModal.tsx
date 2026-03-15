@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { ONBOARDING_TOUR_STEPS } from "@/components/onboarding/onboardingTourSteps";
 import {
@@ -12,12 +12,15 @@ import {
 import type { OnboardingTourStep } from "@/components/onboarding/types";
 import { StepCarousel } from "@/components/ui/StepCarousel";
 import { cn } from "@/lib/utils";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { usePathname } from "next/navigation";
 
 export const OnboardingTourModal = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(dialogRef, isOpen);
   const isCompactStep = ONBOARDING_TOUR_STEPS[activeStep]?.layout === "compact";
   const closeTour = useCallback(() => {
     markOnboardingTourSeen();
@@ -71,6 +74,7 @@ export const OnboardingTourModal = () => {
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[140] flex items-start justify-center bg-slate-950/82 px-4 py-6 backdrop-blur-sm lg:items-center"
       role="dialog"
       aria-modal="true"

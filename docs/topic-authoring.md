@@ -172,7 +172,7 @@ const topic = getTopicOrThrow("closures");
 
 const ClosuresVisualization = dynamic(
   () =>
-    import("@/components/visualizations/Closures").then(
+    import("@/components/visualizations/closures").then(
       (module) => module.Closures
     ),
   { loading: () => <VisualizationLoading /> }
@@ -202,7 +202,7 @@ Key points:
 
 ## Step 3 - Build the Visualization Component
 
-**File:** `src/components/visualizations/Closures.tsx`
+**File:** `src/components/visualizations/closures/index.tsx`
 
 ### Skeleton
 

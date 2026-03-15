@@ -9,7 +9,7 @@ const closuresTopic = getTopicOrThrow("closures");
 
 const ClosuresVisualization = dynamic(
   () =>
-    import("@/components/visualizations/Closures").then(
+    import("@/components/visualizations/closures").then(
       (module) => module.Closures
     ),
   {

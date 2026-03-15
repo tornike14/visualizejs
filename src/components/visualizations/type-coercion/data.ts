@@ -1,57 +1,7 @@
-"use client";
+import type { CoercionExample } from "./types";
 
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
-import {
-  CodeBlock,
-  type CodeBlockLine,
-} from "@/components/visualization-ui/CodeBlock";
-import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
-import { TransportControls } from "@/components/visualization-ui/TransportControls";
-import {
-  ExampleSelector,
-  type ExampleOption,
-} from "@/components/visualization-ui/ExampleSelector";
-import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
-import { cn } from "@/lib/utils";
-import {
-  VISUALIZATION_PANEL_TITLES,
-  VISUALIZATION_EMPTY_STATES,
-} from "@/lib/visualization/uiCopy";
-import { useStepPlayback } from "@/hooks/useStepPlayback";
-import { useChangeFlash } from "@/hooks/useChangeFlash";
-import type { SourceLine } from "@/types/visualization";
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
-
-/* ── Types ── */
-
-type CoercionKind = "equality" | "truthy" | "null" | "nan";
-
-interface CoercionOperation {
-  label: string;
-  result: string;
-  color: "amber" | "emerald" | "red" | "cyan";
-}
-
-interface CoercionStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
-  consoleOutput: string[];
-  coercionOps: CoercionOperation[];
-}
-
-interface CoercionExample extends ExampleOption {
-  kind: CoercionKind;
-  codeLines: SourceLine[];
-  steps: CoercionStep[];
-}
-
-/* ── Example Data ── */
-
-const EXAMPLES: CoercionExample[] = [
-  /* ── 1. Loose vs Strict ── */
+export const EXAMPLES: CoercionExample[] = [
+  /* 1. Loose vs Strict */
   {
     id: "loose-vs-strict",
     title: "Loose vs Strict",
@@ -137,7 +87,7 @@ const EXAMPLES: CoercionExample[] = [
     ],
   },
 
-  /* ── 2. Truthy & Falsy ── */
+  /* 2. Truthy & Falsy */
   {
     id: "truthy-falsy",
     title: "Truthy & Falsy",
@@ -246,7 +196,7 @@ const EXAMPLES: CoercionExample[] = [
     ],
   },
 
-  /* ── 3. null & undefined ── */
+  /* 3. null & undefined */
   {
     id: "null-undefined",
     title: "null & undefined",
@@ -330,7 +280,7 @@ const EXAMPLES: CoercionExample[] = [
     ],
   },
 
-  /* ── 4. NaN Quirks ── */
+  /* 4. NaN Quirks */
   {
     id: "nan-quirks",
     title: "NaN Quirks",
@@ -415,194 +365,3 @@ const EXAMPLES: CoercionExample[] = [
     ],
   },
 ];
-
-/* ── Helpers ── */
-
-const kindBadgeClass = createKindBadgeClass<CoercionKind>({
-  equality: "bg-amber-500/15 text-amber-400 border-amber-500/25",
-  truthy: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
-  null: "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
-  nan: "bg-rose-500/15 text-rose-400 border-rose-500/25",
-});
-
-const kindLabel = createKindLabel<CoercionKind>({
-  equality: "== vs ===",
-  truthy: "truthy/falsy",
-  null: "null/undefined",
-  nan: "NaN",
-});
-
-const OP_COLOR_MAP = {
-  amber: "border-amber-500/30 bg-amber-500/8 text-amber-300",
-  emerald: "border-emerald-500/30 bg-emerald-500/8 text-emerald-300",
-  red: "border-rose-500/30 bg-rose-500/8 text-rose-300",
-  cyan: "border-cyan-500/30 bg-cyan-500/8 text-cyan-300",
-} as const;
-
-/* ── Component ── */
-
-export function TypeCoercion() {
-  const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-
-  const example =
-    EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
-
-  const {
-    currentStepIndex,
-    isPlaying,
-    speedLevel,
-    speedLabel,
-    canStep,
-    canStepBack,
-    togglePlay,
-    step: handleStep,
-    stepBack: handleStepBack,
-    reset: handleReset,
-    setSpeedLevel,
-  } = useStepPlayback({
-    totalSteps: example.steps.length,
-    initialStep: -1,
-    resetKey: activeExampleId,
-  });
-
-  const currentStep =
-    currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
-
-  const flashes = useChangeFlash(
-    {
-      description: currentStep?.descriptionHtml,
-      coercionOps: currentStep?.coercionOps,
-      console: currentStep?.consoleOutput,
-    },
-    currentStepIndex,
-  );
-
-  const handleExampleChange = (id: string) => {
-    setActiveExampleId(id);
-  };
-
-  return (
-    <>
-      {/* Toolbar: portaled above the surface card */}
-      <ToolbarPortal>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <ExampleSelector
-                examples={EXAMPLES}
-                activeId={activeExampleId}
-                onSelect={handleExampleChange}
-                renderBadge={(ex) => (
-                  <Badge
-                    variant="outline"
-                    className={cn("text-[10px]", kindBadgeClass(ex.kind))}
-                  >
-                    {kindLabel(ex.kind)}
-                  </Badge>
-                )}
-              />
-              <Badge
-                variant="outline"
-                className={cn("text-[10px]", kindBadgeClass(example.kind))}
-              >
-                {kindLabel(example.kind)}
-              </Badge>
-            </div>
-
-            <TransportControls
-              isPlaying={isPlaying}
-              canStep={canStep}
-              canStepBack={canStepBack}
-              stepIndex={currentStepIndex}
-              totalSteps={example.steps.length}
-              speedLevel={speedLevel}
-              speedLabel={speedLabel}
-              onTogglePlay={togglePlay}
-              onStep={handleStep}
-              onStepBack={handleStepBack}
-              onReset={handleReset}
-              onSpeedLevelChange={setSpeedLevel}
-            />
-          </div>
-
-          <div className={cn("app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5", flashes.description && "viz-change-flash-pill")}>
-            {currentStep?.descriptionHtml ? (
-              <p
-                className="viz-step-desc text-center text-sm text-slate-300"
-                dangerouslySetInnerHTML={{
-                  __html: currentStep.descriptionHtml,
-                }}
-              />
-            ) : (
-              <p className="text-center text-sm text-slate-500">
-                {VISUALIZATION_EMPTY_STATES.stepDescription}
-              </p>
-            )}
-          </div>
-        </div>
-      </ToolbarPortal>
-
-      {/* Main visualization */}
-      <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
-          <NeonPanel
-            title={VISUALIZATION_PANEL_TITLES.sourceCode}
-            tone="amber"
-            bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
-          >
-            <CodeBlock
-              lines={example.codeLines.map(
-                (line): CodeBlockLine => {
-                  const isActive = currentStep?.activeLine === line.num;
-                  const isDone =
-                    currentStep?.doneLines.includes(line.num) ?? false;
-                  return {
-                    key: line.num,
-                    lineNumber: line.num,
-                    text: line.text,
-                    className: cn(
-                      isActive && "is-active",
-                      isDone && !isActive && "is-done"
-                    ),
-                  };
-                }
-              )}
-            />
-          </NeonPanel>
-
-          <div className="space-y-4">
-            <NeonPanel
-              title="Coercion Steps"
-              tone="cyan"
-              bodyClassName="min-h-[7rem] space-y-2"
-              className={flashes.coercionOps ? "viz-change-flash" : undefined}
-            >
-              {currentStep && currentStep.coercionOps.length > 0 ? (
-                currentStep.coercionOps.map((op, idx) => (
-                  <div
-                    key={`${currentStepIndex}-${idx}`}
-                    className={cn(
-                      "viz-slide-in flex items-center justify-between gap-3 rounded-lg border px-3 py-2 font-mono text-xs",
-                      OP_COLOR_MAP[op.color]
-                    )}
-                  >
-                    <span>{op.label}</span>
-                    <span className="shrink-0 font-semibold">{op.result}</span>
-                  </div>
-                ))
-              ) : (
-                <p className="pt-1 text-sm text-slate-500/70">
-                  Step through the code to see coercion in action.
-                </p>
-              )}
-            </NeonPanel>
-
-            <div className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}>
-              <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
