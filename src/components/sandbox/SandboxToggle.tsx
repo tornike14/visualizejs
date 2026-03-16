@@ -32,7 +32,7 @@ export function SandboxToggle({
         className={cn(
           btnBase,
           isActive
-            ? "border-red-400/45 bg-gradient-to-br from-red-500/25 to-rose-400/15 text-red-200 hover:border-red-400/70 hover:shadow-[0_0_16px_rgba(248,113,113,0.2)]"
+            ? "border-rose-400/45 bg-gradient-to-br from-rose-500/25 to-rose-400/15 text-rose-200 hover:border-rose-400/70 hover:shadow-[0_0_16px_rgba(248,113,113,0.2)]"
             : "border-slate-600/85 bg-slate-900/65 text-slate-100 hover:border-slate-500",
         )}
         aria-label={isActive ? "Exit Sandbox" : "Try Sandbox"}

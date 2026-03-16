@@ -26,7 +26,13 @@ const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> = {
     "js runtime",
     "js internals",
   ],
-  react: ["react fundamentals", "react concepts"],
+  react: [
+    "react fundamentals",
+    "react concepts",
+    "react internals",
+    "react rendering",
+    "learn react visually",
+  ],
 };
 
 const TOPIC_KEYWORDS: Record<string, string[]> = {
@@ -113,6 +119,30 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "setInterval memory leak",
     "closure memory leak javascript",
   ],
+  "virtual-dom": [
+    "react virtual dom explained",
+    "jsx compiles to what",
+    "react createElement explained",
+    "virtual dom vs real dom",
+    "how jsx works react",
+    "react element tree",
+  ],
+  "context-propagation": [
+    "react context explained",
+    "useContext internals react",
+    "react provider consumer pattern",
+    "context re-render problem react",
+    "react context propagation",
+    "createContext useContext react",
+  ],
+  reconciliation: [
+    "react reconciliation explained",
+    "virtual DOM diffing algorithm",
+    "react re-render explained",
+    "react key prop explained",
+    "react fiber reconciliation",
+    "react dom updates",
+  ],
   generators: [
     "javascript generators explained",
     "yield keyword javascript",
@@ -140,6 +170,33 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "array spread javascript",
     "rest in destructuring",
     "ES6 spread rest syntax",
+  ],
+  "fiber-tree": [
+    "react fiber tree explained",
+    "react fiber architecture",
+    "beginWork completeWork react",
+    "react work loop explained",
+    "react unit of work",
+    "react fiber node properties",
+    "react fiber traversal",
+  ],
+  hooks: [
+    "react hooks explained",
+    "react hooks linked list",
+    "rules of hooks react",
+    "useState internals react",
+    "why hooks order matters react",
+    "react hook call order",
+    "conditional hooks react error",
+  ],
+  "render-cycle": [
+    "react render cycle explained",
+    "react render vs commit phase",
+    "react two-phase rendering",
+    "react work-in-progress tree",
+    "react batched state updates",
+    "react useEffect execution order",
+    "react useLayoutEffect vs useEffect",
   ],
 };
 
@@ -179,10 +236,22 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "Deep dive into JavaScript garbage collection: mark-and-sweep algorithm, reference counting, memory leak patterns with closures/timers/DOM, WeakRef, and FinalizationRegistry.",
   generators:
     "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
+  "virtual-dom":
+    "Learn what JSX compiles to and how React.createElement builds virtual DOM objects. Understand the transform from JSX syntax to plain JavaScript objects to real DOM nodes, and how React diffs virtual trees on re-render.",
+  "context-propagation":
+    "Learn how React Context works under the hood: createContext and Provider value storage, useContext consumer subscription, value propagation through the component tree, and why all consumers re-render when the Provider value changes.",
+  reconciliation:
+    "Deep dive into React reconciliation: how the virtual DOM diffing algorithm compares element trees, same-type vs different-type updates, key-based list matching, and DOM commit optimizations.",
   destructuring:
     "Complete guide to JavaScript destructuring: array unpacking by position, object extraction by name, default values, nested patterns, renaming, and function parameter destructuring.",
   "spread-rest":
     "Deep dive into JavaScript spread and rest syntax: array and object spread for merging and copying, rest parameters for variadic functions, and rest in destructuring patterns.",
+  "fiber-tree":
+    "Deep dive into React's fiber tree architecture: how fibers represent components, the beginWork/completeWork work loop, child/sibling/return pointers, and unit-of-work processing.",
+  hooks:
+    "Complete guide to React hooks internals: how hooks are stored as a linked list on fibers, why call order matters, useState and useEffect processing, and the rules of hooks explained.",
+  "render-cycle":
+    "Deep dive into React's render cycle: the two-phase model with render (pure, interruptible) and commit (synchronous DOM mutations), useLayoutEffect vs useEffect timing, and automatic state update batching.",
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

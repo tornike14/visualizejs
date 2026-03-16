@@ -108,9 +108,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
         />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:text-slate-100 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-300/70"
+        >
+          Skip to main content
+        </a>
         <AppTheme>
           <Sidebar />
-          <main className="flex-1 overflow-x-hidden pt-16 lg:pt-0">
+          <main id="main-content" className="flex-1 overflow-x-hidden pt-16 lg:pt-0">
             {children}
           </main>
         </AppTheme>

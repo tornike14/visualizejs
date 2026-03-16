@@ -102,7 +102,7 @@ export function CategoryTopicsPage({ category }: CategoryTopicsPageProps) {
         <h2 className="text-2xl font-semibold tracking-tight">{config.title}</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {topics.map((topic) => (
-            <Link key={topic.id} href={topic.route}>
+            <Link key={topic.id} href={topic.route} prefetch={false}>
               <Card className="app-surface group h-full cursor-pointer gap-3 rounded-3xl border-[color:var(--app-border)] py-5 transition-all hover:border-pink-300/35 hover:shadow-[0_0_24px_rgba(244,114,182,0.16)]">
                 <CardHeader className="flex flex-row items-center justify-between gap-2 pb-0">
                   <CardTitle className="text-base">{topic.title}</CardTitle>

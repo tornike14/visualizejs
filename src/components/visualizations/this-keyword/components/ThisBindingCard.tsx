@@ -59,7 +59,7 @@ export function ThisBindingCard({ binding }: { binding: ThisBinding | null }) {
           className={cn(
             "rounded-lg border px-3 py-1.5 font-mono text-sm font-semibold",
             binding.value === "undefined"
-              ? "border-red-300/35 bg-red-400/10 text-red-200"
+              ? "border-rose-300/35 bg-rose-400/10 text-rose-200"
               : "border-emerald-300/35 bg-emerald-400/10 text-emerald-200"
           )}
         >

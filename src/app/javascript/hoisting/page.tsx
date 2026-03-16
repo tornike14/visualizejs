@@ -9,7 +9,7 @@ const hoistingTopic = getTopicOrThrow("hoisting");
 
 const HoistingVisualization = dynamic(
   () =>
-    import("@/components/visualizations/Hoisting").then(
+    import("@/components/visualizations/hoisting").then(
       (module) => module.Hoisting
     ),
   {

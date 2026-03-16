@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: `${SITE_URL}/react`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
   ];
 
   const topicRoutes: MetadataRoute.Sitemap = topics.map((topic) => ({
@@ -22,9 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const theoryRoutes: MetadataRoute.Sitemap = getTheoryTopicsByCategory(
-    "javascript",
-  ).map((topic) => ({
+  const theoryRoutes: MetadataRoute.Sitemap = [
+    ...getTheoryTopicsByCategory("javascript"),
+    ...getTheoryTopicsByCategory("react"),
+  ].map((topic) => ({
     url: `${SITE_URL}${topic.route}/theory`,
     lastModified: now,
     changeFrequency: "monthly",

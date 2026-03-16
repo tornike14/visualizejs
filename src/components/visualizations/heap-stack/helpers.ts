@@ -27,7 +27,7 @@ export const FRAME_TONE_MAP: Record<
 
 export const HEAP_STATUS_MAP = {
   alive: "",
-  unreachable: "opacity-50 ring-1 ring-red-400/40",
+  unreachable: "opacity-50 ring-1 ring-rose-400/40",
   collected: "hidden",
 } as const;
 

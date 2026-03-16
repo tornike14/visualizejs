@@ -1,28 +1,25 @@
 import type { Metadata } from "next";
-import { ReactComingSoonHero } from "@/components/layout/ReactComingSoonHero";
+import { CategoryTopicsPage } from "@/components/layout/CategoryTopicsPage";
 
 export const metadata: Metadata = {
-  title: "React Concepts Coming Soon",
+  title: "React Concepts",
   description:
-    "React visualizations are being redesigned and will be available soon.",
-  keywords: ["react concepts", "react fundamentals", "react visualizations"],
+    "Interactive React visualizations: reconciliation, virtual DOM diffing, re-rendering behavior, and more. Understand React internals step by step.",
+  keywords: [
+    "react concepts",
+    "react fundamentals",
+    "react reconciliation",
+    "virtual DOM",
+    "react re-rendering",
+    "react internals",
+    "react fiber",
+    "react diffing algorithm",
+  ],
   alternates: {
     canonical: "/react",
-  },
-  robots: {
-    index: false,
-    follow: true,
-    googleBot: {
-      index: false,
-      follow: true,
-    },
   },
 };
 
 export default function ReactIndexPage() {
-  return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
-      <ReactComingSoonHero />
-    </div>
-  );
+  return <CategoryTopicsPage category="react" />;
 }

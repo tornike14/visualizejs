@@ -36,7 +36,7 @@ export function ConsoleOutput({ lines, className }: ConsoleOutputProps) {
               key={`${line}-${index}`}
               className={cn(
                 "console-line",
-                isError && "text-red-300",
+                isError && "text-rose-300",
               )}
             >
               <span className="console-prefix">›</span>

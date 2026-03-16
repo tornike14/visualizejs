@@ -9,7 +9,7 @@ const eventLoopTopic = getTopicOrThrow("event-loop");
 
 const EventLoopVisualization = dynamic(
   () =>
-    import("@/components/visualizations/EventLoop").then(
+    import("@/components/visualizations/event-loop").then(
       (module) => module.EventLoop
     ),
   {

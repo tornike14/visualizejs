@@ -19,7 +19,7 @@ export function getEffectiveData(
 
 export const kindBadgeClass = createKindBadgeClass<ReferenceKind>({
   primitive: "bg-amber-500/15 text-amber-400 border-amber-500/25",
-  reference: "bg-red-500/15 text-red-400 border-red-500/25",
+  reference: "bg-rose-500/15 text-rose-400 border-rose-500/25",
   shallow: "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
   deep: "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
 });
