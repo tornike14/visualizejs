@@ -15,8 +15,14 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
 
   return (
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pb-8 pt-3 lg:px-6 lg:pb-10 lg:pt-6">
-      <header className="app-surface rounded-2xl p-4 lg:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <header className="app-surface flex flex-col rounded-2xl p-4 lg:p-5">
+        <h1 className="order-1 text-3xl font-semibold tracking-tight lg:text-4xl">
+          {topic.title} Theory
+        </h1>
+        <p className="order-2 mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
+          {content.summary}
+        </p>
+        <nav className="order-first flex flex-wrap items-center justify-between gap-3" aria-label="Theory navigation">
           <Link
             href={topic.route}
             className="inline-flex items-center gap-2 text-sm text-[color:var(--app-text-secondary)] transition-colors hover:text-[color:var(--app-text-primary)]"
@@ -33,14 +39,8 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
             MDN Reference
             <ExternalLink className="h-3.5 w-3.5" />
           </a>
-        </div>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight lg:text-4xl">
-          {topic.title} Theory
-        </h1>
-        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
-          {content.summary}
-        </p>
-        <div className="mt-3 text-xs text-[color:var(--app-text-secondary)]">
+        </nav>
+        <div className="order-3 mt-3 text-xs text-[color:var(--app-text-secondary)]">
           <Link
             href={categoryRoute}
             className="underline decoration-cyan-300/40 underline-offset-4 hover:text-[color:var(--app-text-primary)]"
@@ -132,8 +132,8 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
             {relatedTopics.map((relatedTopic) => (
               <TopicLink
                 key={relatedTopic.id}
-                href={relatedTopic.route}
-                label={relatedTopic.title}
+                href={`${relatedTopic.route}/theory`}
+                label={`${relatedTopic.title} Theory`}
               />
             ))}
           </div>

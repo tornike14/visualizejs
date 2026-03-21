@@ -28,6 +28,9 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "fiber-tree",
   "hooks",
   "render-cycle",
+  "memoization",
+  "suspense",
+  "server-components",
 ]);
 
 interface VisualizationPageShellProps {

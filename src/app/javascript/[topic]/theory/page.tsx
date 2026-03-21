@@ -105,6 +105,19 @@ export default async function TopicTheoryPage({ params }: TopicTheoryPageProps) 
     ],
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: theory.interviewQuestions.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: q.answer,
+      },
+    })),
+  };
+
   return (
     <>
       <script
@@ -114,6 +127,10 @@ export default async function TopicTheoryPage({ params }: TopicTheoryPageProps) 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <TheoryArticle topic={topic} content={theory} relatedTopics={relatedTopics} />
     </>
