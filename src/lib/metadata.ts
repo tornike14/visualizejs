@@ -198,6 +198,33 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "react useEffect execution order",
     "react useLayoutEffect vs useEffect",
   ],
+  memoization: [
+    "react memo explained",
+    "useMemo vs useCallback",
+    "react memo shallow comparison",
+    "react skip re-render",
+    "react performance optimization",
+    "react memoization when to use",
+    "useCallback explained react",
+  ],
+  suspense: [
+    "react suspense explained",
+    "react suspense fallback",
+    "react suspense data fetching",
+    "react suspense boundary",
+    "react lazy loading suspense",
+    "react suspense nested boundaries",
+    "react concurrent rendering suspense",
+  ],
+  "server-components": [
+    "react server components explained",
+    "RSC vs SSR difference",
+    "use client directive react",
+    "react server components payload",
+    "react server client boundary",
+    "react server components composition",
+    "react zero bundle server components",
+  ],
 };
 
 const THEORY_INTENT_KEYWORDS = [
@@ -207,51 +234,61 @@ const THEORY_INTENT_KEYWORDS = [
   "deep dive",
   "common mistakes",
   "faq",
+  "how it works",
+  "interview questions",
+  "examples",
+  "tutorial",
 ];
 
 const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
   "event-loop":
-    "Deep dive into how the JavaScript event loop works: call stack, task queue, microtask queue, setTimeout vs Promises, and common async pitfalls explained with examples.",
+    "The JavaScript event loop manages async code using a call stack, microtask queue, and macrotask queue. Learn how setTimeout, Promises, and async/await work with interactive examples.",
   hoisting:
-    "Complete guide to JavaScript hoisting: how var, let, const, and function declarations behave during the creation phase, temporal dead zone rules, and common interview questions.",
+    "JavaScript hoisting moves var, let, const, and function declarations to the top of their scope before execution. Learn the rules, temporal dead zone, and common interview pitfalls.",
   "execution-context":
-    "Learn how JavaScript execution contexts work: global vs function context, creation and execution phases, variable environment, scope chain setup, and the this binding.",
+    "A JavaScript execution context is the environment where code runs. Learn how global and function contexts are created, how the scope chain forms, and how this gets bound.",
   closures:
-    "Master JavaScript closures: how inner functions capture outer variables, lexical scoping rules, practical closure patterns, memory considerations, and interview preparation.",
+    "A JavaScript closure is a function that remembers variables from its outer scope. Learn how lexical scoping works, common closure patterns, and how to answer closure interview questions.",
   promises:
-    "Comprehensive guide to JavaScript Promises: states and transitions, .then/.catch/.finally chaining, microtask scheduling, async/await under the hood, and error handling patterns.",
+    "A JavaScript Promise represents a future value from an async operation. Learn .then/.catch chaining, microtask scheduling, async/await, and error handling with interactive examples.",
   "this-keyword":
-    "Complete guide to the JavaScript 'this' keyword: default, implicit, explicit, and new binding rules, arrow function behavior, call/apply/bind usage, and common gotchas.",
+    "The JavaScript this keyword refers to the object a function runs on. Learn the four binding rules, arrow function behavior, call/apply/bind, and common interview gotchas.",
   "scope-chain":
-    "Understand JavaScript scope chain resolution: global, function, and block scope, lexical environment linking, identifier lookup algorithm, and closures through the scope chain.",
+    "The JavaScript scope chain is how the engine looks up variables across nested scopes. Learn global, function, and block scope, lexical environments, and how closures use the chain.",
   "type-coercion":
-    "Deep dive into JavaScript type coercion: == vs === rules, Abstract Equality Algorithm, truthy/falsy chart, ToString/ToNumber/ToBoolean conversions, and tricky edge cases.",
+    "JavaScript type coercion automatically converts values between types during operations. Learn == vs === rules, truthy/falsy values, ToNumber/ToString conversions, and tricky edge cases.",
   "prototypal-inheritance":
-    "Learn JavaScript prototypal inheritance: prototype chain lookups, Object.create, constructor functions, class syntax under the hood, and instanceof behavior explained.",
+    "JavaScript uses prototypal inheritance where objects inherit directly from other objects. Learn the prototype chain, Object.create, constructor functions, and class syntax under the hood.",
   "reference-value":
-    "Understand reference vs value types in JavaScript: primitive copying, object reference sharing, shallow vs deep copy methods, structuredClone API, and mutation pitfalls.",
+    "JavaScript primitives are copied by value while objects are shared by reference. Learn shallow vs deep copy, structuredClone, the spread operator, and how to avoid mutation bugs.",
   "heap-stack":
-    "Learn the JavaScript memory model: stack frames for primitives and call execution, heap allocation for objects, memory lifecycle, and how the engine manages memory.",
+    "JavaScript stores primitives on the stack and objects on the heap. Learn how stack frames work, how the engine allocates memory, and the lifecycle of values during execution.",
   "garbage-collection":
-    "Deep dive into JavaScript garbage collection: mark-and-sweep algorithm, reference counting, memory leak patterns with closures/timers/DOM, WeakRef, and FinalizationRegistry.",
+    "JavaScript garbage collection automatically frees unused memory using mark-and-sweep. Learn how memory leaks happen with closures, timers, and DOM references, plus WeakRef and FinalizationRegistry.",
   generators:
-    "Complete guide to JavaScript generators: function* syntax, yield/next() protocol, iterator interface, two-way data flow, delegating with yield*, and practical use cases.",
+    "JavaScript generators are functions that can pause and resume with yield. Learn function* syntax, the iterator protocol, two-way data flow with next(), and practical use cases.",
   "virtual-dom":
-    "Learn what JSX compiles to and how React.createElement builds virtual DOM objects. Understand the transform from JSX syntax to plain JavaScript objects to real DOM nodes, and how React diffs virtual trees on re-render.",
+    "React's virtual DOM is a lightweight JavaScript copy of the real DOM. Learn what JSX compiles to, how React.createElement builds element trees, and how diffing decides what to update.",
   "context-propagation":
-    "Learn how React Context works under the hood: createContext and Provider value storage, useContext consumer subscription, value propagation through the component tree, and why all consumers re-render when the Provider value changes.",
+    "React Context lets you pass data through the component tree without prop drilling. Learn how createContext, Provider, and useContext work, and why consumers re-render on value changes.",
   reconciliation:
-    "Deep dive into React reconciliation: how the virtual DOM diffing algorithm compares element trees, same-type vs different-type updates, key-based list matching, and DOM commit optimizations.",
+    "React reconciliation is the diffing algorithm that compares virtual DOM trees to find minimal updates. Learn same-type vs cross-type diffs, key-based list matching, and DOM commit rules.",
   destructuring:
-    "Complete guide to JavaScript destructuring: array unpacking by position, object extraction by name, default values, nested patterns, renaming, and function parameter destructuring.",
+    "JavaScript destructuring extracts values from arrays and objects into variables. Learn array unpacking, object extraction, default values, nested patterns, and function parameter destructuring.",
   "spread-rest":
-    "Deep dive into JavaScript spread and rest syntax: array and object spread for merging and copying, rest parameters for variadic functions, and rest in destructuring patterns.",
+    "JavaScript spread (...) expands iterables and rest (...) collects remaining items. Learn array/object spread for copying, rest parameters for variadic functions, and destructuring rest patterns.",
   "fiber-tree":
-    "Deep dive into React's fiber tree architecture: how fibers represent components, the beginWork/completeWork work loop, child/sibling/return pointers, and unit-of-work processing.",
+    "React's fiber tree is the internal data structure that tracks component state and work. Learn how fibers represent components, the beginWork/completeWork loop, and unit-of-work processing.",
   hooks:
-    "Complete guide to React hooks internals: how hooks are stored as a linked list on fibers, why call order matters, useState and useEffect processing, and the rules of hooks explained.",
+    "React hooks are stored as a linked list on each fiber node. Learn why hook call order matters, how useState and useEffect work internally, and why conditional hooks cause errors.",
   "render-cycle":
-    "Deep dive into React's render cycle: the two-phase model with render (pure, interruptible) and commit (synchronous DOM mutations), useLayoutEffect vs useEffect timing, and automatic state update batching.",
+    "React renders in two phases: render (pure, interruptible diffing) and commit (synchronous DOM mutations). Learn useLayoutEffect vs useEffect timing and how state updates get batched.",
+  memoization:
+    "React memoization skips unnecessary re-renders and recalculations. Learn React.memo for component props, useMemo for expensive values, useCallback for stable references, and when to optimize.",
+  suspense:
+    "React Suspense lets components wait for async data with a declarative fallback UI. Learn how thrown Promises trigger boundaries, nested Suspense, parallel fetching, and content revealing.",
+  "server-components":
+    "React Server Components run on the server and send rendered output to the client with zero bundle cost. Learn the server/client split, RSC payload format, and the composition pattern.",
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
@@ -316,17 +353,22 @@ export function createTopicMetadata(topic: Topic): Metadata {
 }
 
 export function createTopicTheoryMetadata(topic: Topic): Metadata {
-  const title = `${topic.title} Theory Guide`;
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const title = `What is ${topic.title} in ${categoryLabel}? Explained with Examples`;
   const canonicalUrl = `${SITE_URL}${topic.route}/theory`;
   const keywords = dedupeKeywords(
     getTopicKeywords(topic),
     THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
-    [`${topic.id.replace(/-/g, " ")} theory`],
+    [
+      `${topic.id.replace(/-/g, " ")} theory`,
+      `what is ${topic.title.toLowerCase()} in ${categoryLabel.toLowerCase()}`,
+      `${topic.title.toLowerCase()} ${categoryLabel.toLowerCase()} explained`,
+      `${topic.title.toLowerCase()} interview questions`,
+    ],
   );
   const description =
     TOPIC_THEORY_DESCRIPTIONS[topic.id] ??
-    `In-depth theory for ${topic.title}: concepts, execution model, common mistakes, and interview questions.`;
+    `Learn what ${topic.title} is in ${categoryLabel}, how it works under the hood, common mistakes to avoid, and interview questions with interactive examples.`;
 
   return {
     title,
