@@ -23,7 +23,7 @@ export function CodeBlock({ lines, className }: CodeBlockProps) {
   );
 
   return (
-    <div className={cn("space-y-0.5", className)}>
+    <div className={cn("space-y-0.5 overflow-x-auto", className)}>
       {lines.map((line, index) => (
         <CodeLine
           key={line.key}

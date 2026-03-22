@@ -20,6 +20,9 @@ import { spreadRestTheory } from "@/content/theory/javascript/spread-rest";
 import { fiberTreeTheory } from "@/content/theory/react/fiber-tree";
 import { hooksTheory } from "@/content/theory/react/hooks";
 import { renderCycleTheory } from "@/content/theory/react/render-cycle";
+import { memoizationTheory } from "@/content/theory/react/memoization";
+import { suspenseTheory } from "@/content/theory/react/suspense";
+import { serverComponentsTheory } from "@/content/theory/react/server-components";
 import { getTopicById, getTopicsByCategory } from "@/lib/topics";
 import type { Category, Topic } from "@/types";
 
@@ -45,6 +48,9 @@ const THEORY_CONTENT_BY_TOPIC_ID: Record<string, TopicTheoryContent> = {
   "fiber-tree": fiberTreeTheory,
   hooks: hooksTheory,
   "render-cycle": renderCycleTheory,
+  memoization: memoizationTheory,
+  suspense: suspenseTheory,
+  "server-components": serverComponentsTheory,
 };
 
 export function getTheoryContent(topicId: string): TopicTheoryContent | undefined {
