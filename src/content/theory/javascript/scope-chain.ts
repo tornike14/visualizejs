@@ -68,5 +68,11 @@ function outer() {
         "Yes. Module imports create bindings in module scope that participate in identifier resolution like other lexical bindings.",
     },
   ],
-  relatedTopicIds: ["execution-context", "closures", "hoisting", "this-keyword", "reference-value"],
+  relatedTopicIds: [
+    "execution-context",
+    "closures",
+    "hoisting",
+    "this-keyword",
+    "modules-imports",
+  ],
 };

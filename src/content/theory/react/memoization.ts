@@ -79,5 +79,6 @@ const MemoChild = React.memo(Child, (prev, next) =>
     "render-cycle",
     "hooks",
     "virtual-dom",
+    "context-propagation",
   ],
 };

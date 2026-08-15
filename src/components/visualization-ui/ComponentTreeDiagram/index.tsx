@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useLayoutEffect } from "react";
+import { useRef, useCallback, useLayoutEffect } from "react";
 import type { TreeNodeData } from "@/types/visualization";
 import { TreeNode } from "./TreeNode";
 
@@ -14,13 +14,17 @@ export function ComponentTreeDiagram({
   activeNodeId,
 }: ComponentTreeDiagramProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number | undefined>(undefined);
 
+  // Scale and height are written straight to the DOM rather than held in
+  // state. Measuring already runs in a layout effect, so routing the result
+  // through setState would only add a second render pass per measurement.
   const measure = useCallback(() => {
     const container = containerRef.current;
+    const viewport = viewportRef.current;
     const inner = innerRef.current;
-    if (!container || !inner) return;
+    if (!container || !viewport || !inner) return;
 
     // Reset transform to measure natural size
     inner.style.transform = "none";
@@ -34,7 +38,7 @@ export function ComponentTreeDiagram({
         : 1;
 
     inner.style.transform = s < 1 ? `scale(${s})` : "none";
-    setHeight(s < 1 ? Math.ceil(naturalHeight * s) : undefined);
+    viewport.style.height = s < 1 ? `${Math.ceil(naturalHeight * s)}px` : "";
   }, []);
 
   useLayoutEffect(() => {
@@ -52,7 +56,7 @@ export function ComponentTreeDiagram({
 
   return (
     <div ref={containerRef} className="py-2">
-      <div className="overflow-hidden" style={{ height }}>
+      <div ref={viewportRef} className="overflow-hidden">
         <div
           ref={innerRef}
           className="flex justify-center"

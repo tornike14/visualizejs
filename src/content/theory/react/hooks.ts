@@ -65,5 +65,11 @@ export const hooksTheory: TopicTheoryContent = {
         "React shallow-compares each value in the current dependency array with the corresponding value from the previous render. If any value has changed (using Object.is), React schedules the effect to run after the next commit. If all values are the same, the effect is skipped.",
     },
   ],
-  relatedTopicIds: ["fiber-tree", "render-cycle", "reconciliation", "closures", "scope-chain"],
+  relatedTopicIds: [
+    "fiber-tree",
+    "render-cycle",
+    "use-effect-lifecycle",
+    "closures",
+    "reconciliation",
+  ],
 };

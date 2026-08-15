@@ -79,5 +79,11 @@ console.log(city); // "NYC"
       },
     },
   ],
-  relatedTopicIds: ["spread-rest", "scope-chain", "closures", "reference-value"],
+  relatedTopicIds: [
+    "spread-rest",
+    "scope-chain",
+    "closures",
+    "reference-value",
+    "modules-imports",
+  ],
 };
