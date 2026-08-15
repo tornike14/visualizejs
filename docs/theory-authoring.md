@@ -1,6 +1,6 @@
 # Theory Authoring Guide
 
-How to add theory pages for visualization topics. Theory pages provide in-depth conceptual explanations, step-by-step breakdowns, common mistakes, and interview questions for each topic.
+How to add theory content for visualization topics. Theory sections render on the topic page beneath the visualization, and provide in-depth conceptual explanations, step-by-step breakdowns, common mistakes, and interview questions for each topic.
 
 ---
 
@@ -11,10 +11,10 @@ How to add theory pages for visualization topics. Theory pages provide in-depth 
 - Topic content files:
   - `src/content/theory/javascript/<topic-id>.ts`
   - `src/content/theory/react/<topic-id>.ts`
-- Shared theory page renderer: `src/components/theory/TheoryArticle.tsx`
-- Generic routes:
-  - `src/app/javascript/[topic]/theory/page.tsx`
-  - `src/app/react/[topic]/theory/page.tsx`
+- Shared theory renderer: `src/components/theory/TopicTheorySections.tsx`
+- Rendered by `src/components/layout/VisualizationPageShell.tsx`, which pulls
+  content from the registry and places it below the visualization. There is no
+  separate theory route.
 
 ---
 
@@ -35,9 +35,9 @@ File name must match topic id exactly:
 5. Run `npm run lint` and `npm run build`.
 
 After registration:
-- `/<category>/<topic-id>/theory` is statically generated.
-- The topic visualization header shows the `Theory` button.
-- The sitemap includes the new theory URL automatically.
+- The theory sections render on `/<category>/<topic-id>`, below the visualization.
+- The topic page header shows the `Theory` button, which scrolls to those sections.
+- No sitemap change is needed, since the content shares the topic's URL.
 
 ---
 

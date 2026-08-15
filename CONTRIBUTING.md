@@ -85,7 +85,7 @@ Implements `TopicTheoryContent`: `summary`, `whatItIs`, `howItWorks`, `commonMis
 
 **5. Theory registry** in [`src/content/theory/index.ts`](src/content/theory/index.ts)
 
-Add the import and the entry in `THEORY_CONTENT_BY_TOPIC_ID`. The sitemap derives from this map, so a topic missing here will not be indexed.
+Add the import and the entry in `THEORY_CONTENT_BY_TOPIC_ID`. `VisualizationPageShell` reads this map to render the theory sections beneath the visualization, so a topic missing here renders without any theory.
 
 **6. SEO metadata** in [`src/lib/metadata.ts`](src/lib/metadata.ts)
 
@@ -106,7 +106,7 @@ npm run lint
 npm run build
 ```
 
-Then check that `/your-route` and `/your-route/theory` both render, the sitemap at `/sitemap.xml` includes both, and the related topic links at the bottom of the theory page resolve.
+Then check that `/your-route` renders with the theory sections below the visualization, the sitemap at `/sitemap.xml` includes the route, and the related topic links at the bottom of the page resolve.
 
 ## Pull Requests
 

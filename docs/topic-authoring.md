@@ -50,10 +50,8 @@ src/
   app/
     javascript/
       your-topic/page.tsx          # Route page (Step 2)
-      [topic]/theory/page.tsx      # JS theory route
     react/
       your-topic/page.tsx          # React topic route
-      [topic]/theory/page.tsx      # React theory route
       layout.tsx                   # React category layout
   components/
     visualizations/

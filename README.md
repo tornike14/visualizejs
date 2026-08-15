@@ -2,7 +2,7 @@
 
 Interactive visualizations for JavaScript and React concepts. Step through animations that show what the engine does at each stage, then read the theory behind it.
 
-28 topics, each with a step-by-step visualization and a companion theory page covering how it works, common mistakes, and interview questions.
+28 topics. Each one pairs a step-by-step visualization with theory sections covering how it works, common mistakes, and interview questions, all on a single page.
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ Node 20 or newer is required.
 
 ## Topics
 
-Every topic has a visualization at its route and a theory page at `<route>/theory`.
+Each topic lives at a single route, with the visualization at the top and the theory sections below it.
 
 ### JavaScript (17)
 
@@ -110,7 +110,7 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md) first. New topics are welcome, and the
 | [`docs/topic-authoring.md`](docs/topic-authoring.md) | JavaScript topic creation workflow |
 | [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) | React topic extensions |
 | [`docs/component-reference.md`](docs/component-reference.md) | Design system, components, hooks, animations |
-| [`docs/theory-authoring.md`](docs/theory-authoring.md) | Theory page authoring |
+| [`docs/theory-authoring.md`](docs/theory-authoring.md) | Theory content authoring |
 | [`docs/sandbox-authoring.md`](docs/sandbox-authoring.md) | Sandbox mode |
 | [`docs/architecture.md`](docs/architecture.md) | Frontend architecture rules |
 | [`docs/seo.md`](docs/seo.md) | SEO implementation |

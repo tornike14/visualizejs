@@ -217,7 +217,8 @@ When adding a new React topic, follow these additional steps beyond the base che
 2. Create route page at `src/app/react/<id>/page.tsx`
 3. Create theory file at `src/content/theory/react/<id>.ts` (if applicable)
 4. Add to `SELECTOR_TOOLBAR_TOPIC_IDS` in `VisualizationPageShell.tsx` (if using ExampleSelector)
-5. Sitemap and theory routes update automatically (category-agnostic)
+5. Sitemap updates automatically (category-agnostic), and the theory sections
+   render on the topic page once the content is registered
 
 ---
 
