@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { CategoryTopicsPage } from "@/components/layout/CategoryTopicsPage";
+import { getTopicsByCategory } from "@/lib/topics";
+
+const topicCount = getTopicsByCategory("react").length;
 
 export const metadata: Metadata = {
-  title: "React Concepts",
-  description:
-    "Interactive React visualizations: reconciliation, virtual DOM diffing, re-rendering behavior, and more. Understand React internals step by step.",
+  title: "React Concepts, Visualized",
+  description: `Explore ${topicCount} interactive React visualizations: virtual DOM, reconciliation, fiber, hooks, render cycle, and Suspense. Learn React internals step by step.`,
   keywords: [
+    "react visualizer",
+    "react visualization",
     "react concepts",
     "react fundamentals",
     "react reconciliation",
@@ -13,6 +17,7 @@ export const metadata: Metadata = {
     "react re-rendering",
     "react internals",
     "react fiber",
+    "react hooks",
     "react diffing algorithm",
   ],
   alternates: {

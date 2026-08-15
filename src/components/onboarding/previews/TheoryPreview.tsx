@@ -8,7 +8,7 @@ export const TheoryPreview = () => {
 
       <div className="relative z-10 flex min-h-[6.5rem] items-center justify-center lg:min-h-[7rem]">
         <TopicTheoryButton
-          href="/javascript/event-loop/theory"
+          href="/javascript/event-loop#theory"
           size="large"
           isPreview={true}
         />

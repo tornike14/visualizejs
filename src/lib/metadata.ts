@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { Topic } from "@/types";
 import {
+  CREATOR_LINKEDIN_URL,
+  CREATOR_NAME,
   OPEN_GRAPH_IMAGE_URL,
   SITE_NAME,
   SITE_URL,
@@ -340,20 +342,36 @@ function dedupeKeywords(...keywordGroups: string[][]): string[] {
 }
 
 export function getTopicKeywords(topic: Topic): string[] {
+  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const lowerTitle = topic.title.toLowerCase();
+  const lowerCategory = categoryLabel.toLowerCase();
+
   return dedupeKeywords(
     GLOBAL_KEYWORDS,
     CATEGORY_KEYWORDS[topic.category],
     [topic.title, topic.id.replace(/-/g, " "), `${topic.title} explained`],
     TOPIC_KEYWORDS[topic.id] ?? [],
+    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
+    [
+      `what is ${lowerTitle} in ${lowerCategory}`,
+      `${lowerTitle} ${lowerCategory} explained`,
+      `${lowerTitle} interview questions`,
+      `${lowerTitle} visualizer`,
+      `${lowerTitle} visualization`,
+    ],
   );
+}
+
+export function getTopicDescription(topic: Topic): string {
+  return TOPIC_THEORY_DESCRIPTIONS[topic.id] ?? topic.description;
 }
 
 export function createTopicMetadata(topic: Topic): Metadata {
-  const title = `${topic.title} Visualization`;
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const title = `${topic.title} in ${categoryLabel}, Visualized`;
   const canonicalUrl = `${SITE_URL}${topic.route}`;
   const keywords = getTopicKeywords(topic);
-  const description = topic.description;
+  const description = getTopicDescription(topic);
 
   return {
     title,
@@ -396,61 +414,59 @@ export function createTopicMetadata(topic: Topic): Metadata {
   };
 }
 
-export function createTopicTheoryMetadata(topic: Topic): Metadata {
+export function createTopicStructuredData(topic: Topic, summary?: string) {
   const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
-  const title = `What is ${topic.title} in ${categoryLabel}? Explained with Examples`;
-  const canonicalUrl = `${SITE_URL}${topic.route}/theory`;
-  const keywords = dedupeKeywords(
-    getTopicKeywords(topic),
-    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
-    [
-      `${topic.id.replace(/-/g, " ")} theory`,
-      `what is ${topic.title.toLowerCase()} in ${categoryLabel.toLowerCase()}`,
-      `${topic.title.toLowerCase()} ${categoryLabel.toLowerCase()} explained`,
-      `${topic.title.toLowerCase()} interview questions`,
-    ],
-  );
-  const description =
-    TOPIC_THEORY_DESCRIPTIONS[topic.id] ??
-    `Learn what ${topic.title} is in ${categoryLabel}, how it works under the hood, common mistakes to avoid, and interview questions with interactive examples.`;
+  const categoryRoute =
+    topic.category === "javascript" ? "/javascript" : "/react";
+  const canonicalUrl = `${SITE_URL}${topic.route}`;
 
-  return {
-    title,
-    description,
-    category: categoryLabel,
-    keywords,
-    alternates: {
-      canonical: canonicalUrl,
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: `${topic.title} in ${categoryLabel}, Visualized`,
+    description: summary ?? getTopicDescription(topic),
+    url: canonicalUrl,
+    inLanguage: "en-US",
+    keywords: getTopicKeywords(topic).join(", "),
+    proficiencyLevel:
+      topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
+    about: {
+      "@type": "Thing",
+      name: topic.title,
+      description: topic.description,
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
+    author: {
+      "@type": "Person",
+      name: CREATOR_NAME,
+      url: CREATOR_LINKEDIN_URL,
     },
-    openGraph: {
-      title: `${title} | ${SITE_NAME}`,
-      description,
-      url: canonicalUrl,
-      siteName: SITE_NAME,
-      type: "article",
-      locale: "en_US",
-      images: [
-        {
-          url: OPEN_GRAPH_IMAGE_URL,
-          width: SOCIAL_IMAGE_WIDTH,
-          height: SOCIAL_IMAGE_HEIGHT,
-          alt: SOCIAL_IMAGE_ALT,
-        },
-      ],
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${title} | ${SITE_NAME}`,
-      description,
-      images: [TWITTER_IMAGE_URL],
-    },
+    mainEntityOfPage: canonicalUrl,
   };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: `${categoryLabel} Concepts`,
+        item: `${SITE_URL}${categoryRoute}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: topic.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  return [articleSchema, breadcrumbSchema];
 }

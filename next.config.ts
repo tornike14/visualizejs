@@ -15,6 +15,18 @@ const withAnalyzer = withBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  redirects: async () => [
+    {
+      source: "/javascript/:topic/theory",
+      destination: "/javascript/:topic",
+      permanent: true,
+    },
+    {
+      source: "/react/:topic/theory",
+      destination: "/react/:topic",
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: "/(.*)",
