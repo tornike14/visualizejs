@@ -4,6 +4,10 @@ Interactive visualizations for JavaScript and React concepts. Step through anima
 
 28 topics. Each one pairs a step-by-step visualization with theory sections covering how it works, common mistakes, and interview questions, all on a single page.
 
+**[visualizejs.com](https://visualizejs.com)**
+
+[![VisualizeJS homepage](docs/images/homepage.jpg)](https://visualizejs.com)
+
 ## Getting Started
 
 ```bash
