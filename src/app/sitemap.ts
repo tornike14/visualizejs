@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { getTheoryTopicsByCategory } from "@/content/theory";
 import { SITE_URL } from "@/lib/constants";
 import { topics } from "@/lib/topics";
 
@@ -8,16 +7,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${SITE_URL}/javascript`,
+      url: SITE_URL,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
+      url: `${SITE_URL}/javascript`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${SITE_URL}/react`,
       lastModified: now,
       changeFrequency: "weekly",
-      priority: 1,
+      priority: 0.9,
     },
   ];
 
@@ -28,15 +33,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const theoryRoutes: MetadataRoute.Sitemap = [
-    ...getTheoryTopicsByCategory("javascript"),
-    ...getTheoryTopicsByCategory("react"),
-  ].map((topic) => ({
-    url: `${SITE_URL}${topic.route}/theory`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
-  return [...staticRoutes, ...topicRoutes, ...theoryRoutes];
+  return [...staticRoutes, ...topicRoutes];
 }

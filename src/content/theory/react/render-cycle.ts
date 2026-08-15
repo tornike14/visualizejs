@@ -73,5 +73,11 @@ export const renderCycleTheory: TopicTheoryContent = {
         "The render phase must be free of side effects because React may invoke component functions multiple times, pause rendering, or throw away incomplete work (e.g., when a higher-priority update arrives). Any side effect in this phase would execute unpredictably.",
     },
   ],
-  relatedTopicIds: ["fiber-tree", "hooks", "reconciliation", "event-loop", "promises"],
+  relatedTopicIds: [
+    "fiber-tree",
+    "hooks",
+    "reconciliation",
+    "event-loop",
+    "use-effect-lifecycle",
+  ],
 };

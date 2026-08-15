@@ -70,8 +70,8 @@ This document describes the SEO work currently implemented in VisualizeJS.
   - declares sitemap URL
 - Sitemap route: `src/app/sitemap.ts`
   - Generates `/sitemap.xml`
-  - includes static routes (`/`, `/javascript`, `/react`), all topic routes, and theory routes
-  - Theory routes are generated via `getTheoryTopicsByCategory()` for both JS and React
+  - includes static routes (`/`, `/javascript`, `/react`) and all topic routes
+  - Theory content shares its topic's URL, so it needs no separate sitemap entry
 
 ## Files Involved
 

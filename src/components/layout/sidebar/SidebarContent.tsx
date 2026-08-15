@@ -26,12 +26,14 @@ export function SidebarContent({
 }) {
   const pathname = usePathname();
   const filteredTopics = getTopicsByCategory(activeCategory);
+  const otherCategory: Category =
+    activeCategory === "javascript" ? "react" : "javascript";
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between gap-2 px-4 py-5">
         <Link
-          href={categoryRoute(activeCategory)}
+          href="/"
           className="group inline-flex px-1 py-1 transition-all"
           onClick={onLinkClick}
         >
@@ -74,6 +76,13 @@ export function SidebarContent({
           {filteredTopics.length} topic{filteredTopics.length !== 1 && "s"} in{" "}
           {activeCategory === "javascript" ? "JavaScript" : "React"}
         </p>
+        <Link
+          href={categoryRoute(otherCategory)}
+          onClick={onLinkClick}
+          className="flex w-fit text-xs text-[color:var(--app-text-secondary)] underline decoration-cyan-300/30 underline-offset-4 transition-colors hover:text-[color:var(--app-text-primary)]"
+        >
+          Browse {otherCategory === "javascript" ? "JavaScript" : "React"} topics
+        </Link>
         {showFooterExtras && (
           <>
             <FollowLinkedInButton onClick={onLinkClick} />

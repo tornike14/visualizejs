@@ -23,6 +23,10 @@ import { renderCycleTheory } from "@/content/theory/react/render-cycle";
 import { memoizationTheory } from "@/content/theory/react/memoization";
 import { suspenseTheory } from "@/content/theory/react/suspense";
 import { serverComponentsTheory } from "@/content/theory/react/server-components";
+import { eventDelegationTheory } from "@/content/theory/javascript/event-delegation";
+import { modulesImportsTheory } from "@/content/theory/javascript/modules-imports";
+import { errorBoundariesTheory } from "@/content/theory/react/error-boundaries";
+import { useEffectLifecycleTheory } from "@/content/theory/react/use-effect-lifecycle";
 import { getTopicById, getTopicsByCategory } from "@/lib/topics";
 import type { Category, Topic } from "@/types";
 
@@ -51,6 +55,10 @@ const THEORY_CONTENT_BY_TOPIC_ID: Record<string, TopicTheoryContent> = {
   memoization: memoizationTheory,
   suspense: suspenseTheory,
   "server-components": serverComponentsTheory,
+  "event-delegation": eventDelegationTheory,
+  "modules-imports": modulesImportsTheory,
+  "error-boundaries": errorBoundariesTheory,
+  "use-effect-lifecycle": useEffectLifecycleTheory,
 };
 
 export function getTheoryContent(topicId: string): TopicTheoryContent | undefined {

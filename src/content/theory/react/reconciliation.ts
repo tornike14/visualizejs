@@ -72,5 +72,11 @@ export const reconciliationTheory: TopicTheoryContent = {
         "React tears down the entire old subtree (unmounting all components, running cleanup effects, destroying DOM nodes) and builds the new subtree from scratch. No diffing of children occurs across type boundaries.",
     },
   ],
-  relatedTopicIds: ["reference-value", "execution-context"],
+  relatedTopicIds: [
+    "virtual-dom",
+    "fiber-tree",
+    "render-cycle",
+    "memoization",
+    "error-boundaries",
+  ],
 };

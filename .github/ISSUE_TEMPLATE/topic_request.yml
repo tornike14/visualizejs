@@ -1,0 +1,47 @@
+name: Topic request
+description: Propose a new JavaScript or React concept to visualize
+labels: [topic request]
+body:
+  - type: input
+    id: concept
+    attributes:
+      label: Concept
+      placeholder: Web Workers
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - JavaScript
+        - React
+    validations:
+      required: true
+
+  - type: textarea
+    id: visual
+    attributes:
+      label: What would the visualization show
+      description: >
+        The concepts that work well here have moving parts worth watching:
+        state that changes over time, a structure being traversed, or an
+        ordering that surprises people. Describe the panels and what changes
+        between steps.
+    validations:
+      required: true
+
+  - type: textarea
+    id: misconception
+    attributes:
+      label: What do people usually get wrong about it
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contributing
+    attributes:
+      label: Would you like to build it?
+      options:
+        - label: I would like to work on this myself

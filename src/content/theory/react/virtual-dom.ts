@@ -73,5 +73,6 @@ React.createElement("button", { className: "btn" }, "Click")
     "fiber-tree",
     "render-cycle",
     "hooks",
+    "context-propagation",
   ],
 };

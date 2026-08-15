@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or idea
+    url: https://github.com/tornike14/visualizejs/discussions
+    about: Ask about the project or float an idea before opening an issue.
+  - name: Security vulnerability
+    url: https://github.com/tornike14/visualizejs/security/advisories/new
+    about: Report privately. Please do not open a public issue.

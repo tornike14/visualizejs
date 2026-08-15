@@ -2,11 +2,35 @@
   "name": "visualizejs",
   "version": "0.1.0",
   "private": true,
+  "description": "Interactive step-by-step visualizations for JavaScript and React internals.",
+  "license": "MIT",
+  "author": "Tornike Nizharadze",
+  "homepage": "https://visualizejs.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tornike14/visualizejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tornike14/visualizejs/issues"
+  },
+  "keywords": [
+    "javascript",
+    "react",
+    "visualization",
+    "event-loop",
+    "learning",
+    "interactive"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:registries": "node scripts/check-registries.mjs",
+    "verify": "npm run lint && npm run check:registries && npm run build"
   },
   "dependencies": {
     "@codemirror/commands": "^6.10.2",

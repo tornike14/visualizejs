@@ -1,0 +1,33 @@
+name: Content correction
+description: A theory page or step description states something inaccurate
+labels: [content, correction]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Technical accuracy matters more here than any feature. Thanks for taking
+        the time to report this.
+
+  - type: input
+    id: location
+    attributes:
+      label: Where
+      description: Page URL, and the section or step number.
+      placeholder: /react/hooks/theory, "Common Mistakes" section
+    validations:
+      required: true
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What it currently says
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: What it should say, and why
+      description: A link to the spec, MDN, or the React docs settles it fastest.
+    validations:
+      required: true

@@ -1,57 +1,30 @@
-import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import type { TopicTheoryContent } from "@/content/theory/types";
 import { TopicLink } from "@/components/visualization-ui/TopicLink";
 import type { Topic } from "@/types";
 
-interface TheoryArticleProps {
+interface TopicTheorySectionsProps {
   topic: Topic;
   content: TopicTheoryContent;
   relatedTopics: Topic[];
 }
 
-export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticleProps) {
-  const categoryRoute = topic.category === "javascript" ? "/javascript" : "/react";
+export const TopicTheorySections = ({
+  topic,
+  content,
+  relatedTopics,
+}: TopicTheorySectionsProps) => {
+  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
 
   return (
-    <article className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 pb-8 pt-3 lg:px-6 lg:pb-10 lg:pt-6">
-      <header className="app-surface flex flex-col rounded-2xl p-4 lg:p-5">
-        <h1 className="order-1 text-3xl font-semibold tracking-tight lg:text-4xl">
-          {topic.title} Theory
-        </h1>
-        <p className="order-2 mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
+    <div id="theory" className="flex scroll-mt-20 flex-col gap-5">
+      <section className="app-surface rounded-2xl p-4 lg:p-5">
+        <h2 className="text-xl font-semibold tracking-tight lg:text-2xl">
+          What is {topic.title} in {categoryLabel}?
+        </h2>
+        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
           {content.summary}
         </p>
-        <nav className="order-first flex flex-wrap items-center justify-between gap-3" aria-label="Theory navigation">
-          <Link
-            href={topic.route}
-            className="inline-flex items-center gap-2 text-sm text-[color:var(--app-text-secondary)] transition-colors hover:text-[color:var(--app-text-primary)]"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to {topic.title} visualization
-          </Link>
-          <a
-            href={topic.docsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/8 px-3 py-1.5 text-xs font-medium text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/12"
-          >
-            MDN Reference
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-        </nav>
-        <div className="order-3 mt-3 text-xs text-[color:var(--app-text-secondary)]">
-          <Link
-            href={categoryRoute}
-            className="underline decoration-cyan-300/40 underline-offset-4 hover:text-[color:var(--app-text-primary)]"
-          >
-            Browse all {topic.category === "javascript" ? "JavaScript" : "React"} topics
-          </Link>
-        </div>
-      </header>
-
-      <section className="app-surface rounded-2xl p-4 lg:p-5">
-        <h2 className="text-xl font-semibold tracking-tight">What it is</h2>
         <div className="mt-3 space-y-3 text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
           {content.whatItIs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
@@ -62,10 +35,21 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
             example.
           </p>
         </div>
+        <a
+          href={topic.docsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/8 px-3 py-1.5 text-xs font-medium text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/12"
+        >
+          {topic.title} on MDN
+          <ExternalLink className="h-3.5 w-3.5" />
+        </a>
       </section>
 
       <section className="app-surface rounded-2xl p-4 lg:p-5">
-        <h2 className="text-xl font-semibold tracking-tight">How it works</h2>
+        <h2 className="text-xl font-semibold tracking-tight lg:text-2xl">
+          How {topic.title} works
+        </h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
           {content.howItWorks.map((step) => (
             <li key={step}>{step}</li>
@@ -74,7 +58,9 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
       </section>
 
       <section className="app-surface rounded-2xl p-4 lg:p-5">
-        <h2 className="text-xl font-semibold tracking-tight">Common mistakes</h2>
+        <h2 className="text-xl font-semibold tracking-tight lg:text-2xl">
+          Common {topic.title} mistakes
+        </h2>
         <div className="mt-3 grid gap-3 lg:grid-cols-2">
           {content.commonMistakes.map((mistake) => (
             <article
@@ -96,7 +82,9 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
       </section>
 
       <section className="app-surface rounded-2xl p-4 lg:p-5">
-        <h2 className="text-xl font-semibold tracking-tight">Interview questions</h2>
+        <h2 className="text-xl font-semibold tracking-tight lg:text-2xl">
+          {topic.title} interview questions
+        </h2>
         <p className="mt-2 text-sm text-[color:var(--app-text-secondary)]">
           Common interview prompts with concise model answers.
         </p>
@@ -124,7 +112,9 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
 
       {relatedTopics.length > 0 && (
         <section className="app-surface rounded-2xl p-4 lg:p-5">
-          <h2 className="text-xl font-semibold tracking-tight">Related concepts</h2>
+          <h2 className="text-xl font-semibold tracking-tight lg:text-2xl">
+            Related {categoryLabel} concepts
+          </h2>
           <p className="mt-2 text-sm text-[color:var(--app-text-secondary)]">
             Continue with these concepts to strengthen your mental model.
           </p>
@@ -132,13 +122,13 @@ export function TheoryArticle({ topic, content, relatedTopics }: TheoryArticlePr
             {relatedTopics.map((relatedTopic) => (
               <TopicLink
                 key={relatedTopic.id}
-                href={`${relatedTopic.route}/theory`}
-                label={`${relatedTopic.title} Theory`}
+                href={relatedTopic.route}
+                label={relatedTopic.title}
               />
             ))}
           </div>
         </section>
       )}
-    </article>
+    </div>
   );
-}
+};

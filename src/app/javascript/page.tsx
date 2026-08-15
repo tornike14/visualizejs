@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { CategoryTopicsPage } from "@/components/layout/CategoryTopicsPage";
+import { getTopicsByCategory } from "@/lib/topics";
+
+const topicCount = getTopicsByCategory("javascript").length;
 
 export const metadata: Metadata = {
-  title: "JavaScript Concepts",
-  description:
-    "Explore 13 interactive JavaScript visualizations: Event Loop, Closures, Hoisting, Promises, Scope Chain, Prototypal Inheritance, Garbage Collection, and more. Learn JS internals step by step.",
+  title: "JavaScript Concepts, Visualized",
+  description: `Explore ${topicCount} interactive JavaScript visualizations: event loop, closures, hoisting, promises, scope chain, and prototypes. Learn JS internals step by step.`,
   keywords: [
+    "javascript visualizer",
+    "javascript visualization",
     "javascript concepts",
     "javascript fundamentals",
     "event loop",

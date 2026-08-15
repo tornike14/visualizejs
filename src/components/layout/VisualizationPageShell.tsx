@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { TopicTheoryButton } from "@/components/layout/TopicTheoryButton";
+import { TopicTheorySections } from "@/components/theory/TopicTheorySections";
 import { ToolbarProvider, ToolbarSlot } from "./ToolbarPortal";
-import { hasTheoryContent } from "@/content/theory";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
-import { getTopicKeywords } from "@/lib/metadata";
+import { getRelatedTopicsFromTheory, getTheoryContent } from "@/content/theory";
+import { createTopicStructuredData } from "@/lib/metadata";
 import type { Topic } from "@/types";
 
 const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
@@ -31,6 +31,10 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "memoization",
   "suspense",
   "server-components",
+  "event-delegation",
+  "modules-imports",
+  "error-boundaries",
+  "use-effect-lifecycle",
 ]);
 
 interface VisualizationPageShellProps {
@@ -48,68 +52,20 @@ export function VisualizationPageShell({
   const toolbarSkeletonVariant = SELECTOR_TOOLBAR_TOPIC_IDS.has(topic.id)
     ? "selector"
     : "simple";
-  const canonicalUrl = `${SITE_URL}${topic.route}`;
-  const topicKeywords = getTopicKeywords(topic);
-  const hasTheoryPage = hasTheoryContent(topic.id);
-
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: `${topic.title} Visualization`,
-    description: topic.description,
-    url: canonicalUrl,
-    keywords: topicKeywords.join(", "),
-    inLanguage: "en-US",
-    proficiencyLevel: topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
-    about: {
-      "@type": "Thing",
-      name: topic.title,
-      description: topic.description,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
-    mainEntityOfPage: canonicalUrl,
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: `${categoryLabel} Concepts`,
-        item: `${SITE_URL}${categoryRoute}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: topic.title,
-        item: canonicalUrl,
-      },
-    ],
-  };
+  const theory = getTheoryContent(topic.id);
+  const relatedTopics = getRelatedTopicsFromTheory(topic.id);
+  const structuredData = createTopicStructuredData(topic, theory?.summary);
 
   return (
     <ToolbarProvider>
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 pb-6 pt-3 lg:px-6 lg:pb-8 lg:pt-6">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
+        {structuredData.map((schema) => (
+          <script
+            key={schema["@type"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
 
         <header className="flex flex-col gap-3">
           <Link
@@ -122,12 +78,13 @@ export function VisualizationPageShell({
 
           <div className="flex flex-wrap items-center justify-between gap-2.5">
             <h1 className="text-3xl font-semibold tracking-tight lg:text-4xl">
-              {topic.title}
+              {topic.title}{" "}
+              <span className="text-xl font-normal text-[color:var(--app-text-secondary)] lg:text-2xl">
+                in {categoryLabel}
+              </span>
             </h1>
             <div className="flex items-center gap-2">
-              {hasTheoryPage && (
-                <TopicTheoryButton href={`${topic.route}/theory`} />
-              )}
+              {theory && <TopicTheoryButton href="#theory" />}
               <a
                 href={topic.docsUrl}
                 target="_blank"
@@ -139,6 +96,10 @@ export function VisualizationPageShell({
               </a>
             </div>
           </div>
+
+          <p className="max-w-4xl text-sm leading-relaxed text-[color:var(--app-text-secondary)] lg:text-base">
+            {topic.description}
+          </p>
         </header>
 
         <div className="h-px bg-[color:var(--app-border)]" />
@@ -150,6 +111,14 @@ export function VisualizationPageShell({
             {children}
           </ErrorBoundary>
         </section>
+
+        {theory && (
+          <TopicTheorySections
+            topic={topic}
+            content={theory}
+            relatedTopics={relatedTopics}
+          />
+        )}
       </div>
     </ToolbarProvider>
   );

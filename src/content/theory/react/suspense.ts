@@ -71,5 +71,6 @@ export const suspenseTheory: TopicTheoryContent = {
     "fiber-tree",
     "reconciliation",
     "server-components",
+    "error-boundaries",
   ],
 };
