@@ -1,10 +1,10 @@
 # VisualizeJS
 
+[![Live site](https://img.shields.io/badge/live-visualizejs.com-3fb950?style=flat-square&labelColor=24292f)](https://visualizejs.com) [![CI](https://img.shields.io/github/actions/workflow/status/tornike14/visualizejs/ci.yml?branch=develop&style=flat-square&label=CI&labelColor=24292f)](https://github.com/tornike14/visualizejs/actions/workflows/ci.yml) [![Topics](https://img.shields.io/badge/topics-28-a371f7?style=flat-square&labelColor=24292f)](#topics) [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white&labelColor=24292f)](https://nextjs.org) [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=61DAFB&labelColor=24292f)](https://react.dev) [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white&labelColor=24292f)](https://www.typescriptlang.org) [![License](https://img.shields.io/github/license/tornike14/visualizejs?style=flat-square&color=3fb950&labelColor=24292f)](LICENSE)
+
 Interactive visualizations for JavaScript and React concepts. Step through animations that show what the engine does at each stage, then read the theory behind it.
 
 28 topics. Each one pairs a step-by-step visualization with theory sections covering how it works, common mistakes, and interview questions, all on a single page.
-
-**[visualizejs.com](https://visualizejs.com)**
 
 [![VisualizeJS homepage](docs/images/homepage.jpg)](https://visualizejs.com)
 
