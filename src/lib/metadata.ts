@@ -225,6 +225,42 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "react server components composition",
     "react zero bundle server components",
   ],
+  "event-delegation": [
+    "javascript event delegation explained",
+    "event bubbling javascript",
+    "event capturing javascript",
+    "stopPropagation javascript",
+    "event.target vs event.currentTarget",
+    "DOM event propagation",
+    "event delegation pattern javascript",
+  ],
+  "modules-imports": [
+    "javascript modules explained",
+    "ES modules import export",
+    "javascript live bindings",
+    "circular dependency javascript",
+    "named vs default export",
+    "import resolution javascript",
+    "tree shaking javascript",
+  ],
+  "error-boundaries": [
+    "react error boundary explained",
+    "getDerivedStateFromError react",
+    "componentDidCatch react",
+    "react error handling",
+    "react fallback ui",
+    "nested error boundaries react",
+    "error boundary recovery pattern",
+  ],
+  "use-effect-lifecycle": [
+    "useEffect explained react",
+    "useEffect dependency array",
+    "useEffect cleanup function",
+    "useEffect vs useLayoutEffect",
+    "react effect lifecycle",
+    "useEffect mount unmount",
+    "useEffect common patterns",
+  ],
 };
 
 const THEORY_INTENT_KEYWORDS = [
@@ -289,6 +325,14 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "React Suspense lets components wait for async data with a declarative fallback UI. Learn how thrown Promises trigger boundaries, nested Suspense, parallel fetching, and content revealing.",
   "server-components":
     "React Server Components run on the server and send rendered output to the client with zero bundle cost. Learn the server/client split, RSC payload format, and the composition pattern.",
+  "event-delegation":
+    "DOM events propagate through the tree in three phases: capture (down), target, and bubble (up). Event delegation attaches one handler to a parent instead of many to children. Learn propagation, stopPropagation, and delegation patterns.",
+  "modules-imports":
+    "ES modules use static import/export syntax with live bindings that reference the exporter's variables. Learn named vs default exports, live bindings vs copies, circular dependency handling, and the module loading phases.",
+  "error-boundaries":
+    "React error boundaries are class components that catch render errors in their subtree and display fallback UI. Learn getDerivedStateFromError, componentDidCatch, nested boundaries, and recovery patterns.",
+  "use-effect-lifecycle":
+    "useEffect runs side effects after React commits DOM updates and the browser paints. Learn dependency array behavior, cleanup timing, mount/unmount patterns, and common useEffect recipes.",
 };
 
 function dedupeKeywords(...keywordGroups: string[][]): string[] {

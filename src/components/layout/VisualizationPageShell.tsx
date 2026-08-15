@@ -31,6 +31,10 @@ const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
   "memoization",
   "suspense",
   "server-components",
+  "event-delegation",
+  "modules-imports",
+  "error-boundaries",
+  "use-effect-lifecycle",
 ]);
 
 interface VisualizationPageShellProps {

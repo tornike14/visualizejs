@@ -166,6 +166,28 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*",
   },
+  {
+    id: "event-delegation",
+    title: "Event Delegation",
+    category: "javascript",
+    route: "/javascript/event-delegation",
+    description:
+      "See how DOM events propagate through the tree with an interactive visualization. Watch capture and bubble phases, stopPropagation, and the delegation pattern where one parent handler replaces many child handlers.",
+    difficulty: "beginner",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Event_bubbling",
+  },
+  {
+    id: "modules-imports",
+    title: "Modules & Imports",
+    category: "javascript",
+    route: "/javascript/modules-imports",
+    description:
+      "See how JavaScript ES modules work with an interactive visualization. Watch the module graph build, import bindings resolve, live references update, and circular dependencies get handled step by step.",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules",
+  },
   /* ── React ── */
   {
     id: "virtual-dom",
@@ -256,6 +278,27 @@ export const topics: Topic[] = [
       "See how React Server Components split rendering between server and client with an interactive visualization. Step through the server render pass, payload serialization, and client hydration.",
     difficulty: "advanced",
     docsUrl: "https://react.dev/reference/rsc/server-components",
+  },
+  {
+    id: "error-boundaries",
+    title: "Error Boundaries",
+    category: "react",
+    route: "/react/error-boundaries",
+    description:
+      "See how React error boundaries work with an interactive visualization. Watch errors propagate up the component tree, getDerivedStateFromError trigger, fallback UI render, and recovery patterns step by step.",
+    difficulty: "intermediate",
+    docsUrl:
+      "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary",
+  },
+  {
+    id: "use-effect-lifecycle",
+    title: "useEffect Lifecycle",
+    category: "react",
+    route: "/react/use-effect-lifecycle",
+    description:
+      "See how React useEffect works with an interactive visualization. Step through the render-commit-paint-effect timeline, dependency array comparisons, cleanup function timing, and common patterns.",
+    difficulty: "beginner",
+    docsUrl: "https://react.dev/reference/react/useEffect",
   },
 ];
 
