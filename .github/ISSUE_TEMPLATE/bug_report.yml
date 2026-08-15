@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in a visualization or page does not work as expected
+labels: [bug]
+body:
+  - type: input
+    id: topic
+    attributes:
+      label: Topic
+      description: Which topic, and which step if it is step-specific.
+      placeholder: Event Loop, step 4
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead
+      description: A screen recording is worth more than a paragraph here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /javascript/event-loop
+        2. Select the async/await example
+        3. Press play
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: Firefox 141, macOS 15
+    validations:
+      required: true
