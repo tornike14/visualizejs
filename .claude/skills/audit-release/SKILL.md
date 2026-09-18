@@ -25,7 +25,7 @@ For every topic in `src/lib/topics.ts`, verify a route page file exists at `src/
 Search visualization files for `ExampleSelector` imports. For each topic using it, verify the topic ID is in `SELECTOR_TOOLBAR_TOPIC_IDS` in `src/components/layout/VisualizationPageShell.tsx`. Flag missing registrations.
 
 ### 5. Theory Registration
-For every theory content file in `src/content/theory/javascript/` and `src/content/theory/react/`, verify it is imported and registered in `src/content/theory/index.ts`. Flag unregistered files.
+For every theory content file in `src/content/theory/<category>/` (every folder), verify it is imported and registered in `src/content/theory/index.ts`. Flag unregistered files.
 
 ### 6. Console.log Audit
 Search for `console.log` statements in `src/` (excluding `src/content/` and `ConsoleOutput` rendering). Flag any found in production code.

@@ -36,7 +36,7 @@ For each theory content file, check that:
 Flag empty arrays and invalid IDs.
 
 ### 6. Sitemap and Robots
-Verify `src/app/sitemap.ts` and `src/app/robots.ts` exist.
+Verify `src/app/sitemap.ts` and `src/app/robots.ts` exist, and that every category in `src/lib/categories.ts` has a route page at `src/app/<id>/page.tsx`.
 
 ### 7. Route Page Coverage
 For every topic in `src/lib/topics.ts`, verify a route page file exists at `src/app/<category>/<id>/page.tsx`. Flag missing route pages.

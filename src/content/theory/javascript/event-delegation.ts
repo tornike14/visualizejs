@@ -57,5 +57,5 @@ export const eventDelegationTheory: TopicTheoryContent = {
     },
   ],
 
-  relatedTopicIds: ["event-loop", "scope-chain", "closures", "execution-context"],
+  relatedTopicIds: ["event-loop", "debounce-throttle", "scope-chain", "closures"],
 };

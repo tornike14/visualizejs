@@ -69,8 +69,8 @@ export const suspenseTheory: TopicTheoryContent = {
   relatedTopicIds: [
     "render-cycle",
     "fiber-tree",
-    "reconciliation",
     "server-components",
+    "concurrent-rendering",
     "error-boundaries",
   ],
 };

@@ -63,5 +63,5 @@ export const promisesTheory: TopicTheoryContent = {
         "No. async/await is syntax built on top of Promises; underlying scheduling and resolution behavior still follows Promise rules.",
     },
   ],
-  relatedTopicIds: ["event-loop", "closures", "generators", "type-coercion"],
+  relatedTopicIds: ["event-loop", "async-await", "closures", "generators"],
 };

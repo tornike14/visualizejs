@@ -198,6 +198,107 @@ const { currentStepIndex, ... } = useStepPlayback({
 
 The selector renders in the toolbar area (inside `<ToolbarPortal>`), typically left-aligned with badges while transport controls stay on the right. It uses the shared `useClickOutside` hook internally for outside-click and Escape key dismissal.
 
+
+### PipelineDiagram
+
+**File:** `src/components/visualization-ui/PipelineDiagram.tsx`
+
+Ordered stages with one active. Used for request lifecycles, middleware chains, model forward passes.
+
+```tsx
+<PipelineDiagram
+  orientation="horizontal"          // or "vertical"
+  stages={[
+    { id: "dns", label: "DNS", detail: "20 ms", status: "done" },
+    { id: "tcp", label: "TCP", detail: "1 RTT", status: "active" },
+    { id: "tls", label: "TLS", status: "pending" },
+  ]}
+/>
+```
+
+Statuses: `pending` (slate), `active` (cyan), `done` (emerald), `skipped` (struck through).
+
+### TokenChips
+
+**File:** `src/components/visualization-ui/TokenChips.tsx`
+
+Row of labelled chips with optional value and tone. Used for token sequences, cache entries, timestamps, queue contents.
+
+```tsx
+<TokenChips
+  showIndex
+  emptyLabel="no tokens"
+  chips={[
+    { id: "t0", label: "The", value: "464", tone: "active" },
+    { id: "t1", label: " cat", value: "3797", tone: "neutral" },
+  ]}
+/>
+```
+
+Tones: `neutral`, `active`, `match`, `miss`, `muted`, `amber`, `violet`.
+
+### HeatmapGrid
+
+**File:** `src/components/visualization-ui/HeatmapGrid.tsx`
+
+Matrix of 0 to 1 values with colour intensity, optional row/column highlight and a boolean mask (masked cells render dimmed with a dash). Used for attention weights and similarity matrices.
+
+```tsx
+<HeatmapGrid
+  rowLabels={["The", "cat", "sat"]}
+  colLabels={["The", "cat", "sat"]}
+  values={[[1, 0, 0], [0.4, 0.6, 0], [0.2, 0.3, 0.5]]}
+  mask={[[true, false, false], [true, true, false], [true, true, true]]}
+  activeRow={2}
+  colorRgb="244 114 182"
+/>
+```
+
+### MetricBars
+
+**File:** `src/components/visualization-ui/MetricBars.tsx`
+
+Labelled horizontal bars for values in 0 to 1. Used for probabilities, bucket levels, hit ratios, gradients.
+
+```tsx
+<MetricBars
+  bars={[
+    { id: "paris", label: " Paris", value: 0.82, tone: "green", active: true },
+    { id: "lyon", label: " Lyon", value: 0.05, display: "0.05" },
+  ]}
+/>
+```
+
+### MessageFlow
+
+**File:** `src/components/visualization-ui/MessageFlow.tsx`
+
+Sequence-diagram style panel: actors across the top, messages listed in order with direction arrows. Used for client/server exchanges and handshakes.
+
+```tsx
+<MessageFlow
+  actors={[{ id: "client", label: "Client" }, { id: "server", label: "Server" }]}
+  activeActorId="server"
+  messages={[
+    { id: "m1", from: "client", to: "server", label: "POST /login", status: "done" },
+    { id: "m2", from: "server", to: "client", label: "200 + token", status: "active" },
+  ]}
+/>
+```
+
+Statuses: `done`, `active`, `pending`, `failed`.
+
+### StepScrubber
+
+**File:** `src/components/visualization-ui/TransportControls/StepScrubber.tsx`
+
+Rendered automatically by `TransportControls` when `onJumpTo` is passed. A native range input mapped to step indexes. Every topic passes `jumpTo` from `useStepPlayback`:
+
+```tsx
+const { jumpTo, ...playback } = useStepPlayback({ ... });
+<TransportControls {...playback} onJumpTo={jumpTo} />
+```
+
 ### Tooltip
 
 Custom hover tooltip with 400ms delay. Used internally by TransportControls, available for any button/icon.
@@ -297,6 +398,28 @@ Default speed level is `4` (`1x`).
 | 6 | 2x | 400ms |
 
 ---
+
+
+### Keyboard Shortcuts
+
+`useStepPlayback` binds global shortcuts while no text field, CodeMirror editor, or dialog has focus:
+
+| Key | Action |
+|---|---|
+| Space | Play / pause |
+| Right arrow | Step forward |
+| Left arrow | Step back |
+| R | Reset |
+
+Pass `keyboardShortcuts: false` to opt out (for example when two playback instances share a page). The page shell shows a `KeyboardHint` next to the back link.
+
+### Topic Progress
+
+Reaching the last step marks the topic as completed in `localStorage` (`src/lib/progress/topicProgress.ts`). `useStepPlayback` reads the topic ID from `TopicProgressProvider`, which `VisualizationPageShell` renders, so topics need no changes. Components read completion state with `useTopicProgress` / `useIsTopicCompleted` from `src/hooks/useTopicProgress.ts`. `TopicProgressMark` renders the check badge in the sidebar, cards, and search results; `ProgressSummary` renders the per-category bars on the landing page.
+
+### Search Palette
+
+`src/components/search/CommandPalette.tsx` mounts once in the root layout. Cmd+K, Ctrl+K, or `/` opens it; `openCommandPalette()` opens it from any component (`SearchTrigger` uses this). Ranking lives in `searchTopics.ts` and is pure, so it can be unit tested.
 
 ## Change Flash - useChangeFlash
 

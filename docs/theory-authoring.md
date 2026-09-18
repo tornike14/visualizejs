@@ -9,8 +9,7 @@ How to add theory content for visualization topics. Theory sections render on th
 - Content model types: `src/content/theory/types.ts`
 - Content registry: `src/content/theory/index.ts`
 - Topic content files:
-  - `src/content/theory/javascript/<topic-id>.ts`
-  - `src/content/theory/react/<topic-id>.ts`
+  - `src/content/theory/<category>/<topic-id>.ts` (one folder per category: `javascript`, `react`, `frameworks`, `backend`, `ai`)
 - Shared theory renderer: `src/components/theory/TopicTheorySections.tsx`
 - Rendered by `src/components/layout/VisualizationPageShell.tsx`, which pulls
   content from the registry and places it below the visualization. There is no

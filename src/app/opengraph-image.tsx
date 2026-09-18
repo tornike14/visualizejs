@@ -69,8 +69,8 @@ export default function OpenGraphImage() {
               lineHeight: 1.2,
             }}
           >
-            Interactive JavaScript and React visualizations for mastering core
-            runtime concepts.
+            Interactive visualizations of JavaScript, React, backend systems,
+            and AI models, one step at a time.
           </div>
         </div>
       </div>

@@ -72,6 +72,11 @@ src/
       ConsoleOutput.tsx             # Shared console panel
       ExampleSelector.tsx           # Dropdown for switching sub-examples
       NeonPanel.tsx                 # Themed container with tones
+      PipelineDiagram.tsx           # Ordered stages with an active one
+      TokenChips.tsx                # Row of labelled chips
+      HeatmapGrid.tsx               # Matrix with colour intensity
+      MetricBars.tsx                # Labelled horizontal bars
+      MessageFlow.tsx               # Actors and ordered messages
       TopicLink.tsx                 # Cross-topic navigation link
       TransportControls/            # Playback buttons + speed dropdown
         index.tsx                   #   Main component
@@ -85,10 +90,12 @@ src/
       Sidebar.tsx                   # Navigation sidebar
       AppTheme.tsx                  # Global theme wrapper
   hooks/
-    useStepPlayback.ts              # Shared playback engine
+    useStepPlayback.ts              # Shared playback engine (keyboard shortcuts, progress)
+    useTopicProgress.ts             # Completed-topic state from localStorage
     useChangeFlash.ts               # Detects per-channel data changes between steps
     useClickOutside.ts              # Outside-click + Escape dismiss hook
   lib/
+    categories.ts                   # Category registry (labels, routes, colours)
     topics.ts                       # Topic registry
     constants.ts                    # Site-wide constants
     metadata.ts                     # SEO metadata factory
@@ -127,7 +134,7 @@ Add an entry to the `topics` array:
 |---|---|---|
 | `id` | `string` | URL slug, used by `getTopicOrThrow()` |
 | `title` | `string` | Shown in sidebar + page heading |
-| `category` | `"javascript" \| "react"` | Determines sidebar group |
+| `category` | `Category` (`javascript`, `react`, `frameworks`, `backend`, `ai`) | Sidebar group, route prefix, colours. See [categories.md](categories.md) |
 | `route` | `string` | Must match `src/app/<category>/<id>/page.tsx` |
 | `description` | `string` | Used for SEO metadata and category landing page cards (not shown on visualization page) |
 | `difficulty` | `"beginner" \| "intermediate" \| "advanced"` | Badge color in sidebar |
@@ -136,7 +143,7 @@ Add an entry to the `topics` array:
 **Types** are defined in `src/types/index.ts`:
 
 ```typescript
-export type Category = "javascript" | "react";
+export type Category = "javascript" | "react" | "frameworks" | "backend" | "ai";
 export type Difficulty = "beginner" | "intermediate" | "advanced";
 export interface Topic {
   id: string;
@@ -153,7 +160,7 @@ export interface Topic {
 
 ## Step 2 - Create the Route Page
 
-**File:** `src/app/javascript/closures/page.tsx`
+**File:** `src/app/<category>/<topic-id>/page.tsx` (for example `src/app/javascript/closures/page.tsx`)
 
 Every topic page follows the same template:
 

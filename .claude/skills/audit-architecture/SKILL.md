@@ -44,6 +44,9 @@ Search visualization files for hardcoded strings `"Source Code"` or `"Console Ou
 ### 8. ExampleSelector Registration
 For topics using `ExampleSelector`, verify their ID appears in `SELECTOR_TOOLBAR_TOPIC_IDS` in `VisualizationPageShell.tsx`. Cross-reference by searching for `ExampleSelector` imports in visualization files.
 
+### 9. Category Branching
+Search `src/components/` and `src/lib/` for `=== "javascript"` or `=== "react"`. Components must read `CATEGORIES[topic.category]` from `src/lib/categories.ts` instead. Flag violations.
+
 ## Output Format
 
 Report as a numbered list:

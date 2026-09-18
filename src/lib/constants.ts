@@ -1,6 +1,6 @@
 export const SITE_NAME = "VisualizeJS";
 export const SITE_DESCRIPTION =
-  "Free interactive platform to visualize JavaScript concepts step by step. Explore the event loop, closures, hoisting, promises, scope chain, prototypes, garbage collection, and more with animated demonstrations.";
+  "Free interactive visualizations of how JavaScript, React, Vue, Svelte, Angular, backend systems, and AI models work under the hood. Step through the event loop, closures, reconciliation, HTTP requests, attention, and more.";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://visualizejs.com";
 export const SOCIAL_IMAGE_ALT =

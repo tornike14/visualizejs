@@ -8,12 +8,15 @@ Quick reference for project conventions and file locations. Read the full docs f
 
 ## Key Files
 
+- **Category registry:** `src/lib/categories.ts` (javascript, react, frameworks, backend, ai)
 - **Topic registry:** `src/lib/topics.ts` (single source of truth for all topics)
 - **Theory registry:** `src/content/theory/index.ts`
 - **SEO metadata:** `src/lib/metadata.ts` (TOPIC_KEYWORDS, TOPIC_THEORY_DESCRIPTIONS)
 - **Page shell:** `src/components/layout/VisualizationPageShell.tsx` (SELECTOR_TOOLBAR_TOPIC_IDS)
 - **UI strings:** `src/lib/visualization/uiCopy.ts` (VISUALIZATION_PANEL_TITLES, VISUALIZATION_EMPTY_STATES)
-- **Playback engine:** `src/hooks/useStepPlayback.ts`
+- **Playback engine:** `src/hooks/useStepPlayback.ts` (Space, arrows, R shortcuts; marks progress)
+- **Progress:** `src/lib/progress/topicProgress.ts`, `src/hooks/useTopicProgress.ts`
+- **Search:** `src/components/search/CommandPalette.tsx`
 - **Change detection:** `src/hooks/useChangeFlash.ts`
 - **Theory types:** `src/content/theory/types.ts`
 
@@ -29,12 +32,14 @@ Quick reference for project conventions and file locations. Read the full docs f
 8. Components use `"use client"` directive and named exports
 9. React components use const form, not function declarations
 10. Component files target 200 lines, hard limit 300
+11. Pass `onJumpTo={jumpTo}` to TransportControls
+12. Never branch on category IDs; read `CATEGORIES[topic.category]`
 
 ## Topic Patterns
 
 - **Single-file:** `src/components/visualizations/TopicName.tsx` (legacy JS)
 - **Folder-based:** `src/components/visualizations/<topic-id>/` with `index.tsx`, `types.ts`, `helpers.ts`, `data.ts`, `components/` (React, complex JS)
-- **Reference implementations:** Reconciliation (React folder pattern), Event Loop (sandbox)
+- **Reference implementations:** Reconciliation (folder pattern), Event Loop (sandbox), Attention and HTTP Request Lifecycle (PipelineDiagram, HeatmapGrid, MessageFlow)
 
 ## Full Documentation
 
@@ -44,4 +49,5 @@ Quick reference for project conventions and file locations. Read the full docs f
 - `docs/theory-authoring.md` -- theory page authoring
 - `docs/sandbox-authoring.md` -- sandbox mode guide
 - `docs/architecture.md` -- frontend architecture rules
+- `docs/categories.md` -- category registry
 - `docs/seo.md` -- SEO implementation

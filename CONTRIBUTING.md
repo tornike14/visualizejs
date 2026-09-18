@@ -1,6 +1,6 @@
 # Contributing to VisualizeJS
 
-Thanks for wanting to help. This project explains JavaScript and React internals through animations, so contributions range from fixing a typo in a theory page to building a whole new topic.
+Thanks for wanting to help. This project explains JavaScript, React, framework, backend, and AI internals through animations, so contributions range from fixing a typo in a theory page to building a whole new topic.
 
 ## Ways to Contribute
 
@@ -29,7 +29,7 @@ Both must pass. CI runs the same two commands.
 
 ## Project Conventions
 
-These are enforced in review. Most exist because inconsistency between 28 topics is more expensive than it looks.
+These are enforced in review. Most exist because inconsistency between 45 topics is more expensive than it looks.
 
 **Content**
 
@@ -59,7 +59,7 @@ helpers.ts       Pure functions used by the panels
 components/      Panel components
 ```
 
-Reconciliation is the reference implementation for React topics. Event Loop is the reference for sandbox mode.
+Reconciliation is the reference implementation for topic structure. Event Loop is the reference for sandbox mode. Attention and HTTP Request Lifecycle show the newer shared primitives (HeatmapGrid, PipelineDiagram, MessageFlow).
 
 ## Adding a Topic
 
@@ -67,7 +67,7 @@ A topic is not finished when the visualization renders. It is registered in seve
 
 **1. Topic registry** in [`src/lib/topics.ts`](src/lib/topics.ts)
 
-Add an entry with `id`, `title`, `category`, `route`, `description`, `difficulty`, and `docsUrl`. The `id` is the slug used everywhere else, so pick it carefully.
+Add an entry with `id`, `title`, `category`, `route`, `description`, `difficulty`, and `docsUrl`. The `id` is the slug used everywhere else, so pick it carefully. `category` must be one of the IDs in `src/lib/categories.ts` (see [`docs/categories.md`](docs/categories.md) to add a new category).
 
 **2. Route** at `src/app/<category>/<topic-id>/page.tsx`
 

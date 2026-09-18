@@ -1,10 +1,10 @@
 # VisualizeJS
 
-[![Live site](https://img.shields.io/badge/live-visualizejs.com-3fb950?style=flat-square&labelColor=24292f)](https://visualizejs.com) [![CI](https://img.shields.io/github/actions/workflow/status/tornike14/visualizejs/ci.yml?branch=main&style=flat-square&label=CI&labelColor=24292f)](https://github.com/tornike14/visualizejs/actions/workflows/ci.yml) [![Topics](https://img.shields.io/badge/topics-28-a371f7?style=flat-square&labelColor=24292f)](#topics) [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white&labelColor=24292f)](https://nextjs.org) [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=61DAFB&labelColor=24292f)](https://react.dev) [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white&labelColor=24292f)](https://www.typescriptlang.org) [![License](https://img.shields.io/github/license/tornike14/visualizejs?style=flat-square&color=3fb950&labelColor=24292f)](LICENSE)
+[![Live site](https://img.shields.io/badge/live-visualizejs.com-3fb950?style=flat-square&labelColor=24292f)](https://visualizejs.com) [![CI](https://img.shields.io/github/actions/workflow/status/tornike14/visualizejs/ci.yml?branch=main&style=flat-square&label=CI&labelColor=24292f)](https://github.com/tornike14/visualizejs/actions/workflows/ci.yml) [![Topics](https://img.shields.io/badge/topics-45-a371f7?style=flat-square&labelColor=24292f)](#topics) [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white&labelColor=24292f)](https://nextjs.org) [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=61DAFB&labelColor=24292f)](https://react.dev) [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white&labelColor=24292f)](https://www.typescriptlang.org) [![License](https://img.shields.io/github/license/tornike14/visualizejs?style=flat-square&color=3fb950&labelColor=24292f)](LICENSE)
 
-Interactive visualizations for JavaScript and React concepts. Step through animations that show what the engine does at each stage, then read the theory behind it.
+Interactive visualizations of how JavaScript, React, Vue, Svelte, Angular, backend systems, and AI models work under the hood. Step through animations that show what the engine does at each stage, then read the theory behind it.
 
-28 topics. Each one pairs a step-by-step visualization with theory sections covering how it works, common mistakes, and interview questions, all on a single page.
+45 topics across five categories. Each one pairs a step-by-step visualization with theory sections covering how it works, common mistakes, and interview questions, all on a single page.
 
 [![VisualizeJS homepage](docs/images/homepage.jpg)](https://visualizejs.com)
 
@@ -30,9 +30,11 @@ Node 20 or newer is required.
 
 ## Topics
 
-Each topic lives at a single route, with the visualization at the top and the theory sections below it.
+Each topic lives at a single route, with the visualization at the top and the theory sections below it. Press `Cmd+K` (or `/`) anywhere to search topics. Space plays and pauses, the arrow keys step, `R` resets, and the scrubber next to the step counter jumps to any step. Topics you finish get a check mark, stored in your browser.
 
-### JavaScript (17)
+### JavaScript (19)
+
+Runtime internals: the event loop, scope, memory, and async.
 
 | Topic | Difficulty |
 |---|---|
@@ -53,8 +55,12 @@ Each topic lives at a single route, with the visualization at the top and the th
 | [Generators & Iterators](/javascript/generators) | Advanced |
 | [Event Delegation](/javascript/event-delegation) | Beginner |
 | [Modules & Imports](/javascript/modules-imports) | Intermediate |
+| [Async/Await](/javascript/async-await) | Intermediate |
+| [Debounce & Throttle](/javascript/debounce-throttle) | Beginner |
 
-### React (11)
+### React (13)
+
+How React decides what to render and what it commits to the DOM.
 
 | Topic | Difficulty |
 |---|---|
@@ -69,6 +75,42 @@ Each topic lives at a single route, with the visualization at the top and the th
 | [Server Components](/react/server-components) | Advanced |
 | [Error Boundaries](/react/error-boundaries) | Intermediate |
 | [useEffect Lifecycle](/react/use-effect-lifecycle) | Beginner |
+| [State Batching](/react/state-batching) | Intermediate |
+| [Concurrent Rendering](/react/concurrent-rendering) | Advanced |
+
+### Frameworks (3)
+
+How Vue, Svelte, and Angular track changes, compared side by side.
+
+| Topic | Difficulty |
+|---|---|
+| [Vue Reactivity](/frameworks/vue-reactivity) | Intermediate |
+| [Svelte Runes](/frameworks/svelte-runes) | Intermediate |
+| [Angular Change Detection](/frameworks/angular-change-detection) | Advanced |
+
+### Backend (5)
+
+What happens between a request leaving the browser and the response.
+
+| Topic | Difficulty |
+|---|---|
+| [HTTP Request Lifecycle](/backend/http-request-lifecycle) | Beginner |
+| [Database Indexing](/backend/database-indexing) | Intermediate |
+| [Caching Strategies](/backend/caching-strategies) | Intermediate |
+| [JWT Authentication](/backend/jwt-authentication) | Intermediate |
+| [Rate Limiting](/backend/rate-limiting) | Intermediate |
+
+### AI (5)
+
+What a language model does with your text, from tokens to the next word.
+
+| Topic | Difficulty |
+|---|---|
+| [Tokenization](/ai/tokenization) | Beginner |
+| [Embeddings](/ai/embeddings) | Beginner |
+| [Attention](/ai/attention) | Intermediate |
+| [Next Token Prediction](/ai/next-token-prediction) | Intermediate |
+| [Backpropagation](/ai/backpropagation) | Advanced |
 
 Some topics also have a sandbox mode where you can edit the code and watch the visualization respond. Event Loop is the reference implementation.
 
@@ -117,6 +159,7 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md) first. New topics are welcome, and the
 | [`docs/theory-authoring.md`](docs/theory-authoring.md) | Theory content authoring |
 | [`docs/sandbox-authoring.md`](docs/sandbox-authoring.md) | Sandbox mode |
 | [`docs/architecture.md`](docs/architecture.md) | Frontend architecture rules |
+| [`docs/categories.md`](docs/categories.md) | Category registry and adding a category |
 | [`docs/seo.md`](docs/seo.md) | SEO implementation |
 
 ## Tech Stack
