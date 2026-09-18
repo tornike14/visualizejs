@@ -139,6 +139,7 @@ export const JwtAuthentication = () => {
           <NeonPanel
             title={VISUALIZATION_PANEL_TITLES.sourceCode}
             tone="amber"
+            className="min-w-0 xl:max-w-[34rem]"
             bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
           >
             <CodeBlock
