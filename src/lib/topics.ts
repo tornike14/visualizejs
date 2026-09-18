@@ -1,6 +1,7 @@
-import type { Topic } from "@/types";
+import type { Category, Topic } from "@/types";
 
 export const topics: Topic[] = [
+
   /* ── Ordered by importance / popularity ── */
   {
     id: "event-loop",
@@ -188,6 +189,26 @@ export const topics: Topic[] = [
     docsUrl:
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules",
   },
+  {
+    id: "async-await",
+    title: "Async/Await",
+    category: "javascript",
+    route: "/javascript/async-await",
+    description:
+      "See how async/await works with an interactive visualization. Watch an async function pause at await, hand control back to the caller, resume from the microtask queue, and compare sequential awaits with Promise.all.",
+    difficulty: "intermediate",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+  },
+  {
+    id: "debounce-throttle",
+    title: "Debounce & Throttle",
+    category: "javascript",
+    route: "/javascript/debounce-throttle",
+    description:
+      "See how debounce and throttle control event handlers with an interactive visualization. Watch a burst of input events on a timeline, see debounce wait for silence, throttle fire at a fixed rate, and the timers that make it work.",
+    difficulty: "beginner",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Glossary/Debounce",
+  },
   /* ── React ── */
   {
     id: "virtual-dom",
@@ -300,10 +321,180 @@ export const topics: Topic[] = [
     difficulty: "beginner",
     docsUrl: "https://react.dev/reference/react/useEffect",
   },
+  {
+    id: "state-batching",
+    title: "State Batching",
+    category: "react",
+    route: "/react/state-batching",
+    description:
+      "See how React batches state updates with an interactive visualization. Watch multiple setState calls queue up, updater functions run in order against the pending value, and one render commit for all of them, including inside timeouts and promises.",
+    difficulty: "intermediate",
+    docsUrl: "https://react.dev/learn/queueing-a-series-of-state-updates",
+  },
+  {
+    id: "concurrent-rendering",
+    title: "Concurrent Rendering",
+    category: "react",
+    route: "/react/concurrent-rendering",
+    description:
+      "See how React concurrent rendering works with an interactive visualization. Watch a transition render at low priority, an urgent input interrupt it, React discard the stale work and restart, and the final commit land without blocking typing.",
+    difficulty: "advanced",
+    docsUrl: "https://react.dev/reference/react/useTransition",
+  },
+  /* ── Frameworks ── */
+  {
+    id: "vue-reactivity",
+    title: "Vue Reactivity",
+    category: "frameworks",
+    route: "/frameworks/vue-reactivity",
+    description:
+      "See how Vue reactivity works with an interactive visualization. Watch a Proxy intercept property reads to track dependencies, writes trigger the effects that depend on them, and computed values cache until a dependency changes.",
+    difficulty: "intermediate",
+    docsUrl: "https://vuejs.org/guide/extras/reactivity-in-depth.html",
+  },
+  {
+    id: "svelte-runes",
+    title: "Svelte Runes",
+    category: "frameworks",
+    route: "/frameworks/svelte-runes",
+    description:
+      "See how Svelte 5 runes work with an interactive visualization. Watch $state create a signal, $derived build a dependency graph, $effect subscribe, and the compiler turn a component into surgical DOM updates with no virtual DOM.",
+    difficulty: "intermediate",
+    docsUrl: "https://svelte.dev/docs/svelte/what-are-runes",
+  },
+  {
+    id: "angular-change-detection",
+    title: "Angular Change Detection",
+    category: "frameworks",
+    route: "/frameworks/angular-change-detection",
+    description:
+      "See how Angular change detection works with an interactive visualization. Compare zone.js triggering a full tree check, OnPush skipping unchanged subtrees, and signals marking only the exact components that read a changed value.",
+    difficulty: "advanced",
+    docsUrl: "https://angular.dev/guide/signals",
+  },
+  /* ── Backend ── */
+  {
+    id: "http-request-lifecycle",
+    title: "HTTP Request Lifecycle",
+    category: "backend",
+    route: "/backend/http-request-lifecycle",
+    description:
+      "See what happens when a browser makes an HTTP request with an interactive visualization. Follow DNS resolution, the TCP and TLS handshakes, the request hitting a server route, middleware, the database, and the response coming back.",
+    difficulty: "beginner",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+  },
+  {
+    id: "database-indexing",
+    title: "Database Indexing",
+    category: "backend",
+    route: "/backend/database-indexing",
+    description:
+      "See how database indexes speed up queries with an interactive visualization. Compare a full table scan against a B-tree lookup, watch the tree descend to a leaf, and see why writes get slower as indexes pile up.",
+    difficulty: "intermediate",
+    docsUrl: "https://use-the-index-luke.com/sql/anatomy",
+  },
+  {
+    id: "caching-strategies",
+    title: "Caching Strategies",
+    category: "backend",
+    route: "/backend/caching-strategies",
+    description:
+      "See how caching works with an interactive visualization. Watch cache-aside hits and misses, write-through updates, TTL expiry, LRU eviction, and the stale data problem that makes invalidation hard.",
+    difficulty: "intermediate",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching",
+  },
+  {
+    id: "jwt-authentication",
+    title: "JWT Authentication",
+    category: "backend",
+    route: "/backend/jwt-authentication",
+    description:
+      "See how JWT authentication works with an interactive visualization. Watch login produce a signed token, the header, payload, and signature get encoded, a protected route verify the signature, and an expired or tampered token get rejected.",
+    difficulty: "intermediate",
+    docsUrl: "https://datatracker.ietf.org/doc/html/rfc7519",
+  },
+  {
+    id: "rate-limiting",
+    title: "Rate Limiting",
+    category: "backend",
+    route: "/backend/rate-limiting",
+    description:
+      "See how rate limiting protects an API with an interactive visualization. Watch a token bucket refill and drain, a fixed window reset at the boundary, a sliding window smooth out bursts, and requests get accepted or rejected with 429.",
+    difficulty: "intermediate",
+    docsUrl: "https://cloud.google.com/architecture/rate-limiting-strategies-techniques",
+  },
+  /* ── AI ── */
+  {
+    id: "tokenization",
+    title: "Tokenization",
+    category: "ai",
+    route: "/ai/tokenization",
+    description:
+      "See how a language model turns text into tokens with an interactive visualization. Watch byte pair encoding merge characters into subwords, map tokens to ids, and see why token counts differ from word counts.",
+    difficulty: "beginner",
+    docsUrl: "https://huggingface.co/learn/llm-course/chapter2/4",
+  },
+  {
+    id: "embeddings",
+    title: "Embeddings",
+    category: "ai",
+    route: "/ai/embeddings",
+    description:
+      "See how embeddings turn tokens into vectors with an interactive visualization. Watch a lookup table map token ids to numbers, compare vectors with cosine similarity, and see how meaning becomes geometry.",
+    difficulty: "beginner",
+    docsUrl: "https://developers.google.com/machine-learning/crash-course/embeddings",
+  },
+  {
+    id: "attention",
+    title: "Attention",
+    category: "ai",
+    route: "/ai/attention",
+    description:
+      "See how self-attention works with an interactive visualization. Watch queries score keys, softmax turn scores into weights, the causal mask hide future tokens, and weighted values mix into a new representation.",
+    difficulty: "intermediate",
+    docsUrl: "https://arxiv.org/abs/1706.03762",
+  },
+  {
+    id: "next-token-prediction",
+    title: "Next Token Prediction",
+    category: "ai",
+    route: "/ai/next-token-prediction",
+    description:
+      "See how a language model picks the next token with an interactive visualization. Watch logits become probabilities, compare greedy, temperature, top-k, and top-p sampling, and follow the autoregressive loop token by token.",
+    difficulty: "intermediate",
+    docsUrl: "https://huggingface.co/blog/how-to-generate",
+  },
+  {
+    id: "backpropagation",
+    title: "Backpropagation",
+    category: "ai",
+    route: "/ai/backpropagation",
+    description:
+      "See how neural networks learn with an interactive visualization. Step through a forward pass, the loss, gradients flowing backward through the chain rule, and a gradient descent weight update on a tiny network.",
+    difficulty: "advanced",
+    docsUrl: "https://cs231n.github.io/optimization-2/",
+  },
 ];
 
-export function getTopicsByCategory(category: "javascript" | "react") {
+export function getTopicsByCategory(category: Category) {
   return topics.filter((topic) => topic.category === category);
+}
+
+/** Previous and next topics within the same category, in registry order. */
+export function getAdjacentTopics(topicId: string): {
+  previous: Topic | null;
+  next: Topic | null;
+} {
+  const topic = getTopicById(topicId);
+  if (!topic) {
+    return { previous: null, next: null };
+  }
+  const siblings = getTopicsByCategory(topic.category);
+  const index = siblings.findIndex((entry) => entry.id === topicId);
+  return {
+    previous: index > 0 ? siblings[index - 1] : null,
+    next: index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null,
+  };
 }
 
 export function getTopicById(id: string) {

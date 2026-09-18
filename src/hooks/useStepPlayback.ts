@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { PlaybackSpeedLevel } from "@/components/visualization-ui/TransportControls";
+import { useCurrentTopicId } from "@/components/progress/TopicProgressContext";
+import { markTopicCompleted } from "@/lib/progress/topicProgress";
 
 
 export const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
@@ -27,7 +29,26 @@ interface UseStepPlaybackOptions {
   totalSteps: number;
   initialStep?: number;
   resetKey?: string | number;
+  /**
+   * Bind Space, ArrowLeft, ArrowRight, and R to playback while no text field
+   * is focused. On by default so every topic gets the same shortcuts.
+   */
+  keyboardShortcuts?: boolean;
 }
+
+const isTypingTarget = (target: EventTarget | null) => {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tag = target.tagName;
+  return (
+    tag === "INPUT" ||
+    tag === "TEXTAREA" ||
+    tag === "SELECT" ||
+    Boolean(target.closest(".cm-editor")) ||
+    target.getAttribute("role") === "dialog" ||
+    Boolean(target.closest("[role='dialog']"))
+  );
+};
 
 interface UseStepPlaybackReturn {
   currentStepIndex: number;
@@ -48,10 +69,12 @@ export function useStepPlayback({
   totalSteps,
   initialStep = -1,
   resetKey,
+  keyboardShortcuts = true,
 }: UseStepPlaybackOptions): UseStepPlaybackReturn {
   const [currentStepIndex, setCurrentStepIndex] = useState(initialStep);
   const [isPlaying, setIsPlaying] = useState(false);
   const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(4);
+  const topicId = useCurrentTopicId();
 
   const lastStepIndex = totalSteps - 1;
   const firstStep = initialStep < 0 ? 0 : initialStep;
@@ -120,6 +143,47 @@ export function useStepPlayback({
     },
     [initialStep, lastStepIndex],
   );
+
+  useEffect(() => {
+    if (!topicId || totalSteps === 0) return;
+    if (currentStepIndex >= lastStepIndex) {
+      markTopicCompleted(topicId);
+    }
+  }, [topicId, totalSteps, currentStepIndex, lastStepIndex]);
+
+  useEffect(() => {
+    if (!keyboardShortcuts) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+
+      switch (event.key) {
+        case " ":
+          event.preventDefault();
+          togglePlay();
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          step();
+          break;
+        case "ArrowLeft":
+          event.preventDefault();
+          stepBack();
+          break;
+        case "r":
+        case "R":
+          reset();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [keyboardShortcuts, togglePlay, step, stepBack, reset]);
 
   return {
     currentStepIndex,

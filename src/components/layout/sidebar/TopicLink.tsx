@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { TopicProgressMark } from "@/components/progress/TopicProgressMark";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
 import type { Topic } from "@/types";
 
@@ -14,7 +15,10 @@ export function TopicLink({ topic, isActive }: { topic: Topic; isActive: boolean
           : "border-[rgba(71,85,105,0.45)] bg-[rgba(13,21,40,0.62)] text-[color:var(--app-text-secondary)] shadow-[inset_0_1px_0_rgba(148,163,184,0.05)] hover:border-[rgba(71,85,105,0.75)] hover:bg-[rgba(22,33,59,0.72)] hover:text-[color:var(--app-text-primary)]"
       }`}
     >
-      <span className="flex-1 font-semibold tracking-[0.01em]">{topic.title}</span>
+      <span className="flex flex-1 items-center gap-2 font-semibold tracking-[0.01em]">
+        {topic.title}
+        <TopicProgressMark topicId={topic.id} />
+      </span>
       <Badge
         variant="outline"
         className={`text-[10px] ${DIFFICULTY_COLORS[topic.difficulty]}`}

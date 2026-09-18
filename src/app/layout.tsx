@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AppTheme } from "@/components/layout/AppTheme";
 import { Sidebar } from "@/components/layout/sidebar";
+import { CommandPalette } from "@/components/search/CommandPalette";
 import {
   CREATOR_LINKEDIN_URL,
   OPEN_GRAPH_IMAGE_URL,
@@ -14,6 +15,7 @@ import {
   SITE_URL,
   TWITTER_IMAGE_URL,
 } from "@/lib/constants";
+import { CATEGORY_LIST } from "@/lib/categories";
 import { topics } from "@/lib/topics";
 import "./globals.css";
 
@@ -93,9 +95,12 @@ export default function RootLayout({
   const navigationSchema = {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
-    name: ["JavaScript Concepts", ...topics.map((t) => t.title)],
+    name: [
+      ...CATEGORY_LIST.map((c) => c.indexTitle),
+      ...topics.map((t) => t.title),
+    ],
     url: [
-      `${SITE_URL}/javascript`,
+      ...CATEGORY_LIST.map((c) => `${SITE_URL}${c.route}`),
       ...topics.map((t) => `${SITE_URL}${t.route}`),
     ],
   };
@@ -122,6 +127,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <AppTheme>
+          <CommandPalette />
           <Sidebar />
           <main id="main-content" className="flex-1 overflow-x-hidden pt-16 lg:pt-0">
             {children}

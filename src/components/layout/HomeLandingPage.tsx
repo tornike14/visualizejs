@@ -1,42 +1,56 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DIFFICULTY_COLORS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
-import { getTopicsByCategory } from "@/lib/topics";
-import type { Category } from "@/types";
+import Image from "next/image";
+import { ArrowRight, Keyboard, Layers3, BookOpenText } from "lucide-react";
+import { TopicCard } from "@/components/layout/TopicCard";
+import { ProgressSummary } from "@/components/progress/ProgressSummary";
+import { CATEGORY_LIST } from "@/lib/categories";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { getTopicsByCategory, topics } from "@/lib/topics";
+import { cn } from "@/lib/utils";
 
-const CATEGORY_SECTIONS: { category: Category; heading: string; blurb: string }[] = [
+const FEATURED_TOPIC_IDS = [
+  "event-loop",
+  "closures",
+  "reconciliation",
+  "attention",
+  "http-request-lifecycle",
+  "vue-reactivity",
+];
+
+const HOW_IT_WORKS = [
   {
-    category: "javascript",
-    heading: "JavaScript concepts",
-    blurb:
-      "Runtime internals you get asked about in interviews and hit in real bugs.",
+    icon: Layers3,
+    title: "Watch the state change",
+    body: "Every step shows the call stack, the tree, the queue, or the tensor as the engine sees it.",
   },
   {
-    category: "react",
-    heading: "React concepts",
-    blurb:
-      "How React decides what to render, when to re-render, and what it commits to the DOM.",
+    icon: Keyboard,
+    title: "Drive it yourself",
+    body: "Play, pause, scrub to any step, or use the arrow keys. Some topics let you edit the code.",
+  },
+  {
+    icon: BookOpenText,
+    title: "Then read the theory",
+    body: "Mechanism, common mistakes, and interview questions live on the same page as the animation.",
   },
 ];
 
 export const HomeLandingPage = () => {
-  const javascriptTopics = getTopicsByCategory("javascript");
-  const reactTopics = getTopicsByCategory("react");
-  const allTopics = [...javascriptTopics, ...reactTopics];
+  const featured = FEATURED_TOPIC_IDS.map((id) =>
+    topics.find((topic) => topic.id === id),
+  ).filter((topic): topic is NonNullable<typeof topic> => Boolean(topic));
 
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${SITE_NAME}: JavaScript and React Visualizer`,
+    name: `${SITE_NAME}: JavaScript, React, Backend, and AI Visualizer`,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     inLanguage: "en-US",
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: allTopics.length,
-      itemListElement: allTopics.map((topic, index) => ({
+      numberOfItems: topics.length,
+      itemListElement: topics.map((topic, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: topic.title,
@@ -47,83 +61,154 @@ export const HomeLandingPage = () => {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-10 pt-6 lg:px-10 lg:py-10">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-6 pb-12 pt-6 lg:px-10 lg:py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
 
-      <section className="flex flex-col items-center gap-5 text-center">
-        <p className="rounded-full border border-yellow-200/25 bg-yellow-200/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-yellow-100/90">
-          Free and interactive
-        </p>
-        <h1 className="text-4xl font-bold tracking-tight lg:text-6xl">
-          <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">
-            JavaScript
-          </span>{" "}
-          <span className="text-slate-100/90">and</span>{" "}
-          <span className="bg-gradient-to-r from-cyan-200 via-sky-200 to-cyan-400 bg-clip-text text-transparent">
-            React
-          </span>{" "}
-          <span className="text-slate-100/90">Visualizer</span>
-        </h1>
-        <p className="max-w-3xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
-          Watch how JavaScript and React actually run. Step through the event
-          loop, closures, hoisting, the virtual DOM, and {allTopics.length - 4}{" "}
-          more concepts with animated visualizations, then read the theory and
-          interview questions on the same page.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/javascript"
-            className="group inline-flex items-center gap-2 rounded-lg border border-yellow-200/30 bg-yellow-200/10 px-4 py-2 text-sm font-medium text-yellow-100 transition-all hover:border-yellow-200/55 hover:bg-yellow-200/16"
-          >
-            Explore {javascriptTopics.length} JavaScript topics
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/react"
-            className="group inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200 transition-all hover:border-cyan-300/55 hover:bg-cyan-300/16"
-          >
-            Explore {reactTopics.length} React topics
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+      <section className="home-hero relative overflow-hidden rounded-3xl px-6 py-12 text-center lg:px-12 lg:py-16">
+        <div aria-hidden className="home-hero-grid pointer-events-none absolute inset-0" />
+        <div className="relative flex flex-col items-center gap-5">
+          <p className="rounded-full border border-yellow-200/25 bg-yellow-200/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-yellow-100/90">
+            Free and interactive. {topics.length} topics
+          </p>
+          <h1 className="max-w-4xl text-4xl font-bold tracking-tight lg:text-6xl">
+            See how{" "}
+            <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+              JavaScript
+            </span>
+            ,{" "}
+            <span className="bg-gradient-to-r from-cyan-200 via-sky-200 to-cyan-400 bg-clip-text text-transparent">
+              React
+            </span>
+            , the{" "}
+            <span className="bg-gradient-to-r from-violet-200 via-purple-300 to-violet-400 bg-clip-text text-transparent">
+              backend
+            </span>
+            , and{" "}
+            <span className="bg-gradient-to-r from-pink-200 via-rose-300 to-pink-400 bg-clip-text text-transparent">
+              AI models
+            </span>{" "}
+            actually run
+          </h1>
+          <p className="max-w-3xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
+            Step-by-step animations of the mechanisms behind the code: the
+            event loop, closures, reconciliation, HTTP requests, database
+            indexes, attention heads, and more. Then read the theory and
+            interview questions on the same page.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {CATEGORY_LIST.map((category) => {
+              const count = getTopicsByCategory(category.id).length;
+              return (
+                <Link
+                  key={category.id}
+                  href={category.route}
+                  className={cn(
+                    "group inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-sm font-medium transition-all",
+                    category.ctaClass,
+                  )}
+                >
+                  <Image
+                    src={category.iconSrc}
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="h-4 w-4 object-contain"
+                  />
+                  {category.label}
+                  <span className="font-mono text-[11px] opacity-70">{count}</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              );
+            })}
+          </div>
+          <p className="text-xs text-slate-500">
+            Press{" "}
+            <kbd className="rounded border border-slate-600/60 bg-slate-900/70 px-1.5 py-0.5 font-mono text-[10px] text-slate-300">
+              &#8984;K
+            </kbd>{" "}
+            anywhere to search topics
+          </p>
         </div>
       </section>
 
-      {CATEGORY_SECTIONS.map((section) => {
-        const topics = getTopicsByCategory(section.category);
+      <ProgressSummary />
+
+      <section className="grid gap-4 md:grid-cols-3">
+        {HOW_IT_WORKS.map((item) => (
+          <div
+            key={item.title}
+            className="app-surface-subtle flex flex-col gap-2 rounded-2xl px-5 py-4"
+          >
+            <item.icon className="h-5 w-5 text-cyan-300" />
+            <h2 className="text-sm font-semibold text-slate-100">{item.title}</h2>
+            <p className="text-sm leading-relaxed text-[color:var(--app-text-secondary)]">
+              {item.body}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      {featured.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-semibold tracking-tight">Start here</h2>
+            <p className="text-sm text-[color:var(--app-text-secondary)]">
+              One topic from each area, picked to show what the site does.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((topic) => (
+              <TopicCard key={topic.id} topic={topic} showCategory />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {CATEGORY_LIST.map((category) => {
+        const categoryTopics = getTopicsByCategory(category.id);
+        if (categoryTopics.length === 0) return null;
 
         return (
-          <section key={section.category} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-2xl font-semibold tracking-tight">
-                {section.heading}
-              </h2>
-              <p className="text-sm text-[color:var(--app-text-secondary)]">
-                {section.blurb}
-              </p>
+          <section key={category.id} className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-xl",
+                    category.iconShellClass,
+                  )}
+                >
+                  <Image
+                    src={category.iconSrc}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 object-contain"
+                  />
+                </span>
+                <div className="flex flex-col gap-0.5">
+                  <h2 className="text-2xl font-semibold tracking-tight">
+                    {category.headingLabel}
+                  </h2>
+                  <p className="text-sm text-[color:var(--app-text-secondary)]">
+                    {category.tagline}
+                  </p>
+                </div>
+              </div>
+              <Link
+                href={category.route}
+                className="inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-slate-100"
+              >
+                All {categoryTopics.length} topics
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {topics.map((topic) => (
-                <Link key={topic.id} href={topic.route} prefetch={false}>
-                  <Card className="app-surface group h-full cursor-pointer gap-3 rounded-3xl border-[color:var(--app-border)] py-5 transition-all hover:border-pink-300/35 hover:shadow-[0_0_24px_rgba(244,114,182,0.16)]">
-                    <CardHeader className="flex flex-row items-center justify-between gap-2 pb-0">
-                      <CardTitle className="text-base">{topic.title}</CardTitle>
-                      <Badge
-                        variant="outline"
-                        className={`text-[10px] ${DIFFICULTY_COLORS[topic.difficulty]}`}
-                      >
-                        {topic.difficulty}
-                      </Badge>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-sm text-[color:var(--app-text-secondary)]">
-                        {topic.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </Link>
+              {categoryTopics.map((topic, index) => (
+                <TopicCard key={topic.id} topic={topic} index={index + 1} />
               ))}
             </div>
           </section>

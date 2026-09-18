@@ -1,37 +1,16 @@
 import type { Metadata } from "next";
 import { CategoryTopicsPage } from "@/components/layout/CategoryTopicsPage";
+import { CATEGORIES } from "@/lib/categories";
+import { createCategoryMetadata } from "@/lib/metadata";
 import { getTopicsByCategory } from "@/lib/topics";
 
-const topicCount = getTopicsByCategory("javascript").length;
+const category = CATEGORIES.javascript;
 
-export const metadata: Metadata = {
-  title: "JavaScript Concepts, Visualized",
-  description: `Explore ${topicCount} interactive JavaScript visualizations: event loop, closures, hoisting, promises, scope chain, and prototypes. Learn JS internals step by step.`,
-  keywords: [
-    "javascript visualizer",
-    "javascript visualization",
-    "javascript concepts",
-    "javascript fundamentals",
-    "event loop",
-    "hoisting",
-    "closures",
-    "promises",
-    "prototype chain",
-    "this keyword",
-    "scope chain",
-    "var vs let vs const",
-    "garbage collection javascript",
-    "type coercion",
-    "execution context",
-    "heap and stack",
-    "reference vs value",
-    "generators iterators",
-  ],
-  alternates: {
-    canonical: "/javascript",
-  },
-};
+export const metadata: Metadata = createCategoryMetadata(
+  category,
+  getTopicsByCategory(category.id).length,
+);
 
-export default function JavaScriptIndexPage() {
-  return <CategoryTopicsPage category="javascript" />;
+export default function CategoryIndexPage() {
+  return <CategoryTopicsPage category={category.id} />;
 }

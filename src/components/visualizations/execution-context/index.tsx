@@ -34,6 +34,7 @@ export function ExecutionContext() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({ totalSteps: STEPS.length, initialStep: -1 });
 
   const currentStep =
@@ -71,6 +72,7 @@ export function ExecutionContext() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

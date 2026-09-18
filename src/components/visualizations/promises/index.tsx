@@ -41,6 +41,7 @@ export function Promises() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: example.steps.length,
     initialStep: -1,
@@ -101,6 +102,7 @@ export function Promises() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

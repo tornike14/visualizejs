@@ -55,6 +55,7 @@ export function EventLoop() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: activeSteps.length,
     initialStep: -1,
@@ -147,6 +148,7 @@ export function EventLoop() {
                 onStepBack={handleStepBack}
                 onReset={handleReset}
                 onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
               />
             )}
           </div>

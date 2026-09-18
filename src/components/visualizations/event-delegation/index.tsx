@@ -47,6 +47,7 @@ export const EventDelegation = () => {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: example.steps.length,
     initialStep: -1,
@@ -106,6 +107,7 @@ export const EventDelegation = () => {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

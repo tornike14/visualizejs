@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Tooltip } from "../Tooltip";
 import type { TransportControlsProps } from "./types";
 import { SPEED_OPTIONS, iconBtnBase, iconBtnDefault, iconBtnPrimary } from "./constants";
+import { StepScrubber } from "./StepScrubber";
 import {
   PlayIcon,
   PauseIcon,
@@ -30,6 +31,7 @@ export function TransportControls({
   onStepBack,
   onReset,
   onSpeedLevelChange,
+  onJumpTo,
   tooltipConfig,
   className,
 }: TransportControlsProps) {
@@ -37,6 +39,7 @@ export function TransportControls({
   const handleSpeedClose = useCallback(() => setSpeedOpen(false), []);
   const speedRef = useClickOutside<HTMLDivElement>(speedOpen, handleSpeedClose);
   const showStepPill = stepIndex != null && totalSteps != null;
+  const showScrubber = showStepPill && onJumpTo != null && (totalSteps ?? 0) > 1;
   const normalizedStepIndex = stepIndex ?? -1;
   const normalizedTotalSteps = totalSteps ?? 0;
   const forceVisibleTooltips = tooltipConfig?.forceVisible ?? false;
@@ -52,6 +55,14 @@ export function TransportControls({
           {isPlaying ? <span className="viz-pulse-dot" /> : null}
           Step {Math.max(normalizedStepIndex + 1, 0)} / {normalizedTotalSteps}
         </p>
+      )}
+
+      {showScrubber && (
+        <StepScrubber
+          stepIndex={normalizedStepIndex}
+          totalSteps={normalizedTotalSteps}
+          onJumpTo={onJumpTo}
+        />
       )}
 
       {/* Reset */}

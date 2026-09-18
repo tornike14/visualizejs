@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import type { TopicTheoryContent } from "@/content/theory/types";
 import { TopicLink } from "@/components/visualization-ui/TopicLink";
+import { CATEGORIES } from "@/lib/categories";
 import type { Topic } from "@/types";
 
 interface TopicTheorySectionsProps {
@@ -14,7 +15,8 @@ export const TopicTheorySections = ({
   content,
   relatedTopics,
 }: TopicTheorySectionsProps) => {
-  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const category = CATEGORIES[topic.category];
+  const categoryLabel = category.label;
 
   return (
     <div id="theory" className="flex scroll-mt-20 flex-col gap-5">
@@ -41,7 +43,7 @@ export const TopicTheorySections = ({
           rel="noopener noreferrer"
           className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cyan-300/30 bg-cyan-400/8 px-3 py-1.5 text-xs font-medium text-cyan-200 transition-colors hover:border-cyan-300/55 hover:bg-cyan-300/12"
         >
-          {topic.title} on MDN
+          {topic.title} on {category.docsLabel}
           <ExternalLink className="h-3.5 w-3.5" />
         </a>
       </section>

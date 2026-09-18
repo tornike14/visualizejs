@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { CATEGORY_LIST } from "@/lib/categories";
 import { SITE_URL } from "@/lib/constants";
 import { topics } from "@/lib/topics";
 
@@ -12,18 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: `${SITE_URL}/javascript`,
+    ...CATEGORY_LIST.map((category) => ({
+      url: `${SITE_URL}${category.route}`,
       lastModified: now,
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/react`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+    })),
   ];
 
   const topicRoutes: MetadataRoute.Sitemap = topics.map((topic) => ({

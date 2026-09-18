@@ -44,6 +44,7 @@ export function Reconciliation() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: example.steps.length,
     initialStep: -1,
@@ -103,6 +104,7 @@ export function Reconciliation() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

@@ -27,6 +27,23 @@ import { eventDelegationTheory } from "@/content/theory/javascript/event-delegat
 import { modulesImportsTheory } from "@/content/theory/javascript/modules-imports";
 import { errorBoundariesTheory } from "@/content/theory/react/error-boundaries";
 import { useEffectLifecycleTheory } from "@/content/theory/react/use-effect-lifecycle";
+import { tokenizationTheory } from "@/content/theory/ai/tokenization";
+import { embeddingsTheory } from "@/content/theory/ai/embeddings";
+import { attentionTheory } from "@/content/theory/ai/attention";
+import { nextTokenPredictionTheory } from "@/content/theory/ai/next-token-prediction";
+import { backpropagationTheory } from "@/content/theory/ai/backpropagation";
+import { httpRequestLifecycleTheory } from "@/content/theory/backend/http-request-lifecycle";
+import { databaseIndexingTheory } from "@/content/theory/backend/database-indexing";
+import { cachingStrategiesTheory } from "@/content/theory/backend/caching-strategies";
+import { jwtAuthenticationTheory } from "@/content/theory/backend/jwt-authentication";
+import { rateLimitingTheory } from "@/content/theory/backend/rate-limiting";
+import { vueReactivityTheory } from "@/content/theory/frameworks/vue-reactivity";
+import { svelteRunesTheory } from "@/content/theory/frameworks/svelte-runes";
+import { angularChangeDetectionTheory } from "@/content/theory/frameworks/angular-change-detection";
+import { asyncAwaitTheory } from "@/content/theory/javascript/async-await";
+import { debounceThrottleTheory } from "@/content/theory/javascript/debounce-throttle";
+import { stateBatchingTheory } from "@/content/theory/react/state-batching";
+import { concurrentRenderingTheory } from "@/content/theory/react/concurrent-rendering";
 import { getTopicById, getTopicsByCategory } from "@/lib/topics";
 import type { Category, Topic } from "@/types";
 
@@ -59,6 +76,23 @@ const THEORY_CONTENT_BY_TOPIC_ID: Record<string, TopicTheoryContent> = {
   "modules-imports": modulesImportsTheory,
   "error-boundaries": errorBoundariesTheory,
   "use-effect-lifecycle": useEffectLifecycleTheory,
+  "tokenization": tokenizationTheory,
+  "embeddings": embeddingsTheory,
+  "attention": attentionTheory,
+  "next-token-prediction": nextTokenPredictionTheory,
+  "backpropagation": backpropagationTheory,
+  "http-request-lifecycle": httpRequestLifecycleTheory,
+  "database-indexing": databaseIndexingTheory,
+  "caching-strategies": cachingStrategiesTheory,
+  "jwt-authentication": jwtAuthenticationTheory,
+  "rate-limiting": rateLimitingTheory,
+  "vue-reactivity": vueReactivityTheory,
+  "svelte-runes": svelteRunesTheory,
+  "angular-change-detection": angularChangeDetectionTheory,
+  "async-await": asyncAwaitTheory,
+  "debounce-throttle": debounceThrottleTheory,
+  "state-batching": stateBatchingTheory,
+  "concurrent-rendering": concurrentRenderingTheory,
 };
 
 export function getTheoryContent(topicId: string): TopicTheoryContent | undefined {

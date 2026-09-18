@@ -32,6 +32,7 @@ export function Closures() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({ totalSteps: STEPS.length, initialStep: -1 });
 
   const currentStep = currentStepIndex >= 0 ? STEPS[currentStepIndex] : null;
@@ -64,6 +65,7 @@ export function Closures() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

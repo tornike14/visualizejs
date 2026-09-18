@@ -45,6 +45,7 @@ export function VirtualDom() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: example.steps.length,
     initialStep: -1,
@@ -104,6 +105,7 @@ export function VirtualDom() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

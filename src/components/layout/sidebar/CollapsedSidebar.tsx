@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SearchTrigger } from "@/components/search/SearchTrigger";
 import { ExpandIcon } from "./SidebarIcons";
 
 export function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
@@ -23,6 +24,8 @@ export function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
         >
           <ExpandIcon />
         </button>
+
+        <SearchTrigger compact />
       </div>
     </aside>
   );

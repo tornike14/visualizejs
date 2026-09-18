@@ -49,6 +49,7 @@ export function ReferenceValue() {
     stepBack: handleStepBack,
     reset: handleReset,
     setSpeedLevel,
+    jumpTo,
   } = useStepPlayback({
     totalSteps: steps.length,
     initialStep: -1,
@@ -113,6 +114,7 @@ export function ReferenceValue() {
               onStepBack={handleStepBack}
               onReset={handleReset}
               onSpeedLevelChange={setSpeedLevel}
+              onJumpTo={jumpTo}
             />
           </div>
 

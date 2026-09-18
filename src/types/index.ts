@@ -1,4 +1,4 @@
-export type Category = "javascript" | "react";
+export type Category = "javascript" | "react" | "frameworks" | "backend" | "ai";
 
 export type Difficulty = "beginner" | "intermediate" | "advanced";
 

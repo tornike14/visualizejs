@@ -359,6 +359,90 @@
     }
   }
 
+
+  /* ── Topic cards ── */
+  .topic-card {
+    --card-glow: 244 114 182;
+    border-color: var(--app-border);
+  }
+
+  .group:hover .topic-card,
+  .group:focus-visible .topic-card {
+    border-color: rgba(var(--card-glow), 0.45);
+    box-shadow:
+      0 14px 32px rgba(2, 6, 23, 0.45),
+      0 0 24px rgba(var(--card-glow), 0.16);
+    transform: translateY(-2px);
+  }
+
+  /* ── Home hero ── */
+  .home-hero {
+    border: 1px solid rgba(71, 85, 105, 0.5);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(251, 191, 36, 0.14), transparent 40%),
+      radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.14), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(244, 114, 182, 0.14), transparent 46%),
+      linear-gradient(180deg, rgba(12, 23, 44, 0.96), rgba(7, 14, 28, 0.97));
+    box-shadow:
+      0 20px 36px rgba(2, 6, 23, 0.45),
+      inset 0 1px 0 rgba(148, 163, 184, 0.12);
+  }
+
+  .home-hero-grid {
+    opacity: 0.35;
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9), transparent 75%);
+  }
+
+  /* ── Step scrubber ── */
+  .viz-scrubber input[type="range"] {
+    --scrubber-fill: 0%;
+    appearance: none;
+    width: 7.5rem;
+    height: 6px;
+    cursor: pointer;
+    border-radius: 9999px;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(244, 114, 182, 0.85) var(--scrubber-fill),
+        rgba(51, 65, 85, 0.85) var(--scrubber-fill)
+      );
+    outline: none;
+  }
+
+  .viz-scrubber input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 9999px;
+    border: 2px solid #f9a8d4;
+    background: #0f1a30;
+    box-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+    transition: transform 0.15s ease;
+  }
+
+  .viz-scrubber input[type="range"]::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 9999px;
+    border: 2px solid #f9a8d4;
+    background: #0f1a30;
+    box-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+  }
+
+  .viz-scrubber input[type="range"]:hover::-webkit-slider-thumb,
+  .viz-scrubber input[type="range"]:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+
+  .viz-scrubber input[type="range"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.5);
+  }
+
   /* ── Syntax highlighting token classes ── */
   .tok-kw      { color: #c084fc; }
   .tok-builtin { color: #e5c07b; }

@@ -4,32 +4,29 @@ import type { CSSProperties, MouseEvent } from "react";
 import { useRef } from "react";
 import Image from "next/image";
 
+import type { CategoryConfig } from "@/lib/categories";
+
 export type CategoryHeroStyle = CSSProperties & {
   "--hero-accent": string;
   "--hero-accent-soft": string;
   "--hero-secondary": string;
 };
 
-export interface CategoryHeroConfig {
-  iconSrc: string;
-  iconAlt: string;
-  iconShellClass: string;
-  title: string;
-  highlightedWord: string;
-  titleTail: string;
-  description: string;
-  titleAccentClass: string;
-  kicker: string;
-  kickerClass: string;
-  heroStyle: CategoryHeroStyle;
-}
-
 interface CategoryHeroProps {
-  config: CategoryHeroConfig;
+  config: CategoryConfig;
 }
 
-export function CategoryHero({ config }: CategoryHeroProps) {
+export const CategoryHero = ({ config }: CategoryHeroProps) => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const heroStyle: CategoryHeroStyle = {
+    "--hero-accent": config.hero.accent,
+    "--hero-accent-soft": config.hero.accentSoft,
+    "--hero-secondary": config.hero.secondary,
+  };
+  const [highlightedWord, ...titleRest] = config.indexTitle
+    .replace(", Visualized", "")
+    .split(" ");
+  const titleTail = titleRest.join(" ");
 
   const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
     const shell = sectionRef.current;
@@ -70,7 +67,7 @@ export function CategoryHero({ config }: CategoryHeroProps) {
     <section
       ref={sectionRef}
       className="category-hero rounded-3xl px-6 pb-4 pt-10 text-center lg:px-10 lg:pb-6 lg:pt-12"
-      style={config.heroStyle}
+      style={heroStyle}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -108,8 +105,8 @@ export function CategoryHero({ config }: CategoryHeroProps) {
         </div>
 
         <h1 className="category-hero-title text-4xl font-bold tracking-tight lg:text-6xl">
-          <span className={config.titleAccentClass}>{config.highlightedWord}</span>{" "}
-          <span className="text-slate-100/90">{config.titleTail}</span>
+          <span className={config.titleAccentClass}>{highlightedWord}</span>{" "}
+          <span className="text-slate-100/90">{titleTail}</span>
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
           {config.description}
@@ -117,4 +114,4 @@ export function CategoryHero({ config }: CategoryHeroProps) {
       </div>
     </section>
   );
-}
+};
