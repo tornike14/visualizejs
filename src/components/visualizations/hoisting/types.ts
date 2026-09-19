@@ -1,4 +1,9 @@
-export type HoistingKind = "var" | "function" | "let" | "const" | "function-expr";
+export type HoistingKind =
+  | "var"
+  | "function"
+  | "let"
+  | "const"
+  | "function-expr";
 
 export interface CodeLine {
   text: string;
@@ -11,12 +16,7 @@ export interface HoistedLine extends CodeLine {
   isTDZ: boolean;
 }
 
-export type StepKind =
-  | "idle"
-  | "hoist"
-  | "execute"
-  | "tdz-error"
-  | "result";
+export type StepKind = "idle" | "hoist" | "execute" | "tdz-error" | "result";
 
 export interface ExecutionStep {
   kind: StepKind;

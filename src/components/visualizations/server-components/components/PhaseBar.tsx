@@ -17,7 +17,7 @@ const PHASE_ORDER: Record<RenderPhase, number> = {
   complete: 3,
 };
 
-export function PhaseBar({ currentPhase }: { currentPhase: RenderPhase }) {
+export const PhaseBar = ({ currentPhase }: { currentPhase: RenderPhase }) => {
   const currentOrder = PHASE_ORDER[currentPhase];
 
   return (
@@ -45,4 +45,4 @@ export function PhaseBar({ currentPhase }: { currentPhase: RenderPhase }) {
       })}
     </div>
   );
-}
+};

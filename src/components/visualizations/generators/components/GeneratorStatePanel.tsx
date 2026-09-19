@@ -2,7 +2,11 @@ import { cn } from "@/lib/utils";
 import type { GeneratorState } from "../types";
 import { STATUS_STYLES } from "../helpers";
 
-export function GeneratorStatePanel({ state }: { state: GeneratorState | null }) {
+export const GeneratorStatePanel = ({
+  state,
+}: {
+  state: GeneratorState | null;
+}) => {
   if (!state) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -79,4 +83,4 @@ export function GeneratorStatePanel({ state }: { state: GeneratorState | null })
       </div>
     </div>
   );
-}
+};

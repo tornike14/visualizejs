@@ -1,6 +1,9 @@
 import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
 import { TokenChips } from "@/components/visualization-ui/TokenChips";
-import { MetricBars, type MetricBar } from "@/components/visualization-ui/MetricBars";
+import {
+  MetricBars,
+  type MetricBar,
+} from "@/components/visualization-ui/MetricBars";
 import type { EmbeddingsKind, EmbeddingsStep } from "../types";
 import { PANEL_LAYOUT, formatSigned } from "../helpers";
 import { VectorTable } from "./VectorTable";
@@ -23,7 +26,11 @@ const EMPTY = (
   </p>
 );
 
-export const EmbeddingsPanels = ({ kind, step, flashes }: EmbeddingsPanelsProps) => {
+export const EmbeddingsPanels = ({
+  kind,
+  step,
+  flashes,
+}: EmbeddingsPanelsProps) => {
   const layout = PANEL_LAYOUT[kind];
 
   const bars: MetricBar[] = (step?.bars ?? []).map((bar) => ({
@@ -83,7 +90,11 @@ export const EmbeddingsPanels = ({ kind, step, flashes }: EmbeddingsPanelsProps)
             bodyClassName="min-h-[6rem]"
             className={flashes.bars ? "viz-change-flash" : undefined}
           >
-            {step ? <MetricBars bars={bars} emptyLabel="no vector selected" /> : EMPTY}
+            {step ? (
+              <MetricBars bars={bars} emptyLabel="no vector selected" />
+            ) : (
+              EMPTY
+            )}
           </NeonPanel>
         )}
 

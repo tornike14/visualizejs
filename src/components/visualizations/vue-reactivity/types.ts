@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type VueReactivityKind = "track" | "computed" | "pitfalls";
@@ -59,10 +59,7 @@ export interface BindingEntry {
   note: string;
 }
 
-export interface VueReactivityStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface VueReactivityStep extends BaseStep {
   traps: TrapEntry[];
   deps: DepEntry[];
   scheduler: SchedulerState;

@@ -1,23 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { useCallback, useState } from "react";
 import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
-import {
-  CodeBlock,
-  type CodeBlockLine,
-} from "@/components/visualization-ui/CodeBlock";
 import { ConsoleOutput } from "@/components/visualization-ui/ConsoleOutput";
-import { TransportControls } from "@/components/visualization-ui/TransportControls";
 import {
-  ExampleSelector,
-} from "@/components/visualization-ui/ExampleSelector";
-import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
-import { cn } from "@/lib/utils";
+  ExamplePicker,
+  KindBadge,
+} from "@/components/visualization-ui/ExamplePicker";
+import { SourceCodePanel } from "@/components/visualization-ui/SourceCodePanel";
 import {
-  VISUALIZATION_PANEL_TITLES,
-  VISUALIZATION_EMPTY_STATES,
-} from "@/lib/visualization/uiCopy";
+  SourceGrid,
+  VisualizationSection,
+} from "@/components/visualization-ui/VisualizationLayout";
+import { VisualizationToolbar } from "@/components/visualization-ui/VisualizationToolbar";
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
 import { EXAMPLES } from "./data";
@@ -25,39 +20,27 @@ import { getEffectiveData, kindBadgeClass, kindLabel } from "./helpers";
 import { MethodTabs } from "./components/MethodTabs";
 import { MemoryDiagram } from "./components/MemoryDiagram";
 
-/* ── Main Component ── */
+const DEFAULT_METHOD_ID = "structured-clone";
 
-export function ReferenceValue() {
+/**
+ * Unlike most topics, the deep-copy example has a second axis (which copy
+ * method to show), so the steps depend on both selections and this component
+ * drives useStepPlayback directly instead of through useExampleTopic.
+ */
+export const ReferenceValue = () => {
   const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-  const [activeMethodId, setActiveMethodId] = useState("structured-clone");
+  const [activeMethodId, setActiveMethodId] = useState(DEFAULT_METHOD_ID);
 
   const example =
-    EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
+    EXAMPLES.find((entry) => entry.id === activeExampleId) ?? EXAMPLES[0];
   const { codeLines, steps } = getEffectiveData(example, activeMethodId);
 
-  const resetKey = `${activeExampleId}-${activeMethodId}`;
-
-  const {
-    currentStepIndex,
-    isPlaying,
-    speedLevel,
-    speedLabel,
-    canStep,
-    canStepBack,
-    togglePlay,
-    step: handleStep,
-    stepBack: handleStepBack,
-    reset: handleReset,
-    setSpeedLevel,
-    jumpTo,
-  } = useStepPlayback({
+  const playback = useStepPlayback({
     totalSteps: steps.length,
-    initialStep: -1,
-    resetKey,
+    resetKey: `${activeExampleId}-${activeMethodId}`,
   });
-
-  const currentStep =
-    currentStepIndex >= 0 ? steps[currentStepIndex] : null;
+  const { currentStepIndex } = playback;
+  const currentStep = currentStepIndex >= 0 ? steps[currentStepIndex] : null;
 
   const flashes = useChangeFlash(
     {
@@ -69,105 +52,39 @@ export function ReferenceValue() {
     currentStepIndex,
   );
 
-  const handleExampleChange = (id: string) => {
+  const handleExampleChange = useCallback((id: string) => {
     setActiveExampleId(id);
-    setActiveMethodId("structured-clone");
-  };
+    setActiveMethodId(DEFAULT_METHOD_ID);
+  }, []);
 
   return (
     <>
-      <ToolbarPortal>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <ExampleSelector
-                examples={EXAMPLES}
-                activeId={activeExampleId}
-                onSelect={handleExampleChange}
-                renderBadge={(ex) => (
-                  <Badge
-                    variant="outline"
-                    className={cn("text-[10px]", kindBadgeClass(ex.kind))}
-                  >
-                    {kindLabel(ex.kind)}
-                  </Badge>
-                )}
-              />
-              <Badge
-                variant="outline"
-                className={cn("text-[10px]", kindBadgeClass(example.kind))}
-              >
-                {kindLabel(example.kind)}
-              </Badge>
-            </div>
-
-            <TransportControls
-              isPlaying={isPlaying}
-              canStep={canStep}
-              canStepBack={canStepBack}
-              stepIndex={currentStepIndex}
-              totalSteps={steps.length}
-              speedLevel={speedLevel}
-              speedLabel={speedLabel}
-              onTogglePlay={togglePlay}
-              onStep={handleStep}
-              onStepBack={handleStepBack}
-              onReset={handleReset}
-              onSpeedLevelChange={setSpeedLevel}
-              onJumpTo={jumpTo}
-            />
-          </div>
-
-          <div
-            role="status"
-            aria-live="polite"
-            className={cn(
-              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
-              flashes.description && "viz-change-flash-pill",
+      <VisualizationToolbar
+        playback={playback}
+        totalSteps={steps.length}
+        descriptionHtml={currentStep?.descriptionHtml}
+        descriptionFlash={flashes.description}
+        leading={
+          <ExamplePicker
+            examples={EXAMPLES}
+            activeId={activeExampleId}
+            onSelect={handleExampleChange}
+            renderBadge={(ex) => (
+              <KindBadge className={kindBadgeClass(ex.kind)}>
+                {kindLabel(ex.kind)}
+              </KindBadge>
             )}
-          >
-            {currentStep?.descriptionHtml ? (
-              <p
-                className="viz-step-desc text-center text-sm text-slate-300"
-                dangerouslySetInnerHTML={{
-                  __html: currentStep.descriptionHtml,
-                }}
-              />
-            ) : (
-              <p className="text-center text-sm text-slate-500">
-                {VISUALIZATION_EMPTY_STATES.stepDescription}
-              </p>
-            )}
-          </div>
-        </div>
-      </ToolbarPortal>
+          />
+        }
+      />
 
-      <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
-          <NeonPanel
-            title={VISUALIZATION_PANEL_TITLES.sourceCode}
-            tone="amber"
-            bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
-          >
-            <CodeBlock
-              lines={codeLines.map(
-                (line): CodeBlockLine => {
-                  const isActive = currentStep?.activeLine === line.num;
-                  const isDone =
-                    currentStep?.doneLines.includes(line.num) ?? false;
-                  return {
-                    key: line.num,
-                    lineNumber: line.num,
-                    text: line.text,
-                    className: cn(
-                      isActive && "is-active",
-                      isDone && !isActive && "is-done"
-                    ),
-                  };
-                }
-              )}
-            />
-          </NeonPanel>
+      <VisualizationSection>
+        <SourceGrid>
+          <SourceCodePanel
+            lines={codeLines}
+            activeLine={currentStep?.activeLine}
+            doneLines={currentStep?.doneLines}
+          />
 
           <div className="space-y-4">
             {example.kind === "deep" && (
@@ -182,7 +99,9 @@ export function ReferenceValue() {
               title="Memory"
               tone="violet"
               bodyClassName="min-h-[10rem]"
-              className={flashes.memory || flashes.heap ? "viz-change-flash" : undefined}
+              className={
+                flashes.memory || flashes.heap ? "viz-change-flash" : undefined
+              }
             >
               <MemoryDiagram
                 slots={currentStep?.memorySlots ?? []}
@@ -191,13 +110,15 @@ export function ReferenceValue() {
             </NeonPanel>
 
             <div
-              className={flashes.console ? "viz-change-flash rounded-3xl" : undefined}
+              className={
+                flashes.console ? "viz-change-flash rounded-3xl" : undefined
+              }
             >
               <ConsoleOutput lines={currentStep?.consoleOutput ?? []} />
             </div>
           </div>
-        </div>
-      </section>
+        </SourceGrid>
+      </VisualizationSection>
     </>
   );
-}
+};

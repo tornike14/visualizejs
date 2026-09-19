@@ -10,19 +10,19 @@ export const EXAMPLES: MemoizationExample[] = [
     kind: "memo",
     codeLines: [
       { num: 1, text: "const MemoChild = React.memo(({ name }) => {" },
-      { num: 2, text: '  return <p>Hello, {name}</p>;' },
+      { num: 2, text: "  return <p>Hello, {name}</p>;" },
       { num: 3, text: "});" },
       { num: 4, text: "" },
       { num: 5, text: "function Parent() {" },
       { num: 6, text: "  const [count, setCount] = useState(0);" },
-      { num: 7, text: '  return (' },
-      { num: 8, text: '    <div>' },
-      { num: 9, text: '      <p>{count}</p>' },
-      { num: 10, text: '      <button onClick={() => setCount(c => c + 1)}>' },
-      { num: 11, text: '        +' },
-      { num: 12, text: '      </button>' },
+      { num: 7, text: "  return (" },
+      { num: 8, text: "    <div>" },
+      { num: 9, text: "      <p>{count}</p>" },
+      { num: 10, text: "      <button onClick={() => setCount(c => c + 1)}>" },
+      { num: 11, text: "        +" },
+      { num: 12, text: "      </button>" },
       { num: 13, text: '      <MemoChild name="Alice" />' },
-      { num: 14, text: '    </div>' },
+      { num: 14, text: "    </div>" },
       { num: 15, text: "  );" },
       { num: 16, text: "}" },
     ],
@@ -36,11 +36,23 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-child", label: "<MemoChild>", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [{ id: "p-text", label: '"0"' }],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "memo-child",
@@ -55,8 +67,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "initial mount" },
-          { componentId: "memo-child", label: "<MemoChild>", decision: "render", reason: "first render, no cached props" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "initial mount",
+          },
+          {
+            componentId: "memo-child",
+            label: "<MemoChild>",
+            decision: "render",
+            reason: "first render, no cached props",
+          },
         ],
       },
       {
@@ -68,11 +90,24 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-child", label: "<MemoChild>", highlight: "unchanged", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [{ id: "p-text", label: '"0"' }],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  highlight: "unchanged",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -86,8 +121,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "initial mount" },
-          { componentId: "memo-child", label: "<MemoChild>", decision: "render", reason: "first render, no cached props" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "initial mount",
+          },
+          {
+            componentId: "memo-child",
+            label: "<MemoChild>",
+            decision: "render",
+            reason: "first render, no cached props",
+          },
         ],
       },
       {
@@ -100,11 +145,23 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<Parent>",
           highlight: "active",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-child", label: "<MemoChild>", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [{ id: "p-text", label: '"0"' }],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "parent",
@@ -119,7 +176,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
         ],
       },
       {
@@ -131,11 +193,26 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-child", label: "<MemoChild>", highlight: "active", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  highlight: "active",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "memo-child",
@@ -151,7 +228,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
         ],
       },
       {
@@ -163,11 +245,26 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-child", label: "<MemoChild>", highlight: "unchanged", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  highlight: "unchanged",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -182,8 +279,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
-          { componentId: "memo-child", label: "<MemoChild>", decision: "skip", reason: "props unchanged (shallow equal)" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
+          {
+            componentId: "memo-child",
+            label: "<MemoChild>",
+            decision: "skip",
+            reason: "props unchanged (shallow equal)",
+          },
         ],
       },
       {
@@ -196,11 +303,27 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<Parent>",
           highlight: "unchanged",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", highlight: "updated", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>", highlight: "unchanged" },
-              { id: "memo-child", label: "<MemoChild>", highlight: "unchanged", props: [{ key: "name", value: '"Alice"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  highlight: "updated",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>", highlight: "unchanged" },
+                {
+                  id: "memo-child",
+                  label: "<MemoChild>",
+                  highlight: "unchanged",
+                  props: [{ key: "name", value: '"Alice"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -214,8 +337,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
-          { componentId: "memo-child", label: "<MemoChild>", decision: "skip", reason: "props unchanged (shallow equal)" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
+          {
+            componentId: "memo-child",
+            label: "<MemoChild>",
+            decision: "skip",
+            reason: "props unchanged (shallow equal)",
+          },
         ],
       },
     ],
@@ -233,12 +366,18 @@ export const EXAMPLES: MemoizationExample[] = [
       { num: 2, text: "  const [filter, setFilter] = useState('');" },
       { num: 3, text: "" },
       { num: 4, text: "  const total = useMemo(() => {" },
-      { num: 5, text: "    return items.reduce((sum, i) => sum + i.price, 0);" },
+      {
+        num: 5,
+        text: "    return items.reduce((sum, i) => sum + i.price, 0);",
+      },
       { num: 6, text: "  }, [items]);" },
       { num: 7, text: "" },
       { num: 8, text: "  return (" },
       { num: 9, text: "    <div>" },
-      { num: 10, text: "      <input onChange={e => setFilter(e.target.value)} />" },
+      {
+        num: 10,
+        text: "      <input onChange={e => setFilter(e.target.value)} />",
+      },
       { num: 11, text: "      <p>Total: ${total}</p>" },
       { num: 12, text: "    </div>" },
       { num: 13, text: "  );" },
@@ -254,10 +393,18 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "product-list",
           label: "<ProductList>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "input", label: "<input>" },
-              { id: "p-total", label: "<p>", children: [{ id: "total-text", label: '"Total: $150"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                { id: "input", label: "<input>" },
+                {
+                  id: "p-total",
+                  label: "<p>",
+                  children: [{ id: "total-text", label: '"Total: $150"' }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "product-list",
@@ -272,7 +419,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "product-list", label: "<ProductList>", decision: "render", reason: "initial mount" },
+          {
+            componentId: "product-list",
+            label: "<ProductList>",
+            decision: "render",
+            reason: "initial mount",
+          },
         ],
       },
       {
@@ -284,10 +436,18 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "product-list",
           label: "<ProductList>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "input", label: "<input>" },
-              { id: "p-total", label: "<p>", children: [{ id: "total-text", label: '"Total: $150"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                { id: "input", label: "<input>" },
+                {
+                  id: "p-total",
+                  label: "<p>",
+                  children: [{ id: "total-text", label: '"Total: $150"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -301,7 +461,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "product-list", label: "<ProductList>", decision: "render", reason: "initial mount" },
+          {
+            componentId: "product-list",
+            label: "<ProductList>",
+            decision: "render",
+            reason: "initial mount",
+          },
         ],
       },
       {
@@ -314,10 +479,18 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<ProductList>",
           highlight: "active",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "input", label: "<input>" },
-              { id: "p-total", label: "<p>", children: [{ id: "total-text", label: '"Total: $150"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                { id: "input", label: "<input>" },
+                {
+                  id: "p-total",
+                  label: "<p>",
+                  children: [{ id: "total-text", label: '"Total: $150"' }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "product-list",
@@ -332,7 +505,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "product-list", label: "<ProductList>", decision: "render", reason: "state changed: filter" },
+          {
+            componentId: "product-list",
+            label: "<ProductList>",
+            decision: "render",
+            reason: "state changed: filter",
+          },
         ],
       },
       {
@@ -344,10 +522,18 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "product-list",
           label: "<ProductList>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "input", label: "<input>", highlight: "updated" },
-              { id: "p-total", label: "<p>", children: [{ id: "total-text", label: '"Total: $150"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                { id: "input", label: "<input>", highlight: "updated" },
+                {
+                  id: "p-total",
+                  label: "<p>",
+                  children: [{ id: "total-text", label: '"Total: $150"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -362,7 +548,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "product-list", label: "<ProductList>", decision: "render", reason: "state changed: filter" },
+          {
+            componentId: "product-list",
+            label: "<ProductList>",
+            decision: "render",
+            reason: "state changed: filter",
+          },
         ],
       },
       {
@@ -375,10 +566,19 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<ProductList>",
           highlight: "unchanged",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "input", label: "<input>", highlight: "updated" },
-              { id: "p-total", label: "<p>", highlight: "unchanged", children: [{ id: "total-text", label: '"Total: $150"' }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                { id: "input", label: "<input>", highlight: "updated" },
+                {
+                  id: "p-total",
+                  label: "<p>",
+                  highlight: "unchanged",
+                  children: [{ id: "total-text", label: '"Total: $150"' }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -392,7 +592,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "product-list", label: "<ProductList>", decision: "render", reason: "state changed: filter" },
+          {
+            componentId: "product-list",
+            label: "<ProductList>",
+            decision: "render",
+            reason: "state changed: filter",
+          },
         ],
       },
     ],
@@ -417,7 +622,10 @@ export const EXAMPLES: MemoizationExample[] = [
       { num: 9, text: "  return (" },
       { num: 10, text: "    <div>" },
       { num: 11, text: "      <p>{count}</p>" },
-      { num: 12, text: "      <button onClick={() => setCount(c => c + 1)}>+</button>" },
+      {
+        num: 12,
+        text: "      <button onClick={() => setCount(c => c + 1)}>+</button>",
+      },
       { num: 13, text: "      <MemoButton onClick={handleClick} />" },
       { num: 14, text: "    </div>" },
       { num: 15, text: "  );" },
@@ -433,11 +641,23 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-button", label: "<MemoButton>", props: [{ key: "onClick", value: "handleClick" }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [{ id: "p-text", label: '"0"' }],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-button",
+                  label: "<MemoButton>",
+                  props: [{ key: "onClick", value: "handleClick" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "parent",
@@ -452,13 +672,23 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "initial mount" },
-          { componentId: "memo-button", label: "<MemoButton>", decision: "render", reason: "first render" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "initial mount",
+          },
+          {
+            componentId: "memo-button",
+            label: "<MemoButton>",
+            decision: "render",
+            reason: "first render",
+          },
         ],
       },
       {
         descriptionHtml:
-          'User clicks <code>+</code>. <code>setCount</code> triggers Parent re-render. <code>name</code> has not changed.',
+          "User clicks <code>+</code>. <code>setCount</code> triggers Parent re-render. <code>name</code> has not changed.",
         activeLine: 12,
         doneLines: [1, 2, 3, 5, 6, 7],
         componentTree: {
@@ -466,11 +696,23 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<Parent>",
           highlight: "active",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-button", label: "<MemoButton>", props: [{ key: "onClick", value: "handleClick" }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [{ id: "p-text", label: '"0"' }],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-button",
+                  label: "<MemoButton>",
+                  props: [{ key: "onClick", value: "handleClick" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "parent",
@@ -486,7 +728,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
         ],
       },
       {
@@ -498,11 +745,26 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-button", label: "<MemoButton>", highlight: "active", props: [{ key: "onClick", value: "handleClick" }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-button",
+                  label: "<MemoButton>",
+                  highlight: "active",
+                  props: [{ key: "onClick", value: "handleClick" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "memo-button",
@@ -518,7 +780,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
         ],
       },
       {
@@ -530,11 +797,26 @@ export const EXAMPLES: MemoizationExample[] = [
           id: "parent",
           label: "<Parent>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>" },
-              { id: "memo-button", label: "<MemoButton>", highlight: "unchanged", props: [{ key: "onClick", value: "handleClick" }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>" },
+                {
+                  id: "memo-button",
+                  label: "<MemoButton>",
+                  highlight: "unchanged",
+                  props: [{ key: "onClick", value: "handleClick" }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -548,8 +830,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
-          { componentId: "memo-button", label: "<MemoButton>", decision: "skip", reason: "onClick is same reference" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
+          {
+            componentId: "memo-button",
+            label: "<MemoButton>",
+            decision: "skip",
+            reason: "onClick is same reference",
+          },
         ],
       },
       {
@@ -562,11 +854,27 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<Parent>",
           highlight: "unchanged",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "p", label: "<p>", highlight: "updated", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-              { id: "button", label: "<button>", highlight: "unchanged" },
-              { id: "memo-button", label: "<MemoButton>", highlight: "unchanged", props: [{ key: "onClick", value: "handleClick" }] },
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "p",
+                  label: "<p>",
+                  highlight: "updated",
+                  children: [
+                    { id: "p-text", label: '"1"', highlight: "updated" },
+                  ],
+                },
+                { id: "button", label: "<button>", highlight: "unchanged" },
+                {
+                  id: "memo-button",
+                  label: "<MemoButton>",
+                  highlight: "unchanged",
+                  props: [{ key: "onClick", value: "handleClick" }],
+                },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -580,8 +888,18 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "parent", label: "<Parent>", decision: "render", reason: "state changed: count 0 -> 1" },
-          { componentId: "memo-button", label: "<MemoButton>", decision: "skip", reason: "onClick is same reference" },
+          {
+            componentId: "parent",
+            label: "<Parent>",
+            decision: "render",
+            reason: "state changed: count 0 -> 1",
+          },
+          {
+            componentId: "memo-button",
+            label: "<MemoButton>",
+            decision: "skip",
+            reason: "onClick is same reference",
+          },
         ],
       },
     ],
@@ -591,13 +909,15 @@ export const EXAMPLES: MemoizationExample[] = [
   {
     id: "cache-invalidation",
     title: "Cache Invalidation",
-    description:
-      "Dependencies change, forcing cache miss and recalculation.",
+    description: "Dependencies change, forcing cache miss and recalculation.",
     kind: "invalidation",
     codeLines: [
       { num: 1, text: "function PriceDisplay({ items, taxRate }) {" },
       { num: 2, text: "  const total = useMemo(() => {" },
-      { num: 3, text: "    const subtotal = items.reduce((s, i) => s + i.price, 0);" },
+      {
+        num: 3,
+        text: "    const subtotal = items.reduce((s, i) => s + i.price, 0);",
+      },
       { num: 4, text: "    return subtotal * (1 + taxRate);" },
       { num: 5, text: "  }, [items, taxRate]);" },
       { num: 6, text: "" },
@@ -615,7 +935,11 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<PriceDisplay>",
           props: [{ key: "taxRate", value: "0.08" }],
           children: [
-            { id: "p", label: "<p>", children: [{ id: "text", label: '"Total: $108.00"' }] },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "text", label: '"Total: $108.00"' }],
+            },
           ],
         },
         activeNodeId: "price",
@@ -630,7 +954,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "initial mount" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "initial mount",
+          },
         ],
       },
       {
@@ -643,7 +972,11 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<PriceDisplay>",
           props: [{ key: "taxRate", value: "0.08" }],
           children: [
-            { id: "p", label: "<p>", children: [{ id: "text", label: '"Total: $108.00"' }] },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "text", label: '"Total: $108.00"' }],
+            },
           ],
         },
         memoEntries: [
@@ -657,7 +990,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "initial mount" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "initial mount",
+          },
         ],
       },
       {
@@ -671,7 +1009,11 @@ export const EXAMPLES: MemoizationExample[] = [
           highlight: "active",
           props: [{ key: "taxRate", value: "0.10" }],
           children: [
-            { id: "p", label: "<p>", children: [{ id: "text", label: '"Total: $108.00"' }] },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "text", label: '"Total: $108.00"' }],
+            },
           ],
         },
         activeNodeId: "price",
@@ -687,7 +1029,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "props changed: taxRate" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "props changed: taxRate",
+          },
         ],
       },
       {
@@ -700,7 +1047,11 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<PriceDisplay>",
           props: [{ key: "taxRate", value: "0.10" }],
           children: [
-            { id: "p", label: "<p>", children: [{ id: "text", label: '"Total: $108.00"' }] },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "text", label: '"Total: $108.00"' }],
+            },
           ],
         },
         memoEntries: [
@@ -715,7 +1066,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "props changed: taxRate" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "props changed: taxRate",
+          },
         ],
       },
       {
@@ -728,7 +1084,13 @@ export const EXAMPLES: MemoizationExample[] = [
           label: "<PriceDisplay>",
           props: [{ key: "taxRate", value: "0.10" }],
           children: [
-            { id: "p", label: "<p>", children: [{ id: "text", label: '"Total: $110.00"', highlight: "updated" }] },
+            {
+              id: "p",
+              label: "<p>",
+              children: [
+                { id: "text", label: '"Total: $110.00"', highlight: "updated" },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -742,7 +1104,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "props changed: taxRate" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "props changed: taxRate",
+          },
         ],
       },
       {
@@ -756,7 +1123,14 @@ export const EXAMPLES: MemoizationExample[] = [
           highlight: "unchanged",
           props: [{ key: "taxRate", value: "0.10" }],
           children: [
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "text", label: '"Total: $110.00"', highlight: "updated" }] },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [
+                { id: "text", label: '"Total: $110.00"', highlight: "updated" },
+              ],
+            },
           ],
         },
         memoEntries: [
@@ -770,7 +1144,12 @@ export const EXAMPLES: MemoizationExample[] = [
           },
         ],
         renderDecisions: [
-          { componentId: "price", label: "<PriceDisplay>", decision: "render", reason: "props changed: taxRate" },
+          {
+            componentId: "price",
+            label: "<PriceDisplay>",
+            decision: "render",
+            reason: "props changed: taxRate",
+          },
         ],
       },
     ],

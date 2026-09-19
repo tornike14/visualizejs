@@ -12,7 +12,7 @@ export const EXAMPLES: SuspenseExample[] = [
       { num: 1, text: "function App() {" },
       { num: 2, text: "  return (" },
       { num: 3, text: "    <div>" },
-      { num: 4, text: '      <Suspense fallback={<Loading />}>' },
+      { num: 4, text: "      <Suspense fallback={<Loading />}>" },
       { num: 5, text: "        <UserProfile />" },
       { num: 6, text: "      </Suspense>" },
       { num: 7, text: "    </div>" },
@@ -29,11 +29,18 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", highlight: "active", children: [
-                { id: "user-profile", label: "<UserProfile>" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  highlight: "active",
+                  children: [{ id: "user-profile", label: "<UserProfile>" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "suspense",
@@ -55,11 +62,23 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", children: [
-                { id: "user-profile", label: "<UserProfile>", highlight: "removed" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  children: [
+                    {
+                      id: "user-profile",
+                      label: "<UserProfile>",
+                      highlight: "removed",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "user-profile",
@@ -82,11 +101,20 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", highlight: "active", children: [
-                { id: "loading", label: "<Loading>", highlight: "added" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  highlight: "active",
+                  children: [
+                    { id: "loading", label: "<Loading>", highlight: "added" },
+                  ],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "suspense",
@@ -102,18 +130,30 @@ export const EXAMPLES: SuspenseExample[] = [
       },
       {
         descriptionHtml:
-          'Fallback <code>&lt;Loading /&gt;</code> is committed to the DOM. React attaches a <code>.then()</code> handler to the thrown Promise.',
+          "Fallback <code>&lt;Loading /&gt;</code> is committed to the DOM. React attaches a <code>.then()</code> handler to the thrown Promise.",
         activeLine: 4,
         doneLines: [1, 2, 3, 5],
         componentTree: {
           id: "app",
           label: "<App>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", children: [
-                { id: "loading", label: "<Loading>", highlight: "unchanged" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  children: [
+                    {
+                      id: "loading",
+                      label: "<Loading>",
+                      highlight: "unchanged",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         boundaries: [
@@ -135,11 +175,24 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", highlight: "active", children: [
-                { id: "user-profile", label: "<UserProfile>", highlight: "added" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  highlight: "active",
+                  children: [
+                    {
+                      id: "user-profile",
+                      label: "<UserProfile>",
+                      highlight: "added",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "user-profile",
@@ -163,11 +216,24 @@ export const EXAMPLES: SuspenseExample[] = [
           label: "<App>",
           highlight: "unchanged",
           children: [
-            { id: "div", label: "<div>", children: [
-              { id: "suspense", label: "<Suspense>", highlight: "unchanged", children: [
-                { id: "user-profile", label: "<UserProfile>", highlight: "unchanged" },
-              ]},
-            ]},
+            {
+              id: "div",
+              label: "<div>",
+              children: [
+                {
+                  id: "suspense",
+                  label: "<Suspense>",
+                  highlight: "unchanged",
+                  children: [
+                    {
+                      id: "user-profile",
+                      label: "<UserProfile>",
+                      highlight: "unchanged",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         boundaries: [
@@ -186,15 +252,14 @@ export const EXAMPLES: SuspenseExample[] = [
   {
     id: "nested-boundaries",
     title: "Nested Boundaries",
-    description:
-      "Two boundaries at different depths resolve independently.",
+    description: "Two boundaries at different depths resolve independently.",
     kind: "nested",
     codeLines: [
       { num: 1, text: "function App() {" },
       { num: 2, text: "  return (" },
-      { num: 3, text: '    <Suspense fallback={<PageSkeleton />}>' },
+      { num: 3, text: "    <Suspense fallback={<PageSkeleton />}>" },
       { num: 4, text: "      <Header />" },
-      { num: 5, text: '      <Suspense fallback={<CommentsSkeleton />}>' },
+      { num: 5, text: "      <Suspense fallback={<CommentsSkeleton />}>" },
       { num: 6, text: "        <Comments />" },
       { num: 7, text: "      </Suspense>" },
       { num: 8, text: "    </Suspense>" },
@@ -211,18 +276,35 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", highlight: "active", children: [
-              { id: "header", label: "<Header>" },
-              { id: "inner-suspense", label: "<Suspense>", children: [
-                { id: "comments", label: "<Comments>" },
-              ]},
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              highlight: "active",
+              children: [
+                { id: "header", label: "<Header>" },
+                {
+                  id: "inner-suspense",
+                  label: "<Suspense>",
+                  children: [{ id: "comments", label: "<Comments>" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "outer-suspense",
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "idle", fallbackLabel: "<PageSkeleton />" },
-          { id: "inner", label: "Inner <Suspense>", status: "idle", fallbackLabel: "<CommentsSkeleton />" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "idle",
+            fallbackLabel: "<PageSkeleton />",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "idle",
+            fallbackLabel: "<CommentsSkeleton />",
+          },
         ],
       },
       {
@@ -234,15 +316,34 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", children: [
-              { id: "page-skeleton", label: "<PageSkeleton>", highlight: "added" },
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              children: [
+                {
+                  id: "page-skeleton",
+                  label: "<PageSkeleton>",
+                  highlight: "added",
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "outer-suspense",
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "fallback-visible", fallbackLabel: "<PageSkeleton />", promiseLabel: "fetchUser()" },
-          { id: "inner", label: "Inner <Suspense>", status: "idle", fallbackLabel: "<CommentsSkeleton />" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "fallback-visible",
+            fallbackLabel: "<PageSkeleton />",
+            promiseLabel: "fetchUser()",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "idle",
+            fallbackLabel: "<CommentsSkeleton />",
+          },
         ],
       },
       {
@@ -254,37 +355,74 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", children: [
-              { id: "page-skeleton", label: "<PageSkeleton>", highlight: "unchanged" },
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              children: [
+                {
+                  id: "page-skeleton",
+                  label: "<PageSkeleton>",
+                  highlight: "unchanged",
+                },
+              ],
+            },
           ],
         },
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "fallback-visible", fallbackLabel: "<PageSkeleton />", promiseLabel: "fetchUser() [pending]" },
-          { id: "inner", label: "Inner <Suspense>", status: "idle", fallbackLabel: "<CommentsSkeleton />" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "fallback-visible",
+            fallbackLabel: "<PageSkeleton />",
+            promiseLabel: "fetchUser() [pending]",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "idle",
+            fallbackLabel: "<CommentsSkeleton />",
+          },
         ],
       },
       {
         descriptionHtml:
-          'Header\'s promise resolves. React re-renders the outer boundary\'s children. <code>&lt;Header&gt;</code> renders successfully. Now React reaches the <span class="hl-api">inner boundary</span>.',
+          "Header's promise resolves. React re-renders the outer boundary's children. <code>&lt;Header&gt;</code> renders successfully. Now React reaches the <span class=\"hl-api\">inner boundary</span>.",
         activeLine: 5,
         doneLines: [1, 2, 3, 4],
         componentTree: {
           id: "app",
           label: "<App>",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", highlight: "active", children: [
-              { id: "header", label: "<Header>", highlight: "added" },
-              { id: "inner-suspense", label: "<Suspense>", highlight: "active", children: [
-                { id: "comments", label: "<Comments>" },
-              ]},
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              highlight: "active",
+              children: [
+                { id: "header", label: "<Header>", highlight: "added" },
+                {
+                  id: "inner-suspense",
+                  label: "<Suspense>",
+                  highlight: "active",
+                  children: [{ id: "comments", label: "<Comments>" }],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "inner-suspense",
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "resolved", fallbackLabel: "<PageSkeleton />" },
-          { id: "inner", label: "Inner <Suspense>", status: "idle", fallbackLabel: "<CommentsSkeleton />" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "resolved",
+            fallbackLabel: "<PageSkeleton />",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "idle",
+            fallbackLabel: "<CommentsSkeleton />",
+          },
         ],
       },
       {
@@ -296,18 +434,41 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "app",
           label: "<App>",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", children: [
-              { id: "header", label: "<Header>", highlight: "unchanged" },
-              { id: "inner-suspense", label: "<Suspense>", children: [
-                { id: "comments-skeleton", label: "<CommentsSkeleton>", highlight: "added" },
-              ]},
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              children: [
+                { id: "header", label: "<Header>", highlight: "unchanged" },
+                {
+                  id: "inner-suspense",
+                  label: "<Suspense>",
+                  children: [
+                    {
+                      id: "comments-skeleton",
+                      label: "<CommentsSkeleton>",
+                      highlight: "added",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "inner-suspense",
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "resolved", fallbackLabel: "<PageSkeleton />" },
-          { id: "inner", label: "Inner <Suspense>", status: "fallback-visible", fallbackLabel: "<CommentsSkeleton />", promiseLabel: "fetchComments()" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "resolved",
+            fallbackLabel: "<PageSkeleton />",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "fallback-visible",
+            fallbackLabel: "<CommentsSkeleton />",
+            promiseLabel: "fetchComments()",
+          },
         ],
       },
       {
@@ -320,17 +481,37 @@ export const EXAMPLES: SuspenseExample[] = [
           label: "<App>",
           highlight: "unchanged",
           children: [
-            { id: "outer-suspense", label: "<Suspense>", highlight: "unchanged", children: [
-              { id: "header", label: "<Header>", highlight: "unchanged" },
-              { id: "inner-suspense", label: "<Suspense>", highlight: "unchanged", children: [
-                { id: "comments", label: "<Comments>", highlight: "added" },
-              ]},
-            ]},
+            {
+              id: "outer-suspense",
+              label: "<Suspense>",
+              highlight: "unchanged",
+              children: [
+                { id: "header", label: "<Header>", highlight: "unchanged" },
+                {
+                  id: "inner-suspense",
+                  label: "<Suspense>",
+                  highlight: "unchanged",
+                  children: [
+                    { id: "comments", label: "<Comments>", highlight: "added" },
+                  ],
+                },
+              ],
+            },
           ],
         },
         boundaries: [
-          { id: "outer", label: "Outer <Suspense>", status: "resolved", fallbackLabel: "<PageSkeleton />" },
-          { id: "inner", label: "Inner <Suspense>", status: "resolved", fallbackLabel: "<CommentsSkeleton />" },
+          {
+            id: "outer",
+            label: "Outer <Suspense>",
+            status: "resolved",
+            fallbackLabel: "<PageSkeleton />",
+          },
+          {
+            id: "inner",
+            label: "Inner <Suspense>",
+            status: "resolved",
+            fallbackLabel: "<CommentsSkeleton />",
+          },
         ],
       },
     ],
@@ -346,7 +527,7 @@ export const EXAMPLES: SuspenseExample[] = [
     codeLines: [
       { num: 1, text: "function Dashboard() {" },
       { num: 2, text: "  return (" },
-      { num: 3, text: '    <Suspense fallback={<DashSkeleton />}>' },
+      { num: 3, text: "    <Suspense fallback={<DashSkeleton />}>" },
       { num: 4, text: "      <UserStats />   {/* fetches user data */}" },
       { num: 5, text: "      <RecentOrders /> {/* fetches order data */}" },
       { num: 6, text: "    </Suspense>" },
@@ -363,35 +544,59 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "dashboard",
           label: "<Dashboard>",
           children: [
-            { id: "suspense", label: "<Suspense>", highlight: "active", children: [
-              { id: "user-stats", label: "<UserStats>" },
-              { id: "recent-orders", label: "<RecentOrders>" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              highlight: "active",
+              children: [
+                { id: "user-stats", label: "<UserStats>" },
+                { id: "recent-orders", label: "<RecentOrders>" },
+              ],
+            },
           ],
         },
         activeNodeId: "suspense",
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "idle", fallbackLabel: "<DashSkeleton />" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "idle",
+            fallbackLabel: "<DashSkeleton />",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>&lt;UserStats&gt;</code> <span class="hl-loop">throws a Promise</span>. React records it but continues trying to render siblings to discover all pending data.',
+          '<code>&lt;UserStats&gt;</code> <span class="hl-loop">throws a Promise</span>. React records it and still renders the remaining siblings (React 19 does this right after committing the fallback) so that every pending request starts as early as possible.',
         activeLine: 4,
         doneLines: [1, 2, 3],
         componentTree: {
           id: "dashboard",
           label: "<Dashboard>",
           children: [
-            { id: "suspense", label: "<Suspense>", children: [
-              { id: "user-stats", label: "<UserStats>", highlight: "removed" },
-              { id: "recent-orders", label: "<RecentOrders>" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              children: [
+                {
+                  id: "user-stats",
+                  label: "<UserStats>",
+                  highlight: "removed",
+                },
+                { id: "recent-orders", label: "<RecentOrders>" },
+              ],
+            },
           ],
         },
         activeNodeId: "user-stats",
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "suspended", fallbackLabel: "<DashSkeleton />", promiseLabel: "fetchUser() [pending]" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "suspended",
+            fallbackLabel: "<DashSkeleton />",
+            promiseLabel: "fetchUser() [pending]",
+          },
         ],
       },
       {
@@ -403,14 +608,28 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "dashboard",
           label: "<Dashboard>",
           children: [
-            { id: "suspense", label: "<Suspense>", children: [
-              { id: "dash-skeleton", label: "<DashSkeleton>", highlight: "added" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              children: [
+                {
+                  id: "dash-skeleton",
+                  label: "<DashSkeleton>",
+                  highlight: "added",
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "suspense",
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "fallback-visible", fallbackLabel: "<DashSkeleton />", promiseLabel: "fetchUser() + fetchOrders() [pending]" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "fallback-visible",
+            fallbackLabel: "<DashSkeleton />",
+            promiseLabel: "fetchUser() + fetchOrders() [pending]",
+          },
         ],
       },
       {
@@ -422,13 +641,27 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "dashboard",
           label: "<Dashboard>",
           children: [
-            { id: "suspense", label: "<Suspense>", children: [
-              { id: "dash-skeleton", label: "<DashSkeleton>", highlight: "unchanged" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              children: [
+                {
+                  id: "dash-skeleton",
+                  label: "<DashSkeleton>",
+                  highlight: "unchanged",
+                },
+              ],
+            },
           ],
         },
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "fallback-visible", fallbackLabel: "<DashSkeleton />", promiseLabel: "fetchOrders() [still pending]" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "fallback-visible",
+            fallbackLabel: "<DashSkeleton />",
+            promiseLabel: "fetchOrders() [still pending]",
+          },
         ],
       },
       {
@@ -440,20 +673,34 @@ export const EXAMPLES: SuspenseExample[] = [
           id: "dashboard",
           label: "<Dashboard>",
           children: [
-            { id: "suspense", label: "<Suspense>", highlight: "active", children: [
-              { id: "user-stats", label: "<UserStats>", highlight: "added" },
-              { id: "recent-orders", label: "<RecentOrders>", highlight: "added" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              highlight: "active",
+              children: [
+                { id: "user-stats", label: "<UserStats>", highlight: "added" },
+                {
+                  id: "recent-orders",
+                  label: "<RecentOrders>",
+                  highlight: "added",
+                },
+              ],
+            },
           ],
         },
         activeNodeId: "suspense",
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "resolved", fallbackLabel: "<DashSkeleton />" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "resolved",
+            fallbackLabel: "<DashSkeleton />",
+          },
         ],
       },
       {
         descriptionHtml:
-          "Complete. Both siblings render at the same time, avoiding a staggered \"popcorn\" effect. This is a key benefit of Suspense over independent loading states.",
+          'Complete. Both siblings render at the same time, avoiding a staggered "popcorn" effect. This is a key benefit of Suspense over independent loading states.',
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         componentTree: {
@@ -461,14 +708,32 @@ export const EXAMPLES: SuspenseExample[] = [
           label: "<Dashboard>",
           highlight: "unchanged",
           children: [
-            { id: "suspense", label: "<Suspense>", highlight: "unchanged", children: [
-              { id: "user-stats", label: "<UserStats>", highlight: "unchanged" },
-              { id: "recent-orders", label: "<RecentOrders>", highlight: "unchanged" },
-            ]},
+            {
+              id: "suspense",
+              label: "<Suspense>",
+              highlight: "unchanged",
+              children: [
+                {
+                  id: "user-stats",
+                  label: "<UserStats>",
+                  highlight: "unchanged",
+                },
+                {
+                  id: "recent-orders",
+                  label: "<RecentOrders>",
+                  highlight: "unchanged",
+                },
+              ],
+            },
           ],
         },
         boundaries: [
-          { id: "b1", label: "<Suspense>", status: "resolved", fallbackLabel: "<DashSkeleton />" },
+          {
+            id: "b1",
+            label: "<Suspense>",
+            status: "resolved",
+            fallbackLabel: "<DashSkeleton />",
+          },
         ],
       },
     ],

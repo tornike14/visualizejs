@@ -65,7 +65,9 @@ export const TokenChips = ({
           )}
         >
           {showIndex && (
-            <span className="text-[9px] text-slate-500 tabular-nums">{index}</span>
+            <span className="text-[9px] text-slate-500 tabular-nums">
+              {index}
+            </span>
           )}
           <span className="whitespace-pre font-semibold">{chip.label}</span>
           {chip.value != null && (

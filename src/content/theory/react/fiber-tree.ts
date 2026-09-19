@@ -61,7 +61,8 @@ while (workInProgress !== null) {
       },
     },
     {
-      question: "Why did React move from a stack reconciler to a fiber reconciler?",
+      question:
+        "Why did React move from a stack reconciler to a fiber reconciler?",
       answer:
         "The stack reconciler processed the entire tree synchronously in one call, blocking the main thread. The fiber reconciler breaks work into units (fibers) that can be paused, prioritized, and resumed, enabling concurrent features like time-slicing and Suspense.",
     },
@@ -71,5 +72,11 @@ while (workInProgress !== null) {
         "child points to the fiber's first child. sibling points to the next sibling fiber. return points to the parent fiber. Together they form a linked-list representation of the tree that the work loop traverses without recursion.",
     },
   ],
-  relatedTopicIds: ["reconciliation", "hooks", "render-cycle", "execution-context", "heap-stack"],
+  relatedTopicIds: [
+    "reconciliation",
+    "hooks",
+    "render-cycle",
+    "execution-context",
+    "heap-stack",
+  ],
 };

@@ -1,6 +1,13 @@
 import { cn } from "@/lib/utils";
 
-export type MetricBarTone = "cyan" | "amber" | "green" | "violet" | "pink" | "rose" | "slate";
+export type MetricBarTone =
+  | "cyan"
+  | "amber"
+  | "green"
+  | "violet"
+  | "pink"
+  | "rose"
+  | "slate";
 
 export interface MetricBar {
   id: string;

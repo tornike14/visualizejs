@@ -56,7 +56,10 @@ export const StatePanels = ({ kind, step, flashes }: StatePanelsProps) => {
           bodyClassName="min-h-[5rem]"
           className={flash(flashes.lifetimes)}
         >
-          <MetricBars bars={step?.lifetimes ?? []} emptyLabel="no tokens issued" />
+          <MetricBars
+            bars={step?.lifetimes ?? []}
+            emptyLabel="no tokens issued"
+          />
         </NeonPanel>
         {messagesPanel}
         <NeonPanel

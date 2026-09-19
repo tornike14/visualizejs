@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type SvelteRunesKind = "signals" | "compiler" | "deep";
@@ -40,10 +40,7 @@ export interface DomNode {
   depth?: number;
 }
 
-export interface SvelteRunesStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface SvelteRunesStep extends BaseStep {
   signals: SignalNode[];
   dom: DomNode[];
   consoleOutput: string[];

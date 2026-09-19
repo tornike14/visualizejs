@@ -17,51 +17,6 @@ import { getAdjacentTopics } from "@/lib/topics";
 import { cn } from "@/lib/utils";
 import type { Topic } from "@/types";
 
-const SELECTOR_TOOLBAR_TOPIC_IDS = new Set([
-  "hoisting",
-  "promises",
-  "prototypal-inheritance",
-  "scope-chain",
-  "this-keyword",
-  "type-coercion",
-  "reference-value",
-  "heap-stack",
-  "garbage-collection",
-  "generators",
-  "virtual-dom",
-  "reconciliation",
-  "context-propagation",
-  "destructuring",
-  "spread-rest",
-  "fiber-tree",
-  "hooks",
-  "render-cycle",
-  "memoization",
-  "suspense",
-  "server-components",
-  "event-delegation",
-  "modules-imports",
-  "error-boundaries",
-  "use-effect-lifecycle",
-  "tokenization",
-  "embeddings",
-  "attention",
-  "next-token-prediction",
-  "backpropagation",
-  "http-request-lifecycle",
-  "database-indexing",
-  "caching-strategies",
-  "jwt-authentication",
-  "rate-limiting",
-  "vue-reactivity",
-  "svelte-runes",
-  "angular-change-detection",
-  "async-await",
-  "debounce-throttle",
-  "state-batching",
-  "concurrent-rendering",
-]);
-
 interface VisualizationPageShellProps {
   topic: Topic;
   children: ReactNode;
@@ -72,9 +27,7 @@ export const VisualizationPageShell = ({
   children,
 }: VisualizationPageShellProps) => {
   const category = CATEGORIES[topic.category];
-  const toolbarSkeletonVariant = SELECTOR_TOOLBAR_TOPIC_IDS.has(topic.id)
-    ? "selector"
-    : "simple";
+  const toolbarSkeletonVariant = topic.toolbar ?? "selector";
   const theory = getTheoryContent(topic.id);
   const relatedTopics = getRelatedTopicsFromTheory(topic.id);
   const structuredData = createTopicStructuredData(topic, theory?.summary);
@@ -114,7 +67,10 @@ export const VisualizationPageShell = ({
                 </h1>
                 <Badge
                   variant="outline"
-                  className={cn("text-[10px]", DIFFICULTY_COLORS[topic.difficulty])}
+                  className={cn(
+                    "text-[10px]",
+                    DIFFICULTY_COLORS[topic.difficulty],
+                  )}
                 >
                   {topic.difficulty}
                 </Badge>

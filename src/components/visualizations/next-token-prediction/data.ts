@@ -69,13 +69,27 @@ const rowsFrom = (
 const logitRows = (vocab: string[], logits: number[], map?: StatusMap) =>
   rowsFrom(vocab, logits, (v) => v.toFixed(1), map);
 
-const scaledRows = (vocab: string[], logits: number[], t: number, map?: StatusMap) =>
-  rowsFrom(vocab, logits.map((l) => l / t), fmt2, map);
+const scaledRows = (
+  vocab: string[],
+  logits: number[],
+  t: number,
+  map?: StatusMap,
+) =>
+  rowsFrom(
+    vocab,
+    logits.map((l) => l / t),
+    fmt2,
+    map,
+  );
 
 const expRows = (vocab: string[], exps: number[], map?: StatusMap) =>
   rowsFrom(vocab, exps, fmt2, map);
 
-const probRows = (vocab: string[], probs: number[], map?: StatusMap): CandidateRow[] =>
+const probRows = (
+  vocab: string[],
+  probs: number[],
+  map?: StatusMap,
+): CandidateRow[] =>
   vocab.map((token, i) => ({
     id: `c${i}`,
     token,
@@ -146,7 +160,11 @@ const sequence = (
   generated: string[],
   highlightLast = false,
 ): TokenChip[] => [
-  ...prompt.map((label, i) => ({ id: `p${i}`, label, tone: "neutral" as const })),
+  ...prompt.map((label, i) => ({
+    id: `p${i}`,
+    label,
+    tone: "neutral" as const,
+  })),
   ...generated.map((label, i) => ({
     id: `g${i}`,
     label,
@@ -195,7 +213,12 @@ const settingsTable = (rows: SettingRow[]): DetailTable => ({
 const cumulativeTable = (
   vocab: string[],
   probs: number[],
-  opts: { showCum?: boolean; kept?: string[]; after?: number[]; chosen?: string } = {},
+  opts: {
+    showCum?: boolean;
+    kept?: string[];
+    after?: number[];
+    chosen?: string;
+  } = {},
 ): DetailTable => {
   let running = 0;
   return {
@@ -235,6 +258,8 @@ const H_1_HOT = entropyBits(PROBS_1_HOT);
 
 const SOFTMAX_STEPS: NextTokenStep[] = [
   step({
+    simpleHtml:
+      "The prompt <code>The capital of France is</code> is chopped into 5 pieces and turned into numbers. The model only ever sees this list of numbers, and the whole loop below is about adding to it.",
     descriptionHtml:
       'The prompt is split into 5 tokens and mapped to integer ids. The model never sees text, only this <span class="hl-api">id sequence</span>, which is the state the whole loop mutates.',
     activeLine: 1,
@@ -247,8 +272,10 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "The model reads all 5 pieces at once and works out a description for each one. Only the last description matters now, because it is the one that decides what comes next.",
     descriptionHtml:
-      'The loop starts. A forward pass embeds all 5 positions and runs them through every transformer block. Each position ends up with a hidden vector, but only the <strong>last one</strong> matters for choosing what comes next.',
+      "The loop starts. A forward pass embeds all 5 positions and runs them through every transformer block. Each position ends up with a hidden vector, but only the <strong>last one</strong> matters for choosing what comes next.",
     activeLine: 3,
     doneLines: [1, 2],
     pipeline: stagesAt(FORWARD_STAGES, 2),
@@ -259,6 +286,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "That last description is compared with every word the model knows, giving each word a raw score. A real model scores tens of thousands of words; the panel shows the 6 that matter here.",
     descriptionHtml:
       'The <span class="hl-api">lm head</span> multiplies the last hidden vector by the output embedding matrix, producing one raw score (a logit) per vocabulary entry. A real vocabulary has tens of thousands of rows; the panel shows the 6 that matter here.',
     activeLine: 3,
@@ -271,6 +300,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "Turning scores into odds, part one: make every score positive and stretch the gaps. A lead of 3.1 points for <code>Paris</code> over <code>a</code> becomes a 22 to 1 ratio.",
     descriptionHtml:
       'Softmax, first half: exponentiate each logit. <code>exp</code> turns additive gaps into multiplicative ratios, so the 3.1 point lead of <code>" Paris"</code> over <code>" a"</code> becomes a 22x ratio. Values are rounded to two decimals.',
     activeLine: 9,
@@ -283,8 +314,9 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
-    descriptionHtml:
-      `Softmax, second half: divide every exp value by their sum Z = ${fmt2(Z_1)}. The result is a <span class="hl-task">probability distribution</span>: all entries are positive and the exact values sum to 1 (1.00 after rounding).`,
+    simpleHtml:
+      "Part two: divide each value by the total so they add up to 1. Now they are probabilities. <code>Paris</code> holds 88% of the chance, the other five share the rest.",
+    descriptionHtml: `Softmax, second half: divide every exp value by their sum Z = ${fmt2(Z_1)}. The result is a <span class="hl-task">probability distribution</span>: all entries are positive and the exact values sum to 1 (1.00 after rounding).`,
     activeLine: 10,
     doneLines: [1, 2, 3, 8, 9],
     pipeline: stagesAt(FORWARD_STAGES, 4),
@@ -295,6 +327,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "Greedy means always take the most likely word. <code>Paris</code> wins at 0.88. Nothing random happens, so the same prompt always gives the same answer, and the other 12% of the odds are thrown away.",
     descriptionHtml:
       'Greedy decoding takes the <span class="hl-task">argmax</span>: <code>" Paris"</code> at 0.88. Nothing random happens here, so the same prompt always yields the same token. The other 5 candidates are discarded, even though together they hold 12% of the mass.',
     activeLine: 5,
@@ -307,6 +341,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "The chosen word is added to the end of the list. The model's own output becomes part of its next input, which is why this is called generating one word at a time.",
     descriptionHtml:
       'The chosen id is appended to the sequence. This is the <span class="hl-loop">autoregressive</span> part: the output of one step becomes input for the next, so the model conditions on its own predictions.',
     activeLine: 6,
@@ -319,6 +355,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris"], true),
   }),
   step({
+    simpleHtml:
+      "Round two. The model now reads 6 pieces. A shortcut lets it reuse its work on the first 5, so only the new word <code>Paris</code> needs to be processed properly.",
     descriptionHtml:
       'Second iteration. The model runs again on 6 tokens. With a <span class="hl-api">KV cache</span> the keys and values of the first 5 positions are reused, so only the new <code>" Paris"</code> position is computed through the blocks and attends over the cached ones.',
     activeLine: 3,
@@ -331,6 +369,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris"]),
   }),
   step({
+    simpleHtml:
+      "A fresh set of scores for the new last position. The candidates changed because the sentence changed: after <code>Paris</code> the model expects a full stop or a comma, not another city.",
     descriptionHtml:
       'The lm head emits a fresh set of logits for the new last position. The candidates are different now because the context changed: after <code>" Paris"</code> the model expects punctuation or a conjunction, not another city.',
     activeLine: 3,
@@ -343,8 +383,9 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris"]),
   }),
   step({
-    descriptionHtml:
-      `Softmax again: exponentiate, sum to Z = ${fmt2(Z_2)}, divide. <code>"."</code> takes 0.74 of the mass and <code>","</code> 0.12. Rounded to two decimals the column sums to 1.00.`,
+    simpleHtml:
+      "Same conversion to probabilities. <code>.</code> gets 74% and <code>,</code> gets 12%. The column adds up to 1 again.",
+    descriptionHtml: `Softmax again: exponentiate, sum to Z = ${fmt2(Z_2)}, divide. <code>"."</code> takes 0.74 of the mass and <code>","</code> 0.12. Rounded to two decimals the column sums to 1.00.`,
     activeLine: 4,
     doneLines: [1, 2, 3, 5, 6, 8, 9, 10],
     pipeline: stagesAt(FORWARD_STAGES, 4),
@@ -355,6 +396,8 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris"]),
   }),
   step({
+    simpleHtml:
+      "The most likely word is <code>.</code>, so it is added. The sentence now reads <code>The capital of France is Paris.</code> Greedy gave the same path it always would: same prompt, same two words, every time.",
     descriptionHtml:
       'Argmax picks <code>"."</code> and it is appended. The sequence now reads <code>The capital of France is Paris.</code> Greedy decoding gave a deterministic path: same prompt, same weights, same two tokens every run.',
     activeLine: 6,
@@ -367,8 +410,10 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris", "."], true),
   }),
   step({
+    simpleHtml:
+      "The loop stops after a set number of words, or sooner if the model picks its special end marker. That is all generation is: one full read of the text per new word, each time scoring the entire dictionary.",
     descriptionHtml:
-      'The loop stops after <code>max_new_tokens</code> iterations, or earlier if the picked id is the end-of-sequence token. Generation is just this loop: one full forward pass per emitted token, each producing a distribution over the entire vocabulary.',
+      "The loop stops after <code>max_new_tokens</code> iterations, or earlier if the picked id is the end-of-sequence token. Generation is just this loop: one full forward pass per emitted token, each producing a distribution over the entire vocabulary.",
     activeLine: 2,
     doneLines: [1, 3, 4, 5, 6, 8, 9, 10],
     pipeline: stagesAt(FORWARD_STAGES, 6),
@@ -384,15 +429,37 @@ const SOFTMAX_STEPS: NextTokenStep[] = [
 /* Example 2: temperature                                              */
 /* ------------------------------------------------------------------ */
 
-const ROW_COLD: SettingRow = { t: "0.5", top: fmt2(PROBS_1_COLD[0]), entropy: `${fmt2(H_1_COLD)} b`, pick: '" Paris"' };
-const ROW_ONE: SettingRow = { t: "1.0", top: fmt2(PROBS_1[0]), entropy: `${fmt2(H_1)} b`, pick: '" a"' };
-const ROW_HOT: SettingRow = { t: "2.0", top: fmt2(PROBS_1_HOT[0]), entropy: `${fmt2(H_1_HOT)} b`, pick: '" Lyon"' };
-const ROW_ZERO: SettingRow = { t: "0", top: "1.00", entropy: "0.00 b", pick: '" Paris"' };
+const ROW_COLD: SettingRow = {
+  t: "0.5",
+  top: fmt2(PROBS_1_COLD[0]),
+  entropy: `${fmt2(H_1_COLD)} b`,
+  pick: '" Paris"',
+};
+const ROW_ONE: SettingRow = {
+  t: "1.0",
+  top: fmt2(PROBS_1[0]),
+  entropy: `${fmt2(H_1)} b`,
+  pick: '" a"',
+};
+const ROW_HOT: SettingRow = {
+  t: "2.0",
+  top: fmt2(PROBS_1_HOT[0]),
+  entropy: `${fmt2(H_1_HOT)} b`,
+  pick: '" Lyon"',
+};
+const ROW_ZERO: SettingRow = {
+  t: "0",
+  top: "1.00",
+  entropy: "0.00 b",
+  pick: '" Paris"',
+};
 
 const TEMPERATURE_STEPS: NextTokenStep[] = [
   step({
+    simpleHtml:
+      "Same prompt, same model, same 6 raw scores as before. Temperature does not change the model at all; it is a knob turned on the scores just before they become probabilities.",
     descriptionHtml:
-      'Same prompt, same forward pass, same 6 logits as before. Temperature does not touch the model at all; it is a knob applied to these scores <strong>after</strong> the lm head and before softmax.',
+      "Same prompt, same forward pass, same 6 logits as before. Temperature does not touch the model at all; it is a knob applied to these scores <strong>after</strong> the lm head and before softmax.",
     activeLine: 1,
     doneLines: [],
     pipeline: stagesAt(TEMP_STAGES, 0),
@@ -403,6 +470,8 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "Temperature 0.5 doubles every score. The order stays the same, but the lead of <code>Paris</code> over <code>a</code> grows from 3.1 to 6.2, and the conversion will turn that into a much bigger gap in the odds.",
     descriptionHtml:
       '<code>T = 0.5</code>: every logit is divided by 0.5, which doubles it. The ordering is unchanged, but the gap between <code>" Paris"</code> and <code>" a"</code> grows from 3.1 to 6.2, and softmax will turn that into a much bigger ratio.',
     activeLine: 6,
@@ -415,8 +484,9 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
-    descriptionHtml:
-      `Softmax of the doubled logits: <code>" Paris"</code> gets ${fmt2(PROBS_1_COLD[0])} and everything else rounds to 0.00 at two decimals (<code>" a"</code> is really 0.002). Entropy drops to ${fmt2(H_1_COLD)} bits. Low temperature <span class="hl-task">sharpens</span> the distribution.`,
+    simpleHtml:
+      "With the doubled scores, <code>Paris</code> takes essentially 100% and everything else rounds to 0. Low temperature makes the model very sure of itself.",
+    descriptionHtml: `Softmax of the doubled logits: <code>" Paris"</code> gets ${fmt2(PROBS_1_COLD[0])} and everything else rounds to 0.00 at two decimals (<code>" a"</code> is really 0.002). Entropy drops to ${fmt2(H_1_COLD)} bits. Low temperature <span class="hl-task">sharpens</span> the distribution.`,
     activeLine: 6,
     doneLines: [1, 3, 4, 9],
     pipeline: stagesAt(TEMP_STAGES, 2),
@@ -427,6 +497,8 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "Picking a word at random with these odds gives <code>Paris</code> about 996 times out of 1000. It is almost greedy, but not quite: a rare run can still pick something else.",
     descriptionHtml:
       'A multinomial draw at T = 0.5 picks <code>" Paris"</code> in about 996 of 1000 runs. This is close to greedy but not identical: the tail still has nonzero mass, so a rare run can still pick something else.',
     activeLine: 7,
@@ -439,8 +511,9 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Paris"], true),
   }),
   step({
-    descriptionHtml:
-      `<code>T = 1.0</code> divides by 1, so the logits and the resulting probabilities are exactly what the model learned: <code>" Paris"</code> at ${fmt2(PROBS_1[0])}, entropy ${fmt2(H_1)} bits. This is the untouched distribution.`,
+    simpleHtml:
+      "Temperature 1.0 leaves the scores untouched, so the odds are exactly what the model learned: <code>Paris</code> at 88%.",
+    descriptionHtml: `<code>T = 1.0</code> divides by 1, so the logits and the resulting probabilities are exactly what the model learned: <code>" Paris"</code> at ${fmt2(PROBS_1[0])}, entropy ${fmt2(H_1)} bits. This is the untouched distribution.`,
     activeLine: 6,
     doneLines: [1, 3, 4, 7, 9],
     pipeline: stagesAt(TEMP_STAGES, 2),
@@ -451,6 +524,8 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "Now the dice roll. Imagine a line from 0 to 1 with each word owning a slice as wide as its odds. A random number 0.91 lands just past <code>Paris</code> and <code>Lyon</code>, inside <code>a</code>. A 4% event happened, which is why answers vary from run to run.",
     descriptionHtml:
       'Sampling walks the cumulative sum with a uniform random <code>u</code>. Here <code>u = 0.91</code> falls past <code>" Paris"</code> (0.88) and <code>" Lyon"</code> (0.90) into <code>" a"</code>. A 4% event happened, which is why sampled outputs <span class="hl-loop">differ between runs</span>.',
     activeLine: 7,
@@ -463,6 +538,8 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" a"], true),
   }),
   step({
+    simpleHtml:
+      "Temperature 2.0 halves every score. The lead of <code>Paris</code> shrinks from 3.1 to 1.55. The order never changes; temperature only squeezes or stretches the gaps.",
     descriptionHtml:
       '<code>T = 2.0</code> halves every logit. The lead of <code>" Paris"</code> shrinks from 3.1 to 1.55 points over <code>" a"</code>. Again the ranking is preserved; temperature can never reorder candidates, only compress or stretch the gaps.',
     activeLine: 6,
@@ -475,8 +552,9 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
-    descriptionHtml:
-      `Softmax of the halved logits <span class="hl-task">flattens</span> the distribution: <code>" Paris"</code> falls to ${fmt2(PROBS_1_HOT[0])}, <code>" Berlin"</code> rises to ${fmt2(PROBS_1_HOT[5])}, and entropy climbs to ${fmt2(H_1_HOT)} bits. More variety, more wrong answers.`,
+    simpleHtml:
+      "With the halved scores the odds flatten out: <code>Paris</code> drops to 56% and <code>Berlin</code> rises to 5%. More variety, and more wrong answers.",
+    descriptionHtml: `Softmax of the halved logits <span class="hl-task">flattens</span> the distribution: <code>" Paris"</code> falls to ${fmt2(PROBS_1_HOT[0])}, <code>" Berlin"</code> rises to ${fmt2(PROBS_1_HOT[5])}, and entropy climbs to ${fmt2(H_1_HOT)} bits. More variety, more wrong answers.`,
     activeLine: 6,
     doneLines: [1, 3, 4, 7, 9, 10],
     pipeline: stagesAt(TEMP_STAGES, 2),
@@ -487,6 +565,8 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, []),
   }),
   step({
+    simpleHtml:
+      "The dice roll 0.62 lands past <code>Paris</code> (56%) and inside <code>Lyon</code>. At temperature 2 a factual slip like this happens about once in 12 runs. The model knew the answer; the random pick ignored it.",
     descriptionHtml:
       'A draw with <code>u = 0.62</code> passes <code>" Paris"</code> (cumulative 0.56) and lands on <code>" Lyon"</code> (cumulative 0.64). At T = 2 a factual error like this happens roughly 1 run in 12; the model still knew the answer, the sampler ignored it.',
     activeLine: 11,
@@ -499,20 +579,29 @@ const TEMPERATURE_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_1, [" Lyon"], true),
   }),
   step({
+    simpleHtml:
+      "Temperature 0 is special: you cannot divide by zero, so the program skips the odds entirely and takes the top word. That is greedy decoding, always the same answer, the extreme that 0.5 was heading towards.",
     descriptionHtml:
-      '<code>T = 0</code> is a special case: dividing by zero is undefined, so implementations skip softmax and take the argmax directly. That is greedy decoding, deterministic with zero entropy, the limit that T = 0.5 was approaching.',
+      "<code>T = 0</code> is a special case: dividing by zero is undefined, so implementations skip softmax and take the argmax directly. That is greedy decoding, deterministic with zero entropy, the limit that T = 0.5 was approaching.",
     activeLine: 5,
     doneLines: [1, 3, 4, 6, 7, 9, 10, 11],
     pipeline: stagesAt(TEMP_STAGES, 3),
     candidateMode: "prob",
     candidates: probRows(VOCAB_1, PROBS_1, { " Paris": "chosen" }),
     candidateNote: "T = 0: argmax, no draw",
-    table: settingsTable([ROW_COLD, ROW_ONE, ROW_HOT, { ...ROW_ZERO, tone: "chosen" }]),
+    table: settingsTable([
+      ROW_COLD,
+      ROW_ONE,
+      ROW_HOT,
+      { ...ROW_ZERO, tone: "chosen" },
+    ]),
     sequence: sequence(PROMPT_1, [" Paris"], true),
   }),
   step({
+    simpleHtml:
+      "Four runs, one model, four settings. Temperature trades predictability for variety. Around 0.7 to 1.0 is typical for chat; 0 for anything that must come out the same every time.",
     descriptionHtml:
-      'Four runs, one model, four settings. Temperature trades determinism for diversity by rescaling logits before softmax. Values near 0.7 to 1.0 are typical for chat; 0 for anything that must be reproducible.',
+      "Four runs, one model, four settings. Temperature trades determinism for diversity by rescaling logits before softmax. Values near 0.7 to 1.0 are typical for chat; 0 for anything that must be reproducible.",
     activeLine: null,
     doneLines: [1, 3, 4, 5, 6, 7, 9, 10, 11],
     pipeline: stagesAt(TEMP_STAGES, 5),
@@ -538,8 +627,9 @@ const PROBS_3_TOPP = PROBS_3.map((p, i) => (i < 4 ? p / TOPP_Z : 0));
 
 const TRUNCATION_STEPS: NextTokenStep[] = [
   step({
-    descriptionHtml:
-      `A new prompt with a flatter distribution: no single token dominates. <code>" sunny"</code> leads with ${fmt2(PROBS_3[0])} but the top three together hold only ${fmt2(PROBS_3[0] + PROBS_3[1] + PROBS_3[2])}. Sampling from this raw distribution would pick the two tail tokens 9% of the time.`,
+    simpleHtml:
+      "A new prompt where no word is a clear winner. <code>sunny</code> leads with 31%, but the top three together only reach 78%. Rolling the dice on these odds would pick one of the two unlikely words 9% of the time.",
+    descriptionHtml: `A new prompt with a flatter distribution: no single token dominates. <code>" sunny"</code> leads with ${fmt2(PROBS_3[0])} but the top three together hold only ${fmt2(PROBS_3[0] + PROBS_3[1] + PROBS_3[2])}. Sampling from this raw distribution would pick the two tail tokens 9% of the time.`,
     activeLine: 1,
     doneLines: [],
     pipeline: stagesAt(TRUNC_STAGES, 0),
@@ -550,20 +640,27 @@ const TRUNCATION_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_3, []),
   }),
   step({
+    simpleHtml:
+      "Top-k with k = 3 keeps the 3 most likely words and no more. The count is fixed no matter how the odds are spread, which is its weakness.",
     descriptionHtml:
       '<span class="hl-api">Top-k</span> with <code>k = 3</code> sorts the probabilities and marks the 3 largest. The count is fixed no matter how the mass is spread, which is the weakness of this method.',
     activeLine: 4,
     doneLines: [1, 3],
     pipeline: stagesAt(TRUNC_STAGES, 1),
     candidateMode: "prob",
-    candidates: probRows(VOCAB_3, PROBS_3, { " sunny": "kept", " cold": "kept", " nice": "kept" }),
+    candidates: probRows(VOCAB_3, PROBS_3, {
+      " sunny": "kept",
+      " cold": "kept",
+      " nice": "kept",
+    }),
     candidateNote: "k = 3 candidates selected",
     table: cumulativeTable(VOCAB_3, PROBS_3, { kept: TOPK_KEEP }),
     sequence: sequence(PROMPT_3, []),
   }),
   step({
-    descriptionHtml:
-      `Everything outside the top 3 is set to zero. The kept probabilities now sum to ${fmt2(TOPK_Z)}, so the result is no longer a valid distribution.`,
+    simpleHtml:
+      "Everything outside the top 3 is set to zero. The survivors add up to only 78%, so the odds are no longer complete.",
+    descriptionHtml: `Everything outside the top 3 is set to zero. The kept probabilities now sum to ${fmt2(TOPK_Z)}, so the result is no longer a valid distribution.`,
     activeLine: 5,
     doneLines: [1, 3, 4],
     pipeline: stagesAt(TRUNC_STAGES, 1),
@@ -574,18 +671,24 @@ const TRUNCATION_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_3, []),
   }),
   step({
-    descriptionHtml:
-      `Dividing the survivors by ${fmt2(TOPK_Z)} <span class="hl-task">renormalizes</span> them: ${fmt2(PROBS_3_TOPK[0])}, ${fmt2(PROBS_3_TOPK[1])}, ${fmt2(PROBS_3_TOPK[2])}. Their relative odds are unchanged; the tail's mass was redistributed proportionally.`,
+    simpleHtml:
+      "Divide the survivors by 0.78 so they add up to 1 again: <code>0.40, 0.33, 0.27</code>. The gaps between them are the same as before; the missing 22% was shared out in proportion.",
+    descriptionHtml: `Dividing the survivors by ${fmt2(TOPK_Z)} <span class="hl-task">renormalizes</span> them: ${fmt2(PROBS_3_TOPK[0])}, ${fmt2(PROBS_3_TOPK[1])}, ${fmt2(PROBS_3_TOPK[2])}. Their relative odds are unchanged; the tail's mass was redistributed proportionally.`,
     activeLine: 6,
     doneLines: [1, 3, 4, 5],
     pipeline: stagesAt(TRUNC_STAGES, 3),
     candidateMode: "prob",
     candidates: truncatedRows(VOCAB_3, PROBS_3_TOPK, TOPK_KEEP),
     candidateNote: "sum = 1.00 after top-k renormalization",
-    table: cumulativeTable(VOCAB_3, PROBS_3, { kept: TOPK_KEEP, after: PROBS_3_TOPK }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      kept: TOPK_KEEP,
+      after: PROBS_3_TOPK,
+    }),
     sequence: sequence(PROMPT_3, []),
   }),
   step({
+    simpleHtml:
+      "Top-p, also called nucleus sampling, starts over from the full odds and sorts them from most to least likely. Instead of a fixed count, it keeps just enough words to cover a target share.",
     descriptionHtml:
       '<span class="hl-api">Top-p</span> (nucleus sampling) starts over from the full distribution and sorts it in descending order. Instead of a fixed count it will keep the smallest prefix whose mass reaches <code>p</code>.',
     activeLine: 9,
@@ -598,8 +701,10 @@ const TRUNCATION_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_3, []),
   }),
   step({
+    simpleHtml:
+      "Add the odds up as you go down the sorted list: <code>0.31, 0.57, 0.78, 0.91, 0.97, 1.00</code>. Reading down shows how many words it takes to cover any target.",
     descriptionHtml:
-      'The cumulative column is a running sum down the sorted list: 0.31, 0.57, 0.78, 0.91, 0.97, 1.00. Reading it top down shows how many tokens are needed to cover any target mass.',
+      "The cumulative column is a running sum down the sorted list: 0.31, 0.57, 0.78, 0.91, 0.97, 1.00. Reading it top down shows how many tokens are needed to cover any target mass.",
     activeLine: 10,
     doneLines: [1, 3, 4, 5, 6, 8, 9],
     pipeline: stagesAt(TRUNC_STAGES, 2),
@@ -610,42 +715,67 @@ const TRUNCATION_STEPS: NextTokenStep[] = [
     sequence: sequence(PROMPT_3, []),
   }),
   step({
+    simpleHtml:
+      "With a target of 0.9, the running total first reaches 0.9 at <code>going</code> (0.91), so 4 words are kept and <code>not</code> and <code>a</code> are cut. On the earlier Paris prompt, where one word dominated, the same target would have kept only 2.",
     descriptionHtml:
       'With <code>p = 0.9</code> the first row whose cumulative value reaches 0.9 is <code>" going"</code> at 0.91, so 4 tokens are kept and <code>" not"</code> and <code>" a"</code> are cut. Top-k kept 3 here; on the peaked Paris distribution top-p 0.9 would keep only 2.',
     activeLine: 11,
     doneLines: [1, 3, 4, 5, 6, 8, 9, 10],
     pipeline: stagesAt(TRUNC_STAGES, 2),
     candidateMode: "prob",
-    candidates: probRows(VOCAB_3, PROBS_3, { " sunny": "kept", " cold": "kept", " nice": "kept", " going": "kept", " not": "dropped", " a": "dropped" }),
+    candidates: probRows(VOCAB_3, PROBS_3, {
+      " sunny": "kept",
+      " cold": "kept",
+      " nice": "kept",
+      " going": "kept",
+      " not": "dropped",
+      " a": "dropped",
+    }),
     candidateNote: "nucleus = 4 tokens with cumulative 0.91 >= 0.9",
-    table: cumulativeTable(VOCAB_3, PROBS_3, { showCum: true, kept: TOPP_KEEP }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      showCum: true,
+      kept: TOPP_KEEP,
+    }),
     sequence: sequence(PROMPT_3, []),
   }),
   step({
-    descriptionHtml:
-      `The two dropped tokens are zeroed and the nucleus is divided by its mass ${fmt2(TOPP_Z)}. New values: ${fmt2(PROBS_3_TOPP[0])}, ${fmt2(PROBS_3_TOPP[1])}, ${fmt2(PROBS_3_TOPP[2])}, ${fmt2(PROBS_3_TOPP[3])}. The 9% that lived in the tail is gone.`,
+    simpleHtml:
+      "The two cut words are zeroed and the rest are rescaled to add up to 1: <code>0.35, 0.28, 0.23, 0.14</code>. The 9% that lived in the unlikely tail is gone.",
+    descriptionHtml: `The two dropped tokens are zeroed and the nucleus is divided by its mass ${fmt2(TOPP_Z)}. New values: ${fmt2(PROBS_3_TOPP[0])}, ${fmt2(PROBS_3_TOPP[1])}, ${fmt2(PROBS_3_TOPP[2])}, ${fmt2(PROBS_3_TOPP[3])}. The 9% that lived in the tail is gone.`,
     activeLine: 13,
     doneLines: [1, 3, 4, 5, 6, 8, 9, 10, 11, 12],
     pipeline: stagesAt(TRUNC_STAGES, 3),
     candidateMode: "prob",
     candidates: truncatedRows(VOCAB_3, PROBS_3_TOPP, TOPP_KEEP),
     candidateNote: "sum = 1.00 after top-p renormalization",
-    table: cumulativeTable(VOCAB_3, PROBS_3, { showCum: true, kept: TOPP_KEEP, after: PROBS_3_TOPP }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      showCum: true,
+      kept: TOPP_KEEP,
+      after: PROBS_3_TOPP,
+    }),
     sequence: sequence(PROMPT_3, []),
   }),
   step({
-    descriptionHtml:
-      `One multinomial draw from the truncated distribution. <code>u = 0.62</code> passes <code>" sunny"</code> (cumulative ${fmt2(PROBS_3_TOPP[0])}) and stops inside <code>" cold"</code> (cumulative ${fmt2(PROBS_3_TOPP[0] + PROBS_3_TOPP[1])}). Not the top token, but a plausible one.`,
+    simpleHtml:
+      "One dice roll on the trimmed odds. 0.62 passes <code>sunny</code> (0.35) and stops inside <code>cold</code> (0.63). Not the top word, but a reasonable one.",
+    descriptionHtml: `One multinomial draw from the truncated distribution. <code>u = 0.62</code> passes <code>" sunny"</code> (cumulative ${fmt2(PROBS_3_TOPP[0])}) and stops inside <code>" cold"</code> (cumulative ${fmt2(PROBS_3_TOPP[0] + PROBS_3_TOPP[1])}). Not the top token, but a plausible one.`,
     activeLine: 15,
     doneLines: [1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13],
     pipeline: stagesAt(TRUNC_STAGES, 4),
     candidateMode: "prob",
     candidates: truncatedRows(VOCAB_3, PROBS_3_TOPP, TOPP_KEEP, " cold"),
     candidateNote: 'drew u = 0.62, landed on " cold"',
-    table: cumulativeTable(VOCAB_3, PROBS_3, { showCum: true, kept: TOPP_KEEP, after: PROBS_3_TOPP, chosen: " cold" }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      showCum: true,
+      kept: TOPP_KEEP,
+      after: PROBS_3_TOPP,
+      chosen: " cold",
+    }),
     sequence: sequence(PROMPT_3, []),
   }),
   step({
+    simpleHtml:
+      "<code>cold</code> is added and the loop goes on. Another run would roll differently and might pick <code>sunny</code> or <code>nice</code>. Trimming limits which words are possible; it does not remove the randomness.",
     descriptionHtml:
       '<code>" cold"</code> is appended and the loop continues. Another run would draw a different <code>u</code> and could return <code>" sunny"</code> or <code>" nice"</code>; truncation only bounds the set of outcomes, it does not remove randomness.',
     activeLine: 15,
@@ -654,19 +784,33 @@ const TRUNCATION_STEPS: NextTokenStep[] = [
     candidateMode: "prob",
     candidates: truncatedRows(VOCAB_3, PROBS_3_TOPP, TOPP_KEEP, " cold"),
     candidateNote: 'appended " cold"',
-    table: cumulativeTable(VOCAB_3, PROBS_3, { showCum: true, kept: TOPP_KEEP, after: PROBS_3_TOPP, chosen: " cold" }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      showCum: true,
+      kept: TOPP_KEEP,
+      after: PROBS_3_TOPP,
+      chosen: " cold",
+    }),
     sequence: sequence(PROMPT_3, [" cold"], true),
   }),
   step({
+    simpleHtml:
+      "Top-k keeps a fixed number of options; top-p keeps as many as the model's confidence justifies, so it adapts between confident and uncertain moments. Real systems usually apply temperature first, then top-k and top-p, then roll.",
     descriptionHtml:
-      'Top-k keeps a fixed number of candidates; top-p keeps a variable number sized by confidence, which adapts between peaked and flat steps. Production samplers usually apply temperature first, then top-k and top-p, then draw.',
+      "Top-k keeps a fixed number of candidates; top-p keeps a variable number sized by confidence, which adapts between peaked and flat steps. Production samplers usually apply temperature first, then top-k and top-p, then draw.",
     activeLine: null,
     doneLines: [1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 15],
     pipeline: stagesAt(TRUNC_STAGES, 5),
     candidateMode: "prob",
-    candidates: probRows(VOCAB_3, PROBS_3, { " not": "dropped", " a": "dropped" }),
+    candidates: probRows(VOCAB_3, PROBS_3, {
+      " not": "dropped",
+      " a": "dropped",
+    }),
     candidateNote: "original distribution, tail marked for reference",
-    table: cumulativeTable(VOCAB_3, PROBS_3, { showCum: true, kept: TOPP_KEEP, after: PROBS_3_TOPP }),
+    table: cumulativeTable(VOCAB_3, PROBS_3, {
+      showCum: true,
+      kept: TOPP_KEEP,
+      after: PROBS_3_TOPP,
+    }),
     sequence: sequence(PROMPT_3, [" cold"]),
   }),
 ];
@@ -692,7 +836,10 @@ export const EXAMPLES: NextTokenExample[] = [
       { num: 6, text: "    ids.append(next_id)" },
       { num: 7, text: "" },
       { num: 8, text: "def softmax(z):" },
-      { num: 9, text: "    e = exp(z - max(z))          # shift for stability" },
+      {
+        num: 9,
+        text: "    e = exp(z - max(z))          # shift for stability",
+      },
       { num: 10, text: "    return e / e.sum()" },
     ],
     steps: SOFTMAX_STEPS,

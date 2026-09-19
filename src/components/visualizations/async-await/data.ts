@@ -1,4 +1,9 @@
-import type { AsyncAwaitExample, AsyncFnState, TimelineBar, TimerItem } from "./types";
+import type {
+  AsyncAwaitExample,
+  AsyncFnState,
+  TimelineBar,
+  TimerItem,
+} from "./types";
 
 const SCRIPT = "<script>";
 
@@ -31,13 +36,21 @@ const NO_TIMELINE: TimelineBar[] = [];
 
 /* ── Example 1: await yields to the caller ── */
 
-const runPending = (status: AsyncFnState["status"], suspendedAt: number | null = null) =>
-  fn("run", "run()", status, { name: "P1", state: "pending", value: "" }, suspendedAt);
+const runPending = (
+  status: AsyncFnState["status"],
+  suspendedAt: number | null = null,
+) =>
+  fn(
+    "run",
+    "run()",
+    status,
+    { name: "P1", state: "pending", value: "" },
+    suspendedAt,
+  );
 
 const ORDER_STEPS: AsyncAwaitExample["steps"] = [
   {
-    descriptionHtml:
-      `The script starts on the <span class="hl-stack">call stack</span> and <code>console.log('A')</code> runs synchronously. <code>run</code> is hoisted, but nothing inside it executes until it is called.`,
+    descriptionHtml: `The script starts on the <span class="hl-stack">call stack</span> and <code>console.log('A')</code> runs synchronously. <code>run</code> is hoisted, but nothing inside it executes until it is called.`,
     activeLine: 1,
     doneLines: [],
     stack: [SCRIPT, "console.log('A')"],
@@ -49,8 +62,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A"],
   },
   {
-    descriptionHtml:
-      `<code>run()</code> is called. Calling an async function creates its result promise <strong>P1</strong> up front, then runs the body <span class="hl-stack">synchronously</span> on the same stack until the first <code>await</code>.`,
+    descriptionHtml: `<code>run()</code> is called. Calling an async function creates its result promise <strong>P1</strong> up front, then runs the body <span class="hl-stack">synchronously</span> on the same stack until the first <code>await</code>.`,
     activeLine: 7,
     doneLines: [1, 2],
     stack: [SCRIPT, "run()"],
@@ -62,8 +74,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A"],
   },
   {
-    descriptionHtml:
-      `<code>console.log('B')</code> executes inside <code>run</code>. There has been no yield yet, so B prints before the caller gets to line 8.`,
+    descriptionHtml: `<code>console.log('B')</code> executes inside <code>run</code>. There has been no yield yet, so B prints before the caller gets to line 8.`,
     activeLine: 3,
     doneLines: [1, 2, 7],
     stack: [SCRIPT, "run()", "console.log('B')"],
@@ -75,8 +86,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B"],
   },
   {
-    descriptionHtml:
-      `<code>await null</code>: the operand is not a promise, so the engine wraps it with <code>PromiseResolve</code> into an already fulfilled promise. Because that promise is settled, the continuation is queued as a <span class="hl-micro">microtask</span> immediately and <code>run</code> suspends.`,
+    descriptionHtml: `<code>await null</code>: the operand is not a promise, so the engine wraps it with <code>PromiseResolve</code> into an already fulfilled promise. Because that promise is settled, the continuation is queued as a <span class="hl-micro">microtask</span> immediately and <code>run</code> suspends.`,
     activeLine: 4,
     doneLines: [1, 2, 3, 7],
     stack: [SCRIPT, "run()"],
@@ -88,8 +98,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B"],
   },
   {
-    descriptionHtml:
-      `The suspended frame is popped and <code>run()</code> returns <strong>P1</strong>, still <strong>pending</strong>, to the caller. This is the yield: control goes back to the script even though the body is not finished.`,
+    descriptionHtml: `The suspended frame is popped and <code>run()</code> returns <strong>P1</strong>, still <strong>pending</strong>, to the caller. This is the yield: control goes back to the script even though the body is not finished.`,
     activeLine: 7,
     doneLines: [1, 2, 3, 4],
     stack: [SCRIPT],
@@ -101,8 +110,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B"],
   },
   {
-    descriptionHtml:
-      `<code>console.log('D')</code> runs while the continuation is still waiting in the <span class="hl-micro">microtask queue</span>. Queued jobs never interrupt synchronous code.`,
+    descriptionHtml: `<code>console.log('D')</code> runs while the continuation is still waiting in the <span class="hl-micro">microtask queue</span>. Queued jobs never interrupt synchronous code.`,
     activeLine: 8,
     doneLines: [1, 2, 3, 4, 7],
     stack: [SCRIPT, "console.log('D')"],
@@ -114,8 +122,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B", "D"],
   },
   {
-    descriptionHtml:
-      `The script finishes and the <span class="hl-stack">call stack</span> is empty. The <span class="hl-loop">event loop</span> now drains the microtask queue completely before it would pick up any timer or I/O task.`,
+    descriptionHtml: `The script finishes and the <span class="hl-stack">call stack</span> is empty. The <span class="hl-loop">event loop</span> now drains the microtask queue completely before it would pick up any timer or I/O task.`,
     activeLine: null,
     doneLines: [1, 2, 3, 4, 7, 8],
     stack: [],
@@ -127,8 +134,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B", "D"],
   },
   {
-    descriptionHtml:
-      `The microtask runs: the engine restores the saved frame of <code>run</code> and resumes right after the <code>await</code> with the awaited value <code>undefined</code>. This resume is the same mechanism a generator uses on <code>.next()</code>.`,
+    descriptionHtml: `The microtask runs: the engine restores the saved frame of <code>run</code> and resumes right after the <code>await</code> with the awaited value <code>undefined</code>. This resume is the same mechanism a generator uses on <code>.next()</code>.`,
     activeLine: 4,
     doneLines: [1, 2, 3, 7, 8],
     stack: ["run() (resumed)"],
@@ -140,8 +146,7 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B", "D"],
   },
   {
-    descriptionHtml:
-      `<code>console.log('C')</code> finally executes. The output order A, B, D, C comes from one rule: everything before the first <code>await</code> is synchronous, everything after it is a microtask.`,
+    descriptionHtml: `<code>console.log('C')</code> finally executes. The output order A, B, D, C comes from one rule: everything before the first <code>await</code> is synchronous, everything after it is a microtask.`,
     activeLine: 5,
     doneLines: [1, 2, 3, 4, 7, 8],
     stack: ["run() (resumed)", "console.log('C')"],
@@ -153,13 +158,18 @@ const ORDER_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["A", "B", "D", "C"],
   },
   {
-    descriptionHtml:
-      `The body reaches its end with an implicit <code>return undefined</code>, which <span class="hl-task">fulfills P1</span>. Any <code>.then</code> attached to <code>run()</code> would be queued as a microtask now.`,
+    descriptionHtml: `The body reaches its end with an implicit <code>return undefined</code>, which <span class="hl-task">fulfills P1</span>. Any <code>.then</code> attached to <code>run()</code> would be queued as a microtask now.`,
     activeLine: 6,
     doneLines: [1, 2, 3, 4, 5, 7, 8],
     stack: [],
     microtasks: [],
-    functions: [fn("run", "run()", "done", { name: "P1", state: "fulfilled", value: "undefined" })],
+    functions: [
+      fn("run", "run()", "done", {
+        name: "P1",
+        state: "fulfilled",
+        value: "undefined",
+      }),
+    ],
     timers: NO_TIMERS,
     timeline: NO_TIMELINE,
     elapsedMs: 0,
@@ -182,8 +192,7 @@ const NO_FNS: AsyncFnState[] = [];
 
 const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
   {
-    descriptionHtml:
-      `<code>sequential()</code> is called and runs <span class="hl-stack">synchronously</span> until its first <code>await</code>. The clock starts at 0 ms.`,
+    descriptionHtml: `<code>sequential()</code> is called and runs <span class="hl-stack">synchronously</span> until its first <code>await</code>. The clock starts at 0 ms.`,
     activeLine: 16,
     doneLines: [1, 2, 3],
     stack: [SCRIPT, "sequential()"],
@@ -195,8 +204,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>fetchUser(1)</code> builds a promise and hands a 100 ms timer to the <span class="hl-api">host timer API</span>. The promise is pending: its resolve will only be called from the timer callback.`,
+    descriptionHtml: `<code>fetchUser(1)</code> builds a promise and hands a 100 ms timer to the <span class="hl-api">host timer API</span>. The promise is pending: its resolve will only be called from the timer callback.`,
     activeLine: 6,
     doneLines: [1, 2, 3, 16],
     stack: [SCRIPT, "sequential()", "fetchUser(1)"],
@@ -208,8 +216,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>await</code> on a pending promise registers the continuation as a reaction and suspends. Nothing is queued yet, so <code>sequential()</code> returns its pending promise and the second <code>fetchUser</code> call has not started.`,
+    descriptionHtml: `<code>await</code> on a pending promise registers the continuation as a reaction and suspends. Nothing is queued yet, so <code>sequential()</code> returns its pending promise and the second <code>fetchUser</code> call has not started.`,
     activeLine: 6,
     doneLines: [1, 2, 3, 16],
     stack: [SCRIPT],
@@ -221,8 +228,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>parallel()</code> is called next. The array literal on line 12 is evaluated first, so both <code>fetchUser</code> calls run <span class="hl-stack">before</span> <code>Promise.all</code> and before the <code>await</code>.`,
+    descriptionHtml: `<code>parallel()</code> is called next. The array literal on line 12 is evaluated first, so both <code>fetchUser</code> calls run <span class="hl-stack">before</span> <code>Promise.all</code> and before the <code>await</code>.`,
     activeLine: 17,
     doneLines: [1, 2, 3, 6, 16],
     stack: [SCRIPT, "parallel()"],
@@ -234,8 +240,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `Two more 100 ms timers start, both at 0 ms. Three timers are now counting down concurrently in the <span class="hl-api">host</span>, which is where the time saving comes from.`,
+    descriptionHtml: `Two more 100 ms timers start, both at 0 ms. Three timers are now counting down concurrently in the <span class="hl-api">host</span>, which is where the time saving comes from.`,
     activeLine: 12,
     doneLines: [1, 2, 3, 6, 16, 17],
     stack: [SCRIPT, "parallel()", "fetchUser(2)"],
@@ -251,8 +256,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>Promise.all</code> creates one combined promise and attaches a reaction to each input. <code>parallel()</code> awaits it and suspends. The script ends, the <span class="hl-stack">stack</span> is empty, and the <span class="hl-loop">event loop</span> waits for the first timer.`,
+    descriptionHtml: `<code>Promise.all</code> creates one combined promise and attaches a reaction to each input. <code>parallel()</code> awaits it and suspends. The script ends, the <span class="hl-stack">stack</span> is empty, and the <span class="hl-loop">event loop</span> waits for the first timer.`,
     activeLine: null,
     doneLines: [1, 2, 3, 6, 12, 16, 17],
     stack: [],
@@ -268,8 +272,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `At 100 ms all three timers are due and their callbacks sit in the <span class="hl-task">task queue</span> in registration order. The first task runs <code>resolve({ id: 1 })</code> for the sequential call, which queues that await's continuation as a <span class="hl-micro">microtask</span>.`,
+    descriptionHtml: `At 100 ms all three timers are due and their callbacks sit in the <span class="hl-task">task queue</span> in registration order. The first task runs <code>resolve({ id: 1 })</code> for the sequential call, which queues that await's continuation as a <span class="hl-micro">microtask</span>.`,
     activeLine: 2,
     doneLines: [1, 3, 6, 12, 16, 17],
     stack: ["timer callback: resolve({ id: 1 })"],
@@ -285,8 +288,7 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `Microtasks drain between tasks, so <code>sequential</code> resumes before the other timer callbacks run. It reaches line 7 and only now starts the second 100 ms timer, then suspends again.`,
+    descriptionHtml: `Microtasks drain between tasks, so <code>sequential</code> resumes before the other timer callbacks run. It reaches line 7 and only now starts the second 100 ms timer, then suspends again.`,
     activeLine: 7,
     doneLines: [1, 2, 3, 6, 12, 16, 17],
     stack: ["sequential() (resumed)", "fetchUser(2)"],
@@ -297,13 +299,17 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
       timer("par-2", "par fetchUser(2)", 0, "due"),
       timer("seq-2", "seq fetchUser(2)", 100),
     ],
-    timeline: [seqBar1("done"), seqBar2("pending"), parBar1("pending"), parBar2("pending")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("pending"),
+      parBar1("pending"),
+      parBar2("pending"),
+    ],
     elapsedMs: 100,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `Next task: the callback for <code>parallel</code>'s first promise resolves it. <code>Promise.all</code>'s per-element reaction runs as a <span class="hl-micro">microtask</span>, stores <code>{ id: 1 }</code> at index 0, and decrements its remaining count to 1.`,
+    descriptionHtml: `Next task: the callback for <code>parallel</code>'s first promise resolves it. <code>Promise.all</code>'s per-element reaction runs as a <span class="hl-micro">microtask</span>, stores <code>{ id: 1 }</code> at index 0, and decrements its remaining count to 1.`,
     activeLine: 2,
     doneLines: [1, 3, 6, 7, 12, 16, 17],
     stack: ["timer callback: resolve({ id: 1 })"],
@@ -313,72 +319,97 @@ const PARALLEL_STEPS: AsyncAwaitExample["steps"] = [
       timer("par-2", "par fetchUser(2)", 0, "due"),
       timer("seq-2", "seq fetchUser(2)", 100),
     ],
-    timeline: [seqBar1("done"), seqBar2("pending"), parBar1("done"), parBar2("pending")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("pending"),
+      parBar1("done"),
+      parBar2("pending"),
+    ],
     elapsedMs: 100,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `The last due callback resolves the second promise. Its reaction brings the remaining count to 0, so the combined promise <span class="hl-task">fulfills</span> with <code>[{ id: 1 }, { id: 2 }]</code>, which queues <code>parallel</code>'s continuation.`,
+    descriptionHtml: `The last due callback resolves the second promise. Its reaction brings the remaining count to 0, so the combined promise <span class="hl-task">fulfills</span> with <code>[{ id: 1 }, { id: 2 }]</code>, which queues <code>parallel</code>'s continuation.`,
     activeLine: 2,
     doneLines: [1, 3, 6, 7, 12, 16, 17],
     stack: ["timer callback: resolve({ id: 2 })"],
     microtasks: ["Promise.all resolveElement(1)", "parallel continuation"],
     functions: NO_FNS,
     timers: [timer("seq-2", "seq fetchUser(2)", 100)],
-    timeline: [seqBar1("done"), seqBar2("pending"), parBar1("done"), parBar2("done")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("pending"),
+      parBar1("done"),
+      parBar2("done"),
+    ],
     elapsedMs: 100,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>parallel</code> resumes with both values and logs at 100 ms. Both of its requests overlapped, so total time equals the slowest one, not the sum.`,
+    descriptionHtml: `<code>parallel</code> resumes with both values and logs at 100 ms. Both of its requests overlapped, so total time equals the slowest one, not the sum.`,
     activeLine: 13,
     doneLines: [1, 2, 3, 6, 7, 12, 16, 17],
     stack: ["parallel() (resumed)", "console.log(...)"],
     microtasks: [],
     functions: NO_FNS,
     timers: [timer("seq-2", "seq fetchUser(2)", 100)],
-    timeline: [seqBar1("done"), seqBar2("pending"), parBar1("done"), parBar2("done")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("pending"),
+      parBar1("done"),
+      parBar2("done"),
+    ],
     elapsedMs: 100,
     consoleOutput: ["parallel 100 ms"],
   },
   {
-    descriptionHtml:
-      `The loop idles until 200 ms, when the second sequential timer fires. Its callback resolves the promise from line 7 and queues the final continuation as a <span class="hl-micro">microtask</span>.`,
+    descriptionHtml: `The loop idles until 200 ms, when the second sequential timer fires. Its callback resolves the promise from line 7 and queues the final continuation as a <span class="hl-micro">microtask</span>.`,
     activeLine: 2,
     doneLines: [1, 3, 6, 7, 12, 13, 16, 17],
     stack: ["timer callback: resolve({ id: 2 })"],
     microtasks: ["sequential continuation (b = { id: 2 })"],
     functions: NO_FNS,
     timers: [timer("seq-2", "seq fetchUser(2)", 0, "due")],
-    timeline: [seqBar1("done"), seqBar2("done"), parBar1("done"), parBar2("done")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("done"),
+      parBar1("done"),
+      parBar2("done"),
+    ],
     elapsedMs: 200,
     consoleOutput: ["parallel 100 ms"],
   },
   {
-    descriptionHtml:
-      `<code>sequential</code> resumes and logs at 200 ms. Each <code>await</code> waited for its own timer to finish before the next one was even created, so the durations added up.`,
+    descriptionHtml: `<code>sequential</code> resumes and logs at 200 ms. Each <code>await</code> waited for its own timer to finish before the next one was even created, so the durations added up.`,
     activeLine: 8,
     doneLines: [1, 2, 3, 6, 7, 12, 13, 16, 17],
     stack: ["sequential() (resumed)", "console.log(...)"],
     microtasks: [],
     functions: NO_FNS,
     timers: NO_TIMERS,
-    timeline: [seqBar1("done"), seqBar2("done"), parBar1("done"), parBar2("done")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("done"),
+      parBar1("done"),
+      parBar2("done"),
+    ],
     elapsedMs: 200,
     consoleOutput: ["parallel 100 ms", "sequential 200 ms"],
   },
   {
-    descriptionHtml:
-      `Both functions are done. The rule: start every independent promise first, then <code>await Promise.all</code>. Use sequential awaits only when a later call needs the result of an earlier one.`,
+    descriptionHtml: `Both functions are done. The rule: start every independent promise first, then <code>await Promise.all</code>. Use sequential awaits only when a later call needs the result of an earlier one.`,
     activeLine: null,
     doneLines: [1, 2, 3, 6, 7, 8, 12, 13, 16, 17],
     stack: [],
     microtasks: [],
     functions: NO_FNS,
     timers: NO_TIMERS,
-    timeline: [seqBar1("done"), seqBar2("done"), parBar1("done"), parBar2("done")],
+    timeline: [
+      seqBar1("done"),
+      seqBar2("done"),
+      parBar1("done"),
+      parBar2("done"),
+    ],
     elapsedMs: 200,
     consoleOutput: ["parallel 100 ms", "sequential 200 ms"],
   },
@@ -402,15 +433,22 @@ const leakyFn = (
 
 const P1_PENDING = { name: "P1", state: "pending", value: "" } as const;
 const P1_DONE = { name: "P1", state: "fulfilled", value: "undefined" } as const;
-const P2_PENDING = { name: "P2", state: "pending", value: "resolving with R2" } as const;
-const P3_PENDING = { name: "P3", state: "pending", value: "resolving with R3" } as const;
+const P2_PENDING = {
+  name: "P2",
+  state: "pending",
+  value: "resolving with R2",
+} as const;
+const P3_PENDING = {
+  name: "P3",
+  state: "pending",
+  value: "resolving with R3",
+} as const;
 const P2_REJECTED = { name: "P2", state: "rejected", value: REJECTED } as const;
 const P3_REJECTED = { name: "P3", state: "rejected", value: REJECTED } as const;
 
 const ERROR_STEPS: AsyncAwaitExample["steps"] = [
   {
-    descriptionHtml:
-      `<code>safe()</code> is called. Its result promise <strong>P1</strong> is created and the body starts running <span class="hl-stack">synchronously</span> inside the <code>try</code> block.`,
+    descriptionHtml: `<code>safe()</code> is called. Its result promise <strong>P1</strong> is created and the body starts running <span class="hl-stack">synchronously</span> inside the <code>try</code> block.`,
     activeLine: 19,
     doneLines: [1],
     stack: [SCRIPT, "safe()"],
@@ -422,8 +460,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>fail()</code> returns <strong>R1</strong>, a promise that is <span class="hl-task">already rejected</span> with a <code>TypeError</code>. Nothing is thrown here: a rejection is a promise state, not an exception, until something awaits it.`,
+    descriptionHtml: `<code>fail()</code> returns <strong>R1</strong>, a promise that is <span class="hl-task">already rejected</span> with a <code>TypeError</code>. Nothing is thrown here: a rejection is a promise state, not an exception, until something awaits it.`,
     activeLine: 5,
     doneLines: [1, 3, 4, 19],
     stack: [SCRIPT, "safe()", "fail()"],
@@ -435,8 +472,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>await fail()</code>: R1 is a native promise, so it is used as is. It is already settled, so the continuation is queued as a <span class="hl-micro">microtask</span> and <code>safe</code> suspends inside the <code>try</code>. That placement is what lets the <code>catch</code> see the rejection later.`,
+    descriptionHtml: `<code>await fail()</code>: R1 is a native promise, so it is used as is. It is already settled, so the continuation is queued as a <span class="hl-micro">microtask</span> and <code>safe</code> suspends inside the <code>try</code>. That placement is what lets the <code>catch</code> see the rejection later.`,
     activeLine: 5,
     doneLines: [1, 3, 4, 19],
     stack: [SCRIPT],
@@ -448,21 +484,22 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>leaky()</code> is called for the first time. Its promise <strong>P2</strong> is created and the body enters its own <code>try</code> block.`,
+    descriptionHtml: `<code>leaky()</code> is called for the first time. Its promise <strong>P2</strong> is created and the body enters its own <code>try</code> block.`,
     activeLine: 20,
     doneLines: [1, 3, 4, 5, 19],
     stack: [SCRIPT, "leaky()"],
     microtasks: ["safe continuation (throw TypeError at line 5)"],
-    functions: [safeFn("suspended", P1_PENDING, 5), leakyFn(1, "running", P2_PENDING)],
+    functions: [
+      safeFn("suspended", P1_PENDING, 5),
+      leakyFn(1, "running", P2_PENDING),
+    ],
     timers: NO_TIMERS,
     timeline: NO_TIMELINE,
     elapsedMs: 0,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>return fail()</code> returns the rejected promise <strong>R2</strong> without awaiting it. The <code>try</code> block completes normally, so the <code>catch</code> never runs. Resolving P2 with a thenable schedules a <span class="hl-micro">PromiseResolveThenableJob</span> instead of settling it now.`,
+    descriptionHtml: `<code>return fail()</code> returns the rejected promise <strong>R2</strong> without awaiting it. The <code>try</code> block completes normally, so the <code>catch</code> never runs. Resolving P2 with a thenable schedules a <span class="hl-micro">PromiseResolveThenableJob</span> instead of settling it now.`,
     activeLine: 13,
     doneLines: [1, 3, 4, 5, 11, 12, 19],
     stack: [SCRIPT],
@@ -470,15 +507,17 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
       "safe continuation (throw TypeError at line 5)",
       "resolve P2 with R2 (thenable job)",
     ],
-    functions: [safeFn("suspended", P1_PENDING, 5), leakyFn(1, "done", P2_PENDING)],
+    functions: [
+      safeFn("suspended", P1_PENDING, 5),
+      leakyFn(1, "done", P2_PENDING),
+    ],
     timers: NO_TIMERS,
     timeline: NO_TIMELINE,
     elapsedMs: 0,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>.catch(...)</code> attaches a rejection handler to P2 while it is still pending. The handler is only a registered reaction at this point; it runs when P2 settles.`,
+    descriptionHtml: `<code>.catch(...)</code> attaches a rejection handler to P2 while it is still pending. The handler is only a registered reaction at this point; it runs when P2 settles.`,
     activeLine: 20,
     doneLines: [1, 3, 4, 5, 11, 12, 13, 19],
     stack: [SCRIPT, "P2.catch(handler)"],
@@ -486,15 +525,17 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
       "safe continuation (throw TypeError at line 5)",
       "resolve P2 with R2 (thenable job)",
     ],
-    functions: [safeFn("suspended", P1_PENDING, 5), leakyFn(1, "done", P2_PENDING)],
+    functions: [
+      safeFn("suspended", P1_PENDING, 5),
+      leakyFn(1, "done", P2_PENDING),
+    ],
     timers: NO_TIMERS,
     timeline: NO_TIMELINE,
     elapsedMs: 0,
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `The second <code>leaky()</code> call takes the same path and returns <strong>P3</strong>. Nobody awaits it and nobody attaches a handler, so nothing will ever observe its rejection.`,
+    descriptionHtml: `The second <code>leaky()</code> call takes the same path and returns <strong>P3</strong>. Nobody awaits it and nobody attaches a handler, so nothing will ever observe its rejection.`,
     activeLine: 21,
     doneLines: [1, 3, 4, 5, 11, 12, 13, 19, 20],
     stack: [SCRIPT],
@@ -514,8 +555,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `The script ends and the <span class="hl-stack">stack</span> is empty. Three jobs wait in the <span class="hl-micro">microtask queue</span>, and the <span class="hl-loop">event loop</span> runs them in FIFO order.`,
+    descriptionHtml: `The script ends and the <span class="hl-stack">stack</span> is empty. Three jobs wait in the <span class="hl-micro">microtask queue</span>, and the <span class="hl-loop">event loop</span> runs them in FIFO order.`,
     activeLine: null,
     doneLines: [1, 3, 4, 5, 11, 12, 13, 19, 20, 21],
     stack: [],
@@ -535,12 +575,14 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `<code>safe</code> resumes and the <code>await</code> rethrows the <code>TypeError</code> at line 5. Because the throw happens inside the <code>try</code>, control jumps to the <code>catch</code> block.`,
+    descriptionHtml: `<code>safe</code> resumes and the <code>await</code> rethrows the <code>TypeError</code> at line 5. Because the throw happens inside the <code>try</code>, control jumps to the <code>catch</code> block.`,
     activeLine: 6,
     doneLines: [1, 3, 4, 5, 11, 12, 13, 19, 20, 21],
     stack: ["safe() (resumed)"],
-    microtasks: ["resolve P2 with R2 (thenable job)", "resolve P3 with R3 (thenable job)"],
+    microtasks: [
+      "resolve P2 with R2 (thenable job)",
+      "resolve P3 with R3 (thenable job)",
+    ],
     functions: [
       safeFn("running", P1_PENDING),
       leakyFn(1, "done", P2_PENDING),
@@ -552,12 +594,14 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: [],
   },
   {
-    descriptionHtml:
-      `The <code>catch</code> logs the message and <code>safe</code> completes normally, so <strong>P1</strong> <span class="hl-task">fulfills</span> with <code>undefined</code>. The error was handled where it was awaited.`,
+    descriptionHtml: `The <code>catch</code> logs the message and <code>safe</code> completes normally, so <strong>P1</strong> <span class="hl-task">fulfills</span> with <code>undefined</code>. The error was handled where it was awaited.`,
     activeLine: 7,
     doneLines: [1, 3, 4, 5, 6, 11, 12, 13, 19, 20, 21],
     stack: ["safe() (resumed)", "console.log('caught', ...)"],
-    microtasks: ["resolve P2 with R2 (thenable job)", "resolve P3 with R3 (thenable job)"],
+    microtasks: [
+      "resolve P2 with R2 (thenable job)",
+      "resolve P3 with R3 (thenable job)",
+    ],
     functions: [
       safeFn("done", P1_DONE),
       leakyFn(1, "done", P2_PENDING),
@@ -569,8 +613,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["caught boom"],
   },
   {
-    descriptionHtml:
-      `The two thenable jobs call <code>R2.then(resolveP2, rejectP2)</code> and <code>R3.then(...)</code>. R2 and R3 are already rejected, so each call queues another <span class="hl-micro">reaction job</span>. This is why <code>return promise</code> costs extra ticks compared with <code>return await promise</code>.`,
+    descriptionHtml: `The two thenable jobs call <code>R2.then(resolveP2, rejectP2)</code> and <code>R3.then(...)</code>. R2 and R3 are already rejected, so each call queues another <span class="hl-micro">reaction job</span>. This is why <code>return promise</code> costs extra ticks compared with <code>return await promise</code>.`,
     activeLine: 13,
     doneLines: [1, 3, 4, 5, 6, 7, 11, 12, 19, 20, 21],
     stack: ["PromiseResolveThenableJob"],
@@ -586,8 +629,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["caught boom"],
   },
   {
-    descriptionHtml:
-      `The reaction jobs run. <strong>P2</strong> rejects and its <code>.catch</code> handler is queued. <strong>P3</strong> rejects with <span class="hl-task">no handler attached</span>, so the host records it as a potentially unhandled rejection.`,
+    descriptionHtml: `The reaction jobs run. <strong>P2</strong> rejects and its <code>.catch</code> handler is queued. <strong>P3</strong> rejects with <span class="hl-task">no handler attached</span>, so the host records it as a potentially unhandled rejection.`,
     activeLine: null,
     doneLines: [1, 3, 4, 5, 6, 7, 11, 12, 13, 19, 20, 21],
     stack: ["reject P3"],
@@ -603,8 +645,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["caught boom"],
   },
   {
-    descriptionHtml:
-      `The outer handler runs and logs the message. Catching at the call site works, but the error left <code>leaky</code> entirely: the <code>catch</code> inside the function was dead code.`,
+    descriptionHtml: `The outer handler runs and logs the message. Catching at the call site works, but the error left <code>leaky</code> entirely: the <code>catch</code> inside the function was dead code.`,
     activeLine: 20,
     doneLines: [1, 3, 4, 5, 6, 7, 11, 12, 13, 19, 21],
     stack: ["catch handler", "console.log('outer', ...)"],
@@ -620,8 +661,7 @@ const ERROR_STEPS: AsyncAwaitExample["steps"] = [
     consoleOutput: ["caught boom", "outer boom"],
   },
   {
-    descriptionHtml:
-      `The microtask queue is empty, so the host runs its unhandled rejection check. P3 still has no handler and the rejection is reported. Node exits with a non-zero code by default; browsers log it. Either <code>await</code> or <code>.catch</code> every async call.`,
+    descriptionHtml: `The microtask queue is empty, so the host runs its unhandled rejection check. P3 still has no handler and the rejection is reported. Node exits with a non-zero code by default; browsers log it. Either <code>await</code> or <code>.catch</code> every async call.`,
     activeLine: 21,
     doneLines: [1, 3, 4, 5, 6, 7, 11, 12, 13, 19, 20],
     stack: [],
@@ -679,7 +719,10 @@ export const EXAMPLES: AsyncAwaitExample[] = [
       { num: 9, text: "}" },
       { num: 10, text: "" },
       { num: 11, text: "async function parallel() {" },
-      { num: 12, text: "  const [a, b] = await Promise.all([fetchUser(1), fetchUser(2)]);" },
+      {
+        num: 12,
+        text: "  const [a, b] = await Promise.all([fetchUser(1), fetchUser(2)]);",
+      },
       { num: 13, text: "  console.log('parallel', Date.now() - t0, 'ms');" },
       { num: 14, text: "}" },
       { num: 15, text: "" },
@@ -695,7 +738,10 @@ export const EXAMPLES: AsyncAwaitExample[] = [
       "await rethrows a rejection at the await point, return await lets the local catch see it, and an unawaited call leaks an unhandled rejection.",
     kind: "errors",
     codeLines: [
-      { num: 1, text: "const fail = () => Promise.reject(new TypeError('boom'));" },
+      {
+        num: 1,
+        text: "const fail = () => Promise.reject(new TypeError('boom'));",
+      },
       { num: 2, text: "" },
       { num: 3, text: "async function safe() {" },
       { num: 4, text: "  try {" },
@@ -714,7 +760,10 @@ export const EXAMPLES: AsyncAwaitExample[] = [
       { num: 17, text: "}" },
       { num: 18, text: "" },
       { num: 19, text: "safe();" },
-      { num: 20, text: "leaky().catch((err) => console.log('outer', err.message));" },
+      {
+        num: 20,
+        text: "leaky().catch((err) => console.log('outer', err.message));",
+      },
       { num: 21, text: "leaky();" },
     ],
     steps: ERROR_STEPS,

@@ -15,15 +15,11 @@ const withAnalyzer = withBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  // Theory used to live on its own page; it now sits under the visualization.
   redirects: async () => [
     {
-      source: "/javascript/:topic/theory",
-      destination: "/javascript/:topic",
-      permanent: true,
-    },
-    {
-      source: "/react/:topic/theory",
-      destination: "/react/:topic",
+      source: "/:category/:topic/theory",
+      destination: "/:category/:topic",
       permanent: true,
     },
   ],

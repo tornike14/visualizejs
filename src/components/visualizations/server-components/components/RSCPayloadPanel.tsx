@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { PayloadEntry } from "../types";
 import { payloadTypeStyle, payloadTypeLabel } from "../helpers";
 
-export function RSCPayloadPanel({ entries }: { entries: PayloadEntry[] }) {
+export const RSCPayloadPanel = ({ entries }: { entries: PayloadEntry[] }) => {
   if (entries.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -44,4 +44,4 @@ export function RSCPayloadPanel({ entries }: { entries: PayloadEntry[] }) {
       ))}
     </div>
   );
-}
+};

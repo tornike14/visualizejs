@@ -2,7 +2,11 @@ import { cn } from "@/lib/utils";
 import type { VariableBinding } from "../types";
 import { BINDING_TONE_MAP } from "../helpers";
 
-export const BindingsPanel = ({ bindings }: { bindings: VariableBinding[] }) => {
+export const BindingsPanel = ({
+  bindings,
+}: {
+  bindings: VariableBinding[];
+}) => {
   if (bindings.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">

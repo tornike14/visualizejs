@@ -1,7 +1,12 @@
 import { MetricBars } from "@/components/visualization-ui/MetricBars";
 import { cn } from "@/lib/utils";
 import type { WorkLoopState } from "../types";
-import { LANE_STYLES, PHASE_LABELS, PHASE_STYLES, UNIT_STYLES } from "../helpers";
+import {
+  LANE_STYLES,
+  PHASE_LABELS,
+  PHASE_STYLES,
+  UNIT_STYLES,
+} from "../helpers";
 
 interface WorkLoopPanelProps {
   workLoop: WorkLoopState | null;

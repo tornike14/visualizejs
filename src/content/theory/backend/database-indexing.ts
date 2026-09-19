@@ -45,7 +45,8 @@ export const databaseIndexingTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "Why is a B-tree lookup O(log n) and what does that mean in page reads?",
+      question:
+        "Why is a B-tree lookup O(log n) and what does that mean in page reads?",
       answer:
         "Each internal page holds hundreds of separator keys, so every level divides the remaining search space by hundreds. A tree over a million rows is typically three or four levels tall, so a point lookup reads three or four index pages plus one heap page. A sequential scan on the same table reads every page, tens of thousands of them, and doubles when the table doubles.",
     },
@@ -66,7 +67,8 @@ SELECT * FROM users WHERE first_name = 'Ada';`,
       },
     },
     {
-      question: "What is a covering index and when does the planner use an index only scan?",
+      question:
+        "What is a covering index and when does the planner use an index only scan?",
       answer:
         "A covering index contains every column the query reads, either as key columns or as INCLUDE columns. The executor can answer from the leaf entries and skip the heap fetch, as long as the visibility map shows the heap page has no rows that need a visibility check. This removes the random heap reads that make index scans expensive on wide result sets.",
       codeExample: {
@@ -79,12 +81,14 @@ SELECT total, created_at FROM orders WHERE customer_id = 42;`,
       },
     },
     {
-      question: "Why might the planner ignore an index that matches the WHERE clause?",
+      question:
+        "Why might the planner ignore an index that matches the WHERE clause?",
       answer:
         "The planner compares estimated costs, not just applicability. If the statistics say the predicate selects a large share of the table, the random heap fetches of an index scan cost more than a sequential read of the whole table. Stale statistics, a function around the column, or a type mismatch that forces a cast can also make the index unusable.",
     },
     {
-      question: "What happens inside a B-tree when a leaf page is full and a new key arrives?",
+      question:
+        "What happens inside a B-tree when a leaf page is full and a new key arrives?",
       answer:
         "The leaf splits: roughly half its keys stay, the other half move to a newly allocated leaf, and the first key of the new leaf is copied into the parent as a separator. If the parent is also full it splits the same way, and a split of the root adds a new level. This keeps every leaf at the same depth, which is the balance property that guarantees the logarithmic lookup cost.",
       codeExample: {

@@ -113,12 +113,40 @@ const DEFAULT = { key: "cd", value: "Default" };
 
 /* ── Example 1: Default with zone.js ── */
 
-const Z_APP = check("app", "App", '[title]="\'Cart\'"', '"Cart"', '"Cart"', "same");
-const Z_HEADER = check("header", "Header", "{{ title }}", '"Cart"', '"Cart"', "same");
-const Z_LIST = check("list", "List", '[items]="items"', "items#1", "items#1", "same");
+const Z_APP = check(
+  "app",
+  "App",
+  "[title]=\"'Cart'\"",
+  '"Cart"',
+  '"Cart"',
+  "same",
+);
+const Z_HEADER = check(
+  "header",
+  "Header",
+  "{{ title }}",
+  '"Cart"',
+  '"Cart"',
+  "same",
+);
+const Z_LIST = check(
+  "list",
+  "List",
+  '[items]="items"',
+  "items#1",
+  "items#1",
+  "same",
+);
 const Z_ITEM1 = check("item1", "Item 1", "{{ qty }}", "0", "1", "changed");
 const Z_ITEM2 = check("item2", "Item 2", "{{ qty }}", "0", "0", "same");
-const Z_NOCHANGES = check("nochanges", "all views", "checkNoChanges()", "", "", "pass");
+const Z_NOCHANGES = check(
+  "nochanges",
+  "all views",
+  "checkNoChanges()",
+  "",
+  "",
+  "pass",
+);
 
 const zoneExample: AngularExample = {
   id: "zone",
@@ -129,7 +157,10 @@ const zoneExample: AngularExample = {
   codeLines: [
     { num: 1, text: "@Component({" },
     { num: 2, text: "  selector: 'app-item'," },
-    { num: 3, text: "  template: `<button (click)=\"add()\">{{ qty }}</button>`," },
+    {
+      num: 3,
+      text: '  template: `<button (click)="add()">{{ qty }}</button>`,',
+    },
     { num: 4, text: "})" },
     { num: 5, text: "export class ItemComponent {" },
     { num: 6, text: "  @Input() qty = 0;" },
@@ -140,7 +171,10 @@ const zoneExample: AngularExample = {
     { num: 11, text: "  providers: [provideZoneChangeDetection()]," },
     { num: 12, text: "});" },
     { num: 13, text: "" },
-    { num: 14, text: "// zone.js wraps addEventListener, setTimeout, Promise.then, XHR" },
+    {
+      num: 14,
+      text: "// zone.js wraps addEventListener, setTimeout, Promise.then, XHR",
+    },
     { num: 15, text: "// NgZone.onMicrotaskEmpty -> ApplicationRef.tick()" },
   ],
   steps: [
@@ -162,7 +196,7 @@ const zoneExample: AngularExample = {
     },
     {
       descriptionHtml:
-        "<code>provideZoneChangeDetection()</code> loads <span class=\"hl-api\">zone.js</span>, which monkey-patches <code>addEventListener</code>, <code>setTimeout</code>, <code>Promise.then</code> and <code>XMLHttpRequest</code>. Each patched API wraps its callback so Angular is told when the callback has finished, not what it changed.",
+        '<code>provideZoneChangeDetection()</code> relies on <span class="hl-api">zone.js</span>, loaded as a polyfill, which monkey-patches <code>addEventListener</code>, <code>setTimeout</code>, <code>Promise.then</code> and <code>XMLHttpRequest</code>. Each patched API wraps its callback so Angular is told when the callback has finished, not what it changed.',
       activeLine: 14,
       doneLines: [10, 11, 12],
       tree: tree({
@@ -178,18 +212,26 @@ const zoneExample: AngularExample = {
     },
     {
       descriptionHtml:
-        "The user clicks the button in the first <code>ItemComponent</code>. The listener was registered through the patched <code>addEventListener</code>, so it runs inside the <span class=\"hl-api\">Angular zone</span> and zone.js knows a task has started.",
+        'The user clicks the button in the first <code>ItemComponent</code>. The listener was registered through the patched <code>addEventListener</code>, so it runs inside the <span class="hl-api">Angular zone</span> and zone.js knows a task has started.',
       activeLine: 3,
       doneLines: [10, 11, 12, 14],
       tree: tree({
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "active", props: [DEFAULT, { key: "qty", value: "0" }] },
+        item1: {
+          highlight: "active",
+          props: [DEFAULT, { key: "qty", value: "0" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "item1",
-      trigger: zoneTrigger("click", "listener wrapped by zone.js", ["active", "pending", "pending", "pending"]),
+      trigger: zoneTrigger("click", "listener wrapped by zone.js", [
+        "active",
+        "pending",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
@@ -202,44 +244,68 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "item1",
-      trigger: zoneTrigger("click", "handler mutated qty", ["done", "active", "pending", "pending"]),
+      trigger: zoneTrigger("click", "handler mutated qty", [
+        "done",
+        "active",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
     {
       descriptionHtml:
-        "The handler returns and the microtask queue drains. zone.js reports this to <code>NgZone</code>, which emits <code>onMicrotaskEmpty</code>, and <code>ApplicationRef.tick()</code> starts a <span class=\"hl-stack\">full change detection pass</span> from the root view.",
+        'The handler returns and the microtask queue drains. zone.js reports this to <code>NgZone</code>, which emits <code>onMicrotaskEmpty</code>, and <code>ApplicationRef.tick()</code> starts a <span class="hl-stack">full change detection pass</span> from the root view.',
       activeLine: 15,
       doneLines: [3, 7, 10, 11, 12, 14],
       tree: tree({
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
-      trigger: zoneTrigger("click", "onMicrotaskEmpty -> tick()", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "onMicrotaskEmpty -> tick()", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
     {
       descriptionHtml:
-        "<code>tick()</code> checks <code>AppComponent</code> first. Dirty checking means re-evaluating every template expression and comparing it with the value stored from the last pass. <code>[title]=\"'Cart'\"</code> still produces <code>\"Cart\"</code>, so no DOM write happens.",
+        '<code>tick()</code> checks <code>AppComponent</code> first. Dirty checking means re-evaluating every template expression and comparing it with the value stored from the last pass. <code>[title]="\'Cart\'"</code> still produces <code>"Cart"</code>, so no DOM write happens.',
       activeLine: 15,
       doneLines: [3, 7, 10, 11, 12, 14],
       tree: tree({
         app: { highlight: "active", props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "walking views top-down", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "walking views top-down", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [Z_APP],
       signals: [],
     },
@@ -252,28 +318,44 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { highlight: "active", props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "header",
-      trigger: zoneTrigger("click", "walking views top-down", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "walking views top-down", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [Z_APP, Z_HEADER],
       signals: [],
     },
     {
       descriptionHtml:
-        "<code>ListComponent</code> compares <code>[items]=\"items\"</code> by reference with <code>Object.is</code>. Same array as before, so the input is not written, but with the Default strategy the traversal continues into the children regardless.",
+        '<code>ListComponent</code> compares <code>[items]="items"</code> by reference with <code>Object.is</code>. Same array as before, so the input is not written, but with the Default strategy the traversal continues into the children regardless.',
       activeLine: 15,
       doneLines: [3, 7, 10, 11, 12, 14],
       tree: tree({
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { highlight: "active", props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "list",
-      trigger: zoneTrigger("click", "walking views top-down", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "walking views top-down", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [Z_APP, Z_HEADER, Z_LIST],
       signals: [],
     },
@@ -286,11 +368,19 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "item1",
-      trigger: zoneTrigger("click", "DOM text 0 -> 1", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "DOM text 0 -> 1", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [Z_APP, Z_HEADER, Z_LIST, Z_ITEM1],
       signals: [],
     },
@@ -303,11 +393,22 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
-        item2: { highlight: "active", props: [DEFAULT, { key: "qty", value: "0" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
+        item2: {
+          highlight: "active",
+          props: [DEFAULT, { key: "qty", value: "0" }],
+        },
       }),
       activeNodeId: "item2",
-      trigger: zoneTrigger("click", "walking views top-down", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "walking views top-down", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [Z_APP, Z_HEADER, Z_LIST, Z_ITEM1, Z_ITEM2],
       signals: [],
     },
@@ -320,10 +421,18 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
-      trigger: zoneTrigger("click", "dev mode: second verification pass", ["done", "done", "done", "active"]),
+      trigger: zoneTrigger("click", "dev mode: second verification pass", [
+        "done",
+        "done",
+        "done",
+        "active",
+      ]),
       checks: [Z_APP, Z_HEADER, Z_LIST, Z_ITEM1, Z_ITEM2, Z_NOCHANGES],
       signals: [],
     },
@@ -336,10 +445,18 @@ const zoneExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [DEFAULT] },
-        item1: { highlight: "updated", props: [DEFAULT, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [DEFAULT, { key: "qty", value: "1" }],
+        },
         item2: { props: [DEFAULT, { key: "qty", value: "0" }] },
       }),
-      trigger: zoneTrigger("click", "pass complete, zone idle", ["done", "done", "done", "done"]),
+      trigger: zoneTrigger("click", "pass complete, zone idle", [
+        "done",
+        "done",
+        "done",
+        "done",
+      ]),
       checks: [Z_APP, Z_HEADER, Z_LIST, Z_ITEM1, Z_ITEM2, Z_NOCHANGES],
       signals: [],
     },
@@ -348,18 +465,88 @@ const zoneExample: AngularExample = {
 
 /* ── Example 2: OnPush ── */
 
-const O_APP_SAME = check("app", "App", '[items]="items"', "items#1", "items#1", "same");
-const O_HEADER = check("header", "Header", "{{ title }}", '"Cart"', '"Cart"', "same");
-const O_LIST_SKIP = check("list", "List", "OnPush, input ref unchanged", "", "", "skipped");
-const O_ITEM1_SKIP = check("item1", "Item 1", "parent view skipped", "", "", "skipped");
-const O_ITEM2_SKIP = check("item2", "Item 2", "parent view skipped", "", "", "skipped");
+const O_APP_SAME = check(
+  "app",
+  "App",
+  '[items]="items"',
+  "items#1",
+  "items#1",
+  "same",
+);
+const O_HEADER = check(
+  "header",
+  "Header",
+  "{{ title }}",
+  '"Cart"',
+  '"Cart"',
+  "same",
+);
+const O_LIST_SKIP = check(
+  "list",
+  "List",
+  "OnPush, input ref unchanged",
+  "",
+  "",
+  "skipped",
+);
+const O_ITEM1_SKIP = check(
+  "item1",
+  "Item 1",
+  "parent view skipped",
+  "",
+  "",
+  "skipped",
+);
+const O_ITEM2_SKIP = check(
+  "item2",
+  "Item 2",
+  "parent view skipped",
+  "",
+  "",
+  "skipped",
+);
 const O_STALE = check("stale", "Item 1", "DOM shows qty", "0", "0", "stale");
 
-const O_APP_NEW = check("app2", "App", '[items]="items"', "items#1", "items#2", "changed");
-const O_HEADER2 = check("header2", "Header", "{{ title }}", '"Cart"', '"Cart"', "same");
-const O_LIST_NEW = check("list2", "List", "@for track it.id", "item#1", "item#3", "changed");
-const O_ITEM1_NEW = check("item1b", "Item 1", "{{ item.qty }}", "0", "1", "changed");
-const O_ITEM2_SKIP2 = check("item2b", "Item 2", "OnPush, [item] ref unchanged", "", "", "skipped");
+const O_APP_NEW = check(
+  "app2",
+  "App",
+  '[items]="items"',
+  "items#1",
+  "items#2",
+  "changed",
+);
+const O_HEADER2 = check(
+  "header2",
+  "Header",
+  "{{ title }}",
+  '"Cart"',
+  '"Cart"',
+  "same",
+);
+const O_LIST_NEW = check(
+  "list2",
+  "List",
+  "@for track it.id",
+  "item#1",
+  "item#3",
+  "changed",
+);
+const O_ITEM1_NEW = check(
+  "item1b",
+  "Item 1",
+  "{{ item.qty }}",
+  "0",
+  "1",
+  "changed",
+);
+const O_ITEM2_SKIP2 = check(
+  "item2b",
+  "Item 2",
+  "OnPush, [item] ref unchanged",
+  "",
+  "",
+  "skipped",
+);
 
 const onPushExample: AngularExample = {
   id: "onpush",
@@ -372,7 +559,7 @@ const onPushExample: AngularExample = {
     { num: 2, text: "  selector: 'app-list'," },
     { num: 3, text: "  changeDetection: ChangeDetectionStrategy.OnPush," },
     { num: 4, text: "  template: `@for (it of items; track it.id) {" },
-    { num: 5, text: "    <app-item [item]=\"it\" />" },
+    { num: 5, text: '    <app-item [item]="it" />' },
     { num: 6, text: "  }`," },
     { num: 7, text: "})" },
     { num: 8, text: "export class ListComponent {" },
@@ -416,7 +603,12 @@ const onPushExample: AngularExample = {
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "bump() in AppComponent", ["active", "pending", "pending", "pending"]),
+      trigger: zoneTrigger("click", "bump() in AppComponent", [
+        "active",
+        "pending",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
@@ -433,13 +625,18 @@ const onPushExample: AngularExample = {
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "items[0].qty = 1, same references", ["done", "active", "pending", "pending"]),
+      trigger: zoneTrigger("click", "items[0].qty = 1, same references", [
+        "done",
+        "active",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
     {
       descriptionHtml:
-        "<code>tick()</code> checks <code>AppComponent</code> (Default). The binding <code>[items]=\"items\"</code> yields <code>items#1</code> again, the same reference stored last time, so the input setter is not called and <code>ListComponent</code> is <strong>not</strong> marked dirty.",
+        '<code>tick()</code> checks <code>AppComponent</code> (Default). The binding <code>[items]="items"</code> yields <code>items#1</code> again, the same reference stored last time, so the input setter is not called and <code>ListComponent</code> is <strong>not</strong> marked dirty.',
       activeLine: 13,
       doneLines: [1, 2, 3],
       tree: tree({
@@ -450,13 +647,18 @@ const onPushExample: AngularExample = {
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "checking App bindings", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "checking App bindings", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [O_APP_SAME],
       signals: [],
     },
     {
       descriptionHtml:
-        "<code>HeaderComponent</code> is still Default, so it is checked as usual. Then the traversal reaches <code>ListComponent</code>: it is OnPush and not dirty, so Angular <span class=\"hl-task\">skips the whole subtree</span>. Neither the list template nor the two item templates execute.",
+        '<code>HeaderComponent</code> is still Default, so it is checked as usual. Then the traversal reaches <code>ListComponent</code>: it is OnPush and not dirty, so Angular <span class="hl-task">skips the whole subtree</span>. Neither the list template nor the two item templates execute.',
       activeLine: 3,
       doneLines: [1, 2, 13],
       tree: tree({
@@ -467,7 +669,12 @@ const onPushExample: AngularExample = {
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "list",
-      trigger: zoneTrigger("click", "List subtree pruned", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "List subtree pruned", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [O_APP_SAME, O_HEADER, O_LIST_SKIP, O_ITEM1_SKIP, O_ITEM2_SKIP],
       signals: [],
     },
@@ -480,12 +687,27 @@ const onPushExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [ONPUSH] },
-        item1: { highlight: "removed", props: [ONPUSH, { key: "qty", value: "0" }] },
+        item1: {
+          highlight: "removed",
+          props: [ONPUSH, { key: "qty", value: "0" }],
+        },
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "item1",
-      trigger: zoneTrigger("click", "pass complete, DOM stale", ["done", "done", "done", "done"]),
-      checks: [O_APP_SAME, O_HEADER, O_LIST_SKIP, O_ITEM1_SKIP, O_ITEM2_SKIP, O_STALE],
+      trigger: zoneTrigger("click", "pass complete, DOM stale", [
+        "done",
+        "done",
+        "done",
+        "done",
+      ]),
+      checks: [
+        O_APP_SAME,
+        O_HEADER,
+        O_LIST_SKIP,
+        O_ITEM1_SKIP,
+        O_ITEM2_SKIP,
+        O_STALE,
+      ],
       signals: [],
     },
     {
@@ -501,7 +723,12 @@ const onPushExample: AngularExample = {
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "items = items#2, item#1 -> item#3", ["done", "active", "pending", "pending"]),
+      trigger: zoneTrigger("click", "items = items#2, item#1 -> item#3", [
+        "done",
+        "active",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: [],
     },
@@ -513,12 +740,20 @@ const onPushExample: AngularExample = {
       tree: tree({
         app: { highlight: "active", props: [DEFAULT] },
         header: { props: [DEFAULT] },
-        list: { highlight: "updated", props: [ONPUSH, { key: "dirty", value: "true" }] },
+        list: {
+          highlight: "updated",
+          props: [ONPUSH, { key: "dirty", value: "true" }],
+        },
         item1: { props: [ONPUSH, { key: "qty", value: "0" }] },
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "app",
-      trigger: zoneTrigger("click", "input ref changed, List marked dirty", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "input ref changed, List marked dirty", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [O_APP_NEW, O_HEADER2],
       signals: [],
     },
@@ -531,11 +766,19 @@ const onPushExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { highlight: "active", props: [ONPUSH] },
-        item1: { highlight: "updated", props: [ONPUSH, { key: "dirty", value: "true" }] },
+        item1: {
+          highlight: "updated",
+          props: [ONPUSH, { key: "dirty", value: "true" }],
+        },
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "list",
-      trigger: zoneTrigger("click", "diffing @for rows", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "diffing @for rows", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [O_APP_NEW, O_HEADER2, O_LIST_NEW],
       signals: [],
     },
@@ -548,11 +791,19 @@ const onPushExample: AngularExample = {
         app: { props: [DEFAULT] },
         header: { props: [DEFAULT] },
         list: { props: [ONPUSH] },
-        item1: { highlight: "updated", props: [ONPUSH, { key: "qty", value: "1" }] },
+        item1: {
+          highlight: "updated",
+          props: [ONPUSH, { key: "qty", value: "1" }],
+        },
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
       activeNodeId: "item1",
-      trigger: zoneTrigger("click", "DOM text 0 -> 1", ["done", "done", "active", "pending"]),
+      trigger: zoneTrigger("click", "DOM text 0 -> 1", [
+        "done",
+        "done",
+        "active",
+        "pending",
+      ]),
       checks: [O_APP_NEW, O_HEADER2, O_LIST_NEW, O_ITEM1_NEW, O_ITEM2_SKIP2],
       signals: [],
     },
@@ -568,7 +819,11 @@ const onPushExample: AngularExample = {
         item1: { props: [ONPUSH, { key: "qty", value: "1" }] },
         item2: { props: [ONPUSH, { key: "qty", value: "0" }] },
       }),
-      trigger: zoneTrigger("click", "pass complete, 2 of 3 OnPush views skipped", ["done", "done", "done", "done"]),
+      trigger: zoneTrigger(
+        "click",
+        "pass complete, 2 of 3 OnPush views skipped",
+        ["done", "done", "done", "done"],
+      ),
       checks: [O_APP_NEW, O_HEADER2, O_LIST_NEW, O_ITEM1_NEW, O_ITEM2_SKIP2],
       signals: [],
     },
@@ -582,14 +837,46 @@ const graph = (
   double: [string, SignalNode["state"]],
   view: [string, SignalNode["state"]],
 ): SignalNode[] => [
-  { id: "count", label: "count", kind: "signal", value: count[0], state: count[1] },
-  { id: "double", label: "double", kind: "computed", value: double[0], state: double[1] },
-  { id: "view", label: "Item 1 view", kind: "view", value: view[0], state: view[1] },
+  {
+    id: "count",
+    label: "count",
+    kind: "signal",
+    value: count[0],
+    state: count[1],
+  },
+  {
+    id: "double",
+    label: "double",
+    kind: "computed",
+    value: double[0],
+    state: double[1],
+  },
+  {
+    id: "view",
+    label: "Item 1 view",
+    kind: "view",
+    value: view[0],
+    state: view[1],
+  },
 ];
 
-const S_APP = check("app", "App", "HasChildViewsToRefresh", "", "", "traversed");
+const S_APP = check(
+  "app",
+  "App",
+  "HasChildViewsToRefresh",
+  "",
+  "",
+  "traversed",
+);
 const S_HEADER = check("header", "Header", "no flags", "", "", "skipped");
-const S_LIST = check("list", "List", "HasChildViewsToRefresh", "", "", "traversed");
+const S_LIST = check(
+  "list",
+  "List",
+  "HasChildViewsToRefresh",
+  "",
+  "",
+  "traversed",
+);
 const S_ITEM1 = check("item1", "Item 1", "{{ double() }}", "0", "2", "changed");
 const S_ITEM2 = check("item2", "Item 2", "never read count", "", "", "skipped");
 
@@ -606,7 +893,10 @@ const signalsExample: AngularExample = {
   codeLines: [
     { num: 1, text: "@Component({" },
     { num: 2, text: "  selector: 'app-item'," },
-    { num: 3, text: "  template: `<button (click)=\"add()\">{{ double() }}</button>`," },
+    {
+      num: 3,
+      text: '  template: `<button (click)="add()">{{ double() }}</button>`,',
+    },
     { num: 4, text: "})" },
     { num: 5, text: "export class ItemComponent {" },
     { num: 6, text: "  count = signal(0);" },
@@ -637,7 +927,7 @@ const signalsExample: AngularExample = {
     },
     {
       descriptionHtml:
-        "During the first render the template of the first item calls <code>double()</code>, and <code>double</code> calls <code>count()</code>. Each read registers a <span class=\"hl-micro\">producer to consumer edge</span> in the reactive graph: <code>count</code> feeds <code>double</code>, and <code>double</code> feeds this one view.",
+        'During the first render the template of the first item calls <code>double()</code>, and <code>double</code> calls <code>count()</code>. Each read registers a <span class="hl-micro">producer to consumer edge</span> in the reactive graph: <code>count</code> feeds <code>double</code>, and <code>double</code> feeds this one view.',
       activeLine: 7,
       doneLines: [11, 12, 13],
       tree: tree({
@@ -650,7 +940,11 @@ const signalsExample: AngularExample = {
       activeNodeId: "item1",
       trigger: idle("initial render tracked dependencies", SIGNAL_STAGES),
       checks: [],
-      signals: graph(["0", "reading"], ["0", "reading"], ["shows 0", "reading"]),
+      signals: graph(
+        ["0", "reading"],
+        ["0", "reading"],
+        ["shows 0", "reading"],
+      ),
     },
     {
       descriptionHtml:
@@ -665,7 +959,12 @@ const signalsExample: AngularExample = {
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "item1",
-      trigger: signalTrigger("click", "template listener, no zone", ["pending", "pending", "pending", "pending"]),
+      trigger: signalTrigger("click", "template listener, no zone", [
+        "pending",
+        "pending",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: graph(["0", "clean"], ["0", "clean"], ["shows 0", "clean"]),
     },
@@ -682,13 +981,18 @@ const signalsExample: AngularExample = {
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "item1",
-      trigger: signalTrigger("count.set(1)", "producer notifies consumers", ["active", "pending", "pending", "pending"]),
+      trigger: signalTrigger("count.set(1)", "producer notifies consumers", [
+        "active",
+        "pending",
+        "pending",
+        "pending",
+      ]),
       checks: [],
       signals: graph(["1", "updated"], ["0", "dirty"], ["shows 0", "clean"]),
     },
     {
       descriptionHtml:
-        "The dirty notification reaches the view's reactive consumer. Angular flags this view <code>RefreshView</code> and walks up the parents, setting <code>HasChildViewsToRefresh</code> on <code>ListComponent</code> and <code>AppComponent</code>. Those flags mean \"pass through\", not \"check my bindings\".",
+        'The dirty notification reaches the view\'s reactive consumer. Angular flags this view <code>RefreshView</code> and walks up the parents, setting <code>HasChildViewsToRefresh</code> on <code>ListComponent</code> and <code>AppComponent</code>. Those flags mean "pass through", not "check my bindings".',
       activeLine: 8,
       doneLines: [3, 7, 11, 12, 13],
       tree: tree({
@@ -699,7 +1003,11 @@ const signalsExample: AngularExample = {
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "item1",
-      trigger: signalTrigger("count.set(1)", "view flagged, ancestors marked for traversal", ["done", "active", "pending", "pending"]),
+      trigger: signalTrigger(
+        "count.set(1)",
+        "view flagged, ancestors marked for traversal",
+        ["done", "active", "pending", "pending"],
+      ),
       checks: [],
       signals: graph(["1", "updated"], ["0", "dirty"], ["shows 0", "dirty"]),
     },
@@ -715,7 +1023,11 @@ const signalsExample: AngularExample = {
         item1: { highlight: "updated", props: [REFRESH] },
         item2: { props: [NO_FLAG] },
       }),
-      trigger: signalTrigger("count.set(1)", "one tick scheduled, notifications coalesced", ["done", "done", "active", "pending"]),
+      trigger: signalTrigger(
+        "count.set(1)",
+        "one tick scheduled, notifications coalesced",
+        ["done", "done", "active", "pending"],
+      ),
       checks: [],
       signals: graph(["1", "updated"], ["0", "dirty"], ["shows 0", "dirty"]),
     },
@@ -732,7 +1044,12 @@ const signalsExample: AngularExample = {
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "app",
-      trigger: signalTrigger("count.set(1)", "targeted traversal", ["done", "done", "done", "active"]),
+      trigger: signalTrigger("count.set(1)", "targeted traversal", [
+        "done",
+        "done",
+        "done",
+        "active",
+      ]),
       checks: [S_APP, S_HEADER],
       signals: graph(["1", "updated"], ["0", "dirty"], ["shows 0", "dirty"]),
     },
@@ -749,7 +1066,12 @@ const signalsExample: AngularExample = {
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "list",
-      trigger: signalTrigger("count.set(1)", "targeted traversal", ["done", "done", "done", "active"]),
+      trigger: signalTrigger("count.set(1)", "targeted traversal", [
+        "done",
+        "done",
+        "done",
+        "active",
+      ]),
       checks: [S_APP, S_HEADER, S_LIST],
       signals: graph(["1", "updated"], ["0", "dirty"], ["shows 0", "dirty"]),
     },
@@ -762,11 +1084,19 @@ const signalsExample: AngularExample = {
         app: { props: [NO_FLAG] },
         header: { props: [NO_FLAG] },
         list: { props: [NO_FLAG] },
-        item1: { highlight: "updated", props: [NO_FLAG, { key: "double", value: "2" }] },
+        item1: {
+          highlight: "updated",
+          props: [NO_FLAG, { key: "double", value: "2" }],
+        },
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "item1",
-      trigger: signalTrigger("count.set(1)", "DOM text 0 -> 2", ["done", "done", "done", "active"]),
+      trigger: signalTrigger("count.set(1)", "DOM text 0 -> 2", [
+        "done",
+        "done",
+        "done",
+        "active",
+      ]),
       checks: [S_APP, S_HEADER, S_LIST, S_ITEM1],
       signals: graph(["1", "clean"], ["2", "updated"], ["shows 2", "updated"]),
     },
@@ -779,15 +1109,26 @@ const signalsExample: AngularExample = {
         app: { props: [NO_FLAG] },
         header: { props: [NO_FLAG] },
         list: { props: [NO_FLAG] },
-        item1: { highlight: "updated", props: [NO_FLAG, { key: "double", value: "2" }] },
+        item1: {
+          highlight: "updated",
+          props: [NO_FLAG, { key: "double", value: "2" }],
+        },
         item2: { props: [NO_FLAG] },
       }),
       activeNodeId: "item2",
-      trigger: signalTrigger("count.set(1)", "pass complete, 1 view refreshed", ["done", "done", "done", "done"]),
+      trigger: signalTrigger(
+        "count.set(1)",
+        "pass complete, 1 view refreshed",
+        ["done", "done", "done", "done"],
+      ),
       checks: [S_APP, S_HEADER, S_LIST, S_ITEM1, S_ITEM2],
       signals: graph(["1", "clean"], ["2", "clean"], ["shows 2", "clean"]),
     },
   ],
 };
 
-export const EXAMPLES: AngularExample[] = [zoneExample, onPushExample, signalsExample];
+export const EXAMPLES: AngularExample[] = [
+  zoneExample,
+  onPushExample,
+  signalsExample,
+];

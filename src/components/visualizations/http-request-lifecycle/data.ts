@@ -71,15 +71,33 @@ const RESPONSE_HEADERS: TableRow[] = [
 ];
 
 const tripMessages = {
-  dnsQuery: msg("dns-q", "browser", "dns", "A? api.shop.dev", "recursive query"),
+  dnsQuery: msg(
+    "dns-q",
+    "browser",
+    "dns",
+    "A? api.shop.dev",
+    "recursive query",
+  ),
   dnsAnswer: msg("dns-a", "dns", "browser", "A 203.0.113.10", "TTL 300 s"),
   syn: msg("syn", "browser", "server", "SYN", "seq=0, port 443"),
   synAck: msg("syn-ack", "server", "browser", "SYN-ACK", "seq=0, ack=1"),
   ack: msg("ack", "browser", "server", "ACK", "connection open"),
-  clientHello: msg("ch", "browser", "server", "ClientHello", "SNI, key share, ALPN"),
+  clientHello: msg(
+    "ch",
+    "browser",
+    "server",
+    "ClientHello",
+    "SNI, key share, ALPN",
+  ),
   serverHello: msg("sh", "server", "browser", "ServerHello", "cert, Finished"),
   finished: msg("fin", "browser", "server", "Finished", "keys derived"),
-  request: msg("req", "browser", "server", "GET /products/42", "encrypted, 412 B"),
+  request: msg(
+    "req",
+    "browser",
+    "server",
+    "GET /products/42",
+    "encrypted, 412 B",
+  ),
   response: msg("res", "server", "browser", "200 OK", "87 B JSON"),
 };
 
@@ -152,7 +170,10 @@ const roundTrip: HttpRequestExample = {
       doneLines: [1],
       elapsed: "20 ms",
       stages: buildStages(TRIP, "dns", []),
-      messages: [tripMessages.dnsQuery, { ...tripMessages.dnsAnswer, status: "active" }],
+      messages: [
+        tripMessages.dnsQuery,
+        { ...tripMessages.dnsAnswer, status: "active" },
+      ],
       activeActorId: "browser",
       tableRows: [
         row("A record", "203.0.113.10", "done"),
@@ -250,7 +271,7 @@ const roundTrip: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        'Now the actual HTTP request goes out, encrypted: the request line <code>GET /products/42 HTTP/1.1</code> plus headers. <code>Host</code> is mandatory in HTTP/1.1 because one IP can serve many sites; <code>Authorization</code> carries the bearer token from line 6.',
+        "Now the actual HTTP request goes out, encrypted: the request line <code>GET /products/42 HTTP/1.1</code> plus headers. <code>Host</code> is mandatory in HTTP/1.1 because one IP can serve many sites; <code>Authorization</code> carries the bearer token from line 6.",
       activeLine: 6,
       doneLines: [1, 3, 4, 5],
       elapsed: "80 ms",
@@ -267,7 +288,10 @@ const roundTrip: HttpRequestExample = {
         { ...tripMessages.request, status: "active" },
       ],
       activeActorId: "server",
-      tableRows: REQUEST_HEADERS.map((r) => ({ ...r, tone: "active" as const })),
+      tableRows: REQUEST_HEADERS.map((r) => ({
+        ...r,
+        tone: "active" as const,
+      })),
     },
     {
       descriptionHtml:
@@ -292,11 +316,17 @@ const roundTrip: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        'The server writes the status line <code>200 OK</code> and response headers. <code>Content-Length: 87</code> tells the browser exactly where the body ends, and <code>Cache-Control: private, max-age=60</code> lets this browser reuse the response for a minute without asking again.',
+        "The server writes the status line <code>200 OK</code> and response headers. <code>Content-Length: 87</code> tells the browser exactly where the body ends, and <code>Cache-Control: private, max-age=60</code> lets this browser reuse the response for a minute without asking again.",
       activeLine: 8,
       doneLines: [1, 3, 4, 5, 6, 7],
       elapsed: "125 ms",
-      stages: buildStages(TRIP, "response", ["dns", "tcp", "tls", "request", "server"]),
+      stages: buildStages(TRIP, "response", [
+        "dns",
+        "tcp",
+        "tls",
+        "request",
+        "server",
+      ]),
       messages: [
         tripMessages.dnsQuery,
         tripMessages.dnsAnswer,
@@ -310,7 +340,10 @@ const roundTrip: HttpRequestExample = {
         { ...tripMessages.response, status: "active" },
       ],
       activeActorId: "browser",
-      tableRows: RESPONSE_HEADERS.map((r) => ({ ...r, tone: "active" as const })),
+      tableRows: RESPONSE_HEADERS.map((r) => ({
+        ...r,
+        tone: "active" as const,
+      })),
     },
     {
       descriptionHtml:
@@ -318,7 +351,14 @@ const roundTrip: HttpRequestExample = {
       activeLine: 10,
       doneLines: [1, 3, 4, 5, 6, 7, 8],
       elapsed: "125 ms",
-      stages: buildStages(TRIP, null, ["dns", "tcp", "tls", "request", "server", "response"]),
+      stages: buildStages(TRIP, null, [
+        "dns",
+        "tcp",
+        "tls",
+        "request",
+        "server",
+        "response",
+      ]),
       messages: [
         tripMessages.dnsQuery,
         tripMessages.dnsAnswer,
@@ -341,11 +381,18 @@ const roundTrip: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        '<code>res.json()</code> reads the remaining 87 bytes off the socket, decodes them as UTF-8, and runs <code>JSON.parse</code>. It returns a second promise because the body can still be in flight; with HTTP/2 several such requests would share this one connection as interleaved streams.',
+        "<code>res.json()</code> reads the remaining 87 bytes off the socket, decodes them as UTF-8, and runs <code>JSON.parse</code>. It returns a second promise because the body can still be in flight; with HTTP/2 several such requests would share this one connection as interleaved streams.",
       activeLine: 13,
       doneLines: [1, 3, 4, 5, 6, 7, 8, 10, 11],
       elapsed: "126 ms",
-      stages: buildStages(TRIP, null, ["dns", "tcp", "tls", "request", "server", "response"]),
+      stages: buildStages(TRIP, null, [
+        "dns",
+        "tcp",
+        "tls",
+        "request",
+        "server",
+        "response",
+      ]),
       messages: [
         tripMessages.dnsQuery,
         tripMessages.dnsAnswer,
@@ -363,7 +410,11 @@ const roundTrip: HttpRequestExample = {
         row("body", '{"id":42,"name":"Desk Lamp","price":39.9,...}', "done"),
         row("bytes read", "87 of 87", "done"),
         row("product.name", '"Desk Lamp"', "done"),
-        row("total time", "126 ms (DNS 20, TCP 30, TLS 30, request 45)", "done"),
+        row(
+          "total time",
+          "126 ms (DNS 20, TCP 30, TLS 30, request 45)",
+          "done",
+        ),
       ],
     },
   ],
@@ -460,7 +511,7 @@ const insideServer: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        '<code>express.json()</code> checks <code>Content-Type</code>. A GET has no body and no JSON content type, so the parser does nothing and calls <code>next()</code>; <code>req.body</code> stays an empty object.',
+        "<code>express.json()</code> checks <code>Content-Type</code>. A GET has no body and no JSON content type, so the parser does nothing and calls <code>next()</code>; <code>req.body</code> stays an empty object.",
       activeLine: 3,
       doneLines: [1, 2, 14],
       elapsed: "t+0.1 ms",
@@ -492,7 +543,12 @@ const insideServer: HttpRequestExample = {
       activeLine: 6,
       doneLines: [1, 2, 3, 4, 14],
       elapsed: "t+0.5 ms",
-      stages: buildStages(CHAIN, "router", ["listener", "logger", "json", "auth"]),
+      stages: buildStages(CHAIN, "router", [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+      ]),
       messages: [serverMessages.request],
       activeActorId: "server",
       tableRows: baseRequest([
@@ -507,8 +563,17 @@ const insideServer: HttpRequestExample = {
       activeLine: 7,
       doneLines: [1, 2, 3, 4, 6, 14],
       elapsed: "t+0.6 ms",
-      stages: buildStages(CHAIN, "handler", ["listener", "logger", "json", "auth", "router"]),
-      messages: [serverMessages.request, { ...serverMessages.query, status: "active" }],
+      stages: buildStages(CHAIN, "handler", [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+        "router",
+      ]),
+      messages: [
+        serverMessages.request,
+        { ...serverMessages.query, status: "active" },
+      ],
       activeActorId: "db",
       tableRows: baseRequest([
         row("body", "{}"),
@@ -523,7 +588,13 @@ const insideServer: HttpRequestExample = {
       activeLine: 7,
       doneLines: [1, 2, 3, 4, 6, 14],
       elapsed: "t+4.0 ms",
-      stages: buildStages(CHAIN, "handler", ["listener", "logger", "json", "auth", "router"]),
+      stages: buildStages(CHAIN, "handler", [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+        "router",
+      ]),
       messages: [
         serverMessages.request,
         serverMessages.query,
@@ -544,7 +615,13 @@ const insideServer: HttpRequestExample = {
       activeLine: 10,
       doneLines: [1, 2, 3, 4, 6, 7, 8, 9, 14],
       elapsed: "t+12.6 ms",
-      stages: buildStages(CHAIN, "handler", ["listener", "logger", "json", "auth", "router"]),
+      stages: buildStages(CHAIN, "handler", [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+        "router",
+      ]),
       messages: [
         serverMessages.request,
         serverMessages.query,
@@ -562,11 +639,18 @@ const insideServer: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        '<code>res.status(200).json(product)</code> runs <code>JSON.stringify</code>, sets <code>Content-Type: application/json; charset=utf-8</code> and <code>Content-Length: 87</code>, then calls <code>res.end</code>. Headers are flushed with the first body chunk, so no header can change after this point.',
+        "<code>res.status(200).json(product)</code> runs <code>JSON.stringify</code>, sets <code>Content-Type: application/json; charset=utf-8</code> and <code>Content-Length: 87</code>, then calls <code>res.end</code>. Headers are flushed with the first body chunk, so no header can change after this point.",
       activeLine: 11,
       doneLines: [1, 2, 3, 4, 6, 7, 8, 9, 10, 14],
       elapsed: "t+12.8 ms",
-      stages: buildStages(CHAIN, "response", ["listener", "logger", "json", "auth", "router", "handler"]),
+      stages: buildStages(CHAIN, "response", [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+        "router",
+        "handler",
+      ]),
       messages: [
         serverMessages.request,
         serverMessages.query,
@@ -589,7 +673,15 @@ const insideServer: HttpRequestExample = {
       activeLine: null,
       doneLines: [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14],
       elapsed: "t+12.8 ms",
-      stages: buildStages(CHAIN, null, ["listener", "logger", "json", "auth", "router", "handler", "response"]),
+      stages: buildStages(CHAIN, null, [
+        "listener",
+        "logger",
+        "json",
+        "auth",
+        "router",
+        "handler",
+        "response",
+      ]),
       messages: [
         serverMessages.request,
         serverMessages.query,
@@ -639,9 +731,15 @@ const errorsAndCodes: HttpRequestExample = {
   codeLines: [
     { num: 1, text: "app.get('/products/:id', async (req, res, next) => {" },
     { num: 2, text: "  try {" },
-    { num: 3, text: "    const product = await db.findProduct(req.params.id);" },
+    {
+      num: 3,
+      text: "    const product = await db.findProduct(req.params.id);",
+    },
     { num: 4, text: "    if (!product) {" },
-    { num: 5, text: "      return res.status(404).json({ error: 'Not found' });" },
+    {
+      num: 5,
+      text: "      return res.status(404).json({ error: 'Not found' });",
+    },
     { num: 6, text: "    }" },
     { num: 7, text: "    res.json(product);" },
     { num: 8, text: "  } catch (err) {" },
@@ -655,7 +753,10 @@ const errorsAndCodes: HttpRequestExample = {
     { num: 16, text: "" },
     { num: 17, text: "app.use((err, req, res, next) => {" },
     { num: 18, text: "  console.error(err);" },
-    { num: 19, text: "  res.status(500).json({ error: 'Internal Server Error' });" },
+    {
+      num: 19,
+      text: "  res.status(500).json({ error: 'Internal Server Error' });",
+    },
     { num: 20, text: "});" },
   ],
   steps: [
@@ -678,12 +779,24 @@ const errorsAndCodes: HttpRequestExample = {
         'A missing resource is a <span class="hl-api">client-side 4xx</span>, not a server fault. The handler sends <code>404 Not Found</code> with a JSON body and <code>return</code>s so line 7 cannot also write to the response, which would throw <code>ERR_HTTP_HEADERS_SENT</code>.',
       activeLine: 5,
       doneLines: [1, 2, 3, 4],
-      stages: buildStages(ERR, "response", ["listener", "auth", "router", "handler", "db"], ["error"]),
+      stages: buildStages(
+        ERR,
+        "response",
+        ["listener", "auth", "router", "handler", "db"],
+        ["error"],
+      ),
       messages: [
         msg("r1", "client", "server", "GET /products/999", "valid token"),
         msg("q1", "server", "db", "findProduct(999)", ""),
         msg("q1r", "db", "server", "null", "0 rows"),
-        msg("s1", "server", "client", "404 Not Found", "application/json", "failed"),
+        msg(
+          "s1",
+          "server",
+          "client",
+          "404 Not Found",
+          "application/json",
+          "failed",
+        ),
       ],
       activeActorId: "client",
       tableRows: [
@@ -695,12 +808,19 @@ const errorsAndCodes: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        '<strong>401.</strong> A new request arrives for <code>/products/42</code>, but the bearer token expired ten minutes ago. The <code>auth</code> middleware fails verification before the router ever sees the request.',
+        "<strong>401.</strong> A new request arrives for <code>/products/42</code>, but the bearer token expired ten minutes ago. The <code>auth</code> middleware fails verification before the router ever sees the request.",
       activeLine: null,
       doneLines: [],
       stages: buildStages(ERR, "auth", ["listener"]),
       messages: [
-        msg("r2", "client", "server", "GET /products/42", "expired token", "active"),
+        msg(
+          "r2",
+          "client",
+          "server",
+          "GET /products/42",
+          "expired token",
+          "active",
+        ),
       ],
       activeActorId: "server",
       tableRows: [
@@ -713,15 +833,31 @@ const errorsAndCodes: HttpRequestExample = {
         'The middleware responds <code>401 Unauthorized</code> itself and never calls <code>next()</code>, so the router, handler, and database are <span class="hl-stack">skipped</span>. The <code>WWW-Authenticate</code> header is what makes a 401 well-formed: it tells the client which scheme to retry with.',
       activeLine: null,
       doneLines: [],
-      stages: buildStages(ERR, "response", ["listener", "auth"], ["router", "handler", "db", "error"]),
+      stages: buildStages(
+        ERR,
+        "response",
+        ["listener", "auth"],
+        ["router", "handler", "db", "error"],
+      ),
       messages: [
         msg("r2", "client", "server", "GET /products/42", "expired token"),
-        msg("s2", "server", "client", "401 Unauthorized", "WWW-Authenticate", "failed"),
+        msg(
+          "s2",
+          "server",
+          "client",
+          "401 Unauthorized",
+          "WWW-Authenticate",
+          "failed",
+        ),
       ],
       activeActorId: "client",
       tableRows: [
         row("status", "401 Unauthorized", "failed"),
-        row("WWW-Authenticate", 'Bearer realm="api", error="invalid_token"', "active"),
+        row(
+          "WWW-Authenticate",
+          'Bearer realm="api", error="invalid_token"',
+          "active",
+        ),
         row("body", '{ "error": "Token expired" }', "active"),
         row("next()", "not called", "muted"),
       ],
@@ -748,7 +884,13 @@ const errorsAndCodes: HttpRequestExample = {
         'The <code>catch</code> block calls <span class="hl-api">next(err)</span>. Passing an argument to <code>next</code> tells Express to skip every remaining normal middleware and jump to the first handler declared with four parameters. In Express 5 an async rejection reaches this path even without the try/catch.',
       activeLine: 9,
       doneLines: [1, 2, 3, 8],
-      stages: buildStages(ERR, "error", ["listener", "auth", "router", "handler", "db"]),
+      stages: buildStages(ERR, "error", [
+        "listener",
+        "auth",
+        "router",
+        "handler",
+        "db",
+      ]),
       messages: [
         msg("r3", "client", "server", "GET /products/42", "fresh token"),
         msg("q3", "server", "db", "findProduct(42)", ""),
@@ -762,10 +904,16 @@ const errorsAndCodes: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        'The error middleware logs the full stack to stderr where an operator can see it. That detail must stay on the server: sending stack traces or SQL to the client leaks internals.',
+        "The error middleware logs the full stack to stderr where an operator can see it. That detail must stay on the server: sending stack traces or SQL to the client leaks internals.",
       activeLine: 18,
       doneLines: [1, 2, 3, 8, 9, 17],
-      stages: buildStages(ERR, "error", ["listener", "auth", "router", "handler", "db"]),
+      stages: buildStages(ERR, "error", [
+        "listener",
+        "auth",
+        "router",
+        "handler",
+        "db",
+      ]),
       messages: [
         msg("r3", "client", "server", "GET /products/42", "fresh token"),
         msg("q3", "server", "db", "findProduct(42)", ""),
@@ -773,21 +921,39 @@ const errorsAndCodes: HttpRequestExample = {
       ],
       activeActorId: "server",
       tableRows: [
-        row("stderr", "Error: connect ECONNREFUSED ... at Pool.connect", "failed"),
+        row(
+          "stderr",
+          "Error: connect ECONNREFUSED ... at Pool.connect",
+          "failed",
+        ),
         row("status", "not sent yet", "muted"),
       ],
     },
     {
       descriptionHtml:
-        'It responds <code>500 Internal Server Error</code> with a generic JSON body. A 5xx says the server, not the request, was at fault, so a client may safely retry a GET; monitoring counts 5xx separately from 4xx for exactly that reason.',
+        "It responds <code>500 Internal Server Error</code> with a generic JSON body. A 5xx says the server, not the request, was at fault, so a client may safely retry a GET; monitoring counts 5xx separately from 4xx for exactly that reason.",
       activeLine: 19,
       doneLines: [1, 2, 3, 8, 9, 17, 18],
-      stages: buildStages(ERR, "response", ["listener", "auth", "router", "handler", "db", "error"]),
+      stages: buildStages(ERR, "response", [
+        "listener",
+        "auth",
+        "router",
+        "handler",
+        "db",
+        "error",
+      ]),
       messages: [
         msg("r3", "client", "server", "GET /products/42", "fresh token"),
         msg("q3", "server", "db", "findProduct(42)", ""),
         msg("q3r", "db", "server", "ECONNREFUSED", "pool exhausted", "failed"),
-        msg("s3", "server", "client", "500 Internal Server Error", "generic body", "failed"),
+        msg(
+          "s3",
+          "server",
+          "client",
+          "500 Internal Server Error",
+          "generic body",
+          "failed",
+        ),
       ],
       activeActorId: "client",
       tableRows: [
@@ -799,7 +965,7 @@ const errorsAndCodes: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        '<strong>301.</strong> An old link requests <code>GET /items/42</code>. The legacy route still exists, but only to tell clients where the resource moved.',
+        "<strong>301.</strong> An old link requests <code>GET /items/42</code>. The legacy route still exists, but only to tell clients where the resource moved.",
       activeLine: 13,
       doneLines: [],
       stages: buildStages(ERR, "router", ["listener", "auth"]),
@@ -817,10 +983,22 @@ const errorsAndCodes: HttpRequestExample = {
         '<code>res.redirect(301, ...)</code> sets <code>Location: /products/42</code> and a <span class="hl-api">301 Moved Permanently</span> status with a tiny body. Permanent means the browser may cache the redirect and skip asking next time; a 302 or 307 would not be cached.',
       activeLine: 14,
       doneLines: [13],
-      stages: buildStages(ERR, "response", ["listener", "auth", "router"], ["handler", "db", "error"]),
+      stages: buildStages(
+        ERR,
+        "response",
+        ["listener", "auth", "router"],
+        ["handler", "db", "error"],
+      ),
       messages: [
         msg("r4", "client", "server", "GET /items/42", "legacy path"),
-        msg("s4", "server", "client", "301 Moved Permanently", "Location: /products/42", "active"),
+        msg(
+          "s4",
+          "server",
+          "client",
+          "301 Moved Permanently",
+          "Location: /products/42",
+          "active",
+        ),
       ],
       activeActorId: "client",
       tableRows: [
@@ -838,8 +1016,21 @@ const errorsAndCodes: HttpRequestExample = {
       stages: buildStages(ERR, "handler", ["listener", "auth", "router"]),
       messages: [
         msg("r4", "client", "server", "GET /items/42", "legacy path"),
-        msg("s4", "server", "client", "301 Moved Permanently", "Location: /products/42"),
-        msg("r5", "client", "server", "GET /products/42", "auto-follow, same socket", "active"),
+        msg(
+          "s4",
+          "server",
+          "client",
+          "301 Moved Permanently",
+          "Location: /products/42",
+        ),
+        msg(
+          "r5",
+          "client",
+          "server",
+          "GET /products/42",
+          "auto-follow, same socket",
+          "active",
+        ),
         msg("q5", "server", "db", "findProduct(42)", "", "active"),
       ],
       activeActorId: "server",
@@ -850,14 +1041,31 @@ const errorsAndCodes: HttpRequestExample = {
     },
     {
       descriptionHtml:
-        'The product exists this time, so line 7 sends <code>200 OK</code>. The resolved <code>Response</code> reports <code>redirected: true</code> and <code>url</code> pointing at the final address, which is how the caller can detect that a hop happened.',
+        "The product exists this time, so line 7 sends <code>200 OK</code>. The resolved <code>Response</code> reports <code>redirected: true</code> and <code>url</code> pointing at the final address, which is how the caller can detect that a hop happened.",
       activeLine: 7,
       doneLines: [1, 2, 3, 4, 6, 13, 14, 15],
-      stages: buildStages(ERR, "response", ["listener", "auth", "router", "handler", "db"], ["error"]),
+      stages: buildStages(
+        ERR,
+        "response",
+        ["listener", "auth", "router", "handler", "db"],
+        ["error"],
+      ),
       messages: [
         msg("r4", "client", "server", "GET /items/42", "legacy path"),
-        msg("s4", "server", "client", "301 Moved Permanently", "Location: /products/42"),
-        msg("r5", "client", "server", "GET /products/42", "auto-follow, same socket"),
+        msg(
+          "s4",
+          "server",
+          "client",
+          "301 Moved Permanently",
+          "Location: /products/42",
+        ),
+        msg(
+          "r5",
+          "client",
+          "server",
+          "GET /products/42",
+          "auto-follow, same socket",
+        ),
         msg("q5", "server", "db", "findProduct(42)", ""),
         msg("q5r", "db", "server", "1 row", "Desk Lamp"),
         msg("s5", "server", "client", "200 OK", "87 B JSON", "active"),

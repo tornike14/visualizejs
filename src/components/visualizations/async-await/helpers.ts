@@ -38,8 +38,10 @@ export const FN_STATUS_STYLES: Record<AsyncFnStatus, string> = {
 
 export const FN_CARD_STYLES: Record<AsyncFnStatus, string> = {
   idle: "border-slate-500/30 bg-slate-800/30",
-  running: "border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_18px_rgba(34,211,238,0.1)]",
-  suspended: "border-amber-300/40 bg-amber-400/10 shadow-[0_0_18px_rgba(251,191,36,0.1)]",
+  running:
+    "border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_18px_rgba(34,211,238,0.1)]",
+  suspended:
+    "border-amber-300/40 bg-amber-400/10 shadow-[0_0_18px_rgba(251,191,36,0.1)]",
   done: "border-emerald-300/30 bg-emerald-400/8",
 };
 

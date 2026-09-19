@@ -27,18 +27,19 @@ export const TopicTheoryButton = ({
   if (isPreview) {
     return (
       <span className={buttonClassName} aria-label="Theory button preview">
-        <BookOpenText className={cn(size === "large" ? "h-4 w-4" : "h-3.5 w-3.5")} />
+        <BookOpenText
+          className={cn(size === "large" ? "h-4 w-4" : "h-3.5 w-3.5")}
+        />
         Theory
       </span>
     );
   }
 
   return (
-    <Link
-      href={href}
-      className={buttonClassName}
-    >
-      <BookOpenText className={cn(size === "large" ? "h-4 w-4" : "h-3.5 w-3.5")} />
+    <Link href={href} className={buttonClassName}>
+      <BookOpenText
+        className={cn(size === "large" ? "h-4 w-4" : "h-3.5 w-3.5")}
+      />
       Theory
     </Link>
   );

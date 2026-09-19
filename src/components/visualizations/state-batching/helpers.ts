@@ -23,7 +23,8 @@ export const kindLabel = createKindLabel<StateBatchingKind>({
 
 const UPDATE_STATUS_STYLES: Record<UpdateStatus, string> = {
   queued: "border-amber-500/30 bg-amber-500/8 text-amber-200",
-  applying: "border-cyan-400/40 bg-cyan-500/10 text-cyan-200 shadow-[0_0_14px_rgba(34,211,238,0.12)]",
+  applying:
+    "border-cyan-400/40 bg-cyan-500/10 text-cyan-200 shadow-[0_0_14px_rgba(34,211,238,0.12)]",
   applied: "border-emerald-500/30 bg-emerald-500/8 text-emerald-200 opacity-70",
 };
 
@@ -69,4 +70,5 @@ const PENDING_STYLES: Record<"task" | "microtask", string> = {
   microtask: "border-violet-500/25 text-violet-300/80",
 };
 
-export const pendingStyle = (kind: "task" | "microtask") => PENDING_STYLES[kind];
+export const pendingStyle = (kind: "task" | "microtask") =>
+  PENDING_STYLES[kind];

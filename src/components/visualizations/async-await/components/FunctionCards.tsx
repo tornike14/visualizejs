@@ -1,5 +1,9 @@
 import { cn } from "@/lib/utils";
-import { FN_CARD_STYLES, FN_STATUS_STYLES, PROMISE_STATE_STYLES } from "../helpers";
+import {
+  FN_CARD_STYLES,
+  FN_STATUS_STYLES,
+  PROMISE_STATE_STYLES,
+} from "../helpers";
 import type { AsyncFnState } from "../types";
 
 export const FunctionCards = ({ functions }: { functions: AsyncFnState[] }) => {
@@ -16,7 +20,10 @@ export const FunctionCards = ({ functions }: { functions: AsyncFnState[] }) => {
       {functions.map((fn) => (
         <div
           key={fn.id}
-          className={cn("viz-slide-in rounded-lg border px-3 py-2.5", FN_CARD_STYLES[fn.status])}
+          className={cn(
+            "viz-slide-in rounded-lg border px-3 py-2.5",
+            FN_CARD_STYLES[fn.status],
+          )}
         >
           <div className="flex items-center justify-between gap-2">
             <span className="truncate font-mono text-xs font-semibold text-slate-100">
@@ -38,10 +45,17 @@ export const FunctionCards = ({ functions }: { functions: AsyncFnState[] }) => {
           )}
           <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 font-mono text-[11px] text-slate-400">
             <span>{fn.promise.name}</span>
-            <span className={cn("font-semibold", PROMISE_STATE_STYLES[fn.promise.state])}>
+            <span
+              className={cn(
+                "font-semibold",
+                PROMISE_STATE_STYLES[fn.promise.state],
+              )}
+            >
               {fn.promise.state}
             </span>
-            <span className="break-all text-slate-300/80">{fn.promise.value}</span>
+            <span className="break-all text-slate-300/80">
+              {fn.promise.value}
+            </span>
           </div>
         </div>
       ))}

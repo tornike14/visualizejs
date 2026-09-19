@@ -17,7 +17,7 @@ export const QueueItems = ({ items }: { items: string[] }) => {
           key={`${item}-${index}`}
           className={cn(
             "viz-slide-in rounded-lg border px-3 py-2 font-mono text-xs",
-            QUEUE_ITEM_STYLE
+            QUEUE_ITEM_STYLE,
           )}
         >
           {item}

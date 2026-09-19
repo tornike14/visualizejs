@@ -55,7 +55,10 @@ export const ComputationGraph = ({ nodes, phase }: ComputationGraphProps) => {
         {nodes.map((node, index) => {
           const isLast = index === nodes.length - 1;
           return (
-            <li key={nodeFingerprint(node)} className="flex min-w-0 items-center">
+            <li
+              key={nodeFingerprint(node)}
+              className="flex min-w-0 items-center"
+            >
               <div
                 className={cn(
                   "viz-slide-in flex min-w-[5.75rem] flex-col items-center rounded-xl border px-3 py-2 text-center transition-all duration-300",

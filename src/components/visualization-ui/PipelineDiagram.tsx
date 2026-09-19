@@ -1,3 +1,7 @@
+import {
+  FlowConnector,
+  type FlowTone,
+} from "@/components/visualization-ui/FlowConnector";
 import { cn } from "@/lib/utils";
 
 export type PipelineStageStatus = "pending" | "active" | "done" | "skipped";
@@ -25,11 +29,11 @@ const STAGE_STYLES: Record<PipelineStageStatus, string> = {
   skipped: "border-slate-700/40 bg-slate-900/40 text-slate-600 line-through",
 };
 
-const CONNECTOR_STYLES: Record<PipelineStageStatus, string> = {
-  pending: "bg-slate-600/40",
-  active: "bg-cyan-400/60",
-  done: "bg-emerald-400/50",
-  skipped: "bg-slate-700/40",
+const CONNECTOR_TONES: Record<PipelineStageStatus, FlowTone> = {
+  pending: "slate",
+  active: "cyan",
+  done: "emerald",
+  skipped: "slate",
 };
 
 /**
@@ -47,7 +51,9 @@ export const PipelineDiagram = ({
     <ol
       className={cn(
         "flex",
-        isVertical ? "flex-col items-stretch" : "flex-wrap items-stretch gap-y-3",
+        isVertical
+          ? "flex-col items-stretch"
+          : "flex-wrap items-stretch gap-y-3",
         className,
       )}
       aria-label="Pipeline stages"
@@ -73,17 +79,21 @@ export const PipelineDiagram = ({
                 {stage.label}
               </span>
               {stage.detail && (
-                <span className="mt-0.5 text-[11px] opacity-80">{stage.detail}</span>
+                <span className="mt-0.5 text-[11px] opacity-80">
+                  {stage.detail}
+                </span>
               )}
             </div>
             {!isLast && (
-              <span
-                aria-hidden
-                className={cn(
-                  "transition-colors",
-                  isVertical ? "mx-auto h-4 w-px" : "h-px w-5 shrink-0",
-                  CONNECTOR_STYLES[stage.status === "done" ? "done" : stage.status === "active" ? "active" : "pending"],
-                )}
+              <FlowConnector
+                orientation={orientation}
+                tone={CONNECTOR_TONES[stage.status]}
+                // Dots run along both edges that touch the active stage.
+                active={
+                  stage.status === "active" ||
+                  stages[index + 1].status === "active"
+                }
+                className={isVertical ? "mx-auto h-4" : "w-6"}
               />
             )}
           </li>

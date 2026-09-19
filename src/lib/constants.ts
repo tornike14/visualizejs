@@ -7,8 +7,6 @@ export const SOCIAL_IMAGE_ALT =
   "VisualizeJS - Interactive JavaScript and React visualizations";
 export const SOCIAL_IMAGE_WIDTH = 1200;
 export const SOCIAL_IMAGE_HEIGHT = 630;
-export const OPEN_GRAPH_IMAGE_URL = `${SITE_URL}/opengraph-image`;
-export const TWITTER_IMAGE_URL = `${SITE_URL}/twitter-image`;
 export const CREATOR_NAME = "Tornike Nizharadze";
 export const CREATOR_LINKEDIN_URL =
   process.env.NEXT_PUBLIC_CREATOR_LINKEDIN_URL ||

@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type ConcurrentRenderingKind = "blocking" | "transition" | "deferred";
@@ -70,10 +70,7 @@ export interface DomState {
   suspense: { status: SuspenseStatus; note: string } | null;
 }
 
-export interface ConcurrentRenderingStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ConcurrentRenderingStep extends BaseStep {
   lanes: LaneEntry[];
   workLoop: WorkLoopState;
   frames: FrameEntry[];

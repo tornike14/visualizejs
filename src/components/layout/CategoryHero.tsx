@@ -43,8 +43,14 @@ export const CategoryHero = ({ config }: CategoryHeroProps) => {
 
     shell.style.setProperty("--category-hero-tilt-x", `${tiltX.toFixed(2)}deg`);
     shell.style.setProperty("--category-hero-tilt-y", `${tiltY.toFixed(2)}deg`);
-    shell.style.setProperty("--category-hero-glow-x", `${(x * 100).toFixed(2)}%`);
-    shell.style.setProperty("--category-hero-glow-y", `${(y * 100).toFixed(2)}%`);
+    shell.style.setProperty(
+      "--category-hero-glow-x",
+      `${(x * 100).toFixed(2)}%`,
+    );
+    shell.style.setProperty(
+      "--category-hero-glow-y",
+      `${(y * 100).toFixed(2)}%`,
+    );
     shell.style.setProperty(
       "--category-hero-beam-shift",
       `${beamShift.toFixed(2)}%`,

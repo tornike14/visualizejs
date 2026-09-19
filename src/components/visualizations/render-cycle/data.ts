@@ -39,10 +39,13 @@ export const EXAMPLES: RenderCycleExample[] = [
       },
       {
         descriptionHtml:
-          "<span class=\"hl-api\">Render phase</span> begins. React calls <code>Counter()</code> to produce new elements. This phase is <strong>pure</strong> and can be interrupted.",
+          '<span class="hl-api">Render phase</span> begins. React calls <code>Counter()</code> to produce new elements. This phase is <strong>pure</strong> and can be interrupted.',
         activeLine: 1,
         doneLines: [],
-        phaseInfo: { phase: "render", tags: ["Pure", "No side effects", "Interruptible"] },
+        phaseInfo: {
+          phase: "render",
+          tags: ["Pure", "No side effects", "Interruptible"],
+        },
         currentTree: {
           id: "counter",
           label: "<Counter>",
@@ -63,7 +66,10 @@ export const EXAMPLES: RenderCycleExample[] = [
           "React processes hooks (<code>useState</code> returns <code>1</code>), records effects, and reconciles children.",
         activeLine: 2,
         doneLines: [1],
-        phaseInfo: { phase: "render", tags: ["Pure", "No side effects", "Interruptible"] },
+        phaseInfo: {
+          phase: "render",
+          tags: ["Pure", "No side effects", "Interruptible"],
+        },
         currentTree: {
           id: "counter",
           label: "<Counter>",
@@ -80,16 +86,23 @@ export const EXAMPLES: RenderCycleExample[] = [
           ],
         },
         effects: [
-          { type: "useLayoutEffect", label: "log layout effect", status: "pending" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "pending",
+          },
           { type: "useEffect", label: "log effect", status: "pending" },
         ],
       },
       {
         descriptionHtml:
-          "Render phase complete. The <span class=\"hl-task\">work-in-progress tree</span> is built. React is ready to commit.",
+          'Render phase complete. The <span class="hl-task">work-in-progress tree</span> is built. React is ready to commit.',
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
-        phaseInfo: { phase: "render", tags: ["Pure", "No side effects", "Interruptible"] },
+        phaseInfo: {
+          phase: "render",
+          tags: ["Pure", "No side effects", "Interruptible"],
+        },
         currentTree: {
           id: "counter",
           label: "<Counter>",
@@ -102,32 +115,57 @@ export const EXAMPLES: RenderCycleExample[] = [
           label: "<Counter>",
           highlight: "updated",
           children: [
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "text", label: '"1"', highlight: "updated" }] },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [{ id: "text", label: '"1"', highlight: "updated" }],
+            },
           ],
         },
         effects: [
-          { type: "useLayoutEffect", label: "log layout effect", status: "pending" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "pending",
+          },
           { type: "useEffect", label: "log effect", status: "pending" },
         ],
       },
       {
         descriptionHtml:
-          "<span class=\"hl-api\">Commit phase</span> begins. React applies <span class=\"hl-stack\">DOM mutations</span> synchronously. The text node changes from \"0\" to \"1\".",
+          '<span class="hl-api">Commit phase</span> begins. React applies <span class="hl-stack">DOM mutations</span> synchronously. The text node changes from "0" to "1".',
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
-        phaseInfo: { phase: "commit", tags: ["Synchronous", "DOM mutations", "Cannot be interrupted"] },
+        phaseInfo: {
+          phase: "commit",
+          tags: ["Synchronous", "DOM mutations", "Cannot be interrupted"],
+        },
         currentTree: {
           id: "counter",
           label: "<Counter>",
           highlight: "updated",
           children: [
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "text", label: '"1"', highlight: "updated" }] },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [{ id: "text", label: '"1"', highlight: "updated" }],
+            },
           ],
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \"0\" -> \"1\"", status: "running" },
-          { type: "useLayoutEffect", label: "log layout effect", status: "pending" },
+          {
+            type: "DOM mutation",
+            label: 'text: "0" -> "1"',
+            status: "running",
+          },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "pending",
+          },
           { type: "useEffect", label: "log effect", status: "pending" },
         ],
       },
@@ -142,19 +180,28 @@ export const EXAMPLES: RenderCycleExample[] = [
           label: "<Counter>",
           highlight: "updated",
           children: [
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "text", label: '"1"', highlight: "updated" }] },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [{ id: "text", label: '"1"', highlight: "updated" }],
+            },
           ],
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \"0\" -> \"1\"", status: "done" },
-          { type: "useLayoutEffect", label: "log layout effect", status: "running" },
+          { type: "DOM mutation", label: 'text: "0" -> "1"', status: "done" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "running",
+          },
           { type: "useEffect", label: "log effect", status: "pending" },
         ],
       },
       {
         descriptionHtml:
-          "Layout effects done. The <span class=\"hl-loop\">browser paints</span> the updated DOM to the screen.",
+          'Layout effects done. The <span class="hl-loop">browser paints</span> the updated DOM to the screen.',
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 9, 10],
         phaseInfo: { phase: "commit", tags: ["Browser paint"] },
@@ -167,8 +214,12 @@ export const EXAMPLES: RenderCycleExample[] = [
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \"0\" -> \"1\"", status: "done" },
-          { type: "useLayoutEffect", label: "log layout effect", status: "done" },
+          { type: "DOM mutation", label: 'text: "0" -> "1"', status: "done" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "done",
+          },
           { type: "useEffect", label: "log effect", status: "pending" },
         ],
       },
@@ -187,14 +238,18 @@ export const EXAMPLES: RenderCycleExample[] = [
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \"0\" -> \"1\"", status: "done" },
-          { type: "useLayoutEffect", label: "log layout effect", status: "done" },
+          { type: "DOM mutation", label: 'text: "0" -> "1"', status: "done" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "done",
+          },
           { type: "useEffect", label: "log effect", status: "running" },
         ],
       },
       {
         descriptionHtml:
-          "All effects complete. The cycle returns to <span class=\"hl-api\">idle</span>. Order: render, DOM mutation, useLayoutEffect, paint, useEffect.",
+          'All effects complete. The cycle returns to <span class="hl-api">idle</span>. Order: render, DOM mutation, useLayoutEffect, paint, useEffect.',
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         phaseInfo: { phase: "idle", tags: [] },
@@ -207,8 +262,12 @@ export const EXAMPLES: RenderCycleExample[] = [
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \"0\" -> \"1\"", status: "done" },
-          { type: "useLayoutEffect", label: "log layout effect", status: "done" },
+          { type: "DOM mutation", label: 'text: "0" -> "1"', status: "done" },
+          {
+            type: "useLayoutEffect",
+            label: "log layout effect",
+            status: "done",
+          },
           { type: "useEffect", label: "log effect", status: "done" },
         ],
       },
@@ -245,7 +304,11 @@ export const EXAMPLES: RenderCycleExample[] = [
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: null,
@@ -261,7 +324,11 @@ export const EXAMPLES: RenderCycleExample[] = [
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: null,
@@ -269,15 +336,22 @@ export const EXAMPLES: RenderCycleExample[] = [
       },
       {
         descriptionHtml:
-          "<code>setAge(30)</code> is called. React queues this update too. Both updates are <span class=\"hl-api\">batched</span>.",
+          '<code>setAge(30)</code> is called. React queues this update too. Both updates are <span class="hl-api">batched</span>.',
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
-        phaseInfo: { phase: "idle", tags: ["Update queued: name", "Update queued: age"] },
+        phaseInfo: {
+          phase: "idle",
+          tags: ["Update queued: name", "Update queued: age"],
+        },
         currentTree: {
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: null,
@@ -288,12 +362,19 @@ export const EXAMPLES: RenderCycleExample[] = [
           "Event handler finishes. React processes <strong>both queued updates</strong> in a single render phase.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
-        phaseInfo: { phase: "render", tags: ["Batched: 2 updates", "Single render pass"] },
+        phaseInfo: {
+          phase: "render",
+          tags: ["Batched: 2 updates", "Single render pass"],
+        },
         currentTree: {
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: {
@@ -309,12 +390,19 @@ export const EXAMPLES: RenderCycleExample[] = [
           "React calls <code>Form()</code> once. <code>useState</code> returns <code>'Alice'</code> and <code>30</code>. Both updates applied.",
         activeLine: 1,
         doneLines: [],
-        phaseInfo: { phase: "render", tags: ["Batched: 2 updates", "Single render pass"] },
+        phaseInfo: {
+          phase: "render",
+          tags: ["Batched: 2 updates", "Single render pass"],
+        },
         currentTree: {
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: {
@@ -322,7 +410,11 @@ export const EXAMPLES: RenderCycleExample[] = [
           label: "<Form>",
           highlight: "active",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "'Alice, 30'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "'Alice, 30'" }],
+            },
           ],
         },
         effects: [],
@@ -337,7 +429,11 @@ export const EXAMPLES: RenderCycleExample[] = [
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "', 0'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "', 0'" }],
+            },
           ],
         },
         wipTree: {
@@ -345,7 +441,14 @@ export const EXAMPLES: RenderCycleExample[] = [
           label: "<Form>",
           highlight: "updated",
           children: [
-            { id: "div", label: "<div>", highlight: "updated", children: [{ id: "text", label: "'Alice, 30'", highlight: "updated" }] },
+            {
+              id: "div",
+              label: "<div>",
+              highlight: "updated",
+              children: [
+                { id: "text", label: "'Alice, 30'", highlight: "updated" },
+              ],
+            },
           ],
         },
         effects: [],
@@ -361,12 +464,23 @@ export const EXAMPLES: RenderCycleExample[] = [
           label: "<Form>",
           highlight: "updated",
           children: [
-            { id: "div", label: "<div>", highlight: "updated", children: [{ id: "text", label: "'Alice, 30'", highlight: "updated" }] },
+            {
+              id: "div",
+              label: "<div>",
+              highlight: "updated",
+              children: [
+                { id: "text", label: "'Alice, 30'", highlight: "updated" },
+              ],
+            },
           ],
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \", 0\" -> \"Alice, 30\"", status: "running" },
+          {
+            type: "DOM mutation",
+            label: 'text: ", 0" -> "Alice, 30"',
+            status: "running",
+          },
         ],
       },
       {
@@ -379,12 +493,20 @@ export const EXAMPLES: RenderCycleExample[] = [
           id: "form",
           label: "<Form>",
           children: [
-            { id: "div", label: "<div>", children: [{ id: "text", label: "'Alice, 30'" }] },
+            {
+              id: "div",
+              label: "<div>",
+              children: [{ id: "text", label: "'Alice, 30'" }],
+            },
           ],
         },
         wipTree: null,
         effects: [
-          { type: "DOM mutation", label: "text: \", 0\" -> \"Alice, 30\"", status: "done" },
+          {
+            type: "DOM mutation",
+            label: 'text: ", 0" -> "Alice, 30"',
+            status: "done",
+          },
         ],
       },
     ],

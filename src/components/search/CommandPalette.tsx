@@ -51,10 +51,7 @@ export const CommandPalette = () => {
     [],
   );
 
-  const results = useMemo(
-    () => filterTopics(entries, query),
-    [entries, query],
-  );
+  const results = useMemo(() => filterTopics(entries, query), [entries, query]);
 
   const close = useCallback(() => {
     setOpen(false);

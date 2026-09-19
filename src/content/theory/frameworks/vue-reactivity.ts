@@ -45,7 +45,8 @@ export const vueReactivityTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "How does Vue know which effects to re-run when a property changes?",
+      question:
+        "How does Vue know which effects to re-run when a property changes?",
       answer:
         "Every reactive object is a Proxy. While an effect runs, Vue sets a global activeEffect, and the get trap calls track(target, key) to add that effect to a Dep stored in targetMap under the object and key. The set trap calls trigger(target, key), which schedules every effect in that Dep. Dependencies are collected from actual reads, so there is no declaration step.",
       codeExample: {
@@ -60,7 +61,8 @@ state.count = 1     // set trap: trigger(state, 'count') -> effect queued`,
       },
     },
     {
-      question: "What is the difference between ref and reactive, and why do both exist?",
+      question:
+        "What is the difference between ref and reactive, and why do both exist?",
       answer:
         "reactive wraps an object in a Proxy, so it cannot hold a primitive and stops tracking if you reassign or destructure it. ref wraps any value in a RefImpl object with a value accessor, so primitives become observable and the wrapper can be passed around or returned from a composable without losing reactivity. Inside reactive objects and templates, refs are unwrapped automatically.",
       codeExample: {
@@ -75,20 +77,29 @@ nRef.value                     // forwards to state.n through the Proxy`,
       },
     },
     {
-      question: "How does computed caching work, and when does the getter actually run?",
+      question:
+        "How does computed caching work, and when does the getter actually run?",
       answer:
         "computed creates a ComputedRefImpl with a dirty flag and a cached value. Reading .value runs the getter only when dirty is true, then caches the result and clears the flag. When a dependency triggers, the computed is marked dirty and its own subscribers are notified, but the getter is not re-run until someone reads .value again. Vue 3.4 backs this with version counters so an unchanged computed can return its cache without walking its dependencies.",
     },
     {
-      question: "Why does the DOM not update immediately after a state mutation, and what does nextTick do?",
+      question:
+        "Why does the DOM not update immediately after a state mutation, and what does nextTick do?",
       answer:
         "Triggered render effects are pushed into a job queue rather than run inline. queueJob deduplicates by effect identity and schedules a single flushJobs microtask, so multiple synchronous writes produce one render. nextTick returns the promise chained after that flush, so awaiting it guarantees the DOM reflects the latest state.",
     },
     {
-      question: "How does Vue's reactivity differ from React's re-render model?",
+      question:
+        "How does Vue's reactivity differ from React's re-render model?",
       answer:
         "React re-runs the whole component function when any of its state changes and then diffs the output, relying on memoization to skip children. Vue tracks reads at the property level, so a component's render effect re-runs only when a property it read changes, and unrelated state updates cost nothing. The trade-off is that Vue state must stay inside proxies or refs, and copying a value out of them silently breaks tracking.",
     },
   ],
-  relatedTopicIds: ["svelte-runes", "angular-change-detection", "render-cycle", "hooks", "closures"],
+  relatedTopicIds: [
+    "svelte-runes",
+    "angular-change-detection",
+    "render-cycle",
+    "hooks",
+    "closures",
+  ],
 };

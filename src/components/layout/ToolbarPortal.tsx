@@ -11,18 +11,20 @@ import {
   type SetStateAction,
 } from "react";
 import { createPortal } from "react-dom";
-
+import type { ToolbarVariant } from "@/types";
 
 type SetContainer = Dispatch<SetStateAction<HTMLDivElement | null>>;
 type SetHasPortalContent = Dispatch<SetStateAction<boolean>>;
-export type ToolbarSkeletonVariant = "simple" | "selector";
+export type ToolbarSkeletonVariant = ToolbarVariant;
 
 const ToolbarContext = createContext<SetContainer | null>(null);
 const ToolbarNodeContext = createContext<HTMLDivElement | null>(null);
 const ToolbarReadyContext = createContext<boolean>(false);
-const ToolbarReadySetterContext = createContext<SetHasPortalContent | null>(null);
+const ToolbarReadySetterContext = createContext<SetHasPortalContent | null>(
+  null,
+);
 
-export function ToolbarProvider({ children }: { children: ReactNode }) {
+export const ToolbarProvider = ({ children }: { children: ReactNode }) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [hasPortalContent, setHasPortalContent] = useState(false);
 
@@ -30,20 +32,18 @@ export function ToolbarProvider({ children }: { children: ReactNode }) {
     <ToolbarContext value={setContainer}>
       <ToolbarReadySetterContext value={setHasPortalContent}>
         <ToolbarReadyContext value={hasPortalContent}>
-          <ToolbarNodeContext value={container}>
-            {children}
-          </ToolbarNodeContext>
+          <ToolbarNodeContext value={container}>{children}</ToolbarNodeContext>
         </ToolbarReadyContext>
       </ToolbarReadySetterContext>
     </ToolbarContext>
   );
-}
+};
 
-export function ToolbarSlot({
+export const ToolbarSlot = ({
   variant = "simple",
 }: {
   variant?: ToolbarSkeletonVariant;
-}) {
+}) => {
   const setContainer = useContext(ToolbarContext);
   const hasPortalContent = useContext(ToolbarReadyContext);
 
@@ -51,7 +51,7 @@ export function ToolbarSlot({
     (node: HTMLDivElement | null) => {
       setContainer?.(node);
     },
-    [setContainer]
+    [setContainer],
   );
 
   return (
@@ -60,10 +60,9 @@ export function ToolbarSlot({
       <div ref={callbackRef} className={hasPortalContent ? "" : "hidden"} />
     </div>
   );
-}
+};
 
-
-export function ToolbarPortal({ children }: { children: ReactNode }) {
+export const ToolbarPortal = ({ children }: { children: ReactNode }) => {
   const container = useContext(ToolbarNodeContext);
   const setHasPortalContent = useContext(ToolbarReadySetterContext);
 
@@ -75,9 +74,9 @@ export function ToolbarPortal({ children }: { children: ReactNode }) {
   if (!container) return null;
 
   return createPortal(children, container);
-}
+};
 
-function ToolbarSkeleton({ variant }: { variant: ToolbarSkeletonVariant }) {
+const ToolbarSkeleton = ({ variant }: { variant: ToolbarSkeletonVariant }) => {
   if (variant === "selector") {
     return (
       <div className="flex animate-pulse flex-col gap-3">
@@ -99,4 +98,4 @@ function ToolbarSkeleton({ variant }: { variant: ToolbarSkeletonVariant }) {
       <div className="app-surface-subtle mx-auto h-10 w-full max-w-4xl rounded-full" />
     </div>
   );
-}
+};

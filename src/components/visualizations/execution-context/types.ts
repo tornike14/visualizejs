@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type { SourceLine };
 
@@ -31,10 +31,7 @@ export interface PhaseDetail {
   items: string[];
 }
 
-export interface ECStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ECStep extends BaseStep {
   highlightLines: number[];
   stack: ExecutionContextEntry[];
   scopeLinks: ScopeLink[];

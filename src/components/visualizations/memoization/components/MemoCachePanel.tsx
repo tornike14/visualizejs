@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { MemoEntry } from "../types";
 import { cacheStatusStyle, cacheStatusLabel } from "../helpers";
 
-export function MemoCachePanel({ entries }: { entries: MemoEntry[] }) {
+export const MemoCachePanel = ({ entries }: { entries: MemoEntry[] }) => {
   if (entries.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -59,4 +59,4 @@ export function MemoCachePanel({ entries }: { entries: MemoEntry[] }) {
       ))}
     </div>
   );
-}
+};

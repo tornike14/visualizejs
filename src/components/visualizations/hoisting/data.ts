@@ -8,16 +8,34 @@ export const EXAMPLES: HoistingExample[] = [
     description:
       "var declarations are hoisted to the top of their scope and initialized as undefined.",
     original: [
-      { text: 'console.log(name);', indent: 0, id: "o1" },
+      { text: "console.log(name);", indent: 0, id: "o1" },
       { text: 'var name = "Alice";', indent: 0, id: "o2" },
-      { text: 'console.log(name);', indent: 0, id: "o3" },
+      { text: "console.log(name);", indent: 0, id: "o3" },
     ],
     hoisted: [
       { text: "var name;", indent: 0, id: "h1", isHoisted: true, isTDZ: false },
       { text: "", indent: 0, id: "h-blank", isHoisted: false, isTDZ: false },
-      { text: "console.log(name);", indent: 0, id: "h2", isHoisted: false, isTDZ: false },
-      { text: 'name = "Alice";', indent: 0, id: "h3", isHoisted: false, isTDZ: false },
-      { text: "console.log(name);", indent: 0, id: "h4", isHoisted: false, isTDZ: false },
+      {
+        text: "console.log(name);",
+        indent: 0,
+        id: "h2",
+        isHoisted: false,
+        isTDZ: false,
+      },
+      {
+        text: 'name = "Alice";',
+        indent: 0,
+        id: "h3",
+        isHoisted: false,
+        isTDZ: false,
+      },
+      {
+        text: "console.log(name);",
+        indent: 0,
+        id: "h4",
+        isHoisted: false,
+        isTDZ: false,
+      },
     ],
     steps: [
       {
@@ -26,7 +44,7 @@ export const EXAMPLES: HoistingExample[] = [
         highlightHoisted: ["h1"],
         consoleOutput: [],
         explanation:
-          'Before any code runs, the engine hoists <code>var name</code> to the top of the scope and initializes it as <code>undefined</code>. The assignment stays in place.',
+          "Before any code runs, the engine hoists <code>var name</code> to the top of the scope and initializes it as <code>undefined</code>. The assignment stays in place.",
         floatingLineIds: ["h1"],
         tdzLineIds: [],
       },
@@ -45,7 +63,8 @@ export const EXAMPLES: HoistingExample[] = [
         highlightOriginal: ["o2"],
         highlightHoisted: ["h3"],
         consoleOutput: ["undefined"],
-        explanation: 'The assignment <code>name = "Alice"</code> executes. <code>name</code> is now set to <code>"Alice"</code>.',
+        explanation:
+          'The assignment <code>name = "Alice"</code> executes. <code>name</code> is now set to <code>"Alice"</code>.',
         floatingLineIds: [],
         tdzLineIds: [],
       },
@@ -76,8 +95,20 @@ export const EXAMPLES: HoistingExample[] = [
       { text: "}", indent: 0, id: "o4" },
     ],
     hoisted: [
-      { text: "function greet() {", indent: 0, id: "h1", isHoisted: true, isTDZ: false },
-      { text: '  console.log("Hello!");', indent: 1, id: "h2", isHoisted: true, isTDZ: false },
+      {
+        text: "function greet() {",
+        indent: 0,
+        id: "h1",
+        isHoisted: true,
+        isTDZ: false,
+      },
+      {
+        text: '  console.log("Hello!");',
+        indent: 1,
+        id: "h2",
+        isHoisted: true,
+        isTDZ: false,
+      },
       { text: "}", indent: 0, id: "h3", isHoisted: true, isTDZ: false },
       { text: "", indent: 0, id: "h-blank", isHoisted: false, isTDZ: false },
       { text: "greet();", indent: 0, id: "h4", isHoisted: false, isTDZ: false },
@@ -109,7 +140,7 @@ export const EXAMPLES: HoistingExample[] = [
         highlightHoisted: ["h2"],
         consoleOutput: ["Hello!"],
         explanation:
-          'The function body executes, printing <code>Hello!</code> to the console. <strong>Key takeaway:</strong> function declarations are fully hoisted, unlike <code>var</code> or function expressions.',
+          "The function body executes, printing <code>Hello!</code> to the console. <strong>Key takeaway:</strong> function declarations are fully hoisted, unlike <code>var</code> or function expressions.",
         floatingLineIds: [],
         tdzLineIds: [],
       },
@@ -150,7 +181,13 @@ export const EXAMPLES: HoistingExample[] = [
         isHoisted: false,
         isTDZ: false,
       },
-      { text: "console.log(score);", indent: 0, id: "h4", isHoisted: false, isTDZ: false },
+      {
+        text: "console.log(score);",
+        indent: 0,
+        id: "h4",
+        isHoisted: false,
+        isTDZ: false,
+      },
     ],
     steps: [
       {
@@ -167,7 +204,9 @@ export const EXAMPLES: HoistingExample[] = [
         kind: "tdz-error",
         highlightOriginal: ["o1"],
         highlightHoisted: ["h2"],
-        consoleOutput: ["ReferenceError: Cannot access 'score' before initialization"],
+        consoleOutput: [
+          "ReferenceError: Cannot access 'score' before initialization",
+        ],
         explanation:
           "Accessing <code>score</code> inside the TDZ throws a <code>ReferenceError</code>. The variable exists (it was hoisted), but it cannot be accessed until the <code>let</code> declaration is reached.",
         floatingLineIds: [],
@@ -177,7 +216,9 @@ export const EXAMPLES: HoistingExample[] = [
         kind: "execute",
         highlightOriginal: ["o2"],
         highlightHoisted: ["h3"],
-        consoleOutput: ["ReferenceError: Cannot access 'score' before initialization"],
+        consoleOutput: [
+          "ReferenceError: Cannot access 'score' before initialization",
+        ],
         explanation:
           "If execution continued past the error, this is where the TDZ ends. <code>score</code> is now initialized to <code>100</code>.",
         floatingLineIds: [],
@@ -192,7 +233,7 @@ export const EXAMPLES: HoistingExample[] = [
           "100",
         ],
         explanation:
-          'After the declaration, <code>score</code> is accessible and holds the value <code>100</code>. <strong>Key takeaway:</strong> <code>let</code>/<code>const</code> have a TDZ that prevents access before initialization.',
+          "After the declaration, <code>score</code> is accessible and holds the value <code>100</code>. <strong>Key takeaway:</strong> <code>let</code>/<code>const</code> have a TDZ that prevents access before initialization.",
         floatingLineIds: [],
         tdzLineIds: [],
       },
@@ -252,7 +293,7 @@ export const EXAMPLES: HoistingExample[] = [
         highlightHoisted: ["h1"],
         consoleOutput: [],
         explanation:
-          'Before execution, <code>var sayHi</code> is hoisted and set to <code>undefined</code>. The function assigned to it is <strong>not</strong> hoisted -- only the variable name.',
+          "Before execution, <code>var sayHi</code> is hoisted and set to <code>undefined</code>. The function assigned to it is <strong>not</strong> hoisted -- only the variable name.",
         floatingLineIds: ["h1"],
         tdzLineIds: [],
       },
@@ -282,7 +323,7 @@ export const EXAMPLES: HoistingExample[] = [
         highlightHoisted: [],
         consoleOutput: ["TypeError: sayHi is not a function"],
         explanation:
-          '<strong>Key takeaway:</strong> function expressions assigned to <code>var</code> are only hoisted as <code>undefined</code>. Use function declarations if you need hoisting, or declare before use.',
+          "<strong>Key takeaway:</strong> function expressions assigned to <code>var</code> are only hoisted as <code>undefined</code>. Use function declarations if you need hoisting, or declare before use.",
         floatingLineIds: [],
         tdzLineIds: [],
       },

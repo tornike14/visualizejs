@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { groupTopics } from "@/lib/topics";
 import type { Topic } from "@/types";
-import { TopicLink } from "./TopicLink";
+import { SidebarTopicLink } from "./SidebarTopicLink";
 
-export function ScrollableTopicList({
+export const ScrollableTopicList = ({
   topics: filteredTopics,
   pathname,
   onLinkClick,
@@ -14,7 +15,7 @@ export function ScrollableTopicList({
   topics: Topic[];
   pathname: string;
   onLinkClick?: () => void;
-}) {
+}) => {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [canScrollDown, setCanScrollDown] = useState(false);
   const [canScrollUp, setCanScrollUp] = useState(false);
@@ -23,7 +24,9 @@ export function ScrollableTopicList({
     const el = viewportRef.current;
     if (!el) return;
     const threshold = 4;
-    setCanScrollDown(el.scrollTop + el.clientHeight < el.scrollHeight - threshold);
+    setCanScrollDown(
+      el.scrollTop + el.clientHeight < el.scrollHeight - threshold,
+    );
     setCanScrollUp(el.scrollTop > threshold);
   }, []);
 
@@ -32,8 +35,9 @@ export function ScrollableTopicList({
     // with data-slot="scroll-area-viewport". We grab it after mount.
     const root = viewportRef.current;
     if (!root) return;
-    const viewport =
-      root.querySelector<HTMLDivElement>("[data-slot='scroll-area-viewport']");
+    const viewport = root.querySelector<HTMLDivElement>(
+      "[data-slot='scroll-area-viewport']",
+    );
     if (!viewport) return;
 
     // Replace ref with actual viewport for scroll checks
@@ -59,15 +63,24 @@ export function ScrollableTopicList({
               New topics coming soon.
             </div>
           ) : (
-            filteredTopics.map((topic) => (
-              <div key={topic.id} onClick={onLinkClick}>
-                <TopicLink
-                  topic={topic}
-                  isActive={
-                    pathname === topic.route ||
-                    pathname.startsWith(`${topic.route}/`)
-                  }
-                />
+            groupTopics(filteredTopics).map((group) => (
+              <div key={group.label ?? "all"} className="flex flex-col gap-2">
+                {group.label && (
+                  <p className="px-2 pt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {group.label}
+                  </p>
+                )}
+                {group.topics.map((topic) => (
+                  <SidebarTopicLink
+                    key={topic.id}
+                    topic={topic}
+                    isActive={
+                      pathname === topic.route ||
+                      pathname.startsWith(`${topic.route}/`)
+                    }
+                    onClick={onLinkClick}
+                  />
+                ))}
               </div>
             ))
           )}
@@ -91,4 +104,4 @@ export function ScrollableTopicList({
       />
     </div>
   );
-}
+};

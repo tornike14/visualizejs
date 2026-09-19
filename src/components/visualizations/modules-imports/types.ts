@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 /* ── Types ── */
@@ -35,10 +35,7 @@ export interface Binding {
   isLive: boolean;
 }
 
-export interface ModulesStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ModulesStep extends BaseStep {
   consoleOutput: string[];
   modules: ModuleNode[];
   edges: ModuleEdge[];

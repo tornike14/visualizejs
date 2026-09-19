@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type VirtualDomKind = "element" | "component" | "dynamic";
@@ -9,10 +9,7 @@ export interface CreateElementCall {
   highlight?: boolean;
 }
 
-export interface VirtualDomStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface VirtualDomStep extends BaseStep {
   vdomTree: TreeNodeData | null;
   activeNodeId?: string;
   createElementCalls: CreateElementCall[];

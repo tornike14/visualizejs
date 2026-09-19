@@ -78,5 +78,11 @@ console.log(original); // [1, 2, 3]`,
       },
     },
   ],
-  relatedTopicIds: ["destructuring", "reference-value", "closures", "scope-chain", "hoisting"],
+  relatedTopicIds: [
+    "destructuring",
+    "reference-value",
+    "closures",
+    "scope-chain",
+    "hoisting",
+  ],
 };

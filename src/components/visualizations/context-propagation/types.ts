@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type ContextPropagationKind = "basic" | "nested" | "rerender";
@@ -16,10 +16,7 @@ export interface ConsumerSubscription {
   isRerendering?: boolean;
 }
 
-export interface ContextPropagationStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ContextPropagationStep extends BaseStep {
   componentTree: TreeNodeData;
   activeNodeId?: string;
   contextRegistry: ContextEntry[];

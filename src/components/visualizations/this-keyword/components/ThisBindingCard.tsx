@@ -2,7 +2,11 @@ import { cn } from "@/lib/utils";
 import { ruleColorClass } from "../helpers";
 import type { ThisBinding } from "../types";
 
-export function ThisBindingCard({ binding }: { binding: ThisBinding | null }) {
+export const ThisBindingCard = ({
+  binding,
+}: {
+  binding: ThisBinding | null;
+}) => {
   if (!binding) {
     return (
       <p className="py-6 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60 uppercase">
@@ -21,7 +25,7 @@ export function ThisBindingCard({ binding }: { binding: ThisBinding | null }) {
         <span
           className={cn(
             "rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider",
-            ruleColorClass(binding.rule)
+            ruleColorClass(binding.rule),
           )}
         >
           {binding.ruleLabel}
@@ -60,7 +64,7 @@ export function ThisBindingCard({ binding }: { binding: ThisBinding | null }) {
             "rounded-lg border px-3 py-1.5 font-mono text-sm font-semibold",
             binding.value === "undefined"
               ? "border-rose-300/35 bg-rose-400/10 text-rose-200"
-              : "border-emerald-300/35 bg-emerald-400/10 text-emerald-200"
+              : "border-emerald-300/35 bg-emerald-400/10 text-emerald-200",
           )}
         >
           {binding.value}
@@ -68,4 +72,4 @@ export function ThisBindingCard({ binding }: { binding: ThisBinding | null }) {
       </div>
     </div>
   );
-}
+};

@@ -50,8 +50,13 @@ export const ParameterTable = ({ rows }: { rows: ParameterRow[] }) => {
           <span className="flex items-center justify-end gap-1 text-right">
             {row.next ? (
               <>
-                <ArrowRight className="h-3 w-3 text-emerald-300/70" aria-hidden />
-                <span className="font-semibold text-emerald-200">{row.next}</span>
+                <ArrowRight
+                  className="h-3 w-3 text-emerald-300/70"
+                  aria-hidden
+                />
+                <span className="font-semibold text-emerald-200">
+                  {row.next}
+                </span>
               </>
             ) : (
               <span className="text-slate-600">?</span>

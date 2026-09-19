@@ -4,7 +4,7 @@ export const angularChangeDetectionTheory: TopicTheoryContent = {
   summary:
     "Change detection is the process Angular runs to find template bindings whose values changed and write the new values to the DOM. How it is triggered and how much of the tree it visits depends on whether the app uses zone.js, OnPush, or signals.",
   whatItIs: [
-    "Angular templates contain bindings such as {{ qty }} or [items]=\"items\". Angular does not know when the underlying values change, so it periodically re-evaluates the bindings, compares each result with the value it stored last time, and updates the DOM only where the result differs. This comparison is called dirty checking, and a full run of it is a change detection pass.",
+    'Angular templates contain bindings such as {{ qty }} or [items]="items". Angular does not know when the underlying values change, so it periodically re-evaluates the bindings, compares each result with the value it stored last time, and updates the DOM only where the result differs. This comparison is called dirty checking, and a full run of it is a change detection pass.',
     "In a classic application the pass is triggered by zone.js. zone.js monkey-patches browser APIs such as addEventListener, setTimeout, Promise.then and XMLHttpRequest so that every callback runs inside an Angular zone. When the callback finishes and the microtask queue drains, NgZone emits onMicrotaskEmpty and ApplicationRef.tick() walks the whole component tree from the root, checking every binding in every Default-strategy component whether or not anything relevant changed.",
     "ChangeDetectionStrategy.OnPush lets a component opt out of that blanket check. An OnPush view is skipped unless something marks it dirty: an @Input received a new reference (compared with Object.is), a template event fired inside the view, an async pipe emitted, or ChangeDetectorRef.markForCheck() was called. Marking a view also marks its ancestors, so the next tick can reach it without checking the siblings along the way.",
     "Signals make the trigger precise instead of coarse. A template that reads a signal registers itself as a consumer in a reactive graph. Writing the signal marks its consumers dirty, which flags exactly those views for refresh and asks the scheduler for a tick. In a zoneless app (provideZonelessChangeDetection) that notification is the only trigger, so the traversal visits the flagged views and passes through their ancestors without evaluating anything else.",
@@ -37,7 +37,8 @@ export const angularChangeDetectionTheory: TopicTheoryContent = {
       fix: "Move the update to a point before the check (ngOnInit, a signal computed, or an effect) rather than working around the error with setTimeout or detectChanges().",
     },
     {
-      title: "Reading a signal outside a reactive context and expecting updates",
+      title:
+        "Reading a signal outside a reactive context and expecting updates",
       explanation:
         "Calling count() once inside a constructor or a plain method copies the value; it does not subscribe anything. Only reads inside a template, computed, or effect create graph edges.",
       fix: "Read signals where the value is consumed: in the template, in a computed() that the template reads, or in an effect() when you need a side effect.",
@@ -74,12 +75,14 @@ this.items = this.items.map((it, i) =>
       },
     },
     {
-      question: "What is ExpressionChangedAfterItHasBeenCheckedError and why does it only appear in development?",
+      question:
+        "What is ExpressionChangedAfterItHasBeenCheckedError and why does it only appear in development?",
       answer:
         "After the real pass, dev mode runs checkNoChanges(), which re-evaluates every binding without writing to the DOM. If any expression now returns a different value, some code changed state during the pass, and Angular throws to surface it. Production skips the verification pass for performance, so the same bug renders stale output instead of throwing.",
     },
     {
-      question: "How do signals make change detection local rather than global?",
+      question:
+        "How do signals make change detection local rather than global?",
       answer:
         "Reading a signal in a template records a producer to consumer edge. Writing the signal marks its consumers dirty, which flags the exact views that read it for refresh and marks their ancestors for traversal only. The next tick descends through those ancestors without evaluating their bindings and refreshes only the flagged views, so the work is proportional to the readers of the changed value.",
       codeExample: {
@@ -95,7 +98,8 @@ this.items = this.items.map((it, i) =>
       },
     },
     {
-      question: "What changes when an app switches to provideZonelessChangeDetection()?",
+      question:
+        "What changes when an app switches to provideZonelessChangeDetection()?",
       answer:
         "zone.js is no longer loaded, so finishing an async task does not trigger anything. Change detection runs only when Angular is told explicitly: a signal read in a template changes, a template event fires, markForCheck() is called, an async pipe emits, or ComponentRef.setInput() is used. Code that relied on a plain setTimeout or a manual property assignment to refresh the view stops working until it goes through one of those paths.",
     },

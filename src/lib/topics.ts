@@ -1,34 +1,38 @@
-import type { Category, Topic } from "@/types";
+import type { Category, Topic, TopicDefinition } from "@/types";
 
-export const topics: Topic[] = [
-
+/**
+ * Every topic on the site, in the order it appears within its category.
+ * `route` is derived from category and id so the two can never disagree.
+ * TopicId is derived from this list, which lets the theory, keyword, and
+ * component registries require an entry for every topic at compile time.
+ */
+const TOPIC_DEFINITIONS = [
   /* ── Ordered by importance / popularity ── */
   {
     id: "event-loop",
+    toolbar: "simple",
     title: "Event Loop",
     category: "javascript",
-    route: "/javascript/event-loop",
     description:
       "See how the JavaScript event loop works with an interactive visualization. Watch the call stack, microtask queue, and callback queue process setTimeout, Promises, and async/await step by step.",
     difficulty: "intermediate",
-    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop",
   },
   {
     id: "hoisting",
     title: "Hoisting",
     category: "javascript",
-    route: "/javascript/hoisting",
     description:
       "See how JavaScript hoisting works for var, let, const, and function declarations. Interactive visualization of the creation phase vs execution phase and the temporal dead zone.",
     difficulty: "beginner",
-    docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
   },
   {
     id: "execution-context",
+    toolbar: "simple",
     title: "Execution Context",
     category: "javascript",
-    route: "/javascript/execution-context",
     description:
       "See how JavaScript execution contexts work with an interactive visualization. Step through the global and function context stack, creation phase, scope chain, and variable environments.",
     difficulty: "intermediate",
@@ -37,20 +41,18 @@ export const topics: Topic[] = [
   },
   {
     id: "closures",
+    toolbar: "simple",
     title: "Closures",
     category: "javascript",
-    route: "/javascript/closures",
     description:
       "See how JavaScript closures work with an interactive visualization. Watch inner functions capture outer scope variables, understand lexical scoping, and learn closure patterns for interviews.",
     difficulty: "intermediate",
-    docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures",
   },
   {
     id: "promises",
     title: "Promises",
     category: "javascript",
-    route: "/javascript/promises",
     description:
       "See how JavaScript Promises work with an interactive visualization. Step through pending, fulfilled, and rejected states, promise chaining, microtask scheduling, and async/await flow.",
     difficulty: "intermediate",
@@ -61,7 +63,6 @@ export const topics: Topic[] = [
     id: "this-keyword",
     title: "this Keyword",
     category: "javascript",
-    route: "/javascript/this-keyword",
     description:
       "See how the JavaScript this keyword works with an interactive visualization. Step through implicit, explicit, new, and arrow function binding rules with call, apply, and bind examples.",
     difficulty: "intermediate",
@@ -72,18 +73,15 @@ export const topics: Topic[] = [
     id: "scope-chain",
     title: "Scope Chain",
     category: "javascript",
-    route: "/javascript/scope-chain",
     description:
       "See how the JavaScript scope chain works with an interactive visualization. Trace variable lookups across global, function, and block scopes from inner to outer step by step.",
     difficulty: "intermediate",
-    docsUrl:
-      "https://developer.mozilla.org/en-US/docs/Glossary/Scope",
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Glossary/Scope",
   },
   {
     id: "type-coercion",
     title: "Type Coercion",
     category: "javascript",
-    route: "/javascript/type-coercion",
     description:
       "See how JavaScript type coercion works with an interactive visualization. Compare == vs === behavior, explore truthy/falsy values, and see edge cases with NaN, null, and undefined.",
     difficulty: "beginner",
@@ -94,7 +92,6 @@ export const topics: Topic[] = [
     id: "destructuring",
     title: "Destructuring",
     category: "javascript",
-    route: "/javascript/destructuring",
     description:
       "See how JavaScript destructuring works with an interactive visualization. Unpack arrays by position, extract object properties by name, use default values, nested patterns, and parameter destructuring.",
     difficulty: "beginner",
@@ -105,7 +102,6 @@ export const topics: Topic[] = [
     id: "spread-rest",
     title: "Spread & Rest",
     category: "javascript",
-    route: "/javascript/spread-rest",
     description:
       "See how JavaScript spread and rest syntax works with an interactive visualization. Watch spread expand arrays/objects, rest collect arguments, and rest in destructuring patterns.",
     difficulty: "beginner",
@@ -116,7 +112,6 @@ export const topics: Topic[] = [
     id: "prototypal-inheritance",
     title: "Prototypal Inheritance",
     category: "javascript",
-    route: "/javascript/prototypal-inheritance",
     description:
       "See how JavaScript prototypal inheritance works with an interactive visualization. Trace prototype chain lookups, __proto__ delegation, Object.create, and the instanceof operator step by step.",
     difficulty: "advanced",
@@ -127,7 +122,6 @@ export const topics: Topic[] = [
     id: "reference-value",
     title: "Reference vs Value",
     category: "javascript",
-    route: "/javascript/reference-value",
     description:
       "See how pass by value vs pass by reference works in JavaScript with an interactive visualization. Watch primitives copy, objects share references, and compare shallow copy, deep copy, and structuredClone.",
     difficulty: "beginner",
@@ -138,7 +132,6 @@ export const topics: Topic[] = [
     id: "heap-stack",
     title: "Heap & Stack",
     category: "javascript",
-    route: "/javascript/heap-stack",
     description:
       "See how the JavaScript memory model works with an interactive visualization. Watch primitives live on the stack, objects get allocated on the heap, and call frames get created and destroyed.",
     difficulty: "advanced",
@@ -149,7 +142,6 @@ export const topics: Topic[] = [
     id: "garbage-collection",
     title: "Garbage Collection",
     category: "javascript",
-    route: "/javascript/garbage-collection",
     description:
       "See how JavaScript garbage collection works with an interactive visualization. Watch the mark-and-sweep algorithm, explore memory leak patterns with closures, timers, and DOM nodes, plus WeakRef.",
     difficulty: "advanced",
@@ -160,7 +152,6 @@ export const topics: Topic[] = [
     id: "generators",
     title: "Generators & Iterators",
     category: "javascript",
-    route: "/javascript/generators",
     description:
       "See how JavaScript generators work with an interactive visualization. Watch generator functions pause with yield and resume with .next(), step through the iterator protocol and two-way data flow.",
     difficulty: "advanced",
@@ -171,7 +162,6 @@ export const topics: Topic[] = [
     id: "event-delegation",
     title: "Event Delegation",
     category: "javascript",
-    route: "/javascript/event-delegation",
     description:
       "See how DOM events propagate through the tree with an interactive visualization. Watch capture and bubble phases, stopPropagation, and the delegation pattern where one parent handler replaces many child handlers.",
     difficulty: "beginner",
@@ -182,7 +172,6 @@ export const topics: Topic[] = [
     id: "modules-imports",
     title: "Modules & Imports",
     category: "javascript",
-    route: "/javascript/modules-imports",
     description:
       "See how JavaScript ES modules work with an interactive visualization. Watch the module graph build, import bindings resolve, live references update, and circular dependencies get handled step by step.",
     difficulty: "intermediate",
@@ -193,17 +182,16 @@ export const topics: Topic[] = [
     id: "async-await",
     title: "Async/Await",
     category: "javascript",
-    route: "/javascript/async-await",
     description:
       "See how async/await works with an interactive visualization. Watch an async function pause at await, hand control back to the caller, resume from the microtask queue, and compare sequential awaits with Promise.all.",
     difficulty: "intermediate",
-    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+    docsUrl:
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
   },
   {
     id: "debounce-throttle",
     title: "Debounce & Throttle",
     category: "javascript",
-    route: "/javascript/debounce-throttle",
     description:
       "See how debounce and throttle control event handlers with an interactive visualization. Watch a burst of input events on a timeline, see debounce wait for silence, throttle fire at a fixed rate, and the timers that make it work.",
     difficulty: "beginner",
@@ -214,7 +202,6 @@ export const topics: Topic[] = [
     id: "virtual-dom",
     title: "Virtual DOM",
     category: "react",
-    route: "/react/virtual-dom",
     description:
       "See how React's virtual DOM works with an interactive visualization. Watch JSX compile to React.createElement calls, build a virtual DOM object tree, and diff to find real DOM updates.",
     difficulty: "beginner",
@@ -224,7 +211,6 @@ export const topics: Topic[] = [
     id: "reconciliation",
     title: "Reconciliation",
     category: "react",
-    route: "/react/reconciliation",
     description:
       "See how React reconciliation works with an interactive visualization. Watch the virtual DOM diffing algorithm compare element trees: same-type updates, cross-type remounts, and key-based list matching.",
     difficulty: "intermediate",
@@ -234,7 +220,6 @@ export const topics: Topic[] = [
     id: "context-propagation",
     title: "Context Propagation",
     category: "react",
-    route: "/react/context-propagation",
     description:
       "See how React Context works with an interactive visualization. Watch provider value storage, consumer subscription, value propagation through the component tree, and why all consumers re-render.",
     difficulty: "intermediate",
@@ -244,7 +229,6 @@ export const topics: Topic[] = [
     id: "fiber-tree",
     title: "Fiber Tree",
     category: "react",
-    route: "/react/fiber-tree",
     description:
       "See how React's fiber tree works with an interactive visualization. Watch beginWork go down and completeWork go up as the work loop processes each fiber as a unit of work.",
     difficulty: "advanced",
@@ -254,7 +238,6 @@ export const topics: Topic[] = [
     id: "hooks",
     title: "Hooks",
     category: "react",
-    route: "/react/hooks",
     description:
       "See how React hooks work with an interactive visualization. Watch hooks stored as a linked list on each fiber, understand why call order matters, and what breaks with conditional hooks.",
     difficulty: "intermediate",
@@ -264,7 +247,6 @@ export const topics: Topic[] = [
     id: "render-cycle",
     title: "Render Cycle",
     category: "react",
-    route: "/react/render-cycle",
     description:
       "See how React's render cycle works with an interactive visualization. Step through the render phase (pure, interruptible diffing) and the commit phase (synchronous DOM mutations, effects, paint).",
     difficulty: "advanced",
@@ -274,7 +256,6 @@ export const topics: Topic[] = [
     id: "memoization",
     title: "Memoization",
     category: "react",
-    route: "/react/memoization",
     description:
       "See how React.memo, useMemo, and useCallback prevent unnecessary work with an interactive visualization. Step through dependency checks, cache hits and misses, and which components skip re-renders.",
     difficulty: "intermediate",
@@ -284,7 +265,6 @@ export const topics: Topic[] = [
     id: "suspense",
     title: "Suspense",
     category: "react",
-    route: "/react/suspense",
     description:
       "See how React Suspense handles async boundaries with an interactive visualization. Step through fallback rendering, promise throwing, and content revealing to understand loading states.",
     difficulty: "intermediate",
@@ -294,7 +274,6 @@ export const topics: Topic[] = [
     id: "server-components",
     title: "Server Components",
     category: "react",
-    route: "/react/server-components",
     description:
       "See how React Server Components split rendering between server and client with an interactive visualization. Step through the server render pass, payload serialization, and client hydration.",
     difficulty: "advanced",
@@ -304,7 +283,6 @@ export const topics: Topic[] = [
     id: "error-boundaries",
     title: "Error Boundaries",
     category: "react",
-    route: "/react/error-boundaries",
     description:
       "See how React error boundaries work with an interactive visualization. Watch errors propagate up the component tree, getDerivedStateFromError trigger, fallback UI render, and recovery patterns step by step.",
     difficulty: "intermediate",
@@ -315,7 +293,6 @@ export const topics: Topic[] = [
     id: "use-effect-lifecycle",
     title: "useEffect Lifecycle",
     category: "react",
-    route: "/react/use-effect-lifecycle",
     description:
       "See how React useEffect works with an interactive visualization. Step through the render-commit-paint-effect timeline, dependency array comparisons, cleanup function timing, and common patterns.",
     difficulty: "beginner",
@@ -325,7 +302,6 @@ export const topics: Topic[] = [
     id: "state-batching",
     title: "State Batching",
     category: "react",
-    route: "/react/state-batching",
     description:
       "See how React batches state updates with an interactive visualization. Watch multiple setState calls queue up, updater functions run in order against the pending value, and one render commit for all of them, including inside timeouts and promises.",
     difficulty: "intermediate",
@@ -335,7 +311,6 @@ export const topics: Topic[] = [
     id: "concurrent-rendering",
     title: "Concurrent Rendering",
     category: "react",
-    route: "/react/concurrent-rendering",
     description:
       "See how React concurrent rendering works with an interactive visualization. Watch a transition render at low priority, an urgent input interrupt it, React discard the stale work and restart, and the final commit land without blocking typing.",
     difficulty: "advanced",
@@ -344,9 +319,9 @@ export const topics: Topic[] = [
   /* ── Frameworks ── */
   {
     id: "vue-reactivity",
+    group: "Vue",
     title: "Vue Reactivity",
     category: "frameworks",
-    route: "/frameworks/vue-reactivity",
     description:
       "See how Vue reactivity works with an interactive visualization. Watch a Proxy intercept property reads to track dependencies, writes trigger the effects that depend on them, and computed values cache until a dependency changes.",
     difficulty: "intermediate",
@@ -354,9 +329,9 @@ export const topics: Topic[] = [
   },
   {
     id: "svelte-runes",
+    group: "Svelte",
     title: "Svelte Runes",
     category: "frameworks",
-    route: "/frameworks/svelte-runes",
     description:
       "See how Svelte 5 runes work with an interactive visualization. Watch $state create a signal, $derived build a dependency graph, $effect subscribe, and the compiler turn a component into surgical DOM updates with no virtual DOM.",
     difficulty: "intermediate",
@@ -364,9 +339,9 @@ export const topics: Topic[] = [
   },
   {
     id: "angular-change-detection",
+    group: "Angular",
     title: "Angular Change Detection",
     category: "frameworks",
-    route: "/frameworks/angular-change-detection",
     description:
       "See how Angular change detection works with an interactive visualization. Compare zone.js triggering a full tree check, OnPush skipping unchanged subtrees, and signals marking only the exact components that read a changed value.",
     difficulty: "advanced",
@@ -377,7 +352,6 @@ export const topics: Topic[] = [
     id: "http-request-lifecycle",
     title: "HTTP Request Lifecycle",
     category: "backend",
-    route: "/backend/http-request-lifecycle",
     description:
       "See what happens when a browser makes an HTTP request with an interactive visualization. Follow DNS resolution, the TCP and TLS handshakes, the request hitting a server route, middleware, the database, and the response coming back.",
     difficulty: "beginner",
@@ -387,7 +361,6 @@ export const topics: Topic[] = [
     id: "database-indexing",
     title: "Database Indexing",
     category: "backend",
-    route: "/backend/database-indexing",
     description:
       "See how database indexes speed up queries with an interactive visualization. Compare a full table scan against a B-tree lookup, watch the tree descend to a leaf, and see why writes get slower as indexes pile up.",
     difficulty: "intermediate",
@@ -397,7 +370,6 @@ export const topics: Topic[] = [
     id: "caching-strategies",
     title: "Caching Strategies",
     category: "backend",
-    route: "/backend/caching-strategies",
     description:
       "See how caching works with an interactive visualization. Watch cache-aside hits and misses, write-through updates, TTL expiry, LRU eviction, and the stale data problem that makes invalidation hard.",
     difficulty: "intermediate",
@@ -407,7 +379,6 @@ export const topics: Topic[] = [
     id: "jwt-authentication",
     title: "JWT Authentication",
     category: "backend",
-    route: "/backend/jwt-authentication",
     description:
       "See how JWT authentication works with an interactive visualization. Watch login produce a signed token, the header, payload, and signature get encoded, a protected route verify the signature, and an expired or tampered token get rejected.",
     difficulty: "intermediate",
@@ -417,18 +388,17 @@ export const topics: Topic[] = [
     id: "rate-limiting",
     title: "Rate Limiting",
     category: "backend",
-    route: "/backend/rate-limiting",
     description:
       "See how rate limiting protects an API with an interactive visualization. Watch a token bucket refill and drain, a fixed window reset at the boundary, a sliding window smooth out bursts, and requests get accepted or rejected with 429.",
     difficulty: "intermediate",
-    docsUrl: "https://cloud.google.com/architecture/rate-limiting-strategies-techniques",
+    docsUrl:
+      "https://cloud.google.com/architecture/rate-limiting-strategies-techniques",
   },
   /* ── AI ── */
   {
     id: "tokenization",
     title: "Tokenization",
     category: "ai",
-    route: "/ai/tokenization",
     description:
       "See how a language model turns text into tokens with an interactive visualization. Watch byte pair encoding merge characters into subwords, map tokens to ids, and see why token counts differ from word counts.",
     difficulty: "beginner",
@@ -438,17 +408,16 @@ export const topics: Topic[] = [
     id: "embeddings",
     title: "Embeddings",
     category: "ai",
-    route: "/ai/embeddings",
     description:
       "See how embeddings turn tokens into vectors with an interactive visualization. Watch a lookup table map token ids to numbers, compare vectors with cosine similarity, and see how meaning becomes geometry.",
     difficulty: "beginner",
-    docsUrl: "https://developers.google.com/machine-learning/crash-course/embeddings",
+    docsUrl:
+      "https://developers.google.com/machine-learning/crash-course/embeddings",
   },
   {
     id: "attention",
     title: "Attention",
     category: "ai",
-    route: "/ai/attention",
     description:
       "See how self-attention works with an interactive visualization. Watch queries score keys, softmax turn scores into weights, the causal mask hide future tokens, and weighted values mix into a new representation.",
     difficulty: "intermediate",
@@ -458,7 +427,6 @@ export const topics: Topic[] = [
     id: "next-token-prediction",
     title: "Next Token Prediction",
     category: "ai",
-    route: "/ai/next-token-prediction",
     description:
       "See how a language model picks the next token with an interactive visualization. Watch logits become probabilities, compare greedy, temperature, top-k, and top-p sampling, and follow the autoregressive loop token by token.",
     difficulty: "intermediate",
@@ -468,23 +436,57 @@ export const topics: Topic[] = [
     id: "backpropagation",
     title: "Backpropagation",
     category: "ai",
-    route: "/ai/backpropagation",
     description:
       "See how neural networks learn with an interactive visualization. Step through a forward pass, the loss, gradients flowing backward through the chain rule, and a gradient descent weight update on a tiny network.",
     difficulty: "advanced",
     docsUrl: "https://cs231n.github.io/optimization-2/",
   },
-];
+] as const satisfies readonly TopicDefinition[];
 
-export function getTopicsByCategory(category: Category) {
-  return topics.filter((topic) => topic.category === category);
+export type TopicId = (typeof TOPIC_DEFINITIONS)[number]["id"];
+
+export const topics: readonly Topic[] = TOPIC_DEFINITIONS.map((definition) => ({
+  ...definition,
+  route: `/${definition.category}/${definition.id}`,
+}));
+
+export const isTopicId = (value: string): value is TopicId =>
+  topics.some((topic) => topic.id === value);
+
+export const getTopicsByCategory = (category: Category): Topic[] =>
+  topics.filter((topic) => topic.category === category);
+
+export interface TopicGroup {
+  /** Group label, or null for topics that have no group. */
+  label: string | null;
+  topics: Topic[];
 }
 
+/**
+ * Topics split by their `group`, in first-appearance order. Ungrouped topics
+ * come first under a null label so a category without groups yields a single
+ * entry and callers can render the flat case and the grouped case alike.
+ */
+export const groupTopics = (list: readonly Topic[]): TopicGroup[] => {
+  const groups = new Map<string | null, Topic[]>();
+  for (const topic of list) {
+    const key = topic.group ?? null;
+    const bucket = groups.get(key);
+    if (bucket) bucket.push(topic);
+    else groups.set(key, [topic]);
+  }
+  return [...groups.entries()]
+    .sort(([a], [b]) => (a === null ? -1 : b === null ? 1 : 0))
+    .map(([label, topics]) => ({ label, topics }));
+};
+
+export const getTopicById = (id: string): Topic | undefined =>
+  topics.find((topic) => topic.id === id);
+
 /** Previous and next topics within the same category, in registry order. */
-export function getAdjacentTopics(topicId: string): {
-  previous: Topic | null;
-  next: Topic | null;
-} {
+export const getAdjacentTopics = (
+  topicId: string,
+): { previous: Topic | null; next: Topic | null } => {
   const topic = getTopicById(topicId);
   if (!topic) {
     return { previous: null, next: null };
@@ -493,18 +495,7 @@ export function getAdjacentTopics(topicId: string): {
   const index = siblings.findIndex((entry) => entry.id === topicId);
   return {
     previous: index > 0 ? siblings[index - 1] : null,
-    next: index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null,
+    next:
+      index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null,
   };
-}
-
-export function getTopicById(id: string) {
-  return topics.find((topic) => topic.id === id);
-}
-
-export function getTopicOrThrow(id: string): Topic {
-  const topic = getTopicById(id);
-  if (!topic) {
-    throw new Error(`Missing topic configuration for ${id}`);
-  }
-  return topic;
-}
+};

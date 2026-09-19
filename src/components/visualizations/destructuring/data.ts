@@ -7,8 +7,7 @@ export const EXAMPLES: DestructuringExample[] = [
   {
     id: "array",
     title: "Array Destructuring",
-    description:
-      "Unpack array elements into distinct variables by position.",
+    description: "Unpack array elements into distinct variables by position.",
     kind: "array",
     codeLines: [
       { num: 1, text: 'const colors = ["red", "green", "blue"];' },
@@ -26,7 +25,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: true, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -36,7 +40,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "first", value: '"red"', isNew: true, tone: "cyan" },
           { name: "second", value: '"green"', isNew: true, tone: "cyan" },
           { name: "third", value: '"blue"', isNew: true, tone: "cyan" },
@@ -49,7 +58,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "first", value: '"red"', isNew: false, tone: "cyan" },
           { name: "second", value: '"green"', isNew: false, tone: "cyan" },
           { name: "third", value: '"blue"', isNew: false, tone: "cyan" },
@@ -64,7 +78,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["red"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "first", value: '"red"', isNew: false, tone: "cyan" },
           { name: "second", value: '"green"', isNew: false, tone: "cyan" },
           { name: "third", value: '"blue"', isNew: false, tone: "cyan" },
@@ -79,7 +98,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["red", "green"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "first", value: '"red"', isNew: false, tone: "cyan" },
           { name: "second", value: '"green"', isNew: false, tone: "cyan" },
           { name: "third", value: '"blue"', isNew: false, tone: "cyan" },
@@ -94,7 +118,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["red", "green", "red blue"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "first", value: '"red"', isNew: false, tone: "cyan" },
           { name: "second", value: '"green"', isNew: false, tone: "cyan" },
           { name: "third", value: '"blue"', isNew: false, tone: "cyan" },
@@ -113,7 +142,10 @@ export const EXAMPLES: DestructuringExample[] = [
       "Extract object properties into variables by name, with optional renaming.",
     kind: "object",
     codeLines: [
-      { num: 1, text: 'const user = { name: "Alice", age: 30, role: "admin" };' },
+      {
+        num: 1,
+        text: 'const user = { name: "Alice", age: 30, role: "admin" };',
+      },
       { num: 2, text: "const { name, age } = user;" },
       { num: 3, text: "const { role: userRole } = user;" },
       { num: 4, text: "console.log(name);" },
@@ -123,34 +155,49 @@ export const EXAMPLES: DestructuringExample[] = [
     steps: [
       {
         descriptionHtml:
-          'Creates an object <code>user</code> with three properties: <code>name</code>, <code>age</code>, and <code>role</code>.',
+          "Creates an object <code>user</code> with three properties: <code>name</code>, <code>age</code>, and <code>role</code>.",
         activeLine: 1,
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: true, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>{ name, age } = user</code> extracts properties by <strong>matching property names</strong>. The variable <code>name</code> gets the value of <code>user.name</code>, and <code>age</code> gets <code>user.age</code>.',
+          "<code>{ name, age } = user</code> extracts properties by <strong>matching property names</strong>. The variable <code>name</code> gets the value of <code>user.name</code>, and <code>age</code> gets <code>user.age</code>.",
         activeLine: 2,
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: false, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: true, tone: "cyan" },
           { name: "age", value: "30", isNew: true, tone: "cyan" },
         ],
       },
       {
         descriptionHtml:
-          '<code>{ role: userRole }</code> extracts the <code>role</code> property but <strong>renames</strong> it to <code>userRole</code>. The syntax is <code>propertyName: newVariable</code>.',
+          "<code>{ role: userRole }</code> extracts the <code>role</code> property but <strong>renames</strong> it to <code>userRole</code>. The syntax is <code>propertyName: newVariable</code>.",
         activeLine: 3,
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: false, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "cyan" },
           { name: "age", value: "30", isNew: false, tone: "cyan" },
           { name: "userRole", value: '"admin"', isNew: true, tone: "emerald" },
@@ -163,7 +210,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["Alice"],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: false, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "cyan" },
           { name: "age", value: "30", isNew: false, tone: "cyan" },
           { name: "userRole", value: '"admin"', isNew: false, tone: "emerald" },
@@ -176,7 +228,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["Alice", "30"],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: false, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "cyan" },
           { name: "age", value: "30", isNew: false, tone: "cyan" },
           { name: "userRole", value: '"admin"', isNew: false, tone: "emerald" },
@@ -189,7 +246,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["Alice", "30", "admin"],
         bindings: [
-          { name: "user", value: '{ name: "Alice", age: 30, role: "admin" }', isNew: false, tone: "amber" },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "admin" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "cyan" },
           { name: "age", value: "30", isNew: false, tone: "cyan" },
           { name: "userRole", value: '"admin"', isNew: false, tone: "emerald" },
@@ -222,7 +284,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: true, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -232,21 +299,41 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: true, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: true, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>{ font: { size } }</code> is <strong>nested destructuring</strong>. It reaches into <code>config.font</code> and extracts <code>size</code>. Note: <code>font</code> itself is not created as a variable.',
+          "<code>{ font: { size } }</code> is <strong>nested destructuring</strong>. It reaches into <code>config.font</code> and extracts <code>size</code>. Note: <code>font</code> itself is not created as a variable.",
         activeLine: 3,
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: false, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: false, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: false,
+            tone: "violet",
+          },
           { name: "size", value: "14", isNew: true, tone: "emerald" },
         ],
       },
@@ -257,9 +344,19 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: false, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: false, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: false,
+            tone: "violet",
+          },
           { name: "size", value: "14", isNew: false, tone: "emerald" },
           { name: "x", value: "5", isNew: true, tone: "pink" },
           { name: "y", value: "0 (default)", isNew: true, tone: "pink" },
@@ -267,14 +364,24 @@ export const EXAMPLES: DestructuringExample[] = [
       },
       {
         descriptionHtml:
-          '<code>console.log(theme, lang)</code> outputs <code>"dark" "en"</code>. The default filled in the missing property seamlessly.',
+          '<code>console.log(theme, lang)</code> outputs <code>"dark" "en"</code>. The default filled in the missing property.',
         activeLine: 5,
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["dark en"],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: false, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: false, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: false,
+            tone: "violet",
+          },
           { name: "size", value: "14", isNew: false, tone: "emerald" },
           { name: "x", value: "5", isNew: false, tone: "pink" },
           { name: "y", value: "0 (default)", isNew: false, tone: "pink" },
@@ -287,9 +394,19 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["dark en", "14"],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: false, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: false, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: false,
+            tone: "violet",
+          },
           { name: "size", value: "14", isNew: false, tone: "emerald" },
           { name: "x", value: "5", isNew: false, tone: "pink" },
           { name: "y", value: "0 (default)", isNew: false, tone: "pink" },
@@ -302,9 +419,19 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["dark en", "14", "5 0"],
         bindings: [
-          { name: "config", value: '{ theme: "dark", font: { size: 14 } }', isNew: false, tone: "amber" },
+          {
+            name: "config",
+            value: '{ theme: "dark", font: { size: 14 } }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "theme", value: '"dark"', isNew: false, tone: "cyan" },
-          { name: "lang", value: '"en" (default)', isNew: false, tone: "violet" },
+          {
+            name: "lang",
+            value: '"en" (default)',
+            isNew: false,
+            tone: "violet",
+          },
           { name: "size", value: "14", isNew: false, tone: "emerald" },
           { name: "x", value: "5", isNew: false, tone: "pink" },
           { name: "y", value: "0 (default)", isNew: false, tone: "pink" },
@@ -342,11 +469,16 @@ export const EXAMPLES: DestructuringExample[] = [
         descriptionHtml:
           '<code>greet({ name: "Alice" })</code> is called. The argument <code>{ name: "Alice" }</code> is destructured: <code>name</code> gets <code>"Alice"</code>, and <code>greeting</code> uses the default <code>"Hello"</code>.',
         activeLine: 1,
-        doneLines: [3],
+        doneLines: [],
         consoleOutput: [],
         bindings: [
           { name: "name", value: '"Alice"', isNew: true, tone: "cyan" },
-          { name: "greeting", value: '"Hello" (default)', isNew: true, tone: "violet" },
+          {
+            name: "greeting",
+            value: '"Hello" (default)',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -357,7 +489,12 @@ export const EXAMPLES: DestructuringExample[] = [
         consoleOutput: [],
         bindings: [
           { name: "name", value: '"Alice"', isNew: false, tone: "cyan" },
-          { name: "greeting", value: '"Hello" (default)', isNew: false, tone: "violet" },
+          {
+            name: "greeting",
+            value: '"Hello" (default)',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -367,7 +504,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         bindings: [
-          { name: "msg1", value: '"Hello, Alice!"', isNew: true, tone: "amber" },
+          {
+            name: "msg1",
+            value: '"Hello, Alice!"',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -377,7 +519,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: [],
         bindings: [
-          { name: "msg1", value: '"Hello, Alice!"', isNew: false, tone: "amber" },
+          {
+            name: "msg1",
+            value: '"Hello, Alice!"',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "msg2", value: '"Hi, Bob!"', isNew: true, tone: "emerald" },
         ],
       },
@@ -388,7 +535,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["Hello, Alice!"],
         bindings: [
-          { name: "msg1", value: '"Hello, Alice!"', isNew: false, tone: "amber" },
+          {
+            name: "msg1",
+            value: '"Hello, Alice!"',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "msg2", value: '"Hi, Bob!"', isNew: false, tone: "emerald" },
         ],
       },
@@ -399,7 +551,12 @@ export const EXAMPLES: DestructuringExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["Hello, Alice!", "Hi, Bob!"],
         bindings: [
-          { name: "msg1", value: '"Hello, Alice!"', isNew: false, tone: "amber" },
+          {
+            name: "msg1",
+            value: '"Hello, Alice!"',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "msg2", value: '"Hi, Bob!"', isNew: false, tone: "emerald" },
         ],
       },

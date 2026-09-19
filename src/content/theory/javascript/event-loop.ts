@@ -64,5 +64,11 @@ console.log("B");
         "No. async/await is syntax over Promises, so continuation after await still resumes through microtasks.",
     },
   ],
-  relatedTopicIds: ["promises", "async-await", "closures", "scope-chain", "heap-stack"],
+  relatedTopicIds: [
+    "promises",
+    "async-await",
+    "closures",
+    "scope-chain",
+    "heap-stack",
+  ],
 };

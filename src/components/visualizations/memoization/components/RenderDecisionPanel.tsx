@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import type { RenderDecision } from "../types";
 import { decisionStyle, decisionLabel } from "../helpers";
 
-export function RenderDecisionPanel({
+export const RenderDecisionPanel = ({
   decisions,
 }: {
   decisions: RenderDecision[];
-}) {
+}) => {
   if (decisions.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -34,4 +34,4 @@ export function RenderDecisionPanel({
       ))}
     </div>
   );
-}
+};

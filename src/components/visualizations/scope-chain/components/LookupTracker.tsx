@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { LookupState } from "../types";
 
-export function LookupTracker({ lookup }: { lookup: LookupState | null }) {
+export const LookupTracker = ({ lookup }: { lookup: LookupState | null }) => {
   if (!lookup) {
     return (
       <p className="py-4 text-center font-mono text-xs uppercase tracking-[0.22em] text-slate-500/60">
@@ -26,7 +26,8 @@ export function LookupTracker({ lookup }: { lookup: LookupState | null }) {
       <div className="flex flex-wrap items-center gap-1.5">
         {lookup.path.map((scope, i) => {
           const isLast = i === lookup.path.length - 1;
-          const isFoundHere = lookup.result === "found" && lookup.foundIn === scope;
+          const isFoundHere =
+            lookup.result === "found" && lookup.foundIn === scope;
           const isError = lookup.result === "error" && isLast;
 
           return (
@@ -82,4 +83,4 @@ export function LookupTracker({ lookup }: { lookup: LookupState | null }) {
       </div>
     </div>
   );
-}
+};

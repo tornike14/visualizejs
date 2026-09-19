@@ -1,7 +1,5 @@
-export interface EventLoopStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+import type { BaseStep } from "@/types/visualization";
+export interface EventLoopStep extends BaseStep {
   stack: string[];
   webApis: string[];
   taskQueue: string[];

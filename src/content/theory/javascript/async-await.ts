@@ -45,7 +45,8 @@ export const asyncAwaitTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What does an async function return, and when does its body start running?",
+      question:
+        "What does an async function return, and when does its body start running?",
       answer:
         "It always returns a promise. The body starts immediately and runs synchronously on the caller's stack until the first await. Only then does the function suspend and hand a pending promise back to the caller.",
       codeExample: {
@@ -101,7 +102,8 @@ async function safe() {
       },
     },
     {
-      question: "Two independent requests each take 100 ms. How long do sequential awaits take versus Promise.all, and why?",
+      question:
+        "Two independent requests each take 100 ms. How long do sequential awaits take versus Promise.all, and why?",
       answer:
         "Sequential awaits take about 200 ms because the second request is not created until the first has resolved. Promise.all takes about 100 ms because both requests are started before the function suspends, so their timers overlap and the total is the slowest one.",
     },

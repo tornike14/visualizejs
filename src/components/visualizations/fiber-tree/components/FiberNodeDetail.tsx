@@ -4,7 +4,7 @@ interface FiberNodeDetailProps {
   detail: FiberNodeState | null;
 }
 
-export function FiberNodeDetail({ detail }: FiberNodeDetailProps) {
+export const FiberNodeDetail = ({ detail }: FiberNodeDetailProps) => {
   if (!detail) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -34,4 +34,4 @@ export function FiberNodeDetail({ detail }: FiberNodeDetailProps) {
       ))}
     </div>
   );
-}
+};

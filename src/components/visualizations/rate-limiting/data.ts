@@ -1,10 +1,6 @@
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
-import type {
-  RateLimitExample,
-  RateLimitStep,
-  RequestLogEntry,
-} from "./types";
+import type { RateLimitExample, RateLimitStep, RequestLogEntry } from "./types";
 
 /* ── shared builders ── */
 
@@ -39,7 +35,16 @@ const entry = (
 /* ── Example 1: token bucket ── */
 
 const BUCKET_TIMES = [0, 0, 0, 0.5, 1, 1.2, 1.5, 4];
-const BUCKET_VERDICTS: Verdict[] = ["ok", "ok", "ok", "ok", "ok", "ok", "rej", "ok"];
+const BUCKET_VERDICTS: Verdict[] = [
+  "ok",
+  "ok",
+  "ok",
+  "ok",
+  "ok",
+  "ok",
+  "rej",
+  "ok",
+];
 const BUCKET_DETAILS = [
   "tokens 5 -> 4",
   "tokens 4 -> 3",
@@ -94,9 +99,15 @@ const tokenBucket: RateLimitExample = {
     { num: 2, text: "const buckets = new Map(); // key -> { tokens, last }" },
     { num: 3, text: "" },
     { num: 4, text: "function allow(key, now) {" },
-    { num: 5, text: "  const b = buckets.get(key) ?? { tokens: CAPACITY, last: now };" },
+    {
+      num: 5,
+      text: "  const b = buckets.get(key) ?? { tokens: CAPACITY, last: now };",
+    },
     { num: 6, text: "  const elapsed = (now - b.last) / 1000;" },
-    { num: 7, text: "  b.tokens = Math.min(CAPACITY, b.tokens + elapsed * REFILL_PER_SEC);" },
+    {
+      num: 7,
+      text: "  b.tokens = Math.min(CAPACITY, b.tokens + elapsed * REFILL_PER_SEC);",
+    },
     { num: 8, text: "  b.last = now;" },
     { num: 9, text: "  const ok = b.tokens >= 1;" },
     { num: 10, text: "  if (ok) b.tokens -= 1;" },
@@ -106,8 +117,8 @@ const tokenBucket: RateLimitExample = {
     { num: 14, text: "" },
     { num: 15, text: "app.use((req, res, next) => {" },
     { num: 16, text: "  if (allow(req.ip, Date.now())) return next();" },
-    { num: 17, text: "  res.set(\"Retry-After\", \"1\");" },
-    { num: 18, text: "  res.status(429).send(\"Too Many Requests\");" },
+    { num: 17, text: '  res.set("Retry-After", "1");' },
+    { num: 18, text: '  res.status(429).send("Too Many Requests");' },
     { num: 19, text: "});" },
   ],
   steps: [
@@ -216,7 +227,11 @@ const FIXED_DETAILS = [
   "window 10-20, count 3 / 3",
 ];
 
-const fixedBars = (count: number, now: number, windowStart: number): MetricBar[] => [
+const fixedBars = (
+  count: number,
+  now: number,
+  windowStart: number,
+): MetricBar[] => [
   {
     id: "count",
     label: "count",
@@ -265,24 +280,33 @@ const fixedWindow: RateLimitExample = {
   stateTitle: "Window Counter",
   codeLines: [
     { num: 1, text: "const LIMIT = 3, WINDOW_MS = 10_000;" },
-    { num: 2, text: "const counters = new Map(); // key -> { windowStart, count }" },
+    {
+      num: 2,
+      text: "const counters = new Map(); // key -> { windowStart, count }",
+    },
     { num: 3, text: "" },
     { num: 4, text: "function allow(key, now) {" },
-    { num: 5, text: "  const windowStart = Math.floor(now / WINDOW_MS) * WINDOW_MS;" },
+    {
+      num: 5,
+      text: "  const windowStart = Math.floor(now / WINDOW_MS) * WINDOW_MS;",
+    },
     { num: 6, text: "  let c = counters.get(key);" },
     { num: 7, text: "  if (!c || c.windowStart !== windowStart) {" },
     { num: 8, text: "    c = { windowStart, count: 0 };" },
     { num: 9, text: "  }" },
     { num: 10, text: "  c.count += 1;" },
     { num: 11, text: "  counters.set(key, c);" },
-    { num: 12, text: "  const resetIn = (windowStart + WINDOW_MS - now) / 1000;" },
+    {
+      num: 12,
+      text: "  const resetIn = (windowStart + WINDOW_MS - now) / 1000;",
+    },
     { num: 13, text: "  return { ok: c.count <= LIMIT, resetIn };" },
     { num: 14, text: "}" },
     { num: 15, text: "" },
     { num: 16, text: "app.use((req, res, next) => {" },
     { num: 17, text: "  const { ok, resetIn } = allow(req.ip, Date.now());" },
     { num: 18, text: "  if (ok) return next();" },
-    { num: 19, text: "  res.set(\"Retry-After\", String(Math.ceil(resetIn)));" },
+    { num: 19, text: '  res.set("Retry-After", String(Math.ceil(resetIn)));' },
     { num: 20, text: "  res.status(429).end();" },
     { num: 21, text: "});" },
   ],
@@ -412,7 +436,8 @@ const logChips = (chips: LogChip[]): TokenChip[] =>
   chips.map(({ t, tone }) => ({
     id: `ts-${t}`,
     label: fmt(t),
-    value: tone === "muted" ? "expired" : tone === "active" ? "pushed" : "in window",
+    value:
+      tone === "muted" ? "expired" : tone === "active" ? "pushed" : "in window",
     tone,
   }));
 
@@ -448,22 +473,31 @@ const slidingWindow: RateLimitExample = {
     { num: 2, text: "const logs = new Map(); // key -> accepted timestamps" },
     { num: 3, text: "" },
     { num: 4, text: "function allow(key, now) {" },
-    { num: 5, text: "  const log = (logs.get(key) ?? []).filter((t) => t > now - WINDOW_MS);" },
+    {
+      num: 5,
+      text: "  const log = (logs.get(key) ?? []).filter((t) => t > now - WINDOW_MS);",
+    },
     { num: 6, text: "  if (log.length < LIMIT) {" },
     { num: 7, text: "    log.push(now);" },
     { num: 8, text: "    logs.set(key, log);" },
     { num: 9, text: "    return { ok: true, remaining: LIMIT - log.length };" },
     { num: 10, text: "  }" },
     { num: 11, text: "  logs.set(key, log);" },
-    { num: 12, text: "  const retryAfter = Math.ceil((log[0] + WINDOW_MS - now) / 1000);" },
+    {
+      num: 12,
+      text: "  const retryAfter = Math.ceil((log[0] + WINDOW_MS - now) / 1000);",
+    },
     { num: 13, text: "  return { ok: false, remaining: 0, retryAfter };" },
     { num: 14, text: "}" },
     { num: 15, text: "" },
     { num: 16, text: "app.use((req, res, next) => {" },
     { num: 17, text: "  const r = allow(req.apiKey, Date.now());" },
-    { num: 18, text: "  res.set(\"X-RateLimit-Remaining\", String(r.remaining));" },
+    {
+      num: 18,
+      text: '  res.set("X-RateLimit-Remaining", String(r.remaining));',
+    },
     { num: 19, text: "  if (r.ok) return next();" },
-    { num: 20, text: "  res.set(\"Retry-After\", String(r.retryAfter));" },
+    { num: 20, text: '  res.set("Retry-After", String(r.retryAfter));' },
     { num: 21, text: "  res.status(429).end();" },
     { num: 22, text: "});" },
   ],
@@ -594,4 +628,8 @@ const slidingWindow: RateLimitExample = {
   ],
 };
 
-export const EXAMPLES: RateLimitExample[] = [tokenBucket, fixedWindow, slidingWindow];
+export const EXAMPLES: RateLimitExample[] = [
+  tokenBucket,
+  fixedWindow,
+  slidingWindow,
+];

@@ -21,7 +21,7 @@ export const debounceThrottleTheory: TopicTheoryContent = {
     {
       title: "Creating the wrapper on every render",
       explanation:
-        "Calling debounce inside a React component body, or inline in an event handler, produces a new closure with fresh state on each render. The previous timer belongs to a wrapper that no longer receives events, so the pending call either never fires or fires with stale data.",
+        "Calling debounce inside a React component body, or inline in an event handler, produces a new closure with fresh state on each render. The previous timer belongs to a wrapper that no longer receives events, so nothing can cancel it and it fires with stale data alongside the new one.",
       fix: "Create the debounced or throttled function once, at module scope, or inside useMemo or useRef with a stable dependency list. Cancel it in the cleanup of a useEffect.",
     },
     {
@@ -87,9 +87,10 @@ export const debounceThrottleTheory: TopicTheoryContent = {
       },
     },
     {
-      question: "Why does a debounced function created inside a React render body never fire?",
+      question:
+        "Why does a debounced function created inside a React render body stop debouncing?",
       answer:
-        "Each render calls debounce again and produces a new closure with its own timeoutId. The listener is attached to the newest wrapper, so events clear timers on a wrapper that was created this render and the previous render's timer is orphaned. If a render happens before the wait elapses, no single closure ever reaches its deadline. The fix is to create the wrapper once with useMemo or useRef.",
+        "Each render calls debounce again and produces a new closure with its own timeoutId. The listener is attached to the newest wrapper, so an event after a re-render clears a timer that was never set and the previous render's timer keeps counting down. That orphaned timer still fires with stale arguments, so instead of one call per burst you get one call per render. The fix is to create the wrapper once with useMemo or useRef.",
     },
     {
       question: "What do lodash's leading, trailing, and maxWait options do?",
@@ -97,5 +98,10 @@ export const debounceThrottleTheory: TopicTheoryContent = {
         "leading calls on the first event of a burst and trailing calls after the burst ends; debounce defaults to trailing only and throttle enables both. maxWait forces a debounced function to run at least every N milliseconds even if events never stop, which is how lodash builds throttle on top of debounce by setting maxWait equal to wait.",
     },
   ],
-  relatedTopicIds: ["closures", "event-loop", "event-delegation", "async-await"],
+  relatedTopicIds: [
+    "closures",
+    "event-loop",
+    "event-delegation",
+    "async-await",
+  ],
 };

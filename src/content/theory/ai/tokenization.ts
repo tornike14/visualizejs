@@ -45,7 +45,8 @@ export const tokenizationTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "Why do language models use subword tokens instead of whole words?",
+      question:
+        "Why do language models use subword tokens instead of whole words?",
       answer:
         "Whole-word vocabularies are unbounded and any unseen word becomes an unknown token. Character vocabularies are tiny but produce very long sequences with little meaning per position. Subword tokenization keeps the vocabulary fixed while still encoding any string, and it lets common words be one token while rare words fall back to shared fragments such as prefixes and suffixes.",
     },
@@ -86,12 +87,14 @@ while (merges.length < NUM_MERGES) {
       },
     },
     {
-      question: "Why does 'hello' tokenize differently from ' hello' and 'Hello'?",
+      question:
+        "Why does 'hello' tokenize differently from ' hello' and 'Hello'?",
       answer:
         "The tokenizer works on bytes and has no notion of case or word boundaries beyond what the pre-tokenizer regex encodes. A leading space is part of the byte sequence, so ' hello' is a different string with its own merge path and id. The same holds for a different first byte in 'Hello'. Each variant gets its own embedding and the model learns their relationship only from co-occurrence.",
     },
     {
-      question: "What is byte fallback and why does it matter for non-English text?",
+      question:
+        "What is byte fallback and why does it matter for non-English text?",
       answer:
         "In a byte-level tokenizer the 256 possible byte values are always in the vocabulary, so any UTF-8 input can be encoded without an unknown token. When no merge rules were learned for a script, every byte becomes its own token. A character that needs three bytes in UTF-8 then costs three tokens, which is why the same sentence can be several times more expensive in Georgian or Thai than in English.",
     },

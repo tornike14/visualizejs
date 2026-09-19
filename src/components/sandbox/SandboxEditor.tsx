@@ -1,33 +1,43 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter } from "@codemirror/view";
+import {
+  EditorView,
+  keymap,
+  lineNumbers,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+} from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
-import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+} from "@codemirror/commands";
 import { bracketMatching, indentOnInput } from "@codemirror/language";
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
 import { visualizeJsTheme } from "@/lib/sandbox/editor-theme";
+import type { Plugin as PrettierPlugin } from "prettier";
 
 /* ------------------------------------------------------------------ */
 /*  Prettier formatting (lazy-loaded on first Cmd+Shift+F)             */
 /* ------------------------------------------------------------------ */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let prettierCache: { format: (...args: any[]) => Promise<string>; plugins: unknown[] } | null = null;
+let prettierCache: {
+  format: typeof import("prettier/standalone").format;
+  plugins: PrettierPlugin[];
+} | null = null;
 
 async function loadPrettier() {
   if (prettierCache) return prettierCache;
-  const [prettierMod, babelMod, estreeMod] = await Promise.all([
+  const [prettier, babel, estree] = await Promise.all([
     import("prettier/standalone"),
     import("prettier/plugins/babel"),
     import("prettier/plugins/estree"),
   ]);
-  // Handle both ESM default and direct exports
-  const format = prettierMod.format ?? prettierMod.default?.format;
-  const babel = babelMod.default ?? babelMod;
-  const estree = estreeMod.default ?? estreeMod;
-  prettierCache = { format, plugins: [babel, estree] };
+  prettierCache = { format: prettier.format, plugins: [babel, estree] };
   return prettierCache;
 }
 
@@ -42,7 +52,7 @@ async function formatWithPrettier(view: EditorView) {
       tabWidth: 2,
       singleQuote: true,
       semi: true,
-      trailingComma: "all" as const,
+      trailingComma: "all",
     });
     const trimmed = formatted.replace(/\n+$/, "");
     if (trimmed !== raw) {
@@ -68,13 +78,13 @@ interface SandboxEditorProps {
   codeVersion?: number;
 }
 
-export function SandboxEditor({
+export const SandboxEditor = ({
   code,
   onChange,
   onGenerate,
   maxLines = 20,
   codeVersion = 0,
-}: SandboxEditorProps) {
+}: SandboxEditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const onChangeRef = useRef(onChange);
@@ -82,8 +92,13 @@ export function SandboxEditor({
   /** Track whether a dispatch originated internally (from external sync) to avoid feedback loops. */
   const internalUpdate = useRef(false);
 
-  onChangeRef.current = onChange;
-  onGenerateRef.current = onGenerate;
+  // Latest callbacks for the long-lived CodeMirror extensions. Written in an
+  // effect rather than during render so concurrent renders cannot leak a
+  // callback from a render that was later discarded.
+  useEffect(() => {
+    onChangeRef.current = onChange;
+    onGenerateRef.current = onGenerate;
+  });
 
   const createState = useCallback(
     (doc: string) =>
@@ -134,10 +149,7 @@ export function SandboxEditor({
               const doc = update.state.doc;
               // Enforce max lines
               if (doc.lines > maxLines) {
-                const trimmed = doc.sliceString(
-                  0,
-                  doc.line(maxLines).to,
-                );
+                const trimmed = doc.sliceString(0, doc.line(maxLines).to);
                 onChangeRef.current(trimmed);
               } else {
                 onChangeRef.current(doc.toString());
@@ -195,4 +207,4 @@ export function SandboxEditor({
       className="min-h-[120px] overflow-auto rounded-lg"
     />
   );
-}
+};

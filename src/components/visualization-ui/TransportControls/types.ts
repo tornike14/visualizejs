@@ -1,7 +1,12 @@
 export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 type TooltipSide = "top" | "bottom";
-type TransportTooltipKey = "reset" | "stepBack" | "play" | "stepForward" | "speed";
+type TransportTooltipKey =
+  | "reset"
+  | "stepBack"
+  | "play"
+  | "stepForward"
+  | "speed";
 
 export interface TransportTooltipConfig {
   forceVisible?: boolean;

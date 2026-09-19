@@ -6,7 +6,7 @@ interface PhaseIndicatorProps {
   phaseInfo: PhaseInfo | null;
 }
 
-export function PhaseIndicator({ phaseInfo }: PhaseIndicatorProps) {
+export const PhaseIndicator = ({ phaseInfo }: PhaseIndicatorProps) => {
   if (!phaseInfo) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -43,4 +43,4 @@ export function PhaseIndicator({ phaseInfo }: PhaseIndicatorProps) {
       )}
     </div>
   );
-}
+};

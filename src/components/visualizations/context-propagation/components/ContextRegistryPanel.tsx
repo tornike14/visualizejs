@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 import type { ContextEntry } from "../types";
 
-export function ContextRegistryPanel({
+export const ContextRegistryPanel = ({
   entries,
 }: {
   entries: ContextEntry[];
-}) {
+}) => {
   if (entries.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -28,11 +28,9 @@ export function ContextRegistryPanel({
             {entry.name}
           </span>
           <span className="font-semibold">{entry.value}</span>
-          <span className="ml-auto text-slate-500">
-            {entry.providerId}
-          </span>
+          <span className="ml-auto text-slate-500">{entry.providerId}</span>
         </div>
       ))}
     </div>
   );
-}
+};

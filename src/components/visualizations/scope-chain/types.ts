@@ -1,4 +1,8 @@
-import type { SourceLine, ChainHighlight } from "@/types/visualization";
+import type {
+  SourceLine,
+  ChainHighlight,
+  BaseStep,
+} from "@/types/visualization";
 
 export type ScopeExampleKind = "lookup" | "block" | "lexical";
 
@@ -17,10 +21,7 @@ export interface LookupState {
   foundIn?: string;
 }
 
-export interface ScopeStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ScopeStep extends BaseStep {
   scopes: ScopeEntry[];
   activeLink?: number;
   lookup: LookupState | null;

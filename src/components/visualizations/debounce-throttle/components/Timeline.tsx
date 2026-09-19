@@ -4,7 +4,13 @@ import type { TimelineRow, TimelineState } from "../types";
 
 const pct = (t: number, maxMs: number) => `${(t / maxMs) * 100}%`;
 
-const Track = ({ row, timeline }: { row: TimelineRow; timeline: TimelineState }) => {
+const Track = ({
+  row,
+  timeline,
+}: {
+  row: TimelineRow;
+  timeline: TimelineState;
+}) => {
   const { maxMs, now, window } = timeline;
   return (
     <div className="flex items-center gap-2">
@@ -15,7 +21,10 @@ const Track = ({ row, timeline }: { row: TimelineRow; timeline: TimelineState })
         {window ? (
           <div
             className="absolute inset-y-0 border-x border-amber-400/40 bg-amber-400/10"
-            style={{ left: pct(window.start, maxMs), width: pct(window.end - window.start, maxMs) }}
+            style={{
+              left: pct(window.start, maxMs),
+              width: pct(window.end - window.start, maxMs),
+            }}
           />
         ) : null}
         {now !== null ? (
@@ -57,7 +66,9 @@ export const Timeline = ({ timeline }: { timeline: TimelineState | null }) => {
       <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-slate-400">
         <span>
           now:{" "}
-          <span className="text-pink-300">{now === null ? "not started" : `t=${now} ms`}</span>
+          <span className="text-pink-300">
+            {now === null ? "not started" : `t=${now} ms`}
+          </span>
         </span>
         {window ? (
           <span>
@@ -83,7 +94,11 @@ export const Timeline = ({ timeline }: { timeline: TimelineState | null }) => {
               key={t}
               className={cn(
                 "absolute top-0",
-                index === 0 ? "translate-x-0" : index === axis.length - 1 ? "-translate-x-full" : "-translate-x-1/2",
+                index === 0
+                  ? "translate-x-0"
+                  : index === axis.length - 1
+                    ? "-translate-x-full"
+                    : "-translate-x-1/2",
               )}
               style={{ left: pct(t, maxMs) }}
             >
@@ -96,7 +111,12 @@ export const Timeline = ({ timeline }: { timeline: TimelineState | null }) => {
       <div className="flex flex-wrap gap-x-3 gap-y-1 pt-1 font-mono text-[10px] text-slate-400">
         {TICK_LEGEND.map((item) => (
           <span key={item.state} className="flex items-center gap-1.5">
-            <span className={cn("inline-block rounded-full", TICK_STYLES[item.state])} />
+            <span
+              className={cn(
+                "inline-block rounded-full",
+                TICK_STYLES[item.state],
+              )}
+            />
             {item.label}
           </span>
         ))}

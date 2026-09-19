@@ -69,7 +69,8 @@ function sign(payload, secret) {
         "No. A signed JWT (JWS) is encoded, not encrypted, and anyone holding it can decode the claims. The signature only guarantees the claims were not altered and were produced by a holder of the key. Confidential data needs JWE or must stay on the server.",
     },
     {
-      question: "How does the server verify a token, and why does it compare signatures in constant time?",
+      question:
+        "How does the server verify a token, and why does it compare signatures in constant time?",
       answer:
         "It splits the token, recomputes the HMAC over header.payload with its own secret and algorithm, and compares the result with the presented signature. A naive string comparison returns as soon as one byte differs, so an attacker can measure response times to discover the correct signature byte by byte. Comparing all bytes regardless of where they differ removes that side channel.",
       codeExample: {
@@ -90,15 +91,21 @@ function sign(payload, secret) {
       },
     },
     {
-      question: "What is the difference between HS256 and RS256, and when would you pick each?",
+      question:
+        "What is the difference between HS256 and RS256, and when would you pick each?",
       answer:
         "HS256 uses one shared secret for both signing and verification, so every service that verifies tokens could also forge them. RS256 signs with a private key and verifies with the matching public key, so verification can be spread across services or third parties without sharing signing power. HS256 is simpler and faster for a single backend; RS256 fits multi-service or federated setups.",
     },
     {
-      question: "Why use refresh tokens if access tokens already carry an expiry?",
+      question:
+        "Why use refresh tokens if access tokens already carry an expiry?",
       answer:
         "An access token cannot be revoked before exp because the server holds no state for it, so it must be short-lived, which would force frequent logins on its own. A refresh token is long-lived but stored server side, so it can be checked, rotated on every use, and revoked at logout or on suspected theft. The pair gives fast stateless checks on most requests and a revocable anchor for the session.",
     },
   ],
-  relatedTopicIds: ["http-request-lifecycle", "rate-limiting", "caching-strategies"],
+  relatedTopicIds: [
+    "http-request-lifecycle",
+    "rate-limiting",
+    "caching-strategies",
+  ],
 };

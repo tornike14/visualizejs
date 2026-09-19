@@ -112,9 +112,24 @@ const leaf = (
   props: entries.map(([key, rowId]) => ({ key, value: ctid(rowId) })),
 });
 
-const EMAIL_L1: Entry[] = [["ada", 10], ["alan", 9], ["barbara", 6], ["dennis", 5]];
-const EMAIL_L2: Entry[] = [["edsger", 11], ["frances", 8], ["grace", 1], ["ken", 3]];
-const EMAIL_L3: Entry[] = [["linus", 2], ["margaret", 4], ["radia", 12], ["tim", 7]];
+const EMAIL_L1: Entry[] = [
+  ["ada", 10],
+  ["alan", 9],
+  ["barbara", 6],
+  ["dennis", 5],
+];
+const EMAIL_L2: Entry[] = [
+  ["edsger", 11],
+  ["frances", 8],
+  ["grace", 1],
+  ["ken", 3],
+];
+const EMAIL_L3: Entry[] = [
+  ["linus", 2],
+  ["margaret", 4],
+  ["radia", 12],
+  ["tim", 7],
+];
 
 interface EmailTreeHighlights {
   root?: TreeNodeHighlight;
@@ -149,8 +164,25 @@ const emailTreeAfterSplit = (h: SplitTreeHighlights = {}): TreeNodeData => ({
     : "root  [ edsger | linus ]",
   highlight: h.root,
   children: [
-    leaf("l1", "leaf 1", [["ada", 10], ["alan", 9], ["barbara", 6]], h.l1a),
-    leaf("l1b", "leaf 1b", [["dennis", 5], ["donald", 13]], h.l1b),
+    leaf(
+      "l1",
+      "leaf 1",
+      [
+        ["ada", 10],
+        ["alan", 9],
+        ["barbara", 6],
+      ],
+      h.l1a,
+    ),
+    leaf(
+      "l1b",
+      "leaf 1b",
+      [
+        ["dennis", 5],
+        ["donald", 13],
+      ],
+      h.l1b,
+    ),
     leaf("l2", "leaf 2", EMAIL_L2),
     leaf("l3", "leaf 3", EMAIL_L3),
   ],
@@ -249,7 +281,14 @@ const scanExample: DatabaseIndexingExample = {
       pages: buildPages(byEmail),
       tree: null,
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: SCAN_FILTER, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: SCAN_FILTER,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: [],
       writeLog: [],
@@ -262,46 +301,76 @@ const scanExample: DatabaseIndexingExample = {
       pages: buildPages(byEmail, { visited: range(1, 4) }),
       tree: null,
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: SCAN_FILTER, reads: "1", rows: "4", status: "running" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: SCAN_FILTER,
+          reads: "1",
+          rows: "4",
+          status: "running",
+        },
       ],
       indexColumns: [],
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Page 2 follows. The scan has no way to know where the matching row is, so the work grows in step with the table size. This is the O(n) cost: double the rows, double the reads.',
+        "Page 2 follows. The scan has no way to know where the matching row is, so the work grows in step with the table size. This is the O(n) cost: double the rows, double the reads.",
       activeLine: 3,
       doneLines: [2],
       pages: buildPages(byEmail, { visited: range(1, 8) }),
       tree: null,
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: SCAN_FILTER, reads: "2", rows: "8", status: "running" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: SCAN_FILTER,
+          reads: "2",
+          rows: "8",
+          status: "running",
+        },
       ],
       indexColumns: [],
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Page 3 holds the match at slot 2. The scan still compares slots 3 and 4, since without a unique constraint it cannot assume the match is the only one. <strong>12 comparisons for 1 result.</strong>',
+        "Page 3 holds the match at slot 2. The scan still compares slots 3 and 4, since without a unique constraint it cannot assume the match is the only one. <strong>12 comparisons for 1 result.</strong>",
       activeLine: 3,
       doneLines: [2],
       pages: buildPages(byEmail, { visited: range(1, 12), match: [10] }),
       tree: null,
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: SCAN_FILTER, reads: "3", rows: "12", elapsed: "0.041 ms", status: "done" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: SCAN_FILTER,
+          reads: "3",
+          rows: "12",
+          elapsed: "0.041 ms",
+          status: "done",
+        },
       ],
       indexColumns: [],
       writeLog: [],
     },
     {
       descriptionHtml:
-        'On 12 rows this cost 3 page reads. At a million rows the same query reads roughly 12,000 pages, and every inserted row makes it slower. The fix is a separate structure that already knows where <code>\'ada@example.com\'</code> lives.',
+        "On 12 rows this cost 3 page reads. At a million rows the same query reads roughly 12,000 pages, and every inserted row makes it slower. The fix is a separate structure that already knows where <code>'ada@example.com'</code> lives.",
       activeLine: 5,
       doneLines: [2, 3],
       pages: buildPages(byEmail),
       tree: null,
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: SCAN_FILTER, reads: "3", rows: "12", elapsed: "0.041 ms", status: "done" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: SCAN_FILTER,
+          reads: "3",
+          rows: "12",
+          elapsed: "0.041 ms",
+          status: "done",
+        },
       ],
       indexColumns: [],
       writeLog: [],
@@ -312,14 +381,19 @@ const scanExample: DatabaseIndexingExample = {
       activeLine: 6,
       doneLines: [2, 3],
       pages: buildPages(byEmail),
-      tree: emailTree({ l1: "added", l2: "added", l3: "added", rootLabel: "root" }),
+      tree: emailTree({
+        l1: "added",
+        l2: "added",
+        l3: "added",
+        rootLabel: "root",
+      }),
       plan: [],
       indexColumns: emailColumns("idle"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'The root page stores one separator per boundary: <code>edsger</code> and <code>linus</code>. Keys below <code>edsger</code> live in leaf 1, keys from <code>edsger</code> up to <code>linus</code> in leaf 2, the rest in leaf 3. Every leaf sits at the same depth, which is what keeps the tree balanced.',
+        "The root page stores one separator per boundary: <code>edsger</code> and <code>linus</code>. Keys below <code>edsger</code> live in leaf 1, keys from <code>edsger</code> up to <code>linus</code> in leaf 2, the rest in leaf 3. Every leaf sits at the same depth, which is what keeps the tree balanced.",
       activeLine: 7,
       doneLines: [2, 3, 6],
       pages: buildPages(byEmail),
@@ -337,53 +411,110 @@ const scanExample: DatabaseIndexingExample = {
       pages: buildPages(byEmail),
       tree: emailTree(),
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: "estimated 3 page reads and 12 comparisons, rejected", reads: "0", rows: "0", status: "rejected" },
-        { id: "idx", operation: "Index Scan using users_email_idx", detail: SCAN_COND, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: "estimated 3 page reads and 12 comparisons, rejected",
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "idx",
+          operation: "Index Scan using users_email_idx",
+          detail: SCAN_COND,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: emailColumns("used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Read 1: the root page. <code>ada</code> sorts before <code>edsger</code>, so the search follows the leftmost child pointer. One comparison rules out two thirds of the table without reading it.',
+        "Read 1: the root page. <code>ada</code> sorts before <code>edsger</code>, so the search follows the leftmost child pointer. One comparison rules out two thirds of the table without reading it.",
       activeLine: 11,
       doneLines: [2, 3, 6, 7, 10],
       pages: buildPages(byEmail),
       tree: emailTree({ root: "active" }),
       activeNodeId: "root",
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: "estimated 3 page reads and 12 comparisons, rejected", reads: "0", rows: "0", status: "rejected" },
-        { id: "idx", operation: "Index Scan using users_email_idx", detail: SCAN_COND, reads: "1", rows: "1", status: "running" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: "estimated 3 page reads and 12 comparisons, rejected",
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "idx",
+          operation: "Index Scan using users_email_idx",
+          detail: SCAN_COND,
+          reads: "1",
+          rows: "1",
+          status: "running",
+        },
       ],
       indexColumns: emailColumns("used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Read 2: leaf 1. A binary search over its sorted keys finds <code>ada</code> in the first slot with tuple id <code>(3,2)</code>. No other leaf is touched, and the same descent would take 3 or 4 reads on a tree holding millions of keys.',
+        "Read 2: leaf 1. A binary search over its sorted keys finds <code>ada</code> in the first slot with tuple id <code>(3,2)</code>. No other leaf is touched, and the same descent would take 3 or 4 reads on a tree holding millions of keys.",
       activeLine: 11,
       doneLines: [2, 3, 6, 7, 10],
       pages: buildPages(byEmail),
       tree: emailTree({ l1: "active" }),
       activeNodeId: "l1",
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: "estimated 3 page reads and 12 comparisons, rejected", reads: "0", rows: "0", status: "rejected" },
-        { id: "idx", operation: "Index Scan using users_email_idx", detail: SCAN_COND, reads: "2", rows: "3", status: "running" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: "estimated 3 page reads and 12 comparisons, rejected",
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "idx",
+          operation: "Index Scan using users_email_idx",
+          detail: SCAN_COND,
+          reads: "2",
+          rows: "3",
+          status: "running",
+        },
       ],
       indexColumns: emailColumns("used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Read 3: heap page 3, slot 2. The row is fetched by its tuple id and returned. Three page reads replaced a full scan, and because each index page holds hundreds of keys, height grows with log(n): this is why O(log n) beats O(n) as tables grow.',
+        "Read 3: heap page 3, slot 2. The row is fetched by its tuple id and returned. Three page reads replaced a full scan, and because each index page holds hundreds of keys, height grows with log(n): this is why O(log n) beats O(n) as tables grow.",
       activeLine: 11,
       doneLines: [2, 3, 6, 7, 10],
       pages: buildPages(byEmail, { match: [10] }),
       tree: emailTree({ l1: "active" }),
       activeNodeId: "l1",
       plan: [
-        { id: "seq", operation: "Seq Scan on users", detail: "estimated 3 page reads and 12 comparisons, rejected", reads: "0", rows: "0", status: "rejected" },
-        { id: "idx", operation: "Index Scan using users_email_idx", detail: SCAN_COND, reads: "3", rows: "3", elapsed: "0.019 ms", status: "done" },
+        {
+          id: "seq",
+          operation: "Seq Scan on users",
+          detail: "estimated 3 page reads and 12 comparisons, rejected",
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "idx",
+          operation: "Index Scan using users_email_idx",
+          detail: SCAN_COND,
+          reads: "3",
+          rows: "3",
+          elapsed: "0.019 ms",
+          status: "done",
+        },
       ],
       indexColumns: emailColumns("used"),
       writeLog: [],
@@ -397,7 +528,15 @@ const scanExample: DatabaseIndexingExample = {
       tree: emailTree({ l1: "active" }),
       activeNodeId: "l1",
       plan: [
-        { id: "only", operation: "Index Only Scan using users_email_idx", detail: `${SCAN_COND}, Heap Fetches: 0`, reads: "2", rows: "3", elapsed: "0.012 ms", status: "done" },
+        {
+          id: "only",
+          operation: "Index Only Scan using users_email_idx",
+          detail: `${SCAN_COND}, Heap Fetches: 0`,
+          reads: "2",
+          rows: "3",
+          elapsed: "0.012 ms",
+          status: "done",
+        },
       ],
       indexColumns: emailColumns("used"),
       writeLog: [],
@@ -441,7 +580,7 @@ const compositeExample: DatabaseIndexingExample = {
   steps: [
     {
       descriptionHtml:
-        '<code>CREATE INDEX</code> builds one B-tree whose keys are <code>(last_name, first_name)</code> pairs. Entries sort by <code>last_name</code> first, and only entries sharing a <code>last_name</code> are ordered by <code>first_name</code>. Column order decides everything that follows.',
+        "<code>CREATE INDEX</code> builds one B-tree whose keys are <code>(last_name, first_name)</code> pairs. Entries sort by <code>last_name</code> first, and only entries sharing a <code>last_name</code> are ordered by <code>first_name</code>. Column order decides everything that follows.",
       activeLine: 1,
       doneLines: [],
       pages: buildPages(byName),
@@ -452,7 +591,7 @@ const compositeExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        'The root separators are <code>Hopper</code> and <code>Ritchie</code>. Leaf pages are also linked left to right, so once a search lands on a leaf it can walk forward through keys in order without returning to the root.',
+        "The root separators are <code>Hopper</code> and <code>Ritchie</code>. Leaf pages are also linked left to right, so once a search lands on a leaf it can walk forward through keys in order without returning to the root.",
       activeLine: 2,
       doneLines: [1],
       pages: buildPages(byName),
@@ -470,62 +609,99 @@ const compositeExample: DatabaseIndexingExample = {
       pages: buildPages(byName),
       tree: nameTree(),
       plan: [
-        { id: "a", operation: "Index Scan using users_name_idx", detail: FULL_COND, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "a",
+          operation: "Index Scan using users_name_idx",
+          detail: FULL_COND,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: nameColumns("used", "used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Read 1: the root. <code>(Lovelace, Ada)</code> sorts at or after <code>Hopper</code> and before <code>Ritchie</code>, so the search follows the middle pointer to leaf 2. Comparison happens on the pair, column 1 first.',
+        "Read 1: the root. <code>(Lovelace, Ada)</code> sorts at or after <code>Hopper</code> and before <code>Ritchie</code>, so the search follows the middle pointer to leaf 2. Comparison happens on the pair, column 1 first.",
       activeLine: 6,
       doneLines: [1, 2, 5],
       pages: buildPages(byName),
       tree: nameTree({ root: "active" }),
       activeNodeId: "root",
       plan: [
-        { id: "a", operation: "Index Scan using users_name_idx", detail: FULL_COND, reads: "1", rows: "2", status: "running" },
+        {
+          id: "a",
+          operation: "Index Scan using users_name_idx",
+          detail: FULL_COND,
+          reads: "1",
+          rows: "2",
+          status: "running",
+        },
       ],
       indexColumns: nameColumns("used", "used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Read 2: leaf 2 finds <code>Lovelace, Ada</code> with tuple id <code>(3,2)</code>. Read 3: heap page 3 returns the row. Three reads, exactly the same cost as a single column lookup.',
+        "Read 2: leaf 2 finds <code>Lovelace, Ada</code> with tuple id <code>(3,2)</code>. Read 3: heap page 3 returns the row. Three reads, exactly the same cost as a single column lookup.",
       activeLine: 6,
       doneLines: [1, 2, 5],
       pages: buildPages(byName, { match: [10] }),
       tree: nameTree({ l2: "active" }),
       activeNodeId: "l2",
       plan: [
-        { id: "a", operation: "Index Scan using users_name_idx", detail: FULL_COND, reads: "3", rows: "4", elapsed: "0.020 ms", status: "done" },
+        {
+          id: "a",
+          operation: "Index Scan using users_name_idx",
+          detail: FULL_COND,
+          reads: "3",
+          rows: "4",
+          elapsed: "0.020 ms",
+          status: "done",
+        },
       ],
       indexColumns: nameColumns("used", "used"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'Query B filters on <code>last_name</code> only. That is a <strong>leftmost prefix</strong> of the key, so the index still applies: the search descends to the first entry with <code>last_name = \'Lovelace\'</code> and walks right while the prefix keeps matching.',
+        "Query B filters on <code>last_name</code> only. That is a <strong>leftmost prefix</strong> of the key, so the index still applies: the search descends to the first entry with <code>last_name = 'Lovelace'</code> and walks right while the prefix keeps matching.",
       activeLine: 9,
       doneLines: [1, 2, 5, 6],
       pages: buildPages(byName),
       tree: nameTree(),
       plan: [
-        { id: "b", operation: "Index Scan using users_name_idx", detail: PREFIX_COND, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "b",
+          operation: "Index Scan using users_name_idx",
+          detail: PREFIX_COND,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: nameColumns("used", "unused"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'The descent lands on leaf 2 again. The scan returns <code>Lovelace, Ada</code>, reads the next key, <code>Perlman</code>, sees the prefix no longer matches, and stops. A range on the leading column is a short walk along one or two leaves.',
+        "The descent lands on leaf 2 again. The scan returns <code>Lovelace, Ada</code>, reads the next key, <code>Perlman</code>, sees the prefix no longer matches, and stops. A range on the leading column is a short walk along one or two leaves.",
       activeLine: 9,
       doneLines: [1, 2, 5, 6],
       pages: buildPages(byName, { match: [10] }),
       tree: nameTree({ l2: "active" }),
       activeNodeId: "l2",
       plan: [
-        { id: "b", operation: "Index Scan using users_name_idx", detail: PREFIX_COND, reads: "3", rows: "5", elapsed: "0.021 ms", status: "done" },
+        {
+          id: "b",
+          operation: "Index Scan using users_name_idx",
+          detail: PREFIX_COND,
+          reads: "3",
+          rows: "5",
+          elapsed: "0.021 ms",
+          status: "done",
+        },
       ],
       indexColumns: nameColumns("used", "unused"),
       writeLog: [],
@@ -538,22 +714,51 @@ const compositeExample: DatabaseIndexingExample = {
       pages: buildPages(byName),
       tree: nameTree(),
       plan: [
-        { id: "c-idx", operation: "Index Scan using users_name_idx", detail: NO_PREFIX, reads: "0", rows: "0", status: "rejected" },
-        { id: "c-seq", operation: "Seq Scan on users", detail: FIRST_FILTER, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "c-idx",
+          operation: "Index Scan using users_name_idx",
+          detail: NO_PREFIX,
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "c-seq",
+          operation: "Seq Scan on users",
+          detail: FIRST_FILTER,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: nameColumns("unused", "blocked"),
       writeLog: [],
     },
     {
       descriptionHtml:
-        'All 3 pages are read and all 12 rows compared for 1 match. Serving this query needs a second index led by <code>first_name</code>. The order of columns in an index decides which predicates it can answer, not just which columns it contains.',
+        "All 3 pages are read and all 12 rows compared for 1 match. Serving this query needs a second index led by <code>first_name</code>. The order of columns in an index decides which predicates it can answer, not just which columns it contains.",
       activeLine: 12,
       doneLines: [1, 2, 5, 6, 9],
       pages: buildPages(byName, { visited: range(1, 12), match: [10] }),
       tree: nameTree(),
       plan: [
-        { id: "c-idx", operation: "Index Scan using users_name_idx", detail: NO_PREFIX, reads: "0", rows: "0", status: "rejected" },
-        { id: "c-seq", operation: "Seq Scan on users", detail: FIRST_FILTER, reads: "3", rows: "12", elapsed: "0.044 ms", status: "done" },
+        {
+          id: "c-idx",
+          operation: "Index Scan using users_name_idx",
+          detail: NO_PREFIX,
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "c-seq",
+          operation: "Seq Scan on users",
+          detail: FIRST_FILTER,
+          reads: "3",
+          rows: "12",
+          elapsed: "0.044 ms",
+          status: "done",
+        },
       ],
       indexColumns: nameColumns("unused", "blocked"),
       writeLog: [],
@@ -566,7 +771,15 @@ const compositeExample: DatabaseIndexingExample = {
       pages: buildPages(byName, { match: range(1, 12) }),
       tree: nameTree({ l1: "active", l2: "active", l3: "active" }),
       plan: [
-        { id: "d", operation: "Index Scan using users_name_idx", detail: "no Index Cond, leaf chain walked in key order, no Sort node", reads: "4 index + 3 heap", rows: "12", elapsed: "0.058 ms", status: "done" },
+        {
+          id: "d",
+          operation: "Index Scan using users_name_idx",
+          detail: "no Index Cond, leaf chain walked in key order, no Sort node",
+          reads: "4 index + 3 heap",
+          rows: "12",
+          elapsed: "0.058 ms",
+          status: "done",
+        },
       ],
       indexColumns: nameColumns("used", "used"),
       writeLog: [],
@@ -581,12 +794,43 @@ const compositeExample: DatabaseIndexingExample = {
 const COUNT_FILTER = "Filter: lower(email) = 'ada@example.com'";
 const EXPR_REJECT = "predicate is on lower(email), not on email, rejected";
 
-const WRITE_HEAP = { id: "heap", target: "heap page 4, slot 1", detail: "row 13 written, tuple id (4,1)", tone: "heap" } as const;
-const WRITE_WAL = { id: "wal", target: "WAL record", detail: "heap insert logged for crash recovery", tone: "wal" } as const;
-const WRITE_PKEY = { id: "pkey", target: "users_pkey", detail: "key 13 appended to the rightmost leaf, 1 page written", tone: "index" } as const;
-const WRITE_SPLIT = { id: "split", target: "users_email_idx leaf 1", detail: "full, split into leaf 1 and leaf 1b, 2 pages written", tone: "split" } as const;
-const WRITE_ROOT = { id: "root", target: "users_email_idx root", detail: "separator dennis added, 1 page written", tone: "index" } as const;
-const WRITE_NAME = { id: "name", target: "users_name_idx leaf 2", detail: "(Knuth, Donald) lands in a full leaf: split plus root separator, 3 pages written", tone: "split" } as const;
+const WRITE_HEAP = {
+  id: "heap",
+  target: "heap page 4, slot 1",
+  detail: "row 13 written, tuple id (4,1)",
+  tone: "heap",
+} as const;
+const WRITE_WAL = {
+  id: "wal",
+  target: "WAL record",
+  detail: "heap insert logged for crash recovery",
+  tone: "wal",
+} as const;
+const WRITE_PKEY = {
+  id: "pkey",
+  target: "users_pkey",
+  detail: "key 13 appended to the rightmost leaf, 1 page written",
+  tone: "index",
+} as const;
+const WRITE_SPLIT = {
+  id: "split",
+  target: "users_email_idx leaf 1",
+  detail: "full, split into leaf 1 and leaf 1b, 2 pages written",
+  tone: "split",
+} as const;
+const WRITE_ROOT = {
+  id: "root",
+  target: "users_email_idx root",
+  detail: "separator dennis added, 1 page written",
+  tone: "index",
+} as const;
+const WRITE_NAME = {
+  id: "name",
+  target: "users_name_idx leaf 2",
+  detail:
+    "(Knuth, Donald) lands in a full leaf: split plus root separator, 3 pages written",
+  tone: "split",
+} as const;
 
 const writesExample: DatabaseIndexingExample = {
   id: "writes",
@@ -611,7 +855,7 @@ const writesExample: DatabaseIndexingExample = {
   steps: [
     {
       descriptionHtml:
-        'The <code>INSERT</code> arrives. The heap row is only part of the work: every index on <code>users</code> keeps its own sorted copy of the columns it covers, so each of the three B-trees must accept the new key before the statement completes.',
+        "The <code>INSERT</code> arrives. The heap row is only part of the work: every index on <code>users</code> keeps its own sorted copy of the columns it covers, so each of the three B-trees must accept the new key before the statement completes.",
       activeLine: 6,
       doneLines: [],
       pages: buildPages(byEmail),
@@ -633,9 +877,9 @@ const writesExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        '<code>users_pkey</code> receives key <code>13</code>. Ids increase monotonically, so the key appends at the end of the rightmost leaf, which still has room. This is the cheapest kind of index insert: one leaf page dirtied.',
-      activeLine: 7,
-      doneLines: [6],
+        "<code>users_pkey</code> receives key <code>13</code>. Ids increase monotonically, so the key appends at the end of the rightmost leaf, which still has room. This is the cheapest kind of index insert: one leaf page dirtied.",
+      activeLine: 2,
+      doneLines: [6, 7],
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTree(),
       plan: [],
@@ -645,8 +889,8 @@ const writesExample: DatabaseIndexingExample = {
     {
       descriptionHtml:
         '<code>users_email_idx</code> must place <code>donald</code> in sorted position. The insert descends like a lookup: <code>donald</code> sorts before <code>edsger</code>, so it belongs in <span class="hl-task">leaf 1</span>.',
-      activeLine: 7,
-      doneLines: [6],
+      activeLine: 3,
+      doneLines: [2, 6, 7],
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTree({ root: "active" }),
       activeNodeId: "root",
@@ -656,9 +900,9 @@ const writesExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        'Leaf 1 already holds 4 keys, its capacity in this scaled-down tree (a real 8 KB leaf holds a few hundred). There is no free slot for <code>donald</code>, so the leaf has to <strong>split</strong> before the key can go in.',
-      activeLine: 7,
-      doneLines: [6],
+        "Leaf 1 already holds 4 keys, its capacity in this scaled-down tree (a real 8 KB leaf holds a few hundred). There is no free slot for <code>donald</code>, so the leaf has to <strong>split</strong> before the key can go in.",
+      activeLine: 3,
+      doneLines: [2, 6, 7],
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTree({ l1: "updated" }),
       activeNodeId: "l1",
@@ -668,9 +912,9 @@ const writesExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        'The split keeps the lower half, <code>ada, alan, barbara</code>, in leaf 1 and moves the upper half, <code>dennis, donald</code>, into a newly allocated leaf 1b. Two leaf pages are written where a simple insert would have written one.',
-      activeLine: 7,
-      doneLines: [6],
+        "The split keeps the lower half, <code>ada, alan, barbara</code>, in leaf 1 and moves the upper half, <code>dennis, donald</code>, into a newly allocated leaf 1b. Two leaf pages are written where a simple insert would have written one.",
+      activeLine: 3,
+      doneLines: [2, 6, 7],
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTreeAfterSplit({ l1a: "updated", l1b: "added" }),
       activeNodeId: "l1b",
@@ -680,11 +924,15 @@ const writesExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        'The first key of the new leaf, <code>dennis</code>, is copied up into the root as a separator: <code>dennis | edsger | linus</code>. If the root itself were full it would split too and the tree would gain a level, which is how a B-tree grows while staying balanced.',
-      activeLine: 7,
-      doneLines: [6],
+        "The first key of the new leaf, <code>dennis</code>, is copied up into the root as a separator: <code>dennis | edsger | linus</code>. If the root itself were full it would split too and the tree would gain a level, which is how a B-tree grows while staying balanced.",
+      activeLine: 3,
+      doneLines: [2, 6, 7],
       pages: buildPages(byEmail, { newRow: true }),
-      tree: emailTreeAfterSplit({ root: "updated", l1b: "added", promoted: true }),
+      tree: emailTreeAfterSplit({
+        root: "updated",
+        l1b: "added",
+        promoted: true,
+      }),
       activeNodeId: "root",
       plan: [],
       indexColumns: [],
@@ -692,14 +940,21 @@ const writesExample: DatabaseIndexingExample = {
     },
     {
       descriptionHtml:
-        '<code>users_name_idx</code> gets <code>(Knuth, Donald)</code>, which sorts into a full leaf and splits as well. One inserted row became 8 dirty pages plus WAL: this is <strong>write amplification</strong>. Every extra index adds at least one page write to each INSERT, DELETE, or UPDATE of an indexed column.',
-      activeLine: 7,
-      doneLines: [6],
+        "<code>users_name_idx</code> gets <code>(Knuth, Donald)</code>, which sorts into a full leaf and splits as well. One inserted row became 8 dirty pages plus WAL: this is <strong>write amplification</strong>. Every extra index adds at least one page write to each INSERT, DELETE, or UPDATE of an indexed column.",
+      activeLine: 4,
+      doneLines: [2, 3, 6, 7],
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTreeAfterSplit({ promoted: true }),
       plan: [],
       indexColumns: [],
-      writeLog: [WRITE_HEAP, WRITE_WAL, WRITE_PKEY, WRITE_SPLIT, WRITE_ROOT, WRITE_NAME],
+      writeLog: [
+        WRITE_HEAP,
+        WRITE_WAL,
+        WRITE_PKEY,
+        WRITE_SPLIT,
+        WRITE_ROOT,
+        WRITE_NAME,
+      ],
     },
     {
       descriptionHtml:
@@ -709,25 +964,72 @@ const writesExample: DatabaseIndexingExample = {
       pages: buildPages(byEmail, { newRow: true }),
       tree: emailTreeAfterSplit({ promoted: true }),
       plan: [
-        { id: "cnt-idx", operation: "Index Scan using users_email_idx", detail: EXPR_REJECT, reads: "0", rows: "0", status: "rejected" },
-        { id: "cnt-seq", operation: "Aggregate over Seq Scan on users", detail: COUNT_FILTER, reads: "0", rows: "0", status: "pending" },
+        {
+          id: "cnt-idx",
+          operation: "Index Scan using users_email_idx",
+          detail: EXPR_REJECT,
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "cnt-seq",
+          operation: "Aggregate over Seq Scan on users",
+          detail: COUNT_FILTER,
+          reads: "0",
+          rows: "0",
+          status: "pending",
+        },
       ],
       indexColumns: [],
-      writeLog: [WRITE_HEAP, WRITE_WAL, WRITE_PKEY, WRITE_SPLIT, WRITE_ROOT, WRITE_NAME],
+      writeLog: [
+        WRITE_HEAP,
+        WRITE_WAL,
+        WRITE_PKEY,
+        WRITE_SPLIT,
+        WRITE_ROOT,
+        WRITE_NAME,
+      ],
     },
     {
       descriptionHtml:
-        '4 pages, 13 comparisons, 1 match, and the three indexes paid for on every write did nothing here. An expression index on <code>lower(email)</code> would serve this query. Index the exact shape of the predicates you run, and drop indexes no query uses.',
+        "4 pages, 13 comparisons, 1 match, and the three indexes paid for on every write did nothing here. An expression index on <code>lower(email)</code> would serve this query. Index the exact shape of the predicates you run, and drop indexes no query uses.",
       activeLine: 11,
       doneLines: [6, 7, 10],
-      pages: buildPages(byEmail, { newRow: true, visited: [...range(1, 12), 13], match: [10] }),
+      pages: buildPages(byEmail, {
+        newRow: true,
+        visited: [...range(1, 12), 13],
+        match: [10],
+      }),
       tree: emailTreeAfterSplit({ promoted: true }),
       plan: [
-        { id: "cnt-idx", operation: "Index Scan using users_email_idx", detail: EXPR_REJECT, reads: "0", rows: "0", status: "rejected" },
-        { id: "cnt-seq", operation: "Aggregate over Seq Scan on users", detail: `${COUNT_FILTER}, count = 1`, reads: "4", rows: "13", elapsed: "0.048 ms", status: "done" },
+        {
+          id: "cnt-idx",
+          operation: "Index Scan using users_email_idx",
+          detail: EXPR_REJECT,
+          reads: "0",
+          rows: "0",
+          status: "rejected",
+        },
+        {
+          id: "cnt-seq",
+          operation: "Aggregate over Seq Scan on users",
+          detail: `${COUNT_FILTER}, count = 1`,
+          reads: "4",
+          rows: "13",
+          elapsed: "0.048 ms",
+          status: "done",
+        },
       ],
       indexColumns: [],
-      writeLog: [WRITE_HEAP, WRITE_WAL, WRITE_PKEY, WRITE_SPLIT, WRITE_ROOT, WRITE_NAME],
+      writeLog: [
+        WRITE_HEAP,
+        WRITE_WAL,
+        WRITE_PKEY,
+        WRITE_SPLIT,
+        WRITE_ROOT,
+        WRITE_NAME,
+      ],
     },
   ],
 };

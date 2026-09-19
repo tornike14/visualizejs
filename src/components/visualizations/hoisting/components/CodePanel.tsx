@@ -1,5 +1,8 @@
 import { ArrowUp, AlertTriangle } from "lucide-react";
-import { NeonPanel, type NeonTone } from "@/components/visualization-ui/NeonPanel";
+import {
+  NeonPanel,
+  type NeonTone,
+} from "@/components/visualization-ui/NeonPanel";
 import { CodeLine as CodeLineComponent } from "@/components/visualization-ui/CodeLine";
 import { cn } from "@/lib/utils";
 import type { CodeLine, HoistedLine } from "../types";

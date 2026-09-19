@@ -7,10 +7,7 @@ export const LinkedInPreview = () => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(34,211,238,0.16),transparent_42%)]" />
 
       <div className="relative z-10 flex min-h-[6.5rem] items-center justify-center lg:min-h-[7rem]">
-        <FollowLinkedInButton
-          size="large"
-          trackLocation="onboarding"
-        />
+        <FollowLinkedInButton size="large" trackLocation="onboarding" />
       </div>
     </PreviewShell>
   );

@@ -60,7 +60,8 @@ export const cachingStrategiesTheory: TopicTheoryContent = {
       },
     },
     {
-      question: "What is the difference between write-through and write-behind?",
+      question:
+        "What is the difference between write-through and write-behind?",
       answer:
         "Write-through updates the database and the cache in the same request, so writes pay database latency but reads always see the latest value. Write-behind updates the cache and queues the database write for a background flush. Writes return in a couple of milliseconds and bursts can batch, but a crash before the flush loses the queued writes.",
     },

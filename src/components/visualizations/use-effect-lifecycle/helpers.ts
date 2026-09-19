@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { EffectPhase, UseEffectKind } from "./types";
 
 /* ── Helpers ── */

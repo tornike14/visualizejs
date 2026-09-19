@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export function DomOutputPanel({ lines }: { lines: string[] }) {
+export const DomOutputPanel = ({ lines }: { lines: string[] }) => {
   if (lines.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -16,9 +16,7 @@ export function DomOutputPanel({ lines }: { lines: string[] }) {
         return (
           <div
             key={`${line}-${index}`}
-            className={cn(
-              "viz-slide-in font-mono text-xs text-emerald-300/90",
-            )}
+            className={cn("viz-slide-in font-mono text-xs text-emerald-300/90")}
             style={{ paddingLeft: `${indent * 8 + 12}px` }}
           >
             {line.trim()}
@@ -27,4 +25,4 @@ export function DomOutputPanel({ lines }: { lines: string[] }) {
       })}
     </div>
   );
-}
+};

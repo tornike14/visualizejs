@@ -80,7 +80,10 @@ export const HeatmapGrid = ({
                         ? "border-slate-800/60 text-slate-700"
                         : "border-slate-700/40 text-slate-100",
                       isActive && "ring-2 ring-pink-300/70",
-                      !masked && inActiveLine && !isActive && "border-slate-500/60",
+                      !masked &&
+                        inActiveLine &&
+                        !isActive &&
+                        "border-slate-500/60",
                     )}
                     style={
                       masked

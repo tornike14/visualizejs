@@ -25,6 +25,7 @@ src/components/<feature>/
 ```
 
 Rules:
+
 - Keep rendering logic in `.tsx` components.
 - Keep pure helpers in `.ts` files.
 - Keep static/config data in dedicated `*-data.ts` files.
@@ -36,6 +37,7 @@ Rules:
 If behavior can be reused across features, move it to `src/components/ui`.
 
 Examples:
+
 - carousel primitives
 - dropdown primitives
 - repeated navigation controls

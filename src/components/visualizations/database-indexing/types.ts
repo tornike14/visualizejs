@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type DatabaseIndexingKind = "scan" | "composite" | "writes";
@@ -50,10 +50,7 @@ export interface WriteLogEntry {
   tone: WriteTone;
 }
 
-export interface DatabaseIndexingStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface DatabaseIndexingStep extends BaseStep {
   pages: TablePage[];
   tree: TreeNodeData | null;
   activeNodeId?: string;

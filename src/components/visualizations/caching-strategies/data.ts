@@ -1,7 +1,15 @@
-import type { FlowActor, FlowMessage } from "@/components/visualization-ui/MessageFlow";
+import type {
+  FlowActor,
+  FlowMessage,
+} from "@/components/visualization-ui/MessageFlow";
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
-import type { CacheEntry, CachingExample, QueuedWrite, SourceRow } from "./types";
+import type {
+  CacheEntry,
+  CachingExample,
+  QueuedWrite,
+  SourceRow,
+} from "./types";
 
 export const ACTORS: FlowActor[] = [
   { id: "app", label: "App" },
@@ -34,7 +42,13 @@ const countBar = (
   count: number,
   max: number,
   tone: MetricBar["tone"],
-): MetricBar => ({ id, label, value: count / max, display: String(count), tone });
+): MetricBar => ({
+  id,
+  label,
+  value: count / max,
+  display: String(count),
+  tone,
+});
 
 const asideStats = (
   hits: number,
@@ -48,11 +62,20 @@ const asideStats = (
       id: "ratio",
       label: "hit ratio",
       value: total === 0 ? 0 : hits / total,
-      display: total === 0 ? "0 / 0" : `${Math.round((hits / total) * 100)}% (${hits}/${total})`,
+      display:
+        total === 0
+          ? "0 / 0"
+          : `${Math.round((hits / total) * 100)}% (${hits}/${total})`,
       tone: "cyan",
     },
     latencyMs === null
-      ? { id: "latency", label: "last read", value: 0, display: "n/a", tone: "slate" }
+      ? {
+          id: "latency",
+          label: "last read",
+          value: 0,
+          display: "n/a",
+          tone: "slate",
+        }
       : latencyBar("latency", "last read", latencyMs),
     countBar("db", "db queries", dbQueries, 4, "violet"),
   ];
@@ -64,7 +87,13 @@ const writeStats = (
   behind: number,
 ): MetricBar[] => [
   writeMs === null
-    ? { id: "wlat", label: "write latency", value: 0, display: "n/a", tone: "slate" }
+    ? {
+        id: "wlat",
+        label: "write latency",
+        value: 0,
+        display: "n/a",
+        tone: "slate",
+      }
     : latencyBar("wlat", "write latency", writeMs),
   countBar("queued", "queued writes", queued, 2, "amber"),
   countBar("behind", "rows behind", behind, 2, behind > 0 ? "rose" : "green"),
@@ -76,13 +105,23 @@ const lruStats = (
   misses: number,
   evictions: number,
 ): MetricBar[] => [
-  { id: "size", label: "size", value: size / 3, display: `${size} / 3`, tone: "cyan" },
+  {
+    id: "size",
+    label: "size",
+    value: size / 3,
+    display: `${size} / 3`,
+    tone: "cyan",
+  },
   countBar("hits", "hits", hits, 3, "green"),
   countBar("misses", "misses", misses, 3, "rose"),
   countBar("evict", "evictions", evictions, 3, "violet"),
 ];
 
-const user42 = (value: string, ttl: string, state: CacheEntry["state"]): CacheEntry => ({
+const user42 = (
+  value: string,
+  ttl: string,
+  state: CacheEntry["state"],
+): CacheEntry => ({
   key: "user:42",
   value,
   ttl,
@@ -90,41 +129,76 @@ const user42 = (value: string, ttl: string, state: CacheEntry["state"]): CacheEn
 });
 
 const dbAda: SourceRow[] = [{ key: "users.id = 42", value: '{ name: "Ada" }' }];
-const dbAdaL: SourceRow[] = [{ key: "users.id = 42", value: '{ name: "Ada L." }' }];
+const dbAdaL: SourceRow[] = [
+  { key: "users.id = 42", value: '{ name: "Ada L." }' },
+];
 
 const getMiss = (suffix: string): FlowMessage[] => [
   msg(`get-${suffix}`, "app", "cache", "GET user:42", "1 ms", "done"),
   msg(`nil-${suffix}`, "cache", "app", "nil", "miss", "failed"),
 ];
 
-const getHit = (suffix: string, value: string, wrong = false): FlowMessage[] => [
+const getHit = (
+  suffix: string,
+  value: string,
+  wrong = false,
+): FlowMessage[] => [
   msg(`get-${suffix}`, "app", "cache", "GET user:42", "1 ms", "done"),
-  msg(`hit-${suffix}`, "cache", "app", value, wrong ? "hit, stale" : "hit", wrong ? "failed" : "active"),
+  msg(
+    `hit-${suffix}`,
+    "cache",
+    "app",
+    value,
+    wrong ? "hit, stale" : "hit",
+    wrong ? "failed" : "active",
+  ),
 ];
 
 /* ── LRU builders ── */
 
-const lruEntry = (key: string, value: number, state: CacheEntry["state"] = "fresh"): CacheEntry => ({
+const lruEntry = (
+  key: string,
+  value: number,
+  state: CacheEntry["state"] = "fresh",
+): CacheEntry => ({
   key,
   value: String(value),
   ttl: "none",
   state,
 });
 
-const recency = (order: [string, number][], evicted?: [string, number]): TokenChip[] => {
+const recency = (
+  order: [string, number][],
+  evicted?: [string, number],
+): TokenChip[] => {
   const chips: TokenChip[] = order.map(([key, value], index) => ({
     id: key,
     label: `${key} = ${value}`,
-    value: index === 0 ? "most recent" : index === order.length - 1 ? "least recent" : undefined,
-    tone: index === 0 ? "active" : index === order.length - 1 ? "amber" : "neutral",
+    value:
+      index === 0
+        ? "most recent"
+        : index === order.length - 1
+          ? "least recent"
+          : undefined,
+    tone:
+      index === 0 ? "active" : index === order.length - 1 ? "amber" : "neutral",
   }));
   if (evicted) {
-    chips.push({ id: evicted[0], label: `${evicted[0]} = ${evicted[1]}`, value: "evicted", tone: "miss" });
+    chips.push({
+      id: evicted[0],
+      label: `${evicted[0]} = ${evicted[1]}`,
+      value: "evicted",
+      tone: "miss",
+    });
   }
   return chips;
 };
 
-const queued = (id: string, label: string, status: QueuedWrite["status"]): QueuedWrite => ({
+const queued = (
+  id: string,
+  label: string,
+  status: QueuedWrite["status"],
+): QueuedWrite => ({
   id,
   label,
   status,
@@ -143,13 +217,22 @@ export const EXAMPLES: CachingExample[] = [
       { num: 2, text: "  const key = `user:${id}`;" },
       { num: 3, text: "  const cached = await redis.get(key);" },
       { num: 4, text: "  if (cached) return JSON.parse(cached);" },
-      { num: 5, text: "  const row = await db.query('SELECT * FROM users WHERE id = $1', [id]);" },
-      { num: 6, text: "  await redis.set(key, JSON.stringify(row), 'EX', 60);" },
+      {
+        num: 5,
+        text: "  const row = await db.query('SELECT * FROM users WHERE id = $1', [id]);",
+      },
+      {
+        num: 6,
+        text: "  await redis.set(key, JSON.stringify(row), 'EX', 60);",
+      },
       { num: 7, text: "  return row;" },
       { num: 8, text: "}" },
       { num: 9, text: "" },
       { num: 10, text: "async function updateUser(id, patch) {" },
-      { num: 11, text: "  await db.query('UPDATE users SET name = $1 WHERE id = $2', [patch.name, id]);" },
+      {
+        num: 11,
+        text: "  await db.query('UPDATE users SET name = $1 WHERE id = $2', [patch.name, id]);",
+      },
       { num: 12, text: "  // missing: await redis.del(`user:${id}`);" },
       { num: 13, text: "}" },
     ],
@@ -202,7 +285,14 @@ export const EXAMPLES: CachingExample[] = [
         database: dbAda,
         messages: [
           ...getMiss("1"),
-          msg("sel-1", "app", "db", "SELECT ... WHERE id = 42", "120 ms", "active"),
+          msg(
+            "sel-1",
+            "app",
+            "db",
+            "SELECT ... WHERE id = 42",
+            "120 ms",
+            "active",
+          ),
           msg("row-1", "db", "app", '{ name: "Ada" }', "1 row", "active"),
         ],
         activeActorId: "db",
@@ -219,7 +309,14 @@ export const EXAMPLES: CachingExample[] = [
         database: dbAda,
         messages: [
           ...getMiss("1"),
-          msg("sel-1", "app", "db", "SELECT ... WHERE id = 42", "120 ms", "done"),
+          msg(
+            "sel-1",
+            "app",
+            "db",
+            "SELECT ... WHERE id = 42",
+            "120 ms",
+            "done",
+          ),
           msg("row-1", "db", "app", '{ name: "Ada" }', "1 row", "done"),
           msg("set-1", "app", "cache", "SET user:42 EX 60", "1 ms", "active"),
         ],
@@ -237,7 +334,14 @@ export const EXAMPLES: CachingExample[] = [
         database: dbAda,
         messages: [
           ...getMiss("1"),
-          msg("sel-1", "app", "db", "SELECT ... WHERE id = 42", "120 ms", "done"),
+          msg(
+            "sel-1",
+            "app",
+            "db",
+            "SELECT ... WHERE id = 42",
+            "120 ms",
+            "done",
+          ),
           msg("row-1", "db", "app", '{ name: "Ada" }', "1 row", "done"),
           msg("set-1", "app", "cache", "SET user:42 EX 60", "1 ms", "done"),
         ],
@@ -297,7 +401,14 @@ export const EXAMPLES: CachingExample[] = [
         database: dbAda,
         messages: [
           ...getMiss("3"),
-          msg("sel-3", "app", "db", "SELECT ... WHERE id = 42", "120 ms", "done"),
+          msg(
+            "sel-3",
+            "app",
+            "db",
+            "SELECT ... WHERE id = 42",
+            "120 ms",
+            "done",
+          ),
           msg("row-3", "db", "app", '{ name: "Ada" }', "1 row", "done"),
           msg("set-3", "app", "cache", "SET user:42 EX 60", "1 ms", "active"),
         ],
@@ -314,7 +425,14 @@ export const EXAMPLES: CachingExample[] = [
         cache: [user42('{ name: "Ada" }', "58 s", "stale")],
         database: dbAdaL,
         messages: [
-          msg("upd-1", "app", "db", "UPDATE users SET name = 'Ada L.'", "120 ms", "active"),
+          msg(
+            "upd-1",
+            "app",
+            "db",
+            "UPDATE users SET name = 'Ada L.'",
+            "120 ms",
+            "active",
+          ),
           msg("ok-1", "db", "app", "UPDATE 1", "committed", "active"),
         ],
         activeActorId: "db",
@@ -343,7 +461,14 @@ export const EXAMPLES: CachingExample[] = [
         cache: [],
         database: dbAdaL,
         messages: [
-          msg("upd-1", "app", "db", "UPDATE users SET name = 'Ada L.'", "120 ms", "done"),
+          msg(
+            "upd-1",
+            "app",
+            "db",
+            "UPDATE users SET name = 'Ada L.'",
+            "120 ms",
+            "done",
+          ),
           msg("del-1", "app", "cache", "DEL user:42", "1 ms", "active"),
         ],
         activeActorId: "cache",
@@ -360,7 +485,14 @@ export const EXAMPLES: CachingExample[] = [
         database: dbAdaL,
         messages: [
           ...getMiss("5"),
-          msg("sel-5", "app", "db", "SELECT ... WHERE id = 42", "120 ms", "done"),
+          msg(
+            "sel-5",
+            "app",
+            "db",
+            "SELECT ... WHERE id = 42",
+            "120 ms",
+            "done",
+          ),
           msg("row-5", "db", "app", '{ name: "Ada L." }', "1 row", "done"),
           msg("set-5", "app", "cache", "SET user:42 EX 60", "1 ms", "active"),
         ],
@@ -382,20 +514,35 @@ export const EXAMPLES: CachingExample[] = [
     codeLines: [
       { num: 1, text: "// write-through: database and cache change together" },
       { num: 2, text: "async function saveUserThrough(id, user) {" },
-      { num: 3, text: "  await db.query('UPDATE users SET name = $1 WHERE id = $2', [user.name, id]);" },
-      { num: 4, text: "  await redis.set(`user:${id}`, JSON.stringify(user));" },
+      {
+        num: 3,
+        text: "  await db.query('UPDATE users SET name = $1 WHERE id = $2', [user.name, id]);",
+      },
+      {
+        num: 4,
+        text: "  await redis.set(`user:${id}`, JSON.stringify(user));",
+      },
       { num: 5, text: "}" },
       { num: 6, text: "" },
-      { num: 7, text: "// write-behind: cache changes now, database catches up later" },
+      {
+        num: 7,
+        text: "// write-behind: cache changes now, database catches up later",
+      },
       { num: 8, text: "const pending = [];" },
       { num: 9, text: "async function saveUserBehind(id, user) {" },
-      { num: 10, text: "  await redis.set(`user:${id}`, JSON.stringify(user));" },
+      {
+        num: 10,
+        text: "  await redis.set(`user:${id}`, JSON.stringify(user));",
+      },
       { num: 11, text: "  pending.push({ id, user });" },
       { num: 12, text: "}" },
       { num: 13, text: "setInterval(async () => {" },
       { num: 14, text: "  const batch = pending.splice(0, 100);" },
       { num: 15, text: "  for (const w of batch) {" },
-      { num: 16, text: "    await db.query('UPDATE users SET name = $1 WHERE id = $2', [w.user.name, w.id]);" },
+      {
+        num: 16,
+        text: "    await db.query('UPDATE users SET name = $1 WHERE id = $2', [w.user.name, w.id]);",
+      },
       { num: 17, text: "  }" },
       { num: 18, text: "}, 1000);" },
     ],
@@ -412,7 +559,14 @@ export const EXAMPLES: CachingExample[] = [
           { key: "users.id = 9", value: '{ name: "Linus" }' },
         ],
         messages: [
-          msg("wt-upd", "app", "db", "UPDATE users SET name = 'Ada L.'", "120 ms", "active"),
+          msg(
+            "wt-upd",
+            "app",
+            "db",
+            "UPDATE users SET name = 'Ada L.'",
+            "120 ms",
+            "active",
+          ),
           msg("wt-ok", "db", "app", "UPDATE 1", "committed", "active"),
         ],
         activeActorId: "db",
@@ -432,7 +586,14 @@ export const EXAMPLES: CachingExample[] = [
           { key: "users.id = 9", value: '{ name: "Linus" }' },
         ],
         messages: [
-          msg("wt-upd", "app", "db", "UPDATE users SET name = 'Ada L.'", "120 ms", "done"),
+          msg(
+            "wt-upd",
+            "app",
+            "db",
+            "UPDATE users SET name = 'Ada L.'",
+            "120 ms",
+            "done",
+          ),
           msg("wt-ok", "db", "app", "UPDATE 1", "committed", "done"),
           msg("wt-set", "app", "cache", "SET user:42", "1 ms", "active"),
         ],
@@ -453,7 +614,14 @@ export const EXAMPLES: CachingExample[] = [
           { key: "users.id = 9", value: '{ name: "Linus" }' },
         ],
         messages: [
-          msg("wt-upd", "app", "db", "UPDATE users SET name = 'Ada L.'", "120 ms", "done"),
+          msg(
+            "wt-upd",
+            "app",
+            "db",
+            "UPDATE users SET name = 'Ada L.'",
+            "120 ms",
+            "done",
+          ),
           msg("wt-ok", "db", "app", "UPDATE 1", "committed", "done"),
           msg("wt-set", "app", "cache", "SET user:42", "1 ms", "done"),
         ],
@@ -486,14 +654,21 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
           { key: "users.id = 7", value: '{ name: "Grace" }' },
           { key: "users.id = 9", value: '{ name: "Linus" }' },
         ],
-        messages: [msg("wb-set-7", "app", "cache", "SET user:7", "1 ms", "active")],
+        messages: [
+          msg("wb-set-7", "app", "cache", "SET user:7", "1 ms", "active"),
+        ],
         activeActorId: "cache",
         stats: writeStats(122, 0, 1),
         queue: [],
@@ -506,17 +681,30 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
           { key: "users.id = 7", value: '{ name: "Grace" }' },
           { key: "users.id = 9", value: '{ name: "Linus" }' },
         ],
-        messages: [msg("wb-set-7", "app", "cache", "SET user:7", "1 ms", "done")],
+        messages: [
+          msg("wb-set-7", "app", "cache", "SET user:7", "1 ms", "done"),
+        ],
         activeActorId: "app",
         stats: writeStats(2, 1, 1),
-        queue: [queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "pending")],
+        queue: [
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "pending",
+          ),
+        ],
         recency: [],
       },
       {
@@ -526,8 +714,18 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "pending" },
-          { key: "user:9", value: '{ name: "Linus T." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "pending",
+          },
+          {
+            key: "user:9",
+            value: '{ name: "Linus T." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
@@ -541,8 +739,16 @@ export const EXAMPLES: CachingExample[] = [
         activeActorId: "app",
         stats: writeStats(2, 2, 2),
         queue: [
-          queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "pending"),
-          queued("w9", "UPDATE users SET name = 'Linus T.' WHERE id = 9", "pending"),
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "pending",
+          ),
+          queued(
+            "w9",
+            "UPDATE users SET name = 'Linus T.' WHERE id = 9",
+            "pending",
+          ),
         ],
         recency: [],
       },
@@ -553,8 +759,18 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "pending" },
-          { key: "user:9", value: '{ name: "Linus T." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "pending",
+          },
+          {
+            key: "user:9",
+            value: '{ name: "Linus T." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
@@ -568,8 +784,16 @@ export const EXAMPLES: CachingExample[] = [
         activeActorId: "app",
         stats: writeStats(2, 2, 2),
         queue: [
-          queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "pending"),
-          queued("w9", "UPDATE users SET name = 'Linus T.' WHERE id = 9", "pending"),
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "pending",
+          ),
+          queued(
+            "w9",
+            "UPDATE users SET name = 'Linus T.' WHERE id = 9",
+            "pending",
+          ),
         ],
         recency: [],
       },
@@ -580,8 +804,18 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "pending" },
-          { key: "user:9", value: '{ name: "Linus T." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "pending",
+          },
+          {
+            key: "user:9",
+            value: '{ name: "Linus T." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
@@ -592,8 +826,16 @@ export const EXAMPLES: CachingExample[] = [
         activeActorId: "app",
         stats: writeStats(2, 2, 2),
         queue: [
-          queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "active"),
-          queued("w9", "UPDATE users SET name = 'Linus T.' WHERE id = 9", "active"),
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "active",
+          ),
+          queued(
+            "w9",
+            "UPDATE users SET name = 'Linus T.' WHERE id = 9",
+            "active",
+          ),
         ],
         recency: [],
       },
@@ -604,8 +846,18 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "fresh" },
-          { key: "user:9", value: '{ name: "Linus T." }', ttl: "none", state: "pending" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "fresh",
+          },
+          {
+            key: "user:9",
+            value: '{ name: "Linus T." }',
+            ttl: "none",
+            state: "pending",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
@@ -614,13 +866,28 @@ export const EXAMPLES: CachingExample[] = [
         ],
         messages: [
           msg("fl-7", "app", "db", "UPDATE ... WHERE id = 7", "120 ms", "done"),
-          msg("fl-9", "app", "db", "UPDATE ... WHERE id = 9", "120 ms", "active"),
+          msg(
+            "fl-9",
+            "app",
+            "db",
+            "UPDATE ... WHERE id = 9",
+            "120 ms",
+            "active",
+          ),
         ],
         activeActorId: "db",
         stats: writeStats(2, 1, 1),
         queue: [
-          queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "done"),
-          queued("w9", "UPDATE users SET name = 'Linus T.' WHERE id = 9", "active"),
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "done",
+          ),
+          queued(
+            "w9",
+            "UPDATE users SET name = 'Linus T.' WHERE id = 9",
+            "active",
+          ),
         ],
         recency: [],
       },
@@ -631,8 +898,18 @@ export const EXAMPLES: CachingExample[] = [
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         cache: [
           user42('{ name: "Ada L." }', "none", "fresh"),
-          { key: "user:7", value: '{ name: "Grace H." }', ttl: "none", state: "fresh" },
-          { key: "user:9", value: '{ name: "Linus T." }', ttl: "none", state: "fresh" },
+          {
+            key: "user:7",
+            value: '{ name: "Grace H." }',
+            ttl: "none",
+            state: "fresh",
+          },
+          {
+            key: "user:9",
+            value: '{ name: "Linus T." }',
+            ttl: "none",
+            state: "fresh",
+          },
         ],
         database: [
           { key: "users.id = 42", value: '{ name: "Ada L." }' },
@@ -646,8 +923,16 @@ export const EXAMPLES: CachingExample[] = [
         activeActorId: "db",
         stats: writeStats(2, 0, 0),
         queue: [
-          queued("w7", "UPDATE users SET name = 'Grace H.' WHERE id = 7", "done"),
-          queued("w9", "UPDATE users SET name = 'Linus T.' WHERE id = 9", "done"),
+          queued(
+            "w7",
+            "UPDATE users SET name = 'Grace H.' WHERE id = 7",
+            "done",
+          ),
+          queued(
+            "w9",
+            "UPDATE users SET name = 'Linus T.' WHERE id = 9",
+            "done",
+          ),
         ],
         recency: [],
       },
@@ -665,19 +950,28 @@ export const EXAMPLES: CachingExample[] = [
       { num: 1, text: "class LRUCache {" },
       { num: 2, text: "  constructor(capacity) {" },
       { num: 3, text: "    this.capacity = capacity;" },
-      { num: 4, text: "    this.map = new Map(); // iterates in insertion order" },
+      {
+        num: 4,
+        text: "    this.map = new Map(); // iterates in insertion order",
+      },
       { num: 5, text: "  }" },
       { num: 6, text: "  get(key) {" },
       { num: 7, text: "    if (!this.map.has(key)) return undefined;" },
       { num: 8, text: "    const value = this.map.get(key);" },
       { num: 9, text: "    this.map.delete(key);" },
-      { num: 10, text: "    this.map.set(key, value); // re-insert: now the newest" },
+      {
+        num: 10,
+        text: "    this.map.set(key, value); // re-insert: now the newest",
+      },
       { num: 11, text: "    return value;" },
       { num: 12, text: "  }" },
       { num: 13, text: "  set(key, value) {" },
       { num: 14, text: "    if (this.map.has(key)) this.map.delete(key);" },
       { num: 15, text: "    else if (this.map.size >= this.capacity) {" },
-      { num: 16, text: "      this.map.delete(this.map.keys().next().value); // oldest" },
+      {
+        num: 16,
+        text: "      this.map.delete(this.map.keys().next().value); // oldest",
+      },
       { num: 17, text: "    }" },
       { num: 18, text: "    this.map.set(key, value);" },
       { num: 19, text: "  }" },
@@ -719,7 +1013,10 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(2, 0, 0, 0),
         queue: [],
-        recency: recency([["b", 2], ["a", 1]]),
+        recency: recency([
+          ["b", 2],
+          ["a", 1],
+        ]),
       },
       {
         descriptionHtml:
@@ -731,11 +1028,15 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 0, 0, 0),
         queue: [],
-        recency: recency([["c", 3], ["b", 2], ["a", 1]]),
+        recency: recency([
+          ["c", 3],
+          ["b", 2],
+          ["a", 1],
+        ]),
       },
       {
         descriptionHtml:
-          '<code>cache.get(\'a\')</code> is a <span class="hl-task">hit</span>. The entry is deleted and re-inserted, which moves it to the end of the map. <code>a</code> is now the newest and <code>b</code> has become the least recently used.',
+          "<code>cache.get('a')</code> is a <span class=\"hl-task\">hit</span>. The entry is deleted and re-inserted, which moves it to the end of the map. <code>a</code> is now the newest and <code>b</code> has become the least recently used.",
         activeLine: 10,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 21],
         cache: [lruEntry("a", 1, "hit"), lruEntry("b", 2), lruEntry("c", 3)],
@@ -743,7 +1044,11 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 1, 0, 0),
         queue: [],
-        recency: recency([["a", 1], ["c", 3], ["b", 2]]),
+        recency: recency([
+          ["a", 1],
+          ["c", 3],
+          ["b", 2],
+        ]),
       },
       {
         descriptionHtml:
@@ -755,19 +1060,33 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 1, 0, 0),
         queue: [],
-        recency: recency([["a", 1], ["c", 3], ["b", 2]]),
+        recency: recency([
+          ["a", 1],
+          ["c", 3],
+          ["b", 2],
+        ]),
       },
       {
         descriptionHtml:
-          '<code>cache.set(\'d\', 4)</code>: the key is new and the size equals the capacity, so the oldest key is evicted. <code>this.map.keys().next().value</code> is <code>b</code>, the entry nothing has touched since it was written. It is <span class="hl-loop">deleted</span>.',
+          "<code>cache.set('d', 4)</code>: the key is new and the size equals the capacity, so the oldest key is evicted. <code>this.map.keys().next().value</code> is <code>b</code>, the entry nothing has touched since it was written. It is <span class=\"hl-loop\">deleted</span>.",
         activeLine: 16,
         doneLines: [1, 2, 3, 4, 5, 13, 14, 15, 21],
-        cache: [lruEntry("a", 1), lruEntry("b", 2, "evicted"), lruEntry("c", 3)],
+        cache: [
+          lruEntry("a", 1),
+          lruEntry("b", 2, "evicted"),
+          lruEntry("c", 3),
+        ],
         database: [],
         messages: [],
         stats: lruStats(2, 1, 0, 1),
         queue: [],
-        recency: recency([["a", 1], ["c", 3]], ["b", 2]),
+        recency: recency(
+          [
+            ["a", 1],
+            ["c", 3],
+          ],
+          ["b", 2],
+        ),
       },
       {
         descriptionHtml:
@@ -779,11 +1098,15 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 1, 0, 1),
         queue: [],
-        recency: recency([["d", 4], ["a", 1], ["c", 3]]),
+        recency: recency([
+          ["d", 4],
+          ["a", 1],
+          ["c", 3],
+        ]),
       },
       {
         descriptionHtml:
-          '<code>cache.get(\'b\')</code> is a <span class="hl-loop">miss</span> and returns <code>undefined</code>. In a cache-aside setup this miss becomes a database query. If <code>b</code> turns out to be hot, the capacity is too small or LRU is the wrong policy for this workload.',
+          "<code>cache.get('b')</code> is a <span class=\"hl-loop\">miss</span> and returns <code>undefined</code>. In a cache-aside setup this miss becomes a database query. If <code>b</code> turns out to be hot, the capacity is too small or LRU is the wrong policy for this workload.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6, 13, 21],
         cache: [lruEntry("a", 1), lruEntry("c", 3), lruEntry("d", 4)],
@@ -791,11 +1114,15 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 1, 1, 1),
         queue: [],
-        recency: recency([["d", 4], ["a", 1], ["c", 3]]),
+        recency: recency([
+          ["d", 4],
+          ["a", 1],
+          ["c", 3],
+        ]),
       },
       {
         descriptionHtml:
-          '<code>cache.get(\'c\')</code> is a <span class="hl-task">hit</span> and moves <code>c</code> to the front. <code>a</code> drops to the least recent position even though it was read earlier, because recency only counts the last touch.',
+          "<code>cache.get('c')</code> is a <span class=\"hl-task\">hit</span> and moves <code>c</code> to the front. <code>a</code> drops to the least recent position even though it was read earlier, because recency only counts the last touch.",
         activeLine: 10,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 21],
         cache: [lruEntry("a", 1), lruEntry("c", 3, "hit"), lruEntry("d", 4)],
@@ -803,7 +1130,11 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 2, 1, 1),
         queue: [],
-        recency: recency([["c", 3], ["d", 4], ["a", 1]]),
+        recency: recency([
+          ["c", 3],
+          ["d", 4],
+          ["a", 1],
+        ]),
       },
       {
         descriptionHtml:
@@ -815,7 +1146,14 @@ export const EXAMPLES: CachingExample[] = [
         messages: [],
         stats: lruStats(3, 2, 1, 2),
         queue: [],
-        recency: recency([["e", 5], ["c", 3], ["d", 4]], ["a", 1]),
+        recency: recency(
+          [
+            ["e", 5],
+            ["c", 3],
+            ["d", 4],
+          ],
+          ["a", 1],
+        ),
       },
     ],
   },

@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { CoercionKind } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<CoercionKind>({

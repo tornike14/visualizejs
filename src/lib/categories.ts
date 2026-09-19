@@ -79,7 +79,8 @@ export const CATEGORIES: Record<Category, CategoryConfig> = {
       "bg-gradient-to-r from-amber-200 via-yellow-300 to-yellow-500 bg-clip-text text-transparent",
     kickerClass:
       "border border-yellow-200/25 bg-yellow-200/10 text-yellow-100/90",
-    iconShellClass: "bg-[#f7df1e] p-1.5 shadow-[0_0_28px_rgba(247,223,30,0.46)]",
+    iconShellClass:
+      "bg-[#f7df1e] p-1.5 shadow-[0_0_28px_rgba(247,223,30,0.46)]",
     toggleActiveClass:
       "border border-yellow-300/30 bg-yellow-400/15 shadow-[0_0_16px_rgba(251,191,36,0.16)]",
     badgeClass: "border-yellow-300/30 bg-yellow-400/10 text-yellow-200",

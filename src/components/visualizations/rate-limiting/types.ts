@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
@@ -17,10 +17,7 @@ export interface RequestLogEntry {
   detail: string;
 }
 
-export interface RateLimitStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface RateLimitStep extends BaseStep {
   /** Bars for the bucket level or window counter. Empty for the sliding log. */
   bars: MetricBar[];
   /** Timestamp chips for the sliding log. Empty for bucket and fixed window. */

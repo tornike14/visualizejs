@@ -86,12 +86,12 @@ A generator is a function with this signature:
 import type { Program } from "acorn";
 import type { StepGenerationResult } from "@/types/sandbox";
 
-export function generateYourTopicSteps(
+export const generateYourTopicSteps = (
   ast: Program,
   source: string,
-): StepGenerationResult<YourStep, YourCodeLine> {
+): StepGenerationResult<YourStep, YourCodeLine> => {
   // Walk the AST, build steps, return them
-}
+};
 ```
 
 ### Define Your Types
@@ -119,11 +119,17 @@ Use Acorn's AST node types. The `ast.body` array contains top-level statements. 
 
 ```ts
 for (const node of ast.body) {
-  if (node.type === "VariableDeclaration") { /* ... */ }
-  if (node.type === "FunctionDeclaration") { /* ... */ }
+  if (node.type === "VariableDeclaration") {
+    /* ... */
+  }
+  if (node.type === "FunctionDeclaration") {
+    /* ... */
+  }
   if (node.type === "ExpressionStatement") {
     const expr = node.expression;
-    if (expr.type === "CallExpression") { /* ... */ }
+    if (expr.type === "CallExpression") {
+      /* ... */
+    }
   }
 }
 ```
@@ -152,6 +158,7 @@ return {
 ### Reference Implementation
 
 See `src/lib/sandbox/generators/event-loop.ts` for a complete example (~500 lines) that handles:
+
 - `console.log()` calls
 - `setTimeout()` with callbacks
 - `Promise.resolve().then()` chains (including nested)
@@ -167,11 +174,13 @@ Add an entry to `src/lib/sandbox/configs.ts`:
 
 ```ts
 export const SANDBOX_CONFIGS: Record<string, SandboxConfig> = {
-  "event-loop": { /* ... existing ... */ },
+  "event-loop": {
+    /* ... existing ... */
+  },
 
   // Add your topic:
   "your-topic": {
-    topicId: "your-topic",           // Must match topic registry ID
+    topicId: "your-topic", // Must match topic registry ID
     defaultCode: `// Starter code
 function outer() {
   let x = 10;
@@ -180,14 +189,15 @@ function outer() {
   }
   return inner;
 }`,
-    supportedPatterns: [              // Shown in error display when unsupported code is used
+    supportedPatterns: [
+      // Shown in error display when unsupported code is used
       "Function declarations",
       "Variable declarations (let, const)",
       "Nested functions",
       "console.log()",
     ],
-    maxCodeLines: 25,                 // Max lines allowed
-    maxCodeLength: 1000,              // Max characters allowed
+    maxCodeLines: 25, // Max lines allowed
+    maxCodeLength: 1000, // Max characters allowed
   },
 };
 ```
@@ -196,32 +206,30 @@ function outer() {
 
 ## Step 3 - Wire Into the Visualization
 
-In your visualization component, add sandbox support with minimal boilerplate:
+The sandbox UI is packaged as two components, so a sandbox topic differs from a normal one in only a few lines. `src/components/visualizations/event-loop/index.tsx` is the full reference.
 
 ### 1. Add Imports
 
 ```tsx
-import dynamic from "next/dynamic";
-import { Play, RotateCcw, Pencil } from "lucide-react";
-import { SandboxToggle } from "@/components/sandbox/SandboxToggle";
-import { SandboxErrorDisplay } from "@/components/sandbox/SandboxErrorDisplay";
+import {
+  SandboxControls,
+  SandboxEditingHint,
+} from "@/components/sandbox/SandboxControls";
+import { SandboxPanel } from "@/components/sandbox/SandboxPanel";
 import { useSandboxUIState } from "@/hooks/useSandboxUIState";
+import { useStepPlayback } from "@/hooks/useStepPlayback";
 import { SANDBOX_CONFIGS } from "@/lib/sandbox/configs";
 import { generateYourTopicSteps } from "@/lib/sandbox/generators/your-topic";
-
-// Dynamic import - CodeMirror only loads when sandbox is active
-const SandboxEditor = dynamic(
-  () => import("@/components/sandbox/SandboxEditor").then((m) => ({ default: m.SandboxEditor })),
-  { ssr: false, loading: () => <div className="h-[220px] animate-pulse rounded-lg bg-slate-800/50" /> },
-);
 ```
+
+`SandboxPanel` lazy-loads the CodeMirror editor, so nothing from CodeMirror ships until the reader opens the sandbox.
 
 ### 2. Use the Hook
 
 ```tsx
 const sandboxConfig = SANDBOX_CONFIGS["your-topic"];
 
-export function YourTopic() {
+export const YourTopic = () => {
   const {
     sandbox,
     isEditing,
@@ -232,92 +240,68 @@ export function YourTopic() {
     handleEditCode,
   } = useSandboxUIState(sandboxConfig, generateYourTopicSteps);
 
-  // Choose active data source
-  const activeSteps = usingSandbox ? sandbox.generatedSteps! : STEPS;
-  const activeCodeLines = usingSandbox ? sandbox.generatedCodeLines! : CODE_LINES;
+  // Choose the active data source
+  const activeSteps = usingSandbox && sandbox.generatedSteps ? sandbox.generatedSteps : STEPS;
+  const activeCodeLines =
+    usingSandbox && sandbox.generatedCodeLines ? sandbox.generatedCodeLines : CODE_LINES;
+  const isEditingSandbox = sandbox.isSandboxActive && isEditing;
 
-  // Pass activeSteps to useStepPlayback
-  const { currentStepIndex, ... } = useStepPlayback({
+  const playback = useStepPlayback({
     totalSteps: activeSteps.length,
-    initialStep: -1,
     resetKey: usingSandbox ? `sandbox-${sandbox.generationId}` : "default",
   });
+  const currentStep =
+    playback.currentStepIndex >= 0 ? activeSteps[playback.currentStepIndex] : null;
 ```
 
-### 3. Add Toolbar Buttons
+### 3. Toolbar
+
+`VisualizationToolbar` takes the sandbox buttons as `leading`, hides the transport while the editor owns the stage, and swaps the step description for the editing hint:
 
 ```tsx
-<ToolbarPortal>
-  <div className="flex flex-wrap items-center justify-center gap-3">
-    {/* Sandbox toggle */}
-    <SandboxToggle
+<VisualizationToolbar
+  playback={playback}
+  totalSteps={activeSteps.length}
+  descriptionHtml={currentStep?.descriptionHtml}
+  descriptionFlash={flashes.description}
+  align="center"
+  hideTransport={sandbox.isSandboxActive && !showHighlightedCode}
+  descriptionOverride={isEditingSandbox ? <SandboxEditingHint /> : undefined}
+  leading={
+    <SandboxControls
       isActive={sandbox.isSandboxActive}
+      isEditing={isEditing}
       onToggle={handleToggleSandbox}
+      onGenerate={handleGenerate}
+      onResetCode={sandbox.resetCode}
+      onEdit={handleEditCode}
     />
-
-    {/* Editing mode: Generate + Reset */}
-    {sandbox.isSandboxActive && isEditing && (
-      <>
-        <Tooltip label="Generate visualization (Cmd+Enter)">
-          <button onClick={handleGenerate} className={...}>
-            <Play className="h-4 w-4 fill-current" />
-          </button>
-        </Tooltip>
-        <Tooltip label="Reset to default code">
-          <button onClick={sandbox.resetCode} className={...}>
-            <RotateCcw className="h-4 w-4" />
-          </button>
-        </Tooltip>
-      </>
-    )}
-
-    {/* View mode: Edit button */}
-    {sandbox.isSandboxActive && !isEditing && (
-      <Tooltip label="Edit code">
-        <button onClick={handleEditCode} className={...}>
-          <Pencil className="h-4 w-4" />
-        </button>
-      </Tooltip>
-    )}
-
-    {/* Transport controls (shown when not editing) */}
-    {(showHighlightedCode || !sandbox.isSandboxActive) && (
-      <TransportControls ... />
-    )}
-  </div>
-</ToolbarPortal>
+  }
+/>
 ```
 
-### 4. Swap Code Panel
+### 4. Swap the Code Panel
 
 ```tsx
-{/* Editor (editing mode) */}
-{sandbox.isSandboxActive && isEditing ? (
-  <NeonPanel title="Sandbox" tone="green" className="xl:max-w-sm">
-    <SandboxEditor
-      code={sandbox.userCode}
-      codeVersion={sandbox.codeVersion}
-      onChange={sandbox.setUserCode}
+{
+  isEditingSandbox ? (
+    <SandboxPanel
+      config={sandboxConfig}
+      sandbox={sandbox}
       onGenerate={handleGenerate}
-      maxLines={sandboxConfig.maxCodeLines}
+      className="xl:max-w-sm"
     />
-    {sandbox.error && (
-      <SandboxErrorDisplay
-        error={sandbox.error}
-        supportedPatterns={sandboxConfig.supportedPatterns}
-      />
-    )}
-    <p className="mt-2 text-[11px] text-slate-500">
-      Limited to {sandboxConfig.maxCodeLines} lines · {sandboxConfig.maxCodeLength} characters
-    </p>
-  </NeonPanel>
-) : (
-  /* Highlighted code (view mode or sandbox off) */
-  <NeonPanel title="Source Code" tone="amber">
-    <CodeBlock lines={activeCodeLines.map(...)} />
-  </NeonPanel>
-)}
+  ) : (
+    <SourceCodePanel
+      lines={activeCodeLines}
+      activeLine={currentStep?.activeLine}
+      doneLines={currentStep?.doneLines}
+    />
+  );
+}
 ```
+
+`SandboxPanel` renders the editor, the error display, and the line and character limits.
 
 ---
 
@@ -325,17 +309,17 @@ export function YourTopic() {
 
 `src/lib/sandbox/generatorUtils.ts` provides helpers every generator can use:
 
-| Function | Description |
-|----------|-------------|
-| `getLineRange(node)` | Returns all line numbers a node spans (1-based) |
-| `expressionToLabel(node, source)` | Short label from source (truncated to 45 chars) |
-| `callbackLabel(bodySource)` | Label like `() => console.log('x')` |
-| `getCallbackBody(node)` | Extract body from arrow/function expressions |
-| `extractCallbackFromArg(arg, source)` | Full callback info: label, body, lines |
-| `extractConsoleLogArg(node, source, scope?)` | Get `console.log()` arg text with optional scope resolution |
-| `resolveNodeToString(node, source, scope?)` | Resolve literals/identifiers/template literals to display text |
-| `escapeHtml(value)` | Escape untrusted text before interpolating into HTML |
-| `createError(type, message, line?)` | Factory for `SandboxError` objects |
+| Function                                     | Description                                                    |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| `getLineRange(node)`                         | Returns all line numbers a node spans (1-based)                |
+| `expressionToLabel(node, source)`            | Short label from source (truncated to 45 chars)                |
+| `callbackLabel(bodySource)`                  | Label like `() => console.log('x')`                            |
+| `getCallbackBody(node)`                      | Extract body from arrow/function expressions                   |
+| `extractCallbackFromArg(arg, source)`        | Full callback info: label, body, lines                         |
+| `extractConsoleLogArg(node, source, scope?)` | Get `console.log()` arg text with optional scope resolution    |
+| `resolveNodeToString(node, source, scope?)`  | Resolve literals/identifiers/template literals to display text |
+| `escapeHtml(value)`                          | Escape untrusted text before interpolating into HTML           |
+| `createError(type, message, line?)`          | Factory for `SandboxError` objects                             |
 
 Usage:
 
@@ -372,12 +356,12 @@ The CodeMirror editor (`SandboxEditor`) provides out of the box:
 
 The generator can return four error types:
 
-| Type | When | Display |
-|------|------|---------|
-| `parse-error` | Acorn can't parse the code | Red banner with line/column |
+| Type                  | When                                          | Display                                   |
+| --------------------- | --------------------------------------------- | ----------------------------------------- |
+| `parse-error`         | Acorn can't parse the code                    | Red banner with line/column               |
 | `unsupported-pattern` | Valid JS but your generator doesn't handle it | Amber banner with supported patterns list |
-| `code-too-long` | Exceeds `maxCodeLines` | Auto-handled by `useSandboxMode` |
-| `generation-error` | Other generation failure (empty code, etc.) | Red banner |
+| `code-too-long`       | Exceeds `maxCodeLines`                        | Auto-handled by `useSandboxMode`          |
+| `generation-error`    | Other generation failure (empty code, etc.)   | Red banner                                |
 
 When returning `unsupported-pattern`, provide a helpful message:
 
@@ -386,7 +370,8 @@ return {
   success: false,
   error: {
     type: "unsupported-pattern",
-    message: "for loops are not supported yet. Use simple statements and function calls.",
+    message:
+      "for loops are not supported yet. Use simple statements and function calls.",
     line: node.loc?.start.line,
   },
 };
@@ -418,15 +403,13 @@ Before shipping a new sandbox topic:
 - [ ] `defaultCode` is valid and demonstrates the topic well
 - [ ] `supportedPatterns` list is accurate and matches what the generator handles
 - [ ] Visualization component uses `useSandboxUIState()` hook
-- [ ] `SandboxEditor` rendered with `code`, `codeVersion`, `onChange`, `onGenerate`, `maxLines`
-- [ ] `SandboxErrorDisplay` rendered when `sandbox.error` exists
-- [ ] `SandboxToggle` in toolbar with `handleToggleSandbox`
-- [ ] Generate / Reset / Edit buttons in toolbar with correct conditional rendering
-- [ ] `TransportControls` hidden during editing mode
+- [ ] `SandboxPanel` replaces `SourceCodePanel` while editing
+- [ ] `SandboxControls` passed as `leading` to `VisualizationToolbar` with `align="center"`
+- [ ] `hideTransport` and `descriptionOverride` set on `VisualizationToolbar` for editing mode
 - [ ] `resetKey` passed to `useStepPlayback` includes `sandbox.generationId`
 - [ ] `activeSteps` switches between generated and hardcoded based on `usingSandbox`
 - [ ] Any user-derived text interpolated into HTML is escaped via `escapeHtml`
 - [ ] Tested with valid code, invalid code, empty code, and unsupported patterns
 - [ ] Tested with malicious payload sample (e.g. `<img src=x onerror=alert(1)>`) to verify text rendering only
 - [ ] Queue item pills handle long text (overflow-hidden, break-all)
-- [ ] Build passes (`npm run build`)
+- [ ] `npm run verify` passes

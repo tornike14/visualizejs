@@ -1,8 +1,7 @@
 import type { TreeNodeHighlight } from "@/types/visualization";
 
 export const NODE_HIGHLIGHT_STYLES: Record<TreeNodeHighlight, string> = {
-  unchanged:
-    "border-slate-500/30 bg-slate-800/40",
+  unchanged: "border-slate-500/30 bg-slate-800/40",
   updated:
     "border-amber-300/40 bg-amber-400/10 shadow-[0_0_14px_rgba(251,191,36,0.1)]",
   added:

@@ -35,7 +35,8 @@ export const filterTopics = (
       for (const term of terms) {
         if (title.startsWith(term)) score += 6;
         else if (title.includes(term)) score += 4;
-        else if (entry.id.includes(term) || entry.category.includes(term)) score += 3;
+        else if (entry.id.includes(term) || entry.category.includes(term))
+          score += 3;
         else if (haystack.includes(term)) score += 1;
         else return null;
       }

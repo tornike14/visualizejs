@@ -20,22 +20,19 @@ When the user asks to create, add, or build a new topic or visualization in the 
    - `docsUrl` (MDN or authoritative reference URL)
    - Description (1-2 sentences for SEO and landing page cards)
    - Whether it uses ExampleSelector (multiple sub-examples)
-   - Whether it should be folder-based (recommended for complex topics)
 
-2. **Register the topic** in `src/lib/topics.ts`. Add to the `topics` array following the existing order convention.
+2. **Register the topic** in `src/lib/topics.ts`. Add to `TOPIC_DEFINITIONS` following the existing order convention. The route is derived; set `toolbar: "simple"` only if the topic has no example picker. Once registered, `npm run typecheck` reports every registry that still lacks an entry.
 
 3. **Add SEO keywords** in `src/lib/metadata.ts` under `TOPIC_KEYWORDS`. Add 4-7 relevant search terms.
 
-4. **Create the route page** at `src/app/<category>/<id>/page.tsx`. Follow the exact pattern from existing pages (see `src/app/javascript/generators/page.tsx` for reference).
+4. **Register the component** in `VISUALIZATIONS` in `src/components/visualizations/registry.tsx` (one `dynamic()` entry keyed by topic id). Routing is generated from the registry.
 
-5. **Scaffold the visualization component:**
-   - **Single-file:** `src/components/visualizations/<TopicName>.tsx`
-   - **Folder-based:** `src/components/visualizations/<topic-id>/` with `index.tsx`, `types.ts`, `helpers.ts`, `data.ts`, `components/`
+5. **Scaffold the visualization folder** at `src/components/visualizations/<topic-id>/` with `index.tsx`, `types.ts`, `helpers.ts`, `data.ts`, `components/`.
    - Read `docs/topic-authoring.md` for the full skeleton template.
    - Read `docs/component-reference.md` for component APIs and hooks, including PipelineDiagram, TokenChips, HeatmapGrid, MetricBars, and MessageFlow for backend and AI topics.
-   - Always use ExampleSelector with 2 or 3 examples and pass `onJumpTo={jumpTo}` to TransportControls.
+   - Use `useExampleTopic(EXAMPLES)` with 2 or 3 examples, `VisualizationToolbar` with an `ExamplePicker` in `leading`, and `SourceCodePanel` for the code.
 
-6. **If using ExampleSelector:** Add topic ID to `SELECTOR_TOOLBAR_TOPIC_IDS` in `src/components/layout/VisualizationPageShell.tsx`.
+6. **Extend the shared types:** the step interface extends `BaseStep`, the example interface extends `SourceExample<Step>` (both from `src/types/visualization.ts`).
 
 7. **Create theory content** at `src/content/theory/<category>/<id>.ts`. Read `docs/theory-authoring.md` for field-by-field guidance and tone requirements.
 
@@ -45,17 +42,16 @@ When the user asks to create, add, or build a new topic or visualization in the 
 
 10. **Add inbound links:** add the new ID to `relatedTopicIds` of 2 or more existing theory files (keep each list at 3 to 5).
 
-11. **Verify:** Run `npm run verify` (lint, registry check, build). Fix any errors.
+11. **Verify:** Run `npm run audit:steps -- <id>` and fix anything it flags, then `npm run verify` (lint, typecheck, format, step audit, build).
 
 ## Key Files
 
 - `src/lib/topics.ts` -- topic registry
 - `src/lib/metadata.ts` -- keywords and theory descriptions
-- `src/app/<category>/<id>/page.tsx` -- route page (new)
+- `src/components/visualizations/registry.tsx` -- component registry
 - `src/components/visualizations/` -- visualization component (new)
 - `src/content/theory/<category>/<id>.ts` -- theory content (new)
 - `src/content/theory/index.ts` -- theory registry
-- `src/components/layout/VisualizationPageShell.tsx` -- SELECTOR_TOOLBAR_TOPIC_IDS
 
 ## Documentation
 
@@ -69,7 +65,7 @@ When the user asks to create, add, or build a new topic or visualization in the 
 - No em dashes or AI-sounding language in content
 - No emojis in step descriptions or UI text
 - Use `VISUALIZATION_PANEL_TITLES` and `VISUALIZATION_EMPTY_STATES` from `uiCopy.ts`
-- Wrap `setActiveExampleId` in `handleExampleChange` callback
+- Use `useExampleTopic` + `VisualizationToolbar` + `ExamplePicker`; never hand-roll the toolbar or step pill
 - Theory `relatedTopicIds` must have 3-5 valid IDs (never empty)
-- Code line fading guard: `isDone && !isActive`
+- Source code renders through `SourceCodePanel`
 - Components use `"use client"` directive and named exports

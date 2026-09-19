@@ -45,7 +45,8 @@ export const rateLimitingTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What is the difference between a token bucket and a fixed window limiter?",
+      question:
+        "What is the difference between a token bucket and a fixed window limiter?",
       answer:
         "A fixed window counts requests per clock-aligned interval and resets the count at the boundary, which is cheap but lets a client double its budget by straddling the reset. A token bucket refills continuously at a fixed rate up to a capacity, so it allows a burst up to the capacity while capping the long-run average, and it has no boundary to exploit.",
       codeExample: {
@@ -77,7 +78,8 @@ next();`,
       },
     },
     {
-      question: "What does a 429 response mean and which headers should accompany it?",
+      question:
+        "What does a 429 response mean and which headers should accompany it?",
       answer:
         "429 Too Many Requests means the client has exceeded its budget and the request was not processed. Retry-After tells the client how many seconds to wait, rounded up. X-RateLimit-Limit and X-RateLimit-Remaining, sent on every response, let clients pace themselves before they are rejected. The newer RateLimit-Policy header from the IETF draft standardizes the same information.",
     },
@@ -87,10 +89,16 @@ next();`,
         "It depends on what you are protecting. IP address works for anonymous traffic at the edge but punishes users behind a shared NAT. After authentication, the API key or user id is fairer and supports per-tier limits. Sensitive endpoints such as login often combine keys, for example a per-IP limit and a per-account limit, so neither a distributed attack nor a single abusive account gets through.",
     },
     {
-      question: "How does server-side rate limiting differ from debounce and throttle on the client?",
+      question:
+        "How does server-side rate limiting differ from debounce and throttle on the client?",
       answer:
         "Debounce and throttle run in the browser and reduce how often a cooperative client fires a call, which improves UX and saves bandwidth. They cannot protect the server, because an attacker controls the client code. Rate limiting runs on the server or at the edge and enforces the budget regardless of the client. Use throttle for typing and scrolling, and a server limiter for the API.",
     },
   ],
-  relatedTopicIds: ["http-request-lifecycle", "caching-strategies", "jwt-authentication", "debounce-throttle"],
+  relatedTopicIds: [
+    "http-request-lifecycle",
+    "caching-strategies",
+    "jwt-authentication",
+    "debounce-throttle",
+  ],
 };

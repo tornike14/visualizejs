@@ -17,7 +17,7 @@ export const StackItems = ({ items }: { items: string[] }) => {
           key={`${item}-${index}`}
           className={cn(
             "viz-slide-in rounded-lg border px-3 py-2 font-mono text-xs",
-            STACK_ITEM_STYLE
+            STACK_ITEM_STYLE,
           )}
         >
           {item}

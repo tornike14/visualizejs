@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 /* ── Types ── */
@@ -21,10 +21,7 @@ export interface EffectEntry {
   cleanupPending?: boolean;
 }
 
-export interface UseEffectStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface UseEffectStep extends BaseStep {
   consoleOutput: string[];
   componentTree: TreeNodeData;
   activeNodeId?: string;

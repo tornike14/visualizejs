@@ -32,9 +32,9 @@ export const TopicTheorySections = ({
             <p key={paragraph}>{paragraph}</p>
           ))}
           <p className="rounded-xl border border-cyan-300/20 bg-cyan-400/8 px-3 py-2 text-cyan-100/95">
-            Interview framing: define {topic.title} in one sentence, then explain
-            one concrete runtime behavior and one common pitfall with a short code
-            example.
+            Interview framing: define {topic.title} in one sentence, then
+            explain one concrete runtime behavior and one common pitfall with a
+            short code example.
           </p>
         </div>
         <a

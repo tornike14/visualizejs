@@ -350,7 +350,7 @@ export const EXAMPLES: HeapStackExample[] = [
     steps: [
       {
         descriptionHtml:
-          "The global <span class=\"hl-stack\">stack frame</span> holds the function declarations <code>add</code> and <code>multiply</code>, and <code>result</code> is declared but not yet assigned.",
+          'The global <span class="hl-stack">stack frame</span> holds the function declarations <code>add</code> and <code>multiply</code>, and <code>result</code> is declared but not yet assigned.',
         activeLine: null,
         doneLines: [],
         consoleOutput: [],
@@ -551,9 +551,7 @@ export const EXAMPLES: HeapStackExample[] = [
           {
             id: "global",
             label: "global",
-            variables: [
-              { name: "data", value: "-> Obj#1", heapRef: "obj-1" },
-            ],
+            variables: [{ name: "data", value: "-> Obj#1", heapRef: "obj-1" }],
           },
         ],
         heapAllocations: [
@@ -579,7 +577,7 @@ export const EXAMPLES: HeapStackExample[] = [
       },
       {
         descriptionHtml:
-          "<code>data.items.length</code> follows the reference chain: <code>data</code> on the <span class=\"hl-stack\">stack</span> points to <code>Obj#1</code> on the <span class=\"hl-micro\">heap</span>, which contains <code>items</code> pointing to <code>Arr#1</code>. Outputs <code>3</code>.",
+          '<code>data.items.length</code> follows the reference chain: <code>data</code> on the <span class="hl-stack">stack</span> points to <code>Obj#1</code> on the <span class="hl-micro">heap</span>, which contains <code>items</code> pointing to <code>Arr#1</code>. Outputs <code>3</code>.',
         activeLine: 2,
         doneLines: [1],
         consoleOutput: ["3"],
@@ -587,9 +585,7 @@ export const EXAMPLES: HeapStackExample[] = [
           {
             id: "global",
             label: "global",
-            variables: [
-              { name: "data", value: "-> Obj#1", heapRef: "obj-1" },
-            ],
+            variables: [{ name: "data", value: "-> Obj#1", heapRef: "obj-1" }],
           },
         ],
         heapAllocations: [

@@ -4,7 +4,7 @@ export const stateBatchingTheory: TopicTheoryContent = {
   summary:
     "State batching is how React collects every setState call made during one event handler or callback into a single render, so the UI updates once with the final result instead of once per call.",
   whatItIs: [
-    "Calling setState does not change anything immediately. It records an update on the hook's queue and asks React to render later. Batching is the rule for when \"later\" is: React waits until the current handler or callback finishes, then processes every queued update in one render pass and commits once.",
+    'Calling setState does not change anything immediately. It records an update on the hook\'s queue and asks React to render later. Batching is the rule for when "later" is: React waits until the current handler or callback finishes, then processes every queued update in one render pass and commits once.',
     "Each render captures its state as a snapshot. The count variable inside an event handler is a plain constant captured by a closure, so three setCount(count + 1) calls in a row all compute the same number. To build on the pending value instead of the snapshot, you pass an updater function, setCount(c => c + 1), and React calls it with the result of the previous queued update.",
     "Before React 18, batching only applied inside React's own event handlers. Updates made in a setTimeout, a promise callback, or a native event listener each rendered synchronously on their own. React 18 introduced automatic batching for roots created with createRoot: updates are batched wherever they come from, with the batch boundary at the end of the callback that issued them.",
     "This design matters because rendering is the expensive part. One render per tick keeps intermediate states off the screen, avoids running effects for values nobody sees, and lets React treat the update queue as data it can reorder by priority under concurrent rendering. flushSync exists as the explicit escape hatch for the rare case where the DOM must be updated before the next line of code runs.",
@@ -94,5 +94,10 @@ listRef.current.lastChild.scrollIntoView();`,
         "React does not use a timer to batch. Inside an event handler it holds updates until the handler returns and then flushes synchronously in the same task. For updates issued from a microtask or timer callback, React 18 schedules a flush that runs once that callback finishes, so the batch boundary lines up with a single unit of event loop work.",
     },
   ],
-  relatedTopicIds: ["hooks", "render-cycle", "concurrent-rendering", "event-loop"],
+  relatedTopicIds: [
+    "hooks",
+    "render-cycle",
+    "concurrent-rendering",
+    "event-loop",
+  ],
 };

@@ -35,14 +35,19 @@ export const QueryPlan = ({ entries }: { entries: PlanEntry[] }) => {
           </p>
           <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-slate-400">
             <span>
-              reads <span className="text-slate-200 tabular-nums">{entry.reads}</span>
+              reads{" "}
+              <span className="text-slate-200 tabular-nums">{entry.reads}</span>
             </span>
             <span>
-              rows <span className="text-slate-200 tabular-nums">{entry.rows}</span>
+              rows{" "}
+              <span className="text-slate-200 tabular-nums">{entry.rows}</span>
             </span>
             {entry.elapsed && (
               <span>
-                time <span className="text-slate-200 tabular-nums">{entry.elapsed}</span>
+                time{" "}
+                <span className="text-slate-200 tabular-nums">
+                  {entry.elapsed}
+                </span>
               </span>
             )}
           </div>

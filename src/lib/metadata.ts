@@ -1,33 +1,25 @@
 import type { Metadata } from "next";
-import { CATEGORIES, CATEGORY_LIST, type CategoryConfig } from "@/lib/categories";
+import {
+  CATEGORIES,
+  CATEGORY_LIST,
+  type CategoryConfig,
+} from "@/lib/categories";
+import type { TopicId } from "@/lib/topics";
 import type { Topic } from "@/types";
 import {
   CREATOR_LINKEDIN_URL,
   CREATOR_NAME,
-  OPEN_GRAPH_IMAGE_URL,
   SITE_NAME,
   SITE_URL,
-  SOCIAL_IMAGE_ALT,
-  SOCIAL_IMAGE_HEIGHT,
-  SOCIAL_IMAGE_WIDTH,
-  TWITTER_IMAGE_URL,
 } from "@/lib/constants";
 
-const GLOBAL_KEYWORDS = [
-  "VisualizeJS",
-  "javascript visualizer",
-  "javascript concepts",
-  "interactive javascript tutorial",
-  "javascript interview preparation",
-  "frontend fundamentals",
-];
+const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> =
+  Object.fromEntries(
+    CATEGORY_LIST.map((category) => [category.id, category.keywords]),
+  ) as Record<Topic["category"], string[]>;
 
-const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> = Object.fromEntries(
-  CATEGORY_LIST.map((category) => [category.id, category.keywords]),
-) as Record<Topic["category"], string[]>;
-
-const TOPIC_KEYWORDS: Record<string, string[]> = {
-  "tokenization": [
+const TOPIC_KEYWORDS: Record<TopicId, string[]> = {
+  tokenization: [
     "tokenization explained",
     "byte pair encoding",
     "bpe tokenizer",
@@ -36,7 +28,7 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "token ids explained",
     "why do llms count tokens",
   ],
-  "embeddings": [
+  embeddings: [
     "embeddings explained",
     "word embeddings visualized",
     "cosine similarity explained",
@@ -45,7 +37,7 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "semantic search embeddings",
     "what is an embedding",
   ],
-  "attention": [
+  attention: [
     "self attention explained",
     "attention mechanism visualized",
     "query key value explained",
@@ -63,7 +55,7 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
     "autoregressive generation",
     "greedy decoding vs sampling",
   ],
-  "backpropagation": [
+  backpropagation: [
     "backpropagation explained",
     "gradient descent visualized",
     "chain rule neural network",
@@ -407,29 +399,16 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
   ],
 };
 
-const THEORY_INTENT_KEYWORDS = [
-  "theory",
-  "explained",
-  "guide",
-  "deep dive",
-  "common mistakes",
-  "faq",
-  "how it works",
-  "interview questions",
-  "examples",
-  "tutorial",
-];
-
-const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
-  "tokenization":
+const TOPIC_THEORY_DESCRIPTIONS: Record<TopicId, string> = {
+  tokenization:
     "Learn how tokenizers split text into subword tokens with byte pair encoding, why token counts matter, and how ids feed the model.",
-  "embeddings":
+  embeddings:
     "Learn how token ids become vectors, why similar meanings land near each other, and how cosine similarity compares embeddings.",
-  "attention":
+  attention:
     "Learn how self-attention scores queries against keys, applies softmax and a causal mask, and mixes values so each token sees its context.",
   "next-token-prediction":
     "Learn how logits become a probability distribution, how temperature and top-p change sampling, and why generation runs one token at a time.",
-  "backpropagation":
+  backpropagation:
     "Learn how a forward pass produces a loss, how the chain rule sends gradients backward, and how gradient descent nudges weights.",
   "http-request-lifecycle":
     "Learn the full path of an HTTP request: DNS, TCP and TLS handshakes, routing, middleware, the database call, and the response.",
@@ -513,33 +492,39 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "useEffect runs side effects after React commits DOM updates and the browser paints. Learn dependency array behavior, cleanup timing, mount/unmount patterns, and common useEffect recipes.",
 };
 
+/** schema.org TechArticle only defines Beginner and Expert. */
+const PROFICIENCY_LEVELS: Record<Topic["difficulty"], "Beginner" | "Expert"> = {
+  beginner: "Beginner",
+  intermediate: "Beginner",
+  advanced: "Expert",
+};
+
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
-  return [...new Set(keywordGroups.flat().map((k) => k.trim()).filter(Boolean))];
+  return [
+    ...new Set(
+      keywordGroups
+        .flat()
+        .map((k) => k.trim())
+        .filter(Boolean),
+    ),
+  ];
 }
 
+/**
+ * Curated keywords only. Search engines ignore the meta keywords tag, so
+ * generated "X explained", "X faq" combinations added nothing but bytes.
+ * The list still feeds the TechArticle keywords in structured data.
+ */
 export function getTopicKeywords(topic: Topic): string[] {
-  const categoryLabel = CATEGORIES[topic.category].label;
-  const lowerTitle = topic.title.toLowerCase();
-  const lowerCategory = categoryLabel.toLowerCase();
-
   return dedupeKeywords(
-    GLOBAL_KEYWORDS,
+    [topic.title, topic.id.replace(/-/g, " ")],
+    TOPIC_KEYWORDS[topic.id as TopicId],
     CATEGORY_KEYWORDS[topic.category],
-    [topic.title, topic.id.replace(/-/g, " "), `${topic.title} explained`],
-    TOPIC_KEYWORDS[topic.id] ?? [],
-    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
-    [
-      `what is ${lowerTitle} in ${lowerCategory}`,
-      `${lowerTitle} ${lowerCategory} explained`,
-      `${lowerTitle} interview questions`,
-      `${lowerTitle} visualizer`,
-      `${lowerTitle} visualization`,
-    ],
   );
 }
 
 export function getTopicDescription(topic: Topic): string {
-  return TOPIC_THEORY_DESCRIPTIONS[topic.id] ?? topic.description;
+  return TOPIC_THEORY_DESCRIPTIONS[topic.id as TopicId];
 }
 
 export function createTopicMetadata(topic: Topic): Metadata {
@@ -572,20 +557,11 @@ export function createTopicMetadata(topic: Topic): Metadata {
       siteName: SITE_NAME,
       type: "article",
       locale: "en_US",
-      images: [
-        {
-          url: OPEN_GRAPH_IMAGE_URL,
-          width: SOCIAL_IMAGE_WIDTH,
-          height: SOCIAL_IMAGE_HEIGHT,
-          alt: SOCIAL_IMAGE_ALT,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [TWITTER_IMAGE_URL],
     },
   };
 }
@@ -603,8 +579,7 @@ export function createTopicStructuredData(topic: Topic, summary?: string) {
     url: canonicalUrl,
     inLanguage: "en-US",
     keywords: getTopicKeywords(topic).join(", "),
-    proficiencyLevel:
-      topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
+    proficiencyLevel: PROFICIENCY_LEVELS[topic.difficulty],
     about: {
       "@type": "Thing",
       name: topic.title,
@@ -650,12 +625,29 @@ export function createCategoryMetadata(
   category: CategoryConfig,
   topicCount: number,
 ): Metadata {
+  const title = category.indexTitle;
+  const description = `Explore ${topicCount} interactive ${category.label} visualizations. ${category.description}`;
+  const canonicalUrl = `${SITE_URL}${category.route}`;
+
   return {
-    title: category.indexTitle,
-    description: `Explore ${topicCount} interactive ${category.label} visualizations. ${category.description}`,
+    title,
+    description,
     keywords: dedupeKeywords(category.indexKeywords, category.keywords),
     alternates: {
-      canonical: category.route,
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: canonicalUrl,
+      siteName: SITE_NAME,
+      type: "website",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
     },
   };
 }

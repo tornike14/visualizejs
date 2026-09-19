@@ -21,8 +21,7 @@ export const CODE_LINES: SourceLine[] = [
 
 export const STEPS: EventLoopStep[] = [
   {
-    descriptionHtml:
-      `<span class="hl-stack">Call Stack</span> receives <code>console.log('Start')</code> and executes immediately.`,
+    descriptionHtml: `<span class="hl-stack">Call Stack</span> receives <code>console.log('Start')</code> and executes immediately.`,
     activeLine: 1,
     doneLines: [],
     stack: ["console.log('Start')"],
@@ -34,10 +33,9 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>console.log('Start')</code> pops from the <span class="hl-stack">Call Stack</span>. Output: <strong>Start</strong>.`,
+    descriptionHtml: `<code>console.log('Start')</code> pops from the <span class="hl-stack">Call Stack</span>. Output: <strong>Start</strong>.`,
     activeLine: 1,
-    doneLines: [1],
+    doneLines: [],
     stack: [],
     webApis: [],
     taskQueue: [],
@@ -47,8 +45,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>setTimeout(cb, 0)</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
+    descriptionHtml: `<code>setTimeout(cb, 0)</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
     activeLine: 3,
     doneLines: [1],
     stack: ["setTimeout(cb, 0)"],
@@ -60,10 +57,9 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>setTimeout</code> delegates to <span class="hl-api">Web APIs</span>, and a timer starts.`,
+    descriptionHtml: `<code>setTimeout</code> delegates to <span class="hl-api">Web APIs</span>, and a timer starts.`,
     activeLine: 3,
-    doneLines: [1, 3, 4, 5],
+    doneLines: [1, 4, 5],
     stack: [],
     webApis: ["Timer (0ms)"],
     taskQueue: [],
@@ -73,8 +69,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `Timer completes, so callback moves into the <span class="hl-task">Task Queue</span>.`,
+    descriptionHtml: `Timer completes, so callback moves into the <span class="hl-task">Task Queue</span>.`,
     activeLine: null,
     doneLines: [1, 3, 4, 5],
     stack: [],
@@ -86,8 +81,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>Promise.resolve().then(cb)</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
+    descriptionHtml: `<code>Promise.resolve().then(cb)</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
     activeLine: 7,
     doneLines: [1, 3, 4, 5],
     stack: ["Promise.resolve().then(cb)"],
@@ -99,10 +93,9 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `Promise resolves and the callback enters the <span class="hl-micro">Microtask Queue</span> (higher priority).`,
+    descriptionHtml: `Promise resolves and the callback enters the <span class="hl-micro">Microtask Queue</span> (higher priority).`,
     activeLine: 8,
-    doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13],
+    doneLines: [1, 3, 4, 5, 7, 9, 10, 11, 12, 13],
     stack: [],
     webApis: [],
     taskQueue: ["() => log('Timeout')"],
@@ -112,8 +105,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>console.log('End')</code> is still synchronous and executes before queued callbacks.`,
+    descriptionHtml: `<code>console.log('End')</code> is still synchronous and executes before queued callbacks.`,
     activeLine: 15,
     doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13],
     stack: ["console.log('End')"],
@@ -125,10 +117,9 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<code>console.log('End')</code> finishes. Sync code is done and output now includes <strong>End</strong>.`,
+    descriptionHtml: `<code>console.log('End')</code> finishes. Sync code is done and output now includes <strong>End</strong>.`,
     activeLine: 15,
-    doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 15],
+    doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13],
     stack: [],
     webApis: [],
     taskQueue: ["() => log('Timeout')"],
@@ -138,8 +129,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "idle",
   },
   {
-    descriptionHtml:
-      `<span class="hl-loop">Event Loop</span> checks queues: <span class="hl-micro">Microtasks</span> are always consumed first.`,
+    descriptionHtml: `<span class="hl-loop">Event Loop</span> checks queues: <span class="hl-micro">Microtasks</span> are always consumed first.`,
     activeLine: null,
     doneLines: [1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 15],
     stack: [],
@@ -151,8 +141,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "checking",
   },
   {
-    descriptionHtml:
-      `<span class="hl-loop">Event Loop</span> moves the first microtask to the <span class="hl-stack">Call Stack</span>.`,
+    descriptionHtml: `<span class="hl-loop">Event Loop</span> moves the first microtask to the <span class="hl-stack">Call Stack</span>.`,
     activeLine: 9,
     doneLines: [1, 3, 5, 7, 8, 10, 11, 12, 13, 15],
     stack: ["() => log('Promise 1')"],
@@ -164,8 +153,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "running",
   },
   {
-    descriptionHtml:
-      `Promise chaining queues another callback in the <span class="hl-micro">Microtask Queue</span>.`,
+    descriptionHtml: `Promise chaining queues another callback in the <span class="hl-micro">Microtask Queue</span>.`,
     activeLine: 11,
     doneLines: [1, 3, 5, 7, 8, 9, 10, 13, 15],
     stack: [],
@@ -177,8 +165,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "checking",
   },
   {
-    descriptionHtml:
-      `<span class="hl-loop">Event Loop</span> drains the remaining microtask and runs Promise 2 callback.`,
+    descriptionHtml: `<span class="hl-loop">Event Loop</span> drains the remaining microtask and runs Promise 2 callback.`,
     activeLine: 12,
     doneLines: [1, 3, 5, 7, 8, 9, 10, 11, 13, 15],
     stack: ["() => log('Promise 2')"],
@@ -190,8 +177,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "running",
   },
   {
-    descriptionHtml:
-      `All microtasks are done, so the <span class="hl-loop">Event Loop</span> checks the <span class="hl-task">Task Queue</span>.`,
+    descriptionHtml: `All microtasks are done, so the <span class="hl-loop">Event Loop</span> checks the <span class="hl-task">Task Queue</span>.`,
     activeLine: null,
     doneLines: [1, 3, 5, 7, 8, 9, 10, 11, 12, 13, 15],
     stack: [],
@@ -203,8 +189,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "checking",
   },
   {
-    descriptionHtml:
-      `<span class="hl-loop">Event Loop</span> moves the timeout callback to the <span class="hl-stack">Call Stack</span>.`,
+    descriptionHtml: `<span class="hl-loop">Event Loop</span> moves the timeout callback to the <span class="hl-stack">Call Stack</span>.`,
     activeLine: 4,
     doneLines: [1, 3, 5, 7, 8, 9, 10, 11, 12, 13, 15],
     stack: ["() => log('Timeout')"],
@@ -216,8 +201,7 @@ export const STEPS: EventLoopStep[] = [
     loopLabel: "running",
   },
   {
-    descriptionHtml:
-      `<strong>Done:</strong> output order is Start \u2192 End \u2192 Promise 1 \u2192 Promise 2 \u2192 Timeout.`,
+    descriptionHtml: `<strong>Done:</strong> output order is Start \u2192 End \u2192 Promise 1 \u2192 Promise 2 \u2192 Timeout.`,
     activeLine: null,
     doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     stack: [],

@@ -54,9 +54,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
               label: "<ThemeCtx.Provider>",
               highlight: "active",
               props: [{ key: "value", value: '"dark"' }],
-              children: [
-                { id: "button-comp", label: "<ThemedButton>" },
-              ],
+              children: [{ id: "button-comp", label: "<ThemedButton>" }],
             },
           ],
         },
@@ -68,7 +66,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
       },
       {
         descriptionHtml:
-          "<code>ThemedButton</code> mounts. React sees the <code>useContext(ThemeCtx)</code> call and <span class=\"hl-task\">subscribes</span> this component to ThemeCtx.",
+          '<code>ThemedButton</code> mounts. React sees the <code>useContext(ThemeCtx)</code> call and <span class="hl-task">subscribes</span> this component to ThemeCtx.',
         activeLine: 4,
         doneLines: [1, 3, 8, 9, 10],
         componentTree: {
@@ -264,9 +262,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
                   id: "inner-provider",
                   label: "<ThemeCtx.Provider>",
                   props: [{ key: "value", value: '"blue"' }],
-                  children: [
-                    { id: "label-inner", label: "<Label> (inner)" },
-                  ],
+                  children: [{ id: "label-inner", label: "<Label> (inner)" }],
                 },
               ],
             },
@@ -298,9 +294,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
                   label: "<ThemeCtx.Provider>",
                   highlight: "active",
                   props: [{ key: "value", value: '"blue"' }],
-                  children: [
-                    { id: "label-inner", label: "<Label> (inner)" },
-                  ],
+                  children: [{ id: "label-inner", label: "<Label> (inner)" }],
                 },
               ],
             },
@@ -337,9 +331,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
                   id: "inner-provider",
                   label: "<ThemeCtx.Provider>",
                   props: [{ key: "value", value: '"blue"' }],
-                  children: [
-                    { id: "label-inner", label: "<Label> (inner)" },
-                  ],
+                  children: [{ id: "label-inner", label: "<Label> (inner)" }],
                 },
               ],
             },
@@ -360,7 +352,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
       },
       {
         descriptionHtml:
-          "The inner <code>&lt;Label&gt;</code> calls <code>useContext(ThemeCtx)</code>. React walks up and hits the <strong>inner</strong> Provider first, so it reads <code>\"blue\"</code>.",
+          'The inner <code>&lt;Label&gt;</code> calls <code>useContext(ThemeCtx)</code>. React walks up and hits the <strong>inner</strong> Provider first, so it reads <code>"blue"</code>.',
         activeLine: 4,
         doneLines: [1, 3, 8, 9, 10, 12],
         componentTree: {
@@ -433,7 +425,11 @@ export const EXAMPLES: ContextPropagationExample[] = [
                   label: "<Label> (outer)",
                   highlight: "unchanged",
                   children: [
-                    { id: "span-outer", label: '<span>"dark"</span>', highlight: "unchanged" },
+                    {
+                      id: "span-outer",
+                      label: '<span>"dark"</span>',
+                      highlight: "unchanged",
+                    },
                   ],
                 },
                 {
@@ -447,7 +443,11 @@ export const EXAMPLES: ContextPropagationExample[] = [
                       label: "<Label> (inner)",
                       highlight: "unchanged",
                       children: [
-                        { id: "span-inner", label: '<span>"blue"</span>', highlight: "unchanged" },
+                        {
+                          id: "span-inner",
+                          label: '<span>"blue"</span>',
+                          highlight: "unchanged",
+                        },
                       ],
                     },
                   ],
@@ -486,19 +486,22 @@ export const EXAMPLES: ContextPropagationExample[] = [
     codeLines: [
       { num: 1, text: "const CountCtx = createContext(0);" },
       { num: 2, text: "" },
-      { num: 3, text: "function Display() {" },
+      { num: 3, text: "const Display = memo(function Display() {" },
       { num: 4, text: "  const count = useContext(CountCtx);" },
       { num: 5, text: "  return <p>Count: {count}</p>;" },
-      { num: 6, text: "}" },
+      { num: 6, text: "});" },
       { num: 7, text: "" },
-      { num: 8, text: "function Badge() {" },
+      { num: 8, text: "const Badge = memo(function Badge() {" },
       { num: 9, text: "  const count = useContext(CountCtx);" },
-      { num: 10, text: "  return <span>{count > 0 ? \"active\" : \"idle\"}</span>;" },
-      { num: 11, text: "}" },
+      {
+        num: 10,
+        text: '  return <span>{count > 0 ? "active" : "idle"}</span>;',
+      },
+      { num: 11, text: "});" },
       { num: 12, text: "" },
-      { num: 13, text: "function Logo() {" },
-      { num: 14, text: "  return <img src=\"logo.png\" />;" },
-      { num: 15, text: "}" },
+      { num: 13, text: "const Logo = memo(function Logo() {" },
+      { num: 14, text: '  return <img src="logo.png" />;' },
+      { num: 15, text: "});" },
       { num: 16, text: "" },
       { num: 17, text: "function App() {" },
       { num: 18, text: "  const [count, setCount] = useState(0);" },
@@ -514,7 +517,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
     steps: [
       {
         descriptionHtml:
-          "Initial render with <code>count = 0</code>. The Provider stores the value. Display and Badge subscribe via <code>useContext</code>. Logo does not use context.",
+          "Initial render with <code>count = 0</code>. The Provider stores the value. All three children are wrapped in <code>memo</code>, so a parent re-render alone will not re-render them. Display and Badge subscribe via <code>useContext</code>. Logo does not use context.",
         activeLine: 20,
         doneLines: [1, 17, 18, 19],
         componentTree: {
@@ -571,9 +574,12 @@ export const EXAMPLES: ContextPropagationExample[] = [
       },
       {
         descriptionHtml:
-          "All components render. Display shows <code>0</code>, Badge shows <code>\"idle\"</code>, Logo shows the image. Everything is mounted and stable.",
+          'All components render. Display shows <code>0</code>, Badge shows <code>"idle"</code>, Logo shows the image. Everything is mounted and stable.',
         activeLine: null,
-        doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+        doneLines: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 22, 23, 24, 25, 26,
+        ],
         componentTree: {
           id: "app",
           label: "<App>",
@@ -633,7 +639,7 @@ export const EXAMPLES: ContextPropagationExample[] = [
       },
       {
         descriptionHtml:
-          'React <span class="hl-loop">re-renders every consumer</span> of CountCtx. Both Display and Badge re-render, even though Badge\'s output ("active" vs "idle") might not need the exact number.',
+          'React <span class="hl-loop">re-renders every consumer</span> of CountCtx. Both Display and Badge re-render even though <code>memo</code> saw identical props: a context change bypasses the props comparison. Badge re-renders although its output ("active" vs "idle") did not need the exact number.',
         activeLine: null,
         doneLines: [1, 3, 4, 5, 8, 9, 10, 17, 18, 19, 20],
         componentTree: {
@@ -657,13 +663,23 @@ export const EXAMPLES: ContextPropagationExample[] = [
           { name: "CountCtx", value: "1", providerId: "Provider" },
         ],
         consumers: [
-          { consumerId: "Display", contextName: "CountCtx", currentValue: "1", isRerendering: true },
-          { consumerId: "Badge", contextName: "CountCtx", currentValue: "1", isRerendering: true },
+          {
+            consumerId: "Display",
+            contextName: "CountCtx",
+            currentValue: "1",
+            isRerendering: true,
+          },
+          {
+            consumerId: "Badge",
+            contextName: "CountCtx",
+            currentValue: "1",
+            isRerendering: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          "<code>Logo</code> did <strong>not</strong> re-render because it does not consume CountCtx. Context only triggers re-renders in components that call <code>useContext</code> for that specific context.",
+          "<code>Logo</code> did <strong>not</strong> re-render: <code>memo</code> skipped it because its props are unchanged, and it has no context subscription to override that. Context only triggers re-renders in components that call <code>useContext</code> for that specific context.",
         activeLine: 14,
         doneLines: [1, 3, 4, 5, 8, 9, 10, 13, 17, 18, 19, 20],
         componentTree: {
@@ -693,9 +709,12 @@ export const EXAMPLES: ContextPropagationExample[] = [
       },
       {
         descriptionHtml:
-          "There is no built-in selector for context. If you need fine-grained subscriptions, split large contexts into smaller ones, or use <code>useMemo</code> inside consumers to skip expensive renders.",
+          "There is no built-in selector for context. If you need fine-grained subscriptions, split large contexts into smaller ones, or use <code>useMemo</code> inside consumers to skip expensive renders. Without <code>memo</code>, all three children would re-render anyway simply because <code>App</code> did.",
         activeLine: null,
-        doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+        doneLines: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 22, 23, 24, 25, 26,
+        ],
         componentTree: {
           id: "app",
           label: "<App>",

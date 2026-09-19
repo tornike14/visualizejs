@@ -12,7 +12,11 @@ interface CacheStorePanelProps {
 }
 
 /** Key, value, TTL rows for the cache, with the database rows underneath for comparison. */
-export const CacheStorePanel = ({ entries, database, started }: CacheStorePanelProps) => {
+export const CacheStorePanel = ({
+  entries,
+  database,
+  started,
+}: CacheStorePanelProps) => {
   if (!started) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -38,7 +42,9 @@ export const CacheStorePanel = ({ entries, database, started }: CacheStorePanelP
               )}
             >
               <span className="font-semibold">{entry.key}</span>
-              <span className="min-w-0 flex-1 truncate text-slate-300">{entry.value}</span>
+              <span className="min-w-0 flex-1 truncate text-slate-300">
+                {entry.value}
+              </span>
               <span className="text-[10px] uppercase tracking-[0.1em] opacity-70">
                 ttl {entry.ttl}
               </span>

@@ -36,7 +36,9 @@ export const EventPathPanel = ({ entries }: { entries: EventPathEntry[] }) => {
           >
             {entry.phase}
           </span>
-          <span className="font-semibold text-slate-200">{entry.nodeLabel}</span>
+          <span className="font-semibold text-slate-200">
+            {entry.nodeLabel}
+          </span>
           {entry.handlerFired && (
             <span className="ml-auto text-emerald-400">fired</span>
           )}

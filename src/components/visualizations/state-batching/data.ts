@@ -14,7 +14,9 @@ const idle: EventLoopSnapshot = {
   pending: [],
 };
 
-const clickTask = (pending: EventLoopSnapshot["pending"] = []): EventLoopSnapshot => ({
+const clickTask = (
+  pending: EventLoopSnapshot["pending"] = [],
+): EventLoopSnapshot => ({
   running: "click event: handleClick()",
   runningKind: "task",
   pending,
@@ -105,9 +107,9 @@ const MOUNT_LOG: RenderLogEntry[] = [
 /* ── Example 1: three setState calls, one render ── */
 
 const BATCH_QUEUE_QUEUED = (n: number): QueuedUpdate[] =>
-  [1, 2, 3].slice(0, n).map((i) =>
-    value(`b${i}`, "count", "setCount(count + 1)", "1"),
-  );
+  [1, 2, 3]
+    .slice(0, n)
+    .map((i) => value(`b${i}`, "count", "setCount(count + 1)", "1"));
 
 const BATCH_QUEUE_APPLIED: QueuedUpdate[] = [1, 2, 3].map((i) =>
   value(`b${i}`, "count", "setCount(count + 1)", "1", "applied", "-> 1"),
@@ -128,13 +130,16 @@ const batchExample: StateBatchingExample = {
     { num: 6, text: "    setCount(count + 1);" },
     { num: 7, text: "    console.log(count);" },
     { num: 8, text: "  }" },
-    { num: 9, text: "  return <button onClick={handleClick}>{count}</button>;" },
+    {
+      num: 9,
+      text: "  return <button onClick={handleClick}>{count}</button>;",
+    },
     { num: 10, text: "}" },
   ],
   steps: [
     {
       descriptionHtml:
-        "Mount render. <code>useState(0)</code> creates a hook object on the <span class=\"hl-stack\">fiber</span> with <code>memoizedState = 0</code> and an empty update queue. The render returns a button showing 0 and React commits it.",
+        'Mount render. <code>useState(0)</code> creates a hook object on the <span class="hl-stack">fiber</span> with <code>memoizedState = 0</code> and an empty update queue. The render returns a button showing 0 and React commits it.',
       activeLine: 2,
       doneLines: [1],
       updateQueue: [],
@@ -189,7 +194,7 @@ const batchExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "Third call, same story: payload <code>1</code>. The queue now holds three updates that all say \"replace with 1\". Each <code>setCount</code> also schedules work on the root, but React sees it is inside a batched event and does not start rendering.",
+        'Third call, same story: payload <code>1</code>. The queue now holds three updates that all say "replace with 1". Each <code>setCount</code> also schedules work on the root, but React sees it is inside a batched event and does not start rendering.',
       activeLine: 6,
       doneLines: [1, 2, 3, 4, 5, 9],
       updateQueue: BATCH_QUEUE_QUEUED(3),
@@ -255,14 +260,37 @@ const batchExample: StateBatchingExample = {
 /* ── Example 2: updater functions ── */
 
 const TRIPLE_QUEUED = (n: number): QueuedUpdate[] =>
-  [1, 2, 3].slice(0, n).map((i) =>
-    updater(`t${i}`, "count", "setCount(c => c + 1)", "c => c + 1"),
-  );
+  [1, 2, 3]
+    .slice(0, n)
+    .map((i) =>
+      updater(`t${i}`, "count", "setCount(c => c + 1)", "c => c + 1"),
+    );
 
 const TRIPLE_APPLIED: QueuedUpdate[] = [
-  updater("t1", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "0 -> 1"),
-  updater("t2", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "1 -> 2"),
-  updater("t3", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "2 -> 3"),
+  updater(
+    "t1",
+    "count",
+    "setCount(c => c + 1)",
+    "c => c + 1",
+    "applied",
+    "0 -> 1",
+  ),
+  updater(
+    "t2",
+    "count",
+    "setCount(c => c + 1)",
+    "c => c + 1",
+    "applied",
+    "1 -> 2",
+  ),
+  updater(
+    "t3",
+    "count",
+    "setCount(c => c + 1)",
+    "c => c + 1",
+    "applied",
+    "2 -> 3",
+  ),
 ];
 
 const MIXED_QUEUED: QueuedUpdate[] = [
@@ -273,7 +301,14 @@ const MIXED_QUEUED: QueuedUpdate[] = [
 
 const MIXED_APPLIED: QueuedUpdate[] = [
   value("m1", "count", "setCount(count + 5)", "8", "applied", "3 -> 8"),
-  updater("m2", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "8 -> 9"),
+  updater(
+    "m2",
+    "count",
+    "setCount(c => c + 1)",
+    "c => c + 1",
+    "applied",
+    "8 -> 9",
+  ),
   value("m3", "count", "setCount(42)", "42", "applied", "9 -> 42"),
 ];
 
@@ -325,7 +360,7 @@ const updaterExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "The user clicks <code>+3</code>. <code>handleTriple</code> runs inside the batched click <span class=\"hl-task\">task</span>, so updates queue up and rendering waits until the handler returns.",
+        'The user clicks <code>+3</code>. <code>handleTriple</code> runs inside the batched click <span class="hl-task">task</span>, so updates queue up and rendering waits until the handler returns.',
       activeLine: 3,
       doneLines: [1, 2, 13, 14, 15, 16, 17, 18, 19],
       updateQueue: [],
@@ -394,7 +429,7 @@ const updaterExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "The user clicks <code>mix</code>. <code>handleMixed</code> runs inside a new batched click <span class=\"hl-task\">task</span>. Its <code>count</code> is the snapshot from Render #2, which is <code>3</code>.",
+        'The user clicks <code>mix</code>. <code>handleMixed</code> runs inside a new batched click <span class="hl-task">task</span>. Its <code>count</code> is the snapshot from Render #2, which is <code>3</code>.',
       activeLine: 8,
       doneLines: [1, 2, 13, 14, 15, 16, 17, 18, 19],
       updateQueue: [],
@@ -440,7 +475,9 @@ const updaterExample: StateBatchingExample = {
       descriptionHtml:
         "Handler returns, React renders once. The queue runs from base state <code>3</code>: replace with <code>8</code>, updater turns 8 into <code>9</code>, replace with <code>42</code>. Final value <code>42</code>, one render for three calls.",
       activeLine: 2,
-      doneLines: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+      doneLines: [
+        1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+      ],
       updateQueue: MIXED_APPLIED,
       hooks: [hook("count", "3", "42")],
       renderLog: [
@@ -454,7 +491,9 @@ const updaterExample: StateBatchingExample = {
       descriptionHtml:
         "Commit. The span shows 42 and the queue is empty. Use an updater whenever the next state depends on the previous one; use a value when you are setting state to something you already know.",
       activeLine: 17,
-      doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19],
+      doneLines: [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19,
+      ],
       updateQueue: [],
       hooks: [hook("count", "42")],
       renderLog: [
@@ -470,8 +509,14 @@ const updaterExample: StateBatchingExample = {
 
 /* ── Example 3: automatic batching outside events ── */
 
-const TIMER_PENDING = { label: "setTimeout callback (after 0 ms)", kind: "task" as const };
-const THEN_PENDING = { label: "promise .then callback", kind: "microtask" as const };
+const TIMER_PENDING = {
+  label: "setTimeout callback (after 0 ms)",
+  kind: "task" as const,
+};
+const THEN_PENDING = {
+  label: "promise .then callback",
+  kind: "microtask" as const,
+};
 
 const AUTO_MOUNT_LOG: RenderLogEntry[] = [
   render("r1", "Render #1", "mount, count = 0, flag = false"),
@@ -522,7 +567,10 @@ const automaticExample: StateBatchingExample = {
     { num: 13, text: "    flushSync(() => setCount(1));" },
     { num: 14, text: "    console.log('after flushSync');" },
     { num: 15, text: "  }" },
-    { num: 16, text: "  return <button onClick={handleClick}>{count}</button>;" },
+    {
+      num: 16,
+      text: "  return <button onClick={handleClick}>{count}</button>;",
+    },
     { num: 17, text: "}" },
   ],
   steps: [
@@ -540,7 +588,7 @@ const automaticExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "The user clicks. <code>handleClick</code> runs inside the click <span class=\"hl-task\">task</span>, in React's batched event context. In both React 17 and 18, updates made directly in this handler would be batched.",
+        'The user clicks. <code>handleClick</code> runs inside the click <span class="hl-task">task</span>, in React\'s batched event context. In both React 17 and 18, updates made directly in this handler would be batched.',
       activeLine: 4,
       doneLines: [1, 2, 3, 16],
       updateQueue: [],
@@ -552,7 +600,7 @@ const automaticExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "<code>setTimeout</code> hands the callback to the browser's timer. After 0 ms it will be placed on the <span class=\"hl-task\">task queue</span>, to run in a later turn of the event loop, long after this handler has returned.",
+        '<code>setTimeout</code> hands the callback to the browser\'s timer. After 0 ms it will be placed on the <span class="hl-task">task queue</span>, to run in a later turn of the event loop, long after this handler has returned.',
       activeLine: 5,
       doneLines: [1, 2, 3, 4, 16],
       updateQueue: [],
@@ -564,7 +612,7 @@ const automaticExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "<code>Promise.resolve().then(cb)</code> is already resolved, so <code>cb</code> is queued as a <span class=\"hl-micro\">microtask</span> immediately. Microtasks run as soon as the current task finishes, so this callback will run before the timer callback.",
+        '<code>Promise.resolve().then(cb)</code> is already resolved, so <code>cb</code> is queued as a <span class="hl-micro">microtask</span> immediately. Microtasks run as soon as the current task finishes, so this callback will run before the timer callback.',
       activeLine: 9,
       doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 16],
       updateQueue: [],
@@ -579,7 +627,9 @@ const automaticExample: StateBatchingExample = {
         "<code>flushSync</code> runs its callback, which queues <code>setCount(1)</code>, then forces React to render and commit synchronously before returning. Render #2 happens right here, in the middle of the handler, with <code>count = 1</code>.",
       activeLine: 13,
       doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 16],
-      updateQueue: [value("f1", "count", "setCount(1)", "1", "applied", "0 -> 1")],
+      updateQueue: [
+        value("f1", "count", "setCount(1)", "1", "applied", "0 -> 1"),
+      ],
       hooks: [hook("count", "0", "1"), hook("flag", "false")],
       renderLog: [
         ...AUTO_MOUNT_LOG,
@@ -606,7 +656,7 @@ const automaticExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "The handler returns and the click task ends with nothing left in React's queue. The <span class=\"hl-loop\">event loop</span> now drains microtasks before taking another task, so the <code>.then</code> callback is next.",
+        'The handler returns and the click task ends with nothing left in React\'s queue. The <span class="hl-loop">event loop</span> now drains microtasks before taking another task, so the <code>.then</code> callback is next.',
       activeLine: 15,
       doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16],
       updateQueue: [],
@@ -622,10 +672,12 @@ const automaticExample: StateBatchingExample = {
     },
     {
       descriptionHtml:
-        "The <span class=\"hl-micro\">microtask</span> runs, outside any React event handler. <code>setCount(c => c + 1)</code> queues an updater. React 17 has no batching context here, so it renders synchronously inside this call. React 18 queues the update and schedules one flush for after the callback.",
+        'The <span class="hl-micro">microtask</span> runs, outside any React event handler. <code>setCount(c => c + 1)</code> queues an updater. React 17 has no batching context here, so it renders synchronously inside this call. React 18 queues the update and schedules one flush for after the callback.',
       activeLine: 10,
       doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16],
-      updateQueue: [updater("p1", "count", "setCount(c => c + 1)", "c => c + 1")],
+      updateQueue: [
+        updater("p1", "count", "setCount(c => c + 1)", "c => c + 1"),
+      ],
       hooks: [hook("count", "1"), hook("flag", "false")],
       renderLog: [
         ...AUTO_LOG_AFTER_FLUSH,
@@ -668,21 +720,39 @@ const automaticExample: StateBatchingExample = {
       activeLine: 2,
       doneLines: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
       updateQueue: [
-        updater("p1", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "1 -> 2"),
-        updater("p2", "flag", "setFlag(f => !f)", "f => !f", "applied", "false -> true"),
+        updater(
+          "p1",
+          "count",
+          "setCount(c => c + 1)",
+          "c => c + 1",
+          "applied",
+          "1 -> 2",
+        ),
+        updater(
+          "p2",
+          "flag",
+          "setFlag(f => !f)",
+          "f => !f",
+          "applied",
+          "false -> true",
+        ),
       ],
       hooks: [hook("count", "1", "2"), hook("flag", "false", "true")],
       renderLog: AUTO_LOG_AFTER_THEN,
       renderTotals: { react17: 4, react18: 3 },
-      eventLoop: reactFlush("React flush: batched .then updates", [TIMER_PENDING]),
+      eventLoop: reactFlush("React flush: batched .then updates", [
+        TIMER_PENDING,
+      ]),
       consoleOutput: ["after flushSync"],
     },
     {
       descriptionHtml:
-        "Microtasks are drained, so the <span class=\"hl-loop\">event loop</span> takes the timer <span class=\"hl-task\">task</span>. <code>setCount(c => c + 1)</code> queues an updater. Again React 17 renders immediately while React 18 schedules a single flush.",
+        'Microtasks are drained, so the <span class="hl-loop">event loop</span> takes the timer <span class="hl-task">task</span>. <code>setCount(c => c + 1)</code> queues an updater. Again React 17 renders immediately while React 18 schedules a single flush.',
       activeLine: 6,
       doneLines: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-      updateQueue: [updater("s1", "count", "setCount(c => c + 1)", "c => c + 1")],
+      updateQueue: [
+        updater("s1", "count", "setCount(c => c + 1)", "c => c + 1"),
+      ],
       hooks: [hook("count", "2"), hook("flag", "true")],
       renderLog: [
         ...AUTO_LOG_AFTER_THEN,
@@ -725,8 +795,22 @@ const automaticExample: StateBatchingExample = {
       activeLine: 2,
       doneLines: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
       updateQueue: [
-        updater("s1", "count", "setCount(c => c + 1)", "c => c + 1", "applied", "2 -> 3"),
-        updater("s2", "flag", "setFlag(f => !f)", "f => !f", "applied", "true -> false"),
+        updater(
+          "s1",
+          "count",
+          "setCount(c => c + 1)",
+          "c => c + 1",
+          "applied",
+          "2 -> 3",
+        ),
+        updater(
+          "s2",
+          "flag",
+          "setFlag(f => !f)",
+          "f => !f",
+          "applied",
+          "true -> false",
+        ),
       ],
       hooks: [hook("count", "2", "3"), hook("flag", "true", "false")],
       renderLog: AUTO_LOG_FINAL,

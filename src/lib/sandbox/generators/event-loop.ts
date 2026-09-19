@@ -19,15 +19,11 @@ import {
   resolveNodeToString,
 } from "@/lib/sandbox/generatorUtils";
 import type { SandboxError } from "@/types/sandbox";
+import type { SourceLine } from "@/types/visualization";
 
 /* ------------------------------------------------------------------ */
-/*  Types matching EventLoop.tsx                                       */
+/*  Types matching the event-loop visualization                        */
 /* ------------------------------------------------------------------ */
-
-export interface SourceLine {
-  num: number;
-  text: string;
-}
 
 export interface EventLoopStep {
   descriptionHtml: string;
@@ -68,7 +64,7 @@ interface SimState {
   taskQueue: ScheduledCallback[];
   microtaskQueue: ScheduledCallback[];
   consoleOutput: string[];
-  doneLines: number[];
+  doneLines: Set<number>;
   steps: EventLoopStep[];
   /** User-defined functions (name → declaration node) */
   functions: Map<string, FunctionDeclaration>;
@@ -81,11 +77,17 @@ type RuntimeScope = Record<string, string>;
 /* ------------------------------------------------------------------ */
 
 function isSetTimeout(node: CallExpression): boolean {
-  return node.callee.type === "Identifier" && (node.callee as Identifier).name === "setTimeout";
+  return (
+    node.callee.type === "Identifier" &&
+    (node.callee as Identifier).name === "setTimeout"
+  );
 }
 
 function isQueueMicrotask(node: CallExpression): boolean {
-  return node.callee.type === "Identifier" && (node.callee as Identifier).name === "queueMicrotask";
+  return (
+    node.callee.type === "Identifier" &&
+    (node.callee as Identifier).name === "queueMicrotask"
+  );
 }
 
 function isPromiseResolveThen(node: CallExpression): boolean {
@@ -116,7 +118,8 @@ function detectPromiseMethodTypo(node: CallExpression): string | null {
   while (
     current.callee.type === "MemberExpression" &&
     (current.callee as MemberExpression).property.type === "Identifier" &&
-    ((current.callee as MemberExpression).property as Identifier).name === "then"
+    ((current.callee as MemberExpression).property as Identifier).name ===
+      "then"
   ) {
     const obj = (current.callee as MemberExpression).object;
     if (obj.type !== "CallExpression") break;
@@ -153,11 +156,14 @@ function isUserFunctionCall(node: CallExpression, state: SimState): boolean {
 /*  Step emitters                                                      */
 /* ------------------------------------------------------------------ */
 
-function pushStep(state: SimState, partial: Partial<EventLoopStep> & { descriptionHtml: string }) {
+function pushStep(
+  state: SimState,
+  partial: Partial<EventLoopStep> & { descriptionHtml: string },
+) {
   state.steps.push({
     descriptionHtml: partial.descriptionHtml,
     activeLine: partial.activeLine ?? null,
-    doneLines: [...state.doneLines],
+    doneLines: [...state.doneLines].sort((a, b) => a - b),
     stack: [...state.stack],
     webApis: [...state.webApis],
     taskQueue: state.taskQueue.map((c) => c.label),
@@ -169,9 +175,22 @@ function pushStep(state: SimState, partial: Partial<EventLoopStep> & { descripti
 }
 
 function markDone(state: SimState, lines: number[]) {
-  for (const l of lines) {
-    if (!state.doneLines.includes(l)) state.doneLines.push(l);
-  }
+  for (const line of lines) state.doneLines.add(line);
+}
+
+/** Un-mark lines so a callback body shows as active while it executes. */
+function markPending(state: SimState, lines: number[]) {
+  for (const line of lines) state.doneLines.delete(line);
+}
+
+/** Loop indicator state for a step that runs synchronously. */
+function syncLoopState(
+  isInsideCallback: boolean,
+): Pick<EventLoopStep, "loopActive" | "loopLabel"> {
+  return {
+    loopActive: isInsideCallback,
+    loopLabel: isInsideCallback ? "running" : "idle",
+  };
 }
 
 /* ------------------------------------------------------------------ */
@@ -192,11 +211,17 @@ function collectThenChain(
   function walk(n: CallExpression) {
     if (n.callee.type === "MemberExpression") {
       const obj = (n.callee as MemberExpression).object;
-      if (obj.type === "CallExpression" && isPromiseResolveThen(obj as CallExpression)) {
+      if (
+        obj.type === "CallExpression" &&
+        isPromiseResolveThen(obj as CallExpression)
+      ) {
         walk(obj as CallExpression);
       }
     }
-    if ((((n.callee as MemberExpression).property) as Identifier).name === "then" && n.arguments.length > 0) {
+    if (
+      ((n.callee as MemberExpression).property as Identifier).name === "then" &&
+      n.arguments.length > 0
+    ) {
       const cb = extractCallbackFromArg(n.arguments[0], source);
       if (cb) {
         entries.push({ callback: cb, callNode: n });
@@ -236,8 +261,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<span class="hl-stack">Call Stack</span> executes <code>${safeLabel}</code>. Output: <strong>${safeLogArg}</strong>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
     state.stack.pop();
     markDone(state, lines);
@@ -250,7 +274,9 @@ function processCallExpression(
       expr.arguments[1]?.type === "Literal"
         ? String((expr.arguments[1] as Literal).value)
         : "0";
-    const cb = expr.arguments[0] ? extractCallbackFromArg(expr.arguments[0], source) : null;
+    const cb = expr.arguments[0]
+      ? extractCallbackFromArg(expr.arguments[0], source)
+      : null;
 
     const stLabel = `setTimeout(cb, ${delay})`;
     const safeStLabel = escapeHtml(stLabel);
@@ -258,8 +284,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<code>${safeStLabel}</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     state.stack.pop();
@@ -267,8 +292,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<code>setTimeout</code> delegates to <span class="hl-api">Web APIs</span>, and a timer starts.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     state.webApis.pop();
@@ -283,8 +307,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `Timer completes, so callback moves into the <span class="hl-task">Task Queue</span>.`,
       activeLine: null,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     markDone(state, lines);
@@ -294,7 +317,9 @@ function processCallExpression(
 
   // queueMicrotask(cb)
   if (isQueueMicrotask(expr)) {
-    const cb = expr.arguments[0] ? extractCallbackFromArg(expr.arguments[0], source) : null;
+    const cb = expr.arguments[0]
+      ? extractCallbackFromArg(expr.arguments[0], source)
+      : null;
 
     const qmLabel = "queueMicrotask(cb)";
     const safeQmLabel = escapeHtml(qmLabel);
@@ -302,8 +327,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<code>${safeQmLabel}</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     state.stack.pop();
@@ -318,8 +342,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `Callback is queued in the <span class="hl-micro">Microtask Queue</span> (same priority as Promise callbacks).`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     markDone(state, lines);
@@ -338,8 +361,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<code>${safePromiseLabel}</code> is pushed to the <span class="hl-stack">Call Stack</span>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     state.stack.pop();
@@ -359,8 +381,7 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `Promise resolves and the first callback enters the <span class="hl-micro">Microtask Queue</span> (higher priority than tasks).`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     markDone(state, allLines);
@@ -386,13 +407,12 @@ function processCallExpression(
     pushStep(state, {
       descriptionHtml: `<code>${safeFnLabel}</code> is called and pushed to the <span class="hl-stack">Call Stack</span>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
 
     // Un-mark function body lines so they show as active when executing
     const fnBodyLines = fnDecl.body.body.flatMap(getLineRange);
-    state.doneLines = state.doneLines.filter((l) => !fnBodyLines.includes(l));
+    markPending(state, fnBodyLines);
 
     for (const stmt of fnDecl.body.body) {
       const err = processStatement(
@@ -457,8 +477,7 @@ function processStatement(
       pushStep(state, {
         descriptionHtml: `<code>${safeFnLabel}</code> declaration is hoisted and registered.`,
         activeLine: line,
-        loopActive: isInsideCallback,
-        loopLabel: isInsideCallback ? "running" : "idle",
+        ...syncLoopState(isInsideCallback),
       });
       state.stack.pop();
       markDone(state, lines);
@@ -489,8 +508,7 @@ function processStatement(
     pushStep(state, {
       descriptionHtml: `<span class="hl-stack">Call Stack</span> executes <code>${safeLabel}</code>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
     state.stack.pop();
     markDone(state, lines);
@@ -516,8 +534,7 @@ function processStatement(
     pushStep(state, {
       descriptionHtml: `<span class="hl-stack">Call Stack</span> executes <code>${safeLabel}</code>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
     state.stack.pop();
     markDone(state, lines);
@@ -533,8 +550,7 @@ function processStatement(
     pushStep(state, {
       descriptionHtml: `<span class="hl-stack">Call Stack</span> executes <code>${safeShortLabel}</code>.`,
       activeLine: line,
-      loopActive: isInsideCallback,
-      loopLabel: isInsideCallback ? "running" : "idle",
+      ...syncLoopState(isInsideCallback),
     });
     state.stack.pop();
     markDone(state, lines);
@@ -590,7 +606,7 @@ function drainQueues(state: SimState, source: string): SandboxError | null {
       });
 
       state.stack.pop();
-      state.doneLines = state.doneLines.filter((l) => !micro.bodyLines.includes(l));
+      markPending(state, micro.bodyLines);
 
       for (const stmt of micro.bodyStatements) {
         const err = processStatement(stmt, source, state, true, micro.scope);
@@ -639,7 +655,7 @@ function drainQueues(state: SimState, source: string): SandboxError | null {
       });
 
       state.stack.pop();
-      state.doneLines = state.doneLines.filter((l) => !task.bodyLines.includes(l));
+      markPending(state, task.bodyLines);
 
       for (const stmt of task.bodyStatements) {
         const err = processStatement(stmt, source, state, true, task.scope);
@@ -680,7 +696,7 @@ export function generateEventLoopSteps(
     taskQueue: [],
     microtaskQueue: [],
     consoleOutput: [],
-    doneLines: [],
+    doneLines: new Set(),
     steps: [],
     functions: new Map(),
   };
@@ -699,12 +715,16 @@ export function generateEventLoopSteps(
   const uncalledFunctions: string[] = [];
   for (const [name] of state.functions) {
     // Check if the function was actually called (appears in any step's stack)
-    const wasCalled = state.steps.some((s) => s.stack.some((item) => item === `${name}()`));
+    const wasCalled = state.steps.some((s) =>
+      s.stack.some((item) => item === `${name}()`),
+    );
     if (!wasCalled) uncalledFunctions.push(name);
   }
 
-  const allLines = codeLines.map((l) => l.num);
-  state.doneLines = allLines;
+  markDone(
+    state,
+    codeLines.map((line) => line.num),
+  );
   const outputList = state.consoleOutput.join(" → ");
   const safeOutputList = escapeHtml(outputList || "(no output)");
 

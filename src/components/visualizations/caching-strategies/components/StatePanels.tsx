@@ -10,7 +10,10 @@ import { WriteQueue } from "./WriteQueue";
 interface StatePanelsProps {
   kind: CachingKind;
   step: CachingStep | null;
-  flashes: Record<"cache" | "messages" | "stats" | "queue" | "recency", boolean>;
+  flashes: Record<
+    "cache" | "messages" | "stats" | "queue" | "recency",
+    boolean
+  >;
 }
 
 const Waiting = () => (

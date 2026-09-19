@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import type { HeapAllocation } from "../types";
 import { HEAP_TONE_MAP, HEAP_STATUS_MAP } from "../helpers";
 
-export function HeapPanel({
+export const HeapPanel = ({
   allocations,
   gcSweep,
 }: {
   allocations: HeapAllocation[];
   gcSweep: boolean;
-}) {
+}) => {
   const visible = allocations.filter((a) => a.status !== "collected");
 
   if (visible.length === 0 && !gcSweep) {
@@ -41,7 +41,7 @@ export function HeapPanel({
             "viz-slide-in rounded-lg border px-3 py-2.5",
             HEAP_TONE_MAP[alloc.tone],
             HEAP_STATUS_MAP[alloc.status],
-            gcSweep && alloc.status === "unreachable" && "hs-gc-shake"
+            gcSweep && alloc.status === "unreachable" && "hs-gc-shake",
           )}
         >
           <div className="mb-1.5 flex items-center gap-2">
@@ -69,4 +69,4 @@ export function HeapPanel({
       ))}
     </div>
   );
-}
+};

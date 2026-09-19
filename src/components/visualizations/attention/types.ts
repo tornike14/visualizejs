@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
 
@@ -50,10 +50,7 @@ export interface WorkLine {
   tone: WorkTone;
 }
 
-export interface AttentionStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface AttentionStep extends BaseStep {
   vectors: VectorRow[];
   scores: ScoreGrid[];
   weights: WeightGrid[];

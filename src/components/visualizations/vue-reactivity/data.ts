@@ -152,7 +152,7 @@ const trackExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        'The callback logs <code>double 0</code> and returns. <code>run()</code> restores <code>activeEffect</code> to <code>undefined</code>. Note what is missing: <code>state.name</code> was never read, so there is no Dep for <code>name</code> and no effect will ever react to it.',
+        "The callback logs <code>double 0</code> and returns. <code>run()</code> restores <code>activeEffect</code> to <code>undefined</code>. Note what is missing: <code>state.name</code> was never read, so there is no Dep for <code>name</code> and no effect will ever react to it.",
       activeLine: 7,
       doneLines: [1, 3, 5, 6],
       traps: [t1GetCount],
@@ -176,7 +176,7 @@ const trackExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        '<code>state.count++</code> is a read followed by a write. The <code>get</code> trap fires first, but <code>activeEffect</code> is <code>undefined</code> because this runs in module scope, so <code>track()</code> returns without touching the map.',
+        "<code>state.count++</code> is a read followed by a write. The <code>get</code> trap fires first, but <code>activeEffect</code> is <code>undefined</code> because this runs in module scope, so <code>track()</code> returns without touching the map.",
       activeLine: 10,
       doneLines: [1, 3, 5, 6, 7, 9],
       traps: [t1GetCount, t1SetName, t1GetCount2],
@@ -200,10 +200,17 @@ const trackExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        'The second <code>state.count++</code> writes <code>2</code> and triggers again, but <code>queueJob</code> deduplicates: <strong>effect#1</strong> is already in the queue, so it is not added twice. Two writes, one pending run. This is how Vue batches synchronous mutations.',
+        "The second <code>state.count++</code> writes <code>2</code> and triggers again, but <code>queueJob</code> deduplicates: <strong>effect#1</strong> is already in the queue, so it is not added twice. Two writes, one pending run. This is how Vue batches synchronous mutations.",
       activeLine: 11,
       doneLines: [1, 3, 5, 6, 7, 9, 10],
-      traps: [t1GetCount, t1SetName, t1GetCount2, t1SetCount1, t1GetCount3, t1SetCount2],
+      traps: [
+        t1GetCount,
+        t1SetName,
+        t1GetCount2,
+        t1SetCount1,
+        t1GetCount3,
+        t1SetCount2,
+      ],
       deps: [dep("state", "count", ["effect#1"], "triggering")],
       scheduler: sched({ queue: ["effect#1 (pre)"], flushPending: true }),
       computed: null,
@@ -215,7 +222,14 @@ const trackExample: VueReactivityExample = {
         '<code>await nextTick()</code> yields to the microtask queue. <code>nextTick</code> returns the same promise the scheduler chained <span class="hl-micro">flushJobs</span> onto, so the flush runs before this line resumes. The effect has still not re-run at this point.',
       activeLine: 12,
       doneLines: [1, 3, 5, 6, 7, 9, 10, 11],
-      traps: [t1GetCount, t1SetName, t1GetCount2, t1SetCount1, t1GetCount3, t1SetCount2],
+      traps: [
+        t1GetCount,
+        t1SetName,
+        t1GetCount2,
+        t1SetCount1,
+        t1GetCount3,
+        t1SetCount2,
+      ],
       deps: [dep("state", "count", ["effect#1"])],
       scheduler: sched({ queue: ["effect#1 (pre)"], flushPending: true }),
       computed: null,
@@ -388,7 +402,7 @@ const computedExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        'The getter returns <code>2</code>. The computed stores it as <code>_value</code>, clears <code>dirty</code>, and the outer <code>console.log</code> prints it. In Vue 3.4+ the instance also records the global version counter so later reads can tell whether anything reactive changed since.',
+        "The getter returns <code>2</code>. The computed stores it as <code>_value</code>, clears <code>dirty</code>, and the outer <code>console.log</code> prints it. In Vue 3.4+ the instance also records the global version counter so later reads can tell whether anything reactive changed since.",
       activeLine: 10,
       doneLines: [1, 3, 5, 6, 7, 8],
       traps: [t2GetCount],
@@ -442,7 +456,7 @@ const computedExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        '<code>after write</code> is logged and the getter count is still <strong>1</strong>. Invalidation is eager, recomputation is deferred: a computed that nobody reads after a change costs nothing beyond flipping a flag.',
+        "<code>after write</code> is logged and the getter count is still <strong>1</strong>. Invalidation is eager, recomputation is deferred: a computed that nobody reads after a change costs nothing beyond flipping a flag.",
       activeLine: 13,
       doneLines: [1, 3, 5, 6, 7, 8, 10, 11, 12],
       traps: [t2GetCount, t2SetCount],
@@ -460,7 +474,7 @@ const computedExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        'The third read finds <code>dirty === true</code> (in 3.4 terms, the Dep version moved), so it runs the getter again. <code>activeEffect</code> is the computed, <code>state.count</code> is tracked once more, and <code>getter ran</code> prints a second time.',
+        "The third read finds <code>dirty === true</code> (in 3.4 terms, the Dep version moved), so it runs the getter again. <code>activeEffect</code> is the computed, <code>state.count</code> is tracked once more, and <code>getter ran</code> prints a second time.",
       activeLine: 7,
       doneLines: [1, 3, 5, 6, 8, 10, 11, 12, 13],
       traps: [t2GetCount, t2SetCount, t2GetCount2],
@@ -478,7 +492,7 @@ const computedExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        'The getter returns <code>10</code>, the cache is replaced, and <code>dirty</code> clears. Two evaluations for three reads and one write. If a template read <code>double.value</code>, the render effect would appear under <em>subscribers</em>, and the write on line 12 would schedule that render, still without running the getter until the template asked for the value.',
+        "The getter returns <code>10</code>, the cache is replaced, and <code>dirty</code> clears. Two evaluations for three reads and one write. If a template read <code>double.value</code>, the render effect would appear under <em>subscribers</em>, and the write on line 12 would schedule that render, still without running the getter until the template asked for the value.",
       activeLine: 14,
       doneLines: [1, 3, 5, 6, 7, 8, 10, 11, 12, 13],
       traps: [t2GetCount, t2SetCount, t2GetCount2],
@@ -492,7 +506,14 @@ const computedExample: VueReactivityExample = {
         subscribers: [],
       },
       bindings: null,
-      consoleOutput: ["getter ran", "2", "2", "after write", "getter ran", "10"],
+      consoleOutput: [
+        "getter ran",
+        "2",
+        "2",
+        "after write",
+        "getter ran",
+        "10",
+      ],
     },
   ],
 };
@@ -590,11 +611,17 @@ const pitfallsExample: VueReactivityExample = {
     "Reactivity lives in the ref or proxy object, not the variable. Destructuring copies the value out and severs the link; toRefs keeps it.",
   kind: "pitfalls",
   codeLines: [
-    { num: 1, text: "import { ref, reactive, toRefs, watchEffect } from 'vue'" },
+    {
+      num: 1,
+      text: "import { ref, reactive, toRefs, watchEffect } from 'vue'",
+    },
     { num: 2, text: "const sync = { flush: 'sync' }" },
     { num: 3, text: "" },
     { num: 4, text: "const count = ref(0)" },
-    { num: 5, text: "watchEffect(() => console.log('ref', count.value), sync)" },
+    {
+      num: 5,
+      text: "watchEffect(() => console.log('ref', count.value), sync)",
+    },
     { num: 6, text: "count.value++" },
     { num: 7, text: "" },
     { num: 8, text: "const state = reactive({ total: 1 })" },
@@ -603,13 +630,16 @@ const pitfallsExample: VueReactivityExample = {
     { num: 11, text: "state.total = 2" },
     { num: 12, text: "" },
     { num: 13, text: "const { total: totalRef } = toRefs(state)" },
-    { num: 14, text: "watchEffect(() => console.log('toRef', totalRef.value), sync)" },
+    {
+      num: 14,
+      text: "watchEffect(() => console.log('toRef', totalRef.value), sync)",
+    },
     { num: 15, text: "state.total = 3" },
   ],
   steps: [
     {
       descriptionHtml:
-        '<code>ref(0)</code> returns a <code>RefImpl</code>: an object with a <code>value</code> accessor pair and its own Dep. A Proxy cannot wrap a number, so the wrapper object is what makes a primitive observable. <code>flush: \'sync\'</code> is used here so each effect re-runs inline instead of in the microtask flush.',
+        "<code>ref(0)</code> returns a <code>RefImpl</code>: an object with a <code>value</code> accessor pair and its own Dep. A Proxy cannot wrap a number, so the wrapper object is what makes a primitive observable. <code>flush: 'sync'</code> is used here so each effect re-runs inline instead of in the microtask flush.",
       activeLine: 4,
       doneLines: [1, 2],
       traps: [],
@@ -633,7 +663,7 @@ const pitfallsExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        '<code>count.value++</code> goes through the setter. <code>hasChanged(0, 1)</code> is true, so <span class="hl-stack">triggerRefValue()</span> notifies the Dep. With <code>flush: \'sync\'</code> the scheduler runs effect#1 immediately and <code>ref 1</code> prints. Without the option it would be queued for the next microtask.',
+        "<code>count.value++</code> goes through the setter. <code>hasChanged(0, 1)</code> is true, so <span class=\"hl-stack\">triggerRefValue()</span> notifies the Dep. With <code>flush: 'sync'</code> the scheduler runs effect#1 immediately and <code>ref 1</code> prints. Without the option it would be queued for the next microtask.",
       activeLine: 6,
       doneLines: [1, 2, 4, 5],
       traps: [t3GetRef, t3SetRef],
@@ -645,7 +675,7 @@ const pitfallsExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        '<code>reactive()</code> creates the Proxy for <code>{ total: 1 }</code>. The Dep for <code>count.value</code> is untouched; each reactive source keeps its own entry in <code>targetMap</code>.',
+        "<code>reactive()</code> creates the Proxy for <code>{ total: 1 }</code>. The Dep for <code>count.value</code> is untouched; each reactive source keeps its own entry in <code>targetMap</code>.",
       activeLine: 8,
       doneLines: [1, 2, 4, 5, 6],
       traps: [t3GetRef, t3SetRef],
@@ -708,7 +738,13 @@ const pitfallsExample: VueReactivityExample = {
         '<strong>effect#3</strong> reads <code>totalRef.value</code>, which forwards to <code>state.total</code>. This time the <code>get</code> trap fires with <code>activeEffect</code> set, so <span class="hl-task">track()</span> creates the Dep for <code>total</code> and records effect#3. The log shows the current value, 2.',
       activeLine: 14,
       doneLines: [1, 2, 4, 5, 6, 8, 9, 10, 11, 13],
-      traps: [t3GetRef, t3SetRef, t3GetTotalDestructure, t3SetTotal2, t3GetTotalRef],
+      traps: [
+        t3GetRef,
+        t3SetRef,
+        t3GetTotalDestructure,
+        t3SetTotal2,
+        t3GetTotalRef,
+      ],
       deps: [
         dep("count", "value", ["effect#1"]),
         dep("state", "total", ["effect#3"], "tracking"),
@@ -720,7 +756,7 @@ const pitfallsExample: VueReactivityExample = {
     },
     {
       descriptionHtml:
-        '<code>state.total = 3</code> triggers the Dep for <code>total</code>, which now holds effect#3, and <code>toRef 3</code> prints. effect#2 is still in no Dep and stays silent. The rule: reactivity is a property of the ref or proxy object, so copy the wrapper, never the value. In <code>&lt;script setup&gt;</code> the compiler unwraps refs in templates so you rarely write <code>.value</code> there.',
+        "<code>state.total = 3</code> triggers the Dep for <code>total</code>, which now holds effect#3, and <code>toRef 3</code> prints. effect#2 is still in no Dep and stays silent. The rule: reactivity is a property of the ref or proxy object, so copy the wrapper, never the value. In <code>&lt;script setup&gt;</code> the compiler unwraps refs in templates so you rarely write <code>.value</code> there.",
       activeLine: 15,
       doneLines: [1, 2, 4, 5, 6, 8, 9, 10, 11, 13, 14],
       traps: [

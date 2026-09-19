@@ -69,5 +69,11 @@ export const useEffectLifecycleTheory: TopicTheoryContent = {
     },
   ],
 
-  relatedTopicIds: ["hooks", "render-cycle", "closures", "memoization", "suspense"],
+  relatedTopicIds: [
+    "hooks",
+    "render-cycle",
+    "closures",
+    "memoization",
+    "suspense",
+  ],
 };

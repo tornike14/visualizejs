@@ -2,7 +2,11 @@ import { cn } from "@/lib/utils";
 import { BINDING_LABELS, BINDING_STYLES } from "../helpers";
 import type { BindingEntry } from "../types";
 
-export const BindingsPanel = ({ bindings }: { bindings: BindingEntry[] | null }) => {
+export const BindingsPanel = ({
+  bindings,
+}: {
+  bindings: BindingEntry[] | null;
+}) => {
   if (!bindings || bindings.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -28,7 +32,9 @@ export const BindingsPanel = ({ bindings }: { bindings: BindingEntry[] | null })
               {BINDING_LABELS[binding.kind]}
             </span>
           </div>
-          <p className="mt-1 text-[11px] leading-snug text-slate-400">{binding.note}</p>
+          <p className="mt-1 text-[11px] leading-snug text-slate-400">
+            {binding.note}
+          </p>
         </li>
       ))}
     </ul>

@@ -15,8 +15,6 @@ export const TopicProgressProvider = ({
 }: {
   topicId: string;
   children: ReactNode;
-}) => (
-  <TopicProgressContext value={topicId}>{children}</TopicProgressContext>
-);
+}) => <TopicProgressContext value={topicId}>{children}</TopicProgressContext>;
 
 export const useCurrentTopicId = () => useContext(TopicProgressContext);

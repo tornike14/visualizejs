@@ -107,7 +107,11 @@ const rowOnly = (source: number[][], row: number): (number | null)[][] =>
 const upTo = (source: number[][], row: number): number[][] =>
   source.map((values, i) => (i <= row ? values : [0, 0, 0]));
 
-const work = (id: string, text: string, tone: WorkLine["tone"] = "neutral"): WorkLine => ({
+const work = (
+  id: string,
+  text: string,
+  tone: WorkLine["tone"] = "neutral",
+): WorkLine => ({
   id,
   text,
   tone,
@@ -253,6 +257,8 @@ export const EXAMPLES: AttentionExample[] = [
     ],
     steps: [
       {
+        simpleHtml:
+          "Three words come in, each as a short list of numbers. Attention is going to rewrite each word's numbers so they also carry information from the other words. We follow the word sat.",
         descriptionHtml:
           'Three tokens enter as 2-dimensional embeddings <code>x</code>. Attention will rewrite each row so it also carries information from the other rows, and <span class="hl-api">sat</span> is the query we follow.',
         activeLine: 1,
@@ -264,6 +270,8 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Each word gets a <strong>question</strong>: what am I looking for in the other words? The question is made by multiplying the word's numbers with a small table the model learned during training.",
         descriptionHtml:
           'Multiplying <code>x</code> by the learned matrix <code>Wq = [[0,1],[1,0]]</code> gives each token a <span class="hl-api">query</span>: what it is looking for in the other tokens. The projection is what training tunes.',
         activeLine: 2,
@@ -272,11 +280,17 @@ export const EXAMPLES: AttentionExample[] = [
         scores: [],
         weights: [],
         work: [
-          work("q", "q_sat = [2, 1] @ Wq = [2*0 + 1*1, 2*1 + 1*0] = [1, 2]", "active"),
+          work(
+            "q",
+            "q_sat = [2, 1] @ Wq = [2*0 + 1*1, 2*1 + 1*0] = [1, 2]",
+            "active",
+          ),
         ],
         output: [],
       },
       {
+        simpleHtml:
+          "Each word also gets a <strong>label</strong>: what do I contain? A word's question will be compared against every label, including its own.",
         descriptionHtml:
           'The same input times <code>Wk = [[0,1],[1,1]]</code> gives each token a <span class="hl-stack">key</span>: an advertisement of what it contains. A query is matched against every key, including its own.',
         activeLine: 3,
@@ -292,6 +306,8 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "And each word gets a <strong>message</strong>: what should I hand over if someone pays attention to me? Labels decide how much attention a word gets, messages decide what is passed along.",
         descriptionHtml:
           '<code>Wv = [[1,0],[1,1]]</code> produces the <span class="hl-task">value</span> vectors: the content each token passes along when it is attended to. Keys decide how much, values decide what.',
         activeLine: 4,
@@ -307,12 +323,18 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Compare sat's question with every label. The better a label matches the question, the higher the score. cat matches best.",
         descriptionHtml:
           'Row <span class="hl-api">sat</span> of <code>Q @ K.T</code> is the dot product of <code>q_sat</code> with every key. A large dot product means the query and key point the same way, so <code>cat</code> scores highest.',
         activeLine: 5,
         doneLines: [1, 2, 3, 4],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], 2),
-        scores: [scoreGrid("raw", "raw scores Q K^T", rowOnly(RAW3, 2), { activeRow: 2 })],
+        scores: [
+          scoreGrid("raw", "raw scores Q K^T", rowOnly(RAW3, 2), {
+            activeRow: 2,
+          }),
+        ],
         weights: [],
         work: [
           work("sThe", "q_sat . k_The = 1*1 + 2*2 = 5.00", "active"),
@@ -322,12 +344,18 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "The scores are shrunk a little (divided by about 1.41). Without this, big scores would make the next step pick one word and ignore everything else, and the model would struggle to learn.",
         descriptionHtml:
-          'Every score is divided by <code>sqrt(d_k) = sqrt(2) = 1.41</code>. Dot products grow with the vector length, and unscaled scores would push softmax into a near one-hot regime where gradients vanish.',
+          "Every score is divided by <code>sqrt(d_k) = sqrt(2) = 1.41</code>. Dot products grow with the vector length, and unscaled scores would push softmax into a near one-hot regime where gradients vanish.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], 2),
-        scores: [scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), { activeRow: 2 })],
+        scores: [
+          scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), {
+            activeRow: 2,
+          }),
+        ],
         weights: [],
         work: [
           work("dThe", "5.00 / 1.41 = 3.54", "active"),
@@ -337,12 +365,18 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Softmax turns scores into shares. First every score is made positive and the gaps are stretched, so the best match stands out without the others dropping to zero.",
         descriptionHtml:
-          'Softmax first exponentiates each scaled score. <code>exp</code> makes every entry positive and stretches the gaps, so the highest score dominates without the others dropping to exactly zero.',
+          "Softmax first exponentiates each scaled score. <code>exp</code> makes every entry positive and stretches the gaps, so the highest score dominates without the others dropping to exactly zero.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], 2),
-        scores: [scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), { activeRow: 2 })],
+        scores: [
+          scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), {
+            activeRow: 2,
+          }),
+        ],
         weights: [],
         work: [
           work("eThe", "exp(3.54) = 34.47", "active"),
@@ -353,13 +387,26 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Then the shares are scaled so they add up to 1: <code>0.07</code> for The, <code>0.62</code> for cat, <code>0.31</code> for sat. This is like splitting a budget of attention across the words.",
         descriptionHtml:
           'Dividing by the sum gives the <span class="hl-micro">attention weights</span> for row <code>sat</code>: 0.07, 0.62, 0.31. They sum to 1.00, so the next step is a weighted average rather than an unbounded sum.',
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], 2),
-        scores: [scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), { activeRow: 2 })],
-        weights: [weightGrid("w", "softmax weights", rowOnly(WEIGHTS3, 2).map((r) => r.map((v) => v ?? 0)), { activeRow: 2 })],
+        scores: [
+          scoreGrid("scaled", "scaled scores", rowOnly(SCALED3, 2), {
+            activeRow: 2,
+          }),
+        ],
+        weights: [
+          weightGrid(
+            "w",
+            "softmax weights",
+            rowOnly(WEIGHTS3, 2).map((r) => r.map((v) => v ?? 0)),
+            { activeRow: 2 },
+          ),
+        ],
         work: [
           work("wThe", "34.47 / 462.79 = 0.07", "result"),
           work("wcat", "287.15 / 462.79 = 0.62", "result"),
@@ -369,13 +416,22 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "sat's new numbers are a blend of the messages, weighted by those shares. Most of the blend comes from cat, so sat now carries the information about who did the sitting.",
         descriptionHtml:
           'The new vector for <code>sat</code> is the weights times the <span class="hl-task">values</span>. Most of it comes from <code>v_cat</code>, which is how the representation of <code>sat</code> now encodes who did the sitting.',
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], 2),
         scores: [],
-        weights: [weightGrid("w", "softmax weights", rowOnly(WEIGHTS3, 2).map((r) => r.map((v) => v ?? 0)), { activeRow: 2 })],
+        weights: [
+          weightGrid(
+            "w",
+            "softmax weights",
+            rowOnly(WEIGHTS3, 2).map((r) => r.map((v) => v ?? 0)),
+            { activeRow: 2 },
+          ),
+        ],
         work: [
           work("o0", "sat[0] = 0.07*2 + 0.62*3 + 0.31*3 = 2.93", "result"),
           work("o1", "sat[1] = 0.07*1 + 0.62*2 + 0.31*1 = 1.62", "result"),
@@ -383,8 +439,10 @@ export const EXAMPLES: AttentionExample[] = [
         output: SAT_OUTPUT,
       },
       {
+        simpleHtml:
+          "Every other word goes through the same process at once. Because every word compares itself with every other word, the work grows fast with sentence length, which is why long inputs are expensive.",
         descriptionHtml:
-          'The other rows go through the same pipeline in the same matrix multiply. Every query scores every key, so the weight matrix is <code>n x n</code>: <strong>O(n^2)</strong> in sequence length, which is why long context windows are expensive.',
+          "The other rows go through the same pipeline in the same matrix multiply. Every query scores every key, so the weight matrix is <code>n x n</code>: <strong>O(n^2)</strong> in sequence length, which is why long context windows are expensive.",
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         vectors: vectors3([COLS_X, COLS_Q, COLS_K, COLS_V], null),
@@ -409,15 +467,20 @@ export const EXAMPLES: AttentionExample[] = [
       { num: 1, text: "def causal_attention(Q, K, V):" },
       { num: 2, text: "    n = Q.shape[0]" },
       { num: 3, text: "    scores = Q @ K.T / sqrt(d_k)" },
-      { num: 4, text: "    future = triu(ones(n, n), k=1)  # 1 above the diagonal" },
+      {
+        num: 4,
+        text: "    future = triu(ones(n, n), k=1)  # 1 above the diagonal",
+      },
       { num: 5, text: "    scores = scores.masked_fill(future, -inf)" },
       { num: 6, text: "    weights = softmax(scores, axis=-1)" },
       { num: 7, text: "    return weights @ V" },
     ],
     steps: [
       {
+        simpleHtml:
+          "Same three words, same questions and labels as before. Every word is scored against every other word, including The scored against sat, a word that comes later in the sentence.",
         descriptionHtml:
-          'Same three tokens, same projections as before. The scaled score matrix has all nine entries, including <code>The</code> scored against <code>sat</code>, a token that comes later in the sentence.',
+          "Same three tokens, same projections as before. The scaled score matrix has all nine entries, including <code>The</code> scored against <code>sat</code>, a token that comes later in the sentence.",
         activeLine: 3,
         doneLines: [1, 2],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], null),
@@ -427,26 +490,36 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "The program marks every pair where the second word comes after the first. From each word's point of view, those pairs are the future.",
         descriptionHtml:
-          '<code>triu(..., k=1)</code> builds a matrix with 1 strictly above the diagonal. Those cells are pairs where the key position is <strong>after</strong> the query position, which is the future from that query\'s point of view.',
+          "<code>triu(..., k=1)</code> builds a matrix with 1 strictly above the diagonal. Those cells are pairs where the key position is <strong>after</strong> the query position, which is the future from that query's point of view.",
         activeLine: 4,
         doneLines: [1, 2, 3],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], null),
         scores: [
           scoreGrid("scaled", "scaled scores", SCALED3),
-          scoreGrid("future", "future mask", FUTURE3.map((row) => row.map((v) => (v ? 1 : 0)))),
+          scoreGrid(
+            "future",
+            "future mask",
+            FUTURE3.map((row) => row.map((v) => (v ? 1 : 0))),
+          ),
         ],
         weights: [],
         work: [work("tri", "future[i][j] = 1 if j > i else 0")],
         output: [],
       },
       {
+        simpleHtml:
+          "All the future pairs are overwritten with minus infinity. The comparisons were computed, but the mask makes them unusable before the shares are worked out.",
         descriptionHtml:
           '<code>masked_fill</code> overwrites every future cell with <span class="hl-loop">-inf</span>. The dot products were still computed, the mask just makes them unusable before softmax runs.',
         activeLine: 5,
         doneLines: [1, 2, 3, 4],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], null),
-        scores: [scoreGrid("masked", "masked scores", SCALED3, { masked: FUTURE3 })],
+        scores: [
+          scoreGrid("masked", "masked scores", SCALED3, { masked: FUTURE3 }),
+        ],
         weights: [],
         work: [
           work("m1", "The -> cat, The -> sat: -inf"),
@@ -455,56 +528,111 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "The is the first word, so it can only see itself. Minus infinity becomes zero when shares are computed, so The gets the whole budget, <code>1.00</code>, on itself.",
         descriptionHtml:
-          'Row <code>The</code> keeps only its own score. <code>exp(-inf) = 0</code>, so the masked cells contribute nothing to the sum and the single surviving entry gets weight <strong>1.00</strong>.',
+          "Row <code>The</code> keeps only its own score. <code>exp(-inf) = 0</code>, so the masked cells contribute nothing to the sum and the single surviving entry gets weight <strong>1.00</strong>.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], 0),
-        scores: [scoreGrid("masked", "masked scores", SCALED3, { masked: FUTURE3, activeRow: 0 })],
-        weights: [weightGrid("cw", "causal weights", upTo(CAUSAL3, 0), { mask: CAUSAL_MASK, activeRow: 0 })],
+        scores: [
+          scoreGrid("masked", "masked scores", SCALED3, {
+            masked: FUTURE3,
+            activeRow: 0,
+          }),
+        ],
+        weights: [
+          weightGrid("cw", "causal weights", upTo(CAUSAL3, 0), {
+            mask: CAUSAL_MASK,
+            activeRow: 0,
+          }),
+        ],
         work: [
-          work("e0", "exp(2.12) = 8.33, exp(-inf) = 0, exp(-inf) = 0", "active"),
+          work(
+            "e0",
+            "exp(2.12) = 8.33, exp(-inf) = 0, exp(-inf) = 0",
+            "active",
+          ),
           work("w0", "8.33 / 8.33 = 1.00", "result"),
         ],
         output: [],
       },
       {
+        simpleHtml:
+          "cat can see The and itself. sat is hidden, so the budget is split between just two words, which is why the shares differ from the version with no mask.",
         descriptionHtml:
-          'Row <code>cat</code> can see <code>The</code> and itself. With <code>sat</code> removed, the two remaining exponentials are renormalised against each other, which is why the weights differ from the unmasked 0.09 and 0.73.',
+          "Row <code>cat</code> can see <code>The</code> and itself. With <code>sat</code> removed, the two remaining exponentials are renormalised against each other, which is why the weights differ from the unmasked 0.09 and 0.73.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], 1),
-        scores: [scoreGrid("masked", "masked scores", SCALED3, { masked: FUTURE3, activeRow: 1 })],
-        weights: [weightGrid("cw", "causal weights", upTo(CAUSAL3, 1), { mask: CAUSAL_MASK, activeRow: 1 })],
+        scores: [
+          scoreGrid("masked", "masked scores", SCALED3, {
+            masked: FUTURE3,
+            activeRow: 1,
+          }),
+        ],
+        weights: [
+          weightGrid("cw", "causal weights", upTo(CAUSAL3, 1), {
+            mask: CAUSAL_MASK,
+            activeRow: 1,
+          }),
+        ],
         work: [
-          work("e1", "exp(2.83) = 16.95, exp(4.95) = 141.17, sum = 158.12", "active"),
+          work(
+            "e1",
+            "exp(2.83) = 16.95, exp(4.95) = 141.17, sum = 158.12",
+            "active",
+          ),
           work("w1a", "16.95 / 158.12 = 0.11", "result"),
           work("w1b", "141.17 / 158.12 = 0.89", "result"),
         ],
         output: [],
       },
       {
+        simpleHtml:
+          "sat is the last word. Nothing comes after it, so the mask changes nothing and its shares are the same as before: <code>0.07, 0.62, 0.31</code>.",
         descriptionHtml:
-          'Row <code>sat</code> is the last token, so nothing is in its future and the mask changes nothing. Its weights are exactly the unmasked 0.07, 0.62, 0.31.',
+          "Row <code>sat</code> is the last token, so nothing is in its future and the mask changes nothing. Its weights are exactly the unmasked 0.07, 0.62, 0.31.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], 2),
-        scores: [scoreGrid("masked", "masked scores", SCALED3, { masked: FUTURE3, activeRow: 2 })],
-        weights: [weightGrid("cw", "causal weights", CAUSAL3, { mask: CAUSAL_MASK, activeRow: 2 })],
+        scores: [
+          scoreGrid("masked", "masked scores", SCALED3, {
+            masked: FUTURE3,
+            activeRow: 2,
+          }),
+        ],
+        weights: [
+          weightGrid("cw", "causal weights", CAUSAL3, {
+            mask: CAUSAL_MASK,
+            activeRow: 2,
+          }),
+        ],
         work: [
           work("e2", "exp(3.54) + exp(5.66) + exp(4.95) = 462.79", "active"),
-          work("w2", "34.47 / 462.79 = 0.07, 287.15 / 462.79 = 0.62, 141.17 / 462.79 = 0.31", "result"),
+          work(
+            "w2",
+            "34.47 / 462.79 = 0.07, 287.15 / 462.79 = 0.62, 141.17 / 462.79 = 0.31",
+            "result",
+          ),
         ],
         output: [],
       },
       {
+        simpleHtml:
+          "cat's new numbers now blend only The's message and its own. Compared with the unmasked version, cat leans harder on itself because the share that would have gone to sat was handed back.",
         descriptionHtml:
-          'The value mix for <code>cat</code> now uses only <code>v_The</code> and <code>v_cat</code>. Compare with the unmasked result [2.91, 1.73]: the masked row leans harder on its own value because the future share was redistributed.',
+          "The value mix for <code>cat</code> now uses only <code>v_The</code> and <code>v_cat</code>. Compare with the unmasked result [2.91, 1.73]: the masked row leans harder on its own value because the future share was redistributed.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], 1),
         scores: [],
-        weights: [weightGrid("cw", "causal weights", CAUSAL3, { mask: CAUSAL_MASK, activeRow: 1 })],
+        weights: [
+          weightGrid("cw", "causal weights", CAUSAL3, {
+            mask: CAUSAL_MASK,
+            activeRow: 1,
+          }),
+        ],
         work: [
           work("c0", "cat[0] = 0.11*2 + 0.89*3 = 2.89", "result"),
           work("c1", "cat[1] = 0.11*1 + 0.89*2 = 1.89", "result"),
@@ -515,13 +643,17 @@ export const EXAMPLES: AttentionExample[] = [
         ],
       },
       {
+        simpleHtml:
+          "Why do this? During training the model guesses every next word at once, and word 2 is trained to guess word 3. Without the mask it could just peek at word 3 and learn nothing. When the model writes text, the future words do not exist yet, so the mask keeps practice and real use the same.",
         descriptionHtml:
-          'Why bother: during training all positions are predicted in one pass, and position <code>i</code> is trained to predict token <code>i+1</code>. Without the mask it could read that token through attention and learn nothing. At inference the future tokens do not exist yet, so the mask keeps training and generation consistent.',
+          "Why bother: during training all positions are predicted in one pass, and position <code>i</code> is trained to predict token <code>i+1</code>. Without the mask it could read that token through attention and learn nothing. At inference the future tokens do not exist yet, so the mask keeps training and generation consistent.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         vectors: vectors3([COLS_Q, COLS_K, COLS_V], null),
         scores: [],
-        weights: [weightGrid("cw", "causal weights", CAUSAL3, { mask: CAUSAL_MASK })],
+        weights: [
+          weightGrid("cw", "causal weights", CAUSAL3, { mask: CAUSAL_MASK }),
+        ],
         work: [
           work("why1", "train: position i predicts token i+1"),
           work("why2", "mask: position i never reads j > i"),
@@ -553,6 +685,8 @@ export const EXAMPLES: AttentionExample[] = [
     ],
     steps: [
       {
+        simpleHtml:
+          "Four words, each with 4 numbers, split into two <strong>heads</strong> that each look at 2 of the numbers. Each head has its own questions and labels, so each can look for a different kind of connection. We follow the word him.",
         descriptionHtml:
           'Four tokens, <code>d_model = 4</code>, split into two heads of <code>d_k = 2</code>. Each head owns its own <code>Wq</code>, <code>Wk</code>, <code>Wv</code>, so each head can learn a different notion of relevance. We follow the query <span class="hl-api">him</span>.',
         activeLine: 1,
@@ -564,6 +698,8 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Head 1 scores its pairs. The way it was trained, it gives high scores to words that sit next to each other, a head that pays attention to neighbours.",
         descriptionHtml:
           'Head 1 projects and scores. Its learned <code>Wq</code> and <code>Wk</code> happen to give high scores to <span class="hl-stack">adjacent tokens</span>, a local syntax head. Scores are already divided by <code>sqrt(2)</code>.',
         activeLine: 5,
@@ -575,8 +711,10 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Head 1 splits him's attention mostly between its neighbours gave and it, keeps a little for itself, and almost none for she.",
         descriptionHtml:
-          'Softmax on the <code>him</code> row of head 1 spreads the weight over <code>gave</code> and <code>it</code>, the neighbours, with a smaller share on itself and almost nothing on <code>she</code>.',
+          "Softmax on the <code>him</code> row of head 1 spreads the weight over <code>gave</code> and <code>it</code>, the neighbours, with a smaller share on itself and almost nothing on <code>she</code>.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         vectors: vectors4(2),
@@ -589,6 +727,8 @@ export const EXAMPLES: AttentionExample[] = [
         output: [],
       },
       {
+        simpleHtml:
+          "Head 1's answer for him is a blend of its neighbours' messages, a list of 2 numbers. It is set aside while the next head runs.",
         descriptionHtml:
           'Head 1 output for <code>him</code> is its weights times the head 1 <span class="hl-task">values</span>. This is a 2-dimensional vector, one per head, appended to <code>outputs</code>.',
         activeLine: 7,
@@ -597,12 +737,22 @@ export const EXAMPLES: AttentionExample[] = [
         scores: [],
         weights: [headWeights(1, 2)],
         work: [
-          work("h1o0", "head1[0] = 0.03*1 + 0.37*0 + 0.23*1 + 0.37*0 = 0.26", "result"),
-          work("h1o1", "head1[1] = 0.03*0 + 0.37*1 + 0.23*1 + 0.37*0 = 0.60", "result"),
+          work(
+            "h1o0",
+            "head1[0] = 0.03*1 + 0.37*0 + 0.23*1 + 0.37*0 = 0.26",
+            "result",
+          ),
+          work(
+            "h1o1",
+            "head1[1] = 0.03*0 + 0.37*1 + 0.23*1 + 0.37*0 = 0.60",
+            "result",
+          ),
         ],
         output: HEAD1_OUT,
       },
       {
+        simpleHtml:
+          "Now head 2, with different questions and labels. This head was trained so that every word scores the subject she highest, no matter how far away she is.",
         descriptionHtml:
           'The loop moves to head 2 with a different set of projections. Here the query and key spaces line up so that every token scores the subject <span class="hl-micro">she</span> highest, regardless of distance.',
         activeLine: 5,
@@ -614,8 +764,10 @@ export const EXAMPLES: AttentionExample[] = [
         output: HEAD1_OUT,
       },
       {
+        simpleHtml:
+          "Head 2 gives <code>0.62</code> of him's attention to she. This is the kind of head that lets a word like him work out who it refers to, something head 1 could never do with its neighbour habit.",
         descriptionHtml:
-          'Head 2 weights for <code>him</code> put 0.62 on <code>she</code>. A head like this is what lets a pronoun pick up who it refers to, something head 1 could not express with its local pattern.',
+          "Head 2 weights for <code>him</code> put 0.62 on <code>she</code>. A head like this is what lets a pronoun pick up who it refers to, something head 1 could not express with its local pattern.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5, 7],
         vectors: vectors4(2),
@@ -628,22 +780,34 @@ export const EXAMPLES: AttentionExample[] = [
         output: HEAD1_OUT,
       },
       {
+        simpleHtml:
+          "Head 2's answer for him is mostly she's message. Both heads read the same sentence but produced different summaries of it.",
         descriptionHtml:
-          'Head 2 output mixes the head 2 values, and most of it is <code>v_she = [2, 1]</code>. Both heads ran on the same input but produced different summaries of the context.',
+          "Head 2 output mixes the head 2 values, and most of it is <code>v_she = [2, 1]</code>. Both heads ran on the same input but produced different summaries of the context.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         vectors: vectors4(2),
         scores: [],
         weights: [headWeights(1), headWeights(2, 2)],
         work: [
-          work("h2o0", "head2[0] = 0.62*2 + 0.08*0 + 0.23*1 + 0.07*0 = 1.47", "result"),
-          work("h2o1", "head2[1] = 0.62*1 + 0.08*1 + 0.23*0 + 0.07*1 = 0.77", "result"),
+          work(
+            "h2o0",
+            "head2[0] = 0.62*2 + 0.08*0 + 0.23*1 + 0.07*0 = 1.47",
+            "result",
+          ),
+          work(
+            "h2o1",
+            "head2[1] = 0.62*1 + 0.08*1 + 0.23*0 + 0.07*1 = 0.77",
+            "result",
+          ),
         ],
         output: [...HEAD1_OUT, ...HEAD2_OUT],
       },
       {
+        simpleHtml:
+          "The two answers are placed side by side, giving back a list of 4 numbers. Nothing is added or averaged; each head keeps its own slot.",
         descriptionHtml:
-          'Concatenation places the head outputs side by side, giving back a <code>d_model = 4</code> vector. Nothing is added or averaged here, the heads stay in separate slots.',
+          "Concatenation places the head outputs side by side, giving back a <code>d_model = 4</code> vector. Nothing is added or averaged here, the heads stay in separate slots.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         vectors: vectors4(2),
@@ -653,6 +817,8 @@ export const EXAMPLES: AttentionExample[] = [
         output: CONCAT_OUT,
       },
       {
+        simpleHtml:
+          "One last learned table mixes the two slots together. This is where next to gave from head 1 and refers to she from head 2 combine into a single description of him.",
         descriptionHtml:
           'The output projection <code>Wo</code> is a learned 4x4 matrix that mixes the heads together. This is where the model can combine "next to gave" from head 1 with "refers to she" from head 2 into one representation.',
         activeLine: 9,
@@ -662,16 +828,34 @@ export const EXAMPLES: AttentionExample[] = [
         weights: [headWeights(1), headWeights(2)],
         work: [
           work("wo", "Wo = [[1,0,0,1],[0,1,1,0],[1,0,1,0],[0,1,0,1]]"),
-          work("f0", "him[0] = 0.26*1 + 0.60*0 + 1.47*1 + 0.77*0 = 1.73", "result"),
-          work("f1", "him[1] = 0.26*0 + 0.60*1 + 1.47*0 + 0.77*1 = 1.37", "result"),
-          work("f2", "him[2] = 0.26*0 + 0.60*1 + 1.47*1 + 0.77*0 = 2.07", "result"),
-          work("f3", "him[3] = 0.26*1 + 0.60*0 + 1.47*0 + 0.77*1 = 1.03", "result"),
+          work(
+            "f0",
+            "him[0] = 0.26*1 + 0.60*0 + 1.47*1 + 0.77*0 = 1.73",
+            "result",
+          ),
+          work(
+            "f1",
+            "him[1] = 0.26*0 + 0.60*1 + 1.47*0 + 0.77*1 = 1.37",
+            "result",
+          ),
+          work(
+            "f2",
+            "him[2] = 0.26*0 + 0.60*1 + 1.47*1 + 0.77*0 = 2.07",
+            "result",
+          ),
+          work(
+            "f3",
+            "him[3] = 0.26*1 + 0.60*0 + 1.47*0 + 0.77*1 = 1.03",
+            "result",
+          ),
         ],
         output: FINAL_OUT,
       },
       {
+        simpleHtml:
+          "Every word's shares still add up to 1 in both heads, and the heads run at the same time. Two heads cost the same as one big head, but each sees fewer numbers: more viewpoints, each a bit blurrier.",
         descriptionHtml:
-          'Every row of both weight matrices sums to 1.00, and the heads run in parallel as one batched matmul. Multi-head costs the same as single-head at the same <code>d_model</code>, but each head sees a smaller <code>d_k</code>, which is the trade: more views, each lower resolution.',
+          "Every row of both weight matrices sums to 1.00, and the heads run in parallel as one batched matmul. Multi-head costs the same as single-head at the same <code>d_model</code>, but each head sees a smaller <code>d_k</code>, which is the trade: more views, each lower resolution.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         vectors: vectors4(null),

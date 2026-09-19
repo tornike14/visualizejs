@@ -57,7 +57,8 @@ ids.append(next_id)`,
       },
     },
     {
-      question: "How does temperature change the distribution, and can it reorder tokens?",
+      question:
+        "How does temperature change the distribution, and can it reorder tokens?",
       answer:
         "Temperature divides every logit by T before softmax. Because division preserves order, the ranking of tokens never changes; only the gaps do. T below 1 widens the gaps and concentrates mass on the top token, T above 1 narrows them and spreads mass into the tail. In the limit T approaches 0 the distribution becomes one-hot on the argmax.",
     },
@@ -78,15 +79,22 @@ ids.append(next_id)`,
       },
     },
     {
-      question: "Why is generation with a KV cache faster than recomputing the whole sequence?",
+      question:
+        "Why is generation with a KV cache faster than recomputing the whole sequence?",
       answer:
         "Attention at each layer needs keys and values for every earlier position, but those do not change once computed because the model is causal. Caching them means a new step runs the transformer only for the newest token and attends over stored tensors. Without the cache each step costs work proportional to the full sequence length squared; with it the per-step cost is closer to linear in the sequence length.",
     },
     {
-      question: "Why does the same prompt give different completions on different runs?",
+      question:
+        "Why does the same prompt give different completions on different runs?",
       answer:
         "Because sampling draws each token from a probability distribution using a random number. Any token with nonzero probability can be chosen, and over a long completion the sequence of draws diverges quickly. Greedy decoding or a fixed seed removes this source of variation, though hardware nondeterminism in floating point reductions can still cause small differences.",
     },
   ],
-  relatedTopicIds: ["attention", "tokenization", "embeddings", "backpropagation"],
+  relatedTopicIds: [
+    "attention",
+    "tokenization",
+    "embeddings",
+    "backpropagation",
+  ],
 };

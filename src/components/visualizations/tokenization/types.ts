@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
@@ -22,10 +22,7 @@ export interface StatItem {
   tone?: StatTone;
 }
 
-export interface TokenizationStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface TokenizationStep extends BaseStep {
   /** Tokens or per-word segmentation. */
   segments: SegmentGroup[];
   /** Vocabulary entries or merge rules applied so far. */

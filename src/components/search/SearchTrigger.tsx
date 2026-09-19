@@ -9,7 +9,10 @@ interface SearchTriggerProps {
   className?: string;
 }
 
-export const SearchTrigger = ({ compact = false, className }: SearchTriggerProps) => {
+export const SearchTrigger = ({
+  compact = false,
+  className,
+}: SearchTriggerProps) => {
   if (compact) {
     return (
       <button

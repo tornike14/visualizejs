@@ -1,4 +1,5 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { FlowConnector } from "@/components/visualization-ui/FlowConnector";
 import { cn } from "@/lib/utils";
 
 export interface FlowActor {
@@ -53,7 +54,9 @@ export const MessageFlow = ({
     <div className={cn("space-y-3", className)}>
       <div
         className="grid gap-2"
-        style={{ gridTemplateColumns: `repeat(${actors.length}, minmax(0, 1fr))` }}
+        style={{
+          gridTemplateColumns: `repeat(${actors.length}, minmax(0, 1fr))`,
+        }}
       >
         {actors.map((actor) => (
           <div
@@ -91,7 +94,14 @@ export const MessageFlow = ({
                 <span className="w-16 shrink-0 truncate text-[10px] uppercase tracking-[0.1em] opacity-70">
                   {actorLabel(message.from)}
                 </span>
-                {rightward ? (
+                {message.status === "active" ? (
+                  <FlowConnector
+                    active
+                    reverse={!rightward}
+                    tone="cyan"
+                    className="w-10"
+                  />
+                ) : rightward ? (
                   <ArrowRight className="h-3.5 w-3.5 shrink-0" />
                 ) : (
                   <ArrowLeft className="h-3.5 w-3.5 shrink-0" />
@@ -101,7 +111,9 @@ export const MessageFlow = ({
                 </span>
                 <span className="font-semibold">{message.label}</span>
                 {message.detail && (
-                  <span className="truncate text-slate-400">{message.detail}</span>
+                  <span className="truncate text-slate-400">
+                    {message.detail}
+                  </span>
                 )}
               </li>
             );

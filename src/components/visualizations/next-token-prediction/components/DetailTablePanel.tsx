@@ -7,7 +7,10 @@ interface DetailTablePanelProps {
   emptyLabel: string;
 }
 
-export const DetailTablePanel = ({ table, emptyLabel }: DetailTablePanelProps) => {
+export const DetailTablePanel = ({
+  table,
+  emptyLabel,
+}: DetailTablePanelProps) => {
   if (!table || table.rows.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">

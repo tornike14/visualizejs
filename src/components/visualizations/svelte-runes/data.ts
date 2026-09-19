@@ -314,7 +314,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          '<code>$effect</code> was only maybe-dirty, so the flush checks its dependency first. The version of <code>double</code> changed, so the effect is promoted to dirty and runs. Had <code>double</code> recomputed to an equal value, the effect would have been skipped.',
+          "<code>$effect</code> was only maybe-dirty, so the flush checks its dependency first. The version of <code>double</code> changed, so the effect is promoted to dirty and runs. Had <code>double</code> recomputed to an equal value, the effect would have been skipped.",
         activeLine: 5,
         doneLines: [2, 3, 4, 6, 8, 9],
         signals: [
@@ -359,14 +359,20 @@ export const EXAMPLES: SvelteRunesExample[] = [
     ],
     compiledLines: [
       { num: 1, text: "import * as $ from 'svelte/internal/client';" },
-      { num: 2, text: "var root = $.template('<h1>Counter</h1> <button> </button>');" },
+      {
+        num: 2,
+        text: "var root = $.template('<h1>Counter</h1> <button> </button>');",
+      },
       { num: 3, text: "export default function App($$anchor) {" },
       { num: 4, text: "  let count = $.state(0);" },
       { num: 5, text: "  var fragment = root();" },
       { num: 6, text: "  var button = $.sibling($.first_child(fragment), 2);" },
       { num: 7, text: "  var text = $.child(button);" },
       { num: 8, text: "  button.__click = () => $.update(count);" },
-      { num: 9, text: "  $.template_effect(() => $.set_text(text, `clicks: ${$.get(count)}`));" },
+      {
+        num: 9,
+        text: "  $.template_effect(() => $.set_text(text, `clicks: ${$.get(count)}`));",
+      },
       { num: 10, text: "  $.append($$anchor, fragment);" },
       { num: 11, text: "}" },
       { num: 12, text: "$.delegate(['click']);" },
@@ -385,7 +391,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          'All of the markup becomes one string passed to <code>$.template</code>. The structure is fixed at build time, so Svelte can clone it as real DOM later. The space inside <code>&lt;button&gt;</code> is a placeholder text node for <code>{count}</code>.',
+          "All of the markup becomes one string passed to <code>$.template</code>. The structure is fixed at build time, so Svelte can clone it as real DOM later. The space inside <code>&lt;button&gt;</code> is a placeholder text node for <code>{count}</code>.",
         activeLine: 4,
         doneLines: [2],
         compiledActiveLine: 2,
@@ -407,7 +413,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          '<code>$.sibling</code> and <code>$.child</code> walk to the text node once and keep a reference. The compiler knew at build time that only this node depends on <code>count</code>, so there is nothing to search for on update.',
+          "<code>$.sibling</code> and <code>$.child</code> walk to the text node once and keep a reference. The compiler knew at build time that only this node depends on <code>count</code>, so there is nothing to search for on update.",
         activeLine: 6,
         doneLines: [2, 4, 5],
         compiledActiveLine: 7,
@@ -418,7 +424,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          '<code>onclick={() =&gt; count++}</code> becomes a property assignment, <code>button.__click</code>. <code>$.delegate([\'click\'])</code> on the last line installs one root listener that walks up from the event target looking for <code>__click</code>, so no listener is attached per element.',
+          "<code>onclick={() =&gt; count++}</code> becomes a property assignment, <code>button.__click</code>. <code>$.delegate(['click'])</code> on the last line installs one root listener that walks up from the event target looking for <code>__click</code>, so no listener is attached per element.",
         activeLine: 5,
         doneLines: [2, 4, 6],
         compiledActiveLine: 8,
@@ -492,12 +498,21 @@ export const EXAMPLES: SvelteRunesExample[] = [
     kind: "deep",
     codeLines: [
       { num: 1, text: "<script>" },
-      { num: 2, text: "  let todos = $state([{ text: 'write', done: false }]);" },
+      {
+        num: 2,
+        text: "  let todos = $state([{ text: 'write', done: false }]);",
+      },
       { num: 3, text: "  let raw = $state.raw({ n: 0 });" },
       { num: 4, text: "  $effect(() => {" },
-      { num: 5, text: "    console.log('open:', todos.filter(t => !t.done).length);" },
+      {
+        num: 5,
+        text: "    console.log('open:', todos.filter(t => !t.done).length);",
+      },
       { num: 6, text: "  });" },
-      { num: 7, text: "  function add() { todos.push({ text: 'ship', done: false }); }" },
+      {
+        num: 7,
+        text: "  function add() { todos.push({ text: 'ship', done: false }); }",
+      },
       { num: 8, text: "  function toggle() { todos[0].done = true; }" },
       { num: 9, text: "  function bump() { raw.n = 1; }" },
       { num: 10, text: "  function replace() { raw = { n: raw.n }; }" },
@@ -552,7 +567,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          'The block reads <code>todos[0]</code>, which creates an index source and wraps the nested object in its own proxy. The <code>&lt;li&gt;</code> template effect reads <code>done</code>, creating <code>todos[0].done</code> and subscribing to it.',
+          "The block reads <code>todos[0]</code>, which creates an index source and wraps the nested object in its own proxy. The <code>&lt;li&gt;</code> template effect reads <code>done</code>, creating <code>todos[0].done</code> and subscribing to it.",
         activeLine: 13,
         doneLines: [2, 3, 4, 12],
         signals: [
@@ -570,7 +585,7 @@ export const EXAMPLES: SvelteRunesExample[] = [
       },
       {
         descriptionHtml:
-          'The <code>&lt;p&gt;</code> effect reads <code>raw</code>, so it subscribes to that source. The following <code>.n</code> read is a plain property access on a plain object, and the graph does not see it.',
+          "The <code>&lt;p&gt;</code> effect reads <code>raw</code>, so it subscribes to that source. The following <code>.n</code> read is a plain property access on a plain object, and the graph does not see it.",
         activeLine: 15,
         doneLines: [2, 3, 4, 12, 13, 14],
         signals: [
@@ -671,7 +686,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("clean"),
           D.fx("running", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write open"'), li("li1", '"ship open"'), pRaw('"raw: 0"')],
+        dom: [
+          li("li0", '"write open"'),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 0"'),
+        ],
         consoleOutput: ["open: 1", "open: 2"],
       },
       {
@@ -693,7 +712,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("clean"),
           D.fx("dirty", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write open"'), li("li1", '"ship open"'), pRaw('"raw: 0"')],
+        dom: [
+          li("li0", '"write open"'),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 0"'),
+        ],
         consoleOutput: ["open: 1", "open: 2"],
       },
       {
@@ -715,7 +738,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("clean"),
           D.fx("dirty", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write done"', "updated"), li("li1", '"ship open"'), pRaw('"raw: 0"')],
+        dom: [
+          li("li0", '"write done"', "updated"),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 0"'),
+        ],
         consoleOutput: ["open: 1", "open: 2"],
       },
       {
@@ -737,7 +764,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("clean"),
           D.fx("running", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write done"'), li("li1", '"ship open"'), pRaw('"raw: 0"')],
+        dom: [
+          li("li0", '"write done"'),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 0"'),
+        ],
         consoleOutput: ["open: 1", "open: 2", "open: 1"],
       },
       {
@@ -759,7 +790,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("clean"),
           D.fx("clean", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write done"'), li("li1", '"ship open"'), pRaw('"raw: 0"')],
+        dom: [
+          li("li0", '"write done"'),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 0"'),
+        ],
         consoleOutput: ["open: 1", "open: 2", "open: 1"],
       },
       {
@@ -781,7 +816,11 @@ export const EXAMPLES: SvelteRunesExample[] = [
           D.p("running"),
           D.fx("clean", ["todos.length", "todos[0].done", "todos[1].done"]),
         ],
-        dom: [li("li0", '"write done"'), li("li1", '"ship open"'), pRaw('"raw: 1"', "updated")],
+        dom: [
+          li("li0", '"write done"'),
+          li("li1", '"ship open"'),
+          pRaw('"raw: 1"', "updated"),
+        ],
         consoleOutput: ["open: 1", "open: 2", "open: 1"],
       },
     ],

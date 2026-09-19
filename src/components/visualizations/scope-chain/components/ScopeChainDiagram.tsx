@@ -7,13 +7,13 @@ import {
   scopeTypeBadge,
 } from "../helpers";
 
-export function ScopeChainDiagram({
+export const ScopeChainDiagram = ({
   scopes,
   activeLink,
 }: {
   scopes: ScopeEntry[];
   activeLink?: number;
-}) {
+}) => {
   if (scopes.length === 0) {
     return (
       <p className="py-6 text-center font-mono text-xs uppercase tracking-[0.22em] text-slate-500/60">
@@ -136,4 +136,4 @@ export function ScopeChainDiagram({
       })}
     </div>
   );
-}
+};

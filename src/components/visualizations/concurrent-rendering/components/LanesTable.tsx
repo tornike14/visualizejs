@@ -46,7 +46,9 @@ export const LanesTable = ({ lanes }: LanesTableProps) => {
                 )}
               >
                 <span className="text-[10px] font-semibold">{lane.lane}</span>
-                <span className="text-[9px] opacity-70">{LANE_MASKS[lane.lane]}</span>
+                <span className="text-[9px] opacity-70">
+                  {LANE_MASKS[lane.lane]}
+                </span>
               </span>
               <span
                 className={cn(

@@ -12,7 +12,7 @@ export const EXAMPLES: ReconciliationExample[] = [
       { num: 1, text: "function Counter() {" },
       { num: 2, text: "  const [count, setCount] = useState(0);" },
       { num: 3, text: "  return (" },
-      { num: 4, text: "    <div className=\"counter\">" },
+      { num: 4, text: '    <div className="counter">' },
       { num: 5, text: "      <h1>Count</h1>" },
       { num: 6, text: "      <p>{count}</p>" },
       { num: 7, text: "      <button onClick={() => setCount(count + 1)}>" },
@@ -33,9 +33,21 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"0"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -43,9 +55,21 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"0"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         operations: [],
@@ -60,9 +84,21 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"0"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -70,9 +106,21 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"1"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         operations: [],
@@ -88,9 +136,21 @@ export const EXAMPLES: ReconciliationExample[] = [
           highlight: "active",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"0"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -99,14 +159,30 @@ export const EXAMPLES: ReconciliationExample[] = [
           highlight: "active",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"1"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         activeNodeId: "div",
         operations: [
-          { type: "noop", target: "<div>", detail: "same type, same props. keep node" },
+          {
+            type: "noop",
+            target: "<div>",
+            detail: "same type, same props. keep node",
+          },
         ],
       },
       {
@@ -119,9 +195,22 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "active", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"0"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "active",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"0"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -129,15 +218,36 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "active", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", children: [{ id: "p-text", label: '"1"' }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "active",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              children: [{ id: "p-text", label: '"1"' }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         activeNodeId: "h1",
         operations: [
-          { type: "noop", target: "<div>", detail: "same type, same props. keep node" },
-          { type: "noop", target: "<h1>", detail: 'same text child "Count". skip' },
+          {
+            type: "noop",
+            target: "<div>",
+            detail: "same type, same props. keep node",
+          },
+          {
+            type: "noop",
+            target: "<h1>",
+            detail: 'same text child "Count". skip',
+          },
         ],
       },
       {
@@ -150,9 +260,23 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", highlight: "active", children: [{ id: "p-text", label: '"0"', highlight: "updated" }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "active",
+              children: [{ id: "p-text", label: '"0"', highlight: "updated" }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -160,15 +284,37 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<div>",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", highlight: "active", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-            { id: "button", label: "<button>", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "active",
+              children: [{ id: "p-text", label: '"1"', highlight: "updated" }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         activeNodeId: "p",
         operations: [
-          { type: "noop", target: "<div>", detail: "same type, same props. keep node" },
-          { type: "noop", target: "<h1>", detail: 'same text child "Count". skip' },
+          {
+            type: "noop",
+            target: "<div>",
+            detail: "same type, same props. keep node",
+          },
+          {
+            type: "noop",
+            target: "<h1>",
+            detail: 'same text child "Count". skip',
+          },
           { type: "update", target: "<p>", detail: 'text: "0" → "1"' },
         ],
       },
@@ -183,9 +329,24 @@ export const EXAMPLES: ReconciliationExample[] = [
           highlight: "unchanged",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-            { id: "button", label: "<button>", highlight: "unchanged", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [{ id: "p-text", label: '"1"', highlight: "updated" }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              highlight: "unchanged",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         newTree: {
@@ -194,14 +355,37 @@ export const EXAMPLES: ReconciliationExample[] = [
           highlight: "unchanged",
           props: [{ key: "className", value: '"counter"' }],
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"Count"' }] },
-            { id: "p", label: "<p>", highlight: "updated", children: [{ id: "p-text", label: '"1"', highlight: "updated" }] },
-            { id: "button", label: "<button>", highlight: "unchanged", children: [{ id: "btn-text", label: '"Increment"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"Count"' }],
+            },
+            {
+              id: "p",
+              label: "<p>",
+              highlight: "updated",
+              children: [{ id: "p-text", label: '"1"', highlight: "updated" }],
+            },
+            {
+              id: "button",
+              label: "<button>",
+              highlight: "unchanged",
+              children: [{ id: "btn-text", label: '"Increment"' }],
+            },
           ],
         },
         operations: [
-          { type: "noop", target: "<div>", detail: "same type, same props. keep node" },
-          { type: "noop", target: "<h1>", detail: 'same text child "Count". skip' },
+          {
+            type: "noop",
+            target: "<div>",
+            detail: "same type, same props. keep node",
+          },
+          {
+            type: "noop",
+            target: "<h1>",
+            detail: 'same text child "Count". skip',
+          },
           { type: "update", target: "<p>", detail: 'text: "0" → "1"' },
           { type: "noop", target: "<button>", detail: "same text. skip" },
         ],
@@ -222,7 +406,7 @@ export const EXAMPLES: ReconciliationExample[] = [
       { num: 3, text: "    <main>" },
       { num: 4, text: "      <h1>My App</h1>" },
       { num: 5, text: "      {isLoggedIn" },
-      { num: 6, text: "        ? <Dashboard user=\"Alice\" />" },
+      { num: 6, text: '        ? <Dashboard user="Alice" />' },
       { num: 7, text: "        : <LoginForm />}" },
       { num: 8, text: "    </main>" },
       { num: 9, text: "  );" },
@@ -238,7 +422,11 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>" },
           ],
         },
@@ -246,7 +434,11 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>" },
           ],
         },
@@ -254,14 +446,18 @@ export const EXAMPLES: ReconciliationExample[] = [
       },
       {
         descriptionHtml:
-          "User logs in. <code>isLoggedIn</code> becomes <code>true</code>. React re-renders <code>App</code> and gets a <span class=\"hl-api\">new tree</span> with <code>&lt;Dashboard&gt;</code> instead of <code>&lt;LoginForm&gt;</code>.",
+          'User logs in. <code>isLoggedIn</code> becomes <code>true</code>. React re-renders <code>App</code> and gets a <span class="hl-api">new tree</span> with <code>&lt;Dashboard&gt;</code> instead of <code>&lt;LoginForm&gt;</code>.',
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         previousTree: {
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>" },
           ],
         },
@@ -269,8 +465,16 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
-            { id: "dashboard", label: "<Dashboard>", props: [{ key: "user", value: '"Alice"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
+            {
+              id: "dashboard",
+              label: "<Dashboard>",
+              props: [{ key: "user", value: '"Alice"' }],
+            },
           ],
         },
         operations: [],
@@ -285,7 +489,11 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<main>",
           highlight: "active",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>" },
           ],
         },
@@ -294,8 +502,16 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<main>",
           highlight: "active",
           children: [
-            { id: "h1", label: "<h1>", children: [{ id: "h1-text", label: '"My App"' }] },
-            { id: "dashboard", label: "<Dashboard>", props: [{ key: "user", value: '"Alice"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
+            {
+              id: "dashboard",
+              label: "<Dashboard>",
+              props: [{ key: "user", value: '"Alice"' }],
+            },
           ],
         },
         activeNodeId: "main",
@@ -312,7 +528,12 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>", highlight: "active" },
           ],
         },
@@ -320,8 +541,18 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"My App"' }] },
-            { id: "dashboard", label: "<Dashboard>", highlight: "active", props: [{ key: "user", value: '"Alice"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
+            {
+              id: "dashboard",
+              label: "<Dashboard>",
+              highlight: "active",
+              props: [{ key: "user", value: '"Alice"' }],
+            },
           ],
         },
         activeNodeId: "login",
@@ -339,7 +570,12 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"My App"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
             { id: "login", label: "<LoginForm>", highlight: "removed" },
           ],
         },
@@ -347,15 +583,33 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "main",
           label: "<main>",
           children: [
-            { id: "h1", label: "<h1>", highlight: "unchanged", children: [{ id: "h1-text", label: '"My App"' }] },
-            { id: "dashboard", label: "<Dashboard>", highlight: "added", props: [{ key: "user", value: '"Alice"' }] },
+            {
+              id: "h1",
+              label: "<h1>",
+              highlight: "unchanged",
+              children: [{ id: "h1-text", label: '"My App"' }],
+            },
+            {
+              id: "dashboard",
+              label: "<Dashboard>",
+              highlight: "added",
+              props: [{ key: "user", value: '"Alice"' }],
+            },
           ],
         },
         operations: [
           { type: "noop", target: "<main>", detail: "same type. keep node" },
           { type: "noop", target: "<h1>", detail: "same text. skip" },
-          { type: "remove", target: "<LoginForm>", detail: "unmount. destroy subtree & run cleanup" },
-          { type: "insert", target: "<Dashboard>", detail: "mount. create new subtree from scratch" },
+          {
+            type: "remove",
+            target: "<LoginForm>",
+            detail: "unmount. destroy subtree & run cleanup",
+          },
+          {
+            type: "insert",
+            target: "<Dashboard>",
+            detail: "mount. create new subtree from scratch",
+          },
         ],
       },
     ],
@@ -391,18 +645,48 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-1", label: "<li>", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-1", label: "<li>", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [],
@@ -416,18 +700,48 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-1", label: "<li>", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-4", label: "<li>", props: [{ key: "key", value: '"d"' }], children: [{ id: "text-4", label: '"Feed cat"' }] },
-            { id: "li-1", label: "<li>", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-3", label: "<li>", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-4",
+              label: "<li>",
+              props: [{ key: "key", value: '"d"' }],
+              children: [{ id: "text-4", label: '"Feed cat"' }],
+            },
+            {
+              id: "li-1",
+              label: "<li>",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [],
@@ -442,9 +756,26 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<ul>",
           highlight: "active",
           children: [
-            { id: "li-1", label: "<li>", highlight: "active", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", highlight: "active", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "active",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "active",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
@@ -452,14 +783,39 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<ul>",
           highlight: "active",
           children: [
-            { id: "li-4", label: "<li>", props: [{ key: "key", value: '"d"' }], children: [{ id: "text-4", label: '"Feed cat"' }] },
-            { id: "li-1", label: "<li>", highlight: "active", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-3", label: "<li>", highlight: "active", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-4",
+              label: "<li>",
+              props: [{ key: "key", value: '"d"' }],
+              children: [{ id: "text-4", label: '"Feed cat"' }],
+            },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "active",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "active",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [
-          { type: "noop", target: 'key="a"', detail: "matched. reuse existing DOM node" },
-          { type: "noop", target: 'key="c"', detail: "matched. reuse existing DOM node" },
+          {
+            type: "noop",
+            target: 'key="a"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "noop",
+            target: 'key="c"',
+            detail: "matched. reuse existing DOM node",
+          },
         ],
       },
       {
@@ -471,24 +827,71 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", highlight: "removed", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              highlight: "removed",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-4", label: "<li>", props: [{ key: "key", value: '"d"' }], children: [{ id: "text-4", label: '"Feed cat"' }] },
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-4",
+              label: "<li>",
+              props: [{ key: "key", value: '"d"' }],
+              children: [{ id: "text-4", label: '"Feed cat"' }],
+            },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [
-          { type: "noop", target: 'key="a"', detail: "matched. reuse existing DOM node" },
-          { type: "noop", target: 'key="c"', detail: "matched. reuse existing DOM node" },
-          { type: "remove", target: 'key="b"', detail: "not in new list. unmount & destroy" },
+          {
+            type: "noop",
+            target: 'key="a"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "noop",
+            target: 'key="c"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "remove",
+            target: 'key="b"',
+            detail: "not in new list. unmount & destroy",
+          },
         ],
       },
       {
@@ -500,25 +903,77 @@ export const EXAMPLES: ReconciliationExample[] = [
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", highlight: "removed", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              highlight: "removed",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
           id: "ul",
           label: "<ul>",
           children: [
-            { id: "li-4", label: "<li>", highlight: "added", props: [{ key: "key", value: '"d"' }], children: [{ id: "text-4", label: '"Feed cat"' }] },
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-4",
+              label: "<li>",
+              highlight: "added",
+              props: [{ key: "key", value: '"d"' }],
+              children: [{ id: "text-4", label: '"Feed cat"' }],
+            },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [
-          { type: "noop", target: 'key="a"', detail: "matched. reuse existing DOM node" },
-          { type: "noop", target: 'key="c"', detail: "matched. reuse existing DOM node" },
-          { type: "remove", target: 'key="b"', detail: "not in new list. unmount & destroy" },
-          { type: "insert", target: 'key="d"', detail: "new key. create & insert at position 0" },
+          {
+            type: "noop",
+            target: 'key="a"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "noop",
+            target: 'key="c"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "remove",
+            target: 'key="b"',
+            detail: "not in new list. unmount & destroy",
+          },
+          {
+            type: "insert",
+            target: 'key="d"',
+            detail: "new key. create & insert at position 0",
+          },
         ],
       },
       {
@@ -531,9 +986,27 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<ul>",
           highlight: "unchanged",
           children: [
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-2", label: "<li>", highlight: "removed", props: [{ key: "key", value: '"b"' }], children: [{ id: "text-2", label: '"Walk dog"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-2",
+              label: "<li>",
+              highlight: "removed",
+              props: [{ key: "key", value: '"b"' }],
+              children: [{ id: "text-2", label: '"Walk dog"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         newTree: {
@@ -541,16 +1014,50 @@ export const EXAMPLES: ReconciliationExample[] = [
           label: "<ul>",
           highlight: "unchanged",
           children: [
-            { id: "li-4", label: "<li>", highlight: "added", props: [{ key: "key", value: '"d"' }], children: [{ id: "text-4", label: '"Feed cat"' }] },
-            { id: "li-1", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"a"' }], children: [{ id: "text-1", label: '"Buy milk"' }] },
-            { id: "li-3", label: "<li>", highlight: "unchanged", props: [{ key: "key", value: '"c"' }], children: [{ id: "text-3", label: '"Read book"' }] },
+            {
+              id: "li-4",
+              label: "<li>",
+              highlight: "added",
+              props: [{ key: "key", value: '"d"' }],
+              children: [{ id: "text-4", label: '"Feed cat"' }],
+            },
+            {
+              id: "li-1",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"a"' }],
+              children: [{ id: "text-1", label: '"Buy milk"' }],
+            },
+            {
+              id: "li-3",
+              label: "<li>",
+              highlight: "unchanged",
+              props: [{ key: "key", value: '"c"' }],
+              children: [{ id: "text-3", label: '"Read book"' }],
+            },
           ],
         },
         operations: [
-          { type: "noop", target: 'key="a"', detail: "matched. reuse existing DOM node" },
-          { type: "noop", target: 'key="c"', detail: "matched. reuse existing DOM node" },
-          { type: "remove", target: 'key="b"', detail: "not in new list. unmount & destroy" },
-          { type: "insert", target: 'key="d"', detail: "new key. create & insert at position 0" },
+          {
+            type: "noop",
+            target: 'key="a"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "noop",
+            target: 'key="c"',
+            detail: "matched. reuse existing DOM node",
+          },
+          {
+            type: "remove",
+            target: 'key="b"',
+            detail: "not in new list. unmount & destroy",
+          },
+          {
+            type: "insert",
+            target: 'key="d"',
+            detail: "new key. create & insert at position 0",
+          },
         ],
       },
     ],

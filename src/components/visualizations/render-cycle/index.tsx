@@ -1,21 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { NeonPanel } from "@/components/visualization-ui/NeonPanel";
 import {
-  CodeBlock,
-  type CodeBlockLine,
-} from "@/components/visualization-ui/CodeBlock";
-import { TransportControls } from "@/components/visualization-ui/TransportControls";
-import { ExampleSelector } from "@/components/visualization-ui/ExampleSelector";
-import { ToolbarPortal } from "@/components/layout/ToolbarPortal";
-import { cn } from "@/lib/utils";
+  ExamplePicker,
+  KindBadge,
+} from "@/components/visualization-ui/ExamplePicker";
+import { SourceCodePanel } from "@/components/visualization-ui/SourceCodePanel";
 import {
-  VISUALIZATION_PANEL_TITLES,
-  VISUALIZATION_EMPTY_STATES,
-} from "@/lib/visualization/uiCopy";
-import { useStepPlayback } from "@/hooks/useStepPlayback";
+  SourceGrid,
+  VisualizationSection,
+  WaitingPlaceholder,
+} from "@/components/visualization-ui/VisualizationLayout";
+import { VisualizationToolbar } from "@/components/visualization-ui/VisualizationToolbar";
+import { useExampleTopic } from "@/hooks/useExampleTopic";
 import { useChangeFlash } from "@/hooks/useChangeFlash";
 import { EXAMPLES } from "./data";
 import { kindBadgeClass, kindLabel } from "./helpers";
@@ -23,37 +20,15 @@ import { PhaseIndicator } from "./components/PhaseIndicator";
 import { DualTreePanel } from "./components/DualTreePanel";
 import { EffectsPanel } from "./components/EffectsPanel";
 
-export function RenderCycle() {
-  const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-
-  const handleExampleChange = (id: string) => {
-    setActiveExampleId(id);
-  };
-
-  const example =
-    EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
-
+export const RenderCycle = () => {
   const {
-    currentStepIndex,
-    isPlaying,
-    speedLevel,
-    speedLabel,
-    canStep,
-    canStepBack,
-    togglePlay,
-    step: handleStep,
-    stepBack: handleStepBack,
-    reset: handleReset,
-    setSpeedLevel,
-    jumpTo,
-  } = useStepPlayback({
-    totalSteps: example.steps.length,
-    initialStep: -1,
-    resetKey: activeExampleId,
-  });
-
-  const currentStep =
-    currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
+    example,
+    activeExampleId,
+    handleExampleChange,
+    playback,
+    currentStep,
+  } = useExampleTopic(EXAMPLES);
+  const { currentStepIndex } = playback;
 
   const flashes = useChangeFlash(
     {
@@ -67,99 +42,33 @@ export function RenderCycle() {
 
   return (
     <>
-      <ToolbarPortal>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <ExampleSelector
-                examples={EXAMPLES}
-                activeId={activeExampleId}
-                onSelect={handleExampleChange}
-                renderBadge={(ex) => (
-                  <Badge
-                    variant="outline"
-                    className={cn("text-[10px]", kindBadgeClass(ex.kind))}
-                  >
-                    {kindLabel(ex.kind)}
-                  </Badge>
-                )}
-              />
-              <Badge
-                variant="outline"
-                className={cn("text-[10px]", kindBadgeClass(example.kind))}
-              >
-                {kindLabel(example.kind)}
-              </Badge>
-            </div>
-
-            <TransportControls
-              isPlaying={isPlaying}
-              canStep={canStep}
-              canStepBack={canStepBack}
-              stepIndex={currentStepIndex}
-              totalSteps={example.steps.length}
-              speedLevel={speedLevel}
-              speedLabel={speedLabel}
-              onTogglePlay={togglePlay}
-              onStep={handleStep}
-              onStepBack={handleStepBack}
-              onReset={handleReset}
-              onSpeedLevelChange={setSpeedLevel}
-              onJumpTo={jumpTo}
-            />
-          </div>
-
-          <div
-            role="status"
-            aria-live="polite"
-            className={cn(
-              "app-surface-subtle mx-auto w-full max-w-4xl rounded-full px-4 py-2.5",
-              flashes.description && "viz-change-flash-pill",
+      <VisualizationToolbar
+        playback={playback}
+        totalSteps={example.steps.length}
+        descriptionHtml={currentStep?.descriptionHtml}
+        descriptionFlash={flashes.description}
+        leading={
+          <ExamplePicker
+            examples={EXAMPLES}
+            activeId={activeExampleId}
+            onSelect={handleExampleChange}
+            renderBadge={(ex) => (
+              <KindBadge className={kindBadgeClass(ex.kind)}>
+                {kindLabel(ex.kind)}
+              </KindBadge>
             )}
-          >
-            {currentStep?.descriptionHtml ? (
-              <p
-                className="viz-step-desc text-center text-sm text-slate-300"
-                dangerouslySetInnerHTML={{
-                  __html: currentStep.descriptionHtml,
-                }}
-              />
-            ) : (
-              <p className="text-center text-sm text-slate-500">
-                {VISUALIZATION_EMPTY_STATES.stepDescription}
-              </p>
-            )}
-          </div>
-        </div>
-      </ToolbarPortal>
+          />
+        }
+      />
 
-      <section className="relative flex flex-col gap-4 px-1 py-2 text-slate-100 sm:px-2 sm:py-3 lg:px-3 lg:py-4">
-        <div className="grid gap-4 xl:grid-cols-[auto_minmax(0,1fr)]">
+      <VisualizationSection>
+        <SourceGrid>
           {/* Source Code */}
-          <NeonPanel
-            title={VISUALIZATION_PANEL_TITLES.sourceCode}
-            tone="amber"
-            bodyClassName="font-mono text-[13px] leading-[1.9] text-slate-200"
-          >
-            <CodeBlock
-              lines={example.codeLines.map(
-                (line): CodeBlockLine => {
-                  const isActive = currentStep?.activeLine === line.num;
-                  const isDone =
-                    currentStep?.doneLines.includes(line.num) ?? false;
-                  return {
-                    key: line.num,
-                    lineNumber: line.num,
-                    text: line.text,
-                    className: cn(
-                      isActive && "is-active",
-                      isDone && !isActive && "is-done",
-                    ),
-                  };
-                },
-              )}
-            />
-          </NeonPanel>
+          <SourceCodePanel
+            lines={example.codeLines}
+            activeLine={currentStep?.activeLine}
+            doneLines={currentStep?.doneLines}
+          />
 
           <div className="space-y-4">
             {/* Phase Indicator */}
@@ -173,7 +82,11 @@ export function RenderCycle() {
             </NeonPanel>
 
             {/* Dual Trees */}
-            <div className={flashes.trees ? "viz-change-flash rounded-xl" : undefined}>
+            <div
+              className={
+                flashes.trees ? "viz-change-flash rounded-xl" : undefined
+              }
+            >
               {currentStep ? (
                 <DualTreePanel
                   currentTree={currentStep.currentTree}
@@ -181,15 +94,19 @@ export function RenderCycle() {
                 />
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <NeonPanel title="Current Tree" tone="cyan" bodyClassName="min-h-[8rem]">
-                    <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
-                      waiting
-                    </p>
+                  <NeonPanel
+                    title="Current Tree"
+                    tone="cyan"
+                    bodyClassName="min-h-[8rem]"
+                  >
+                    <WaitingPlaceholder />
                   </NeonPanel>
-                  <NeonPanel title="WIP Tree" tone="green" bodyClassName="min-h-[8rem]">
-                    <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
-                      waiting
-                    </p>
+                  <NeonPanel
+                    title="WIP Tree"
+                    tone="green"
+                    bodyClassName="min-h-[8rem]"
+                  >
+                    <WaitingPlaceholder />
                   </NeonPanel>
                 </div>
               )}
@@ -205,8 +122,8 @@ export function RenderCycle() {
               <EffectsPanel effects={currentStep?.effects ?? []} />
             </NeonPanel>
           </div>
-        </div>
-      </section>
+        </SourceGrid>
+      </VisualizationSection>
     </>
   );
-}
+};

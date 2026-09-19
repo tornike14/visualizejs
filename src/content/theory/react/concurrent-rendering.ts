@@ -64,7 +64,8 @@ export const concurrentRenderingTheory: TopicTheoryContent = {
       },
     },
     {
-      question: "What is the difference between startTransition and useDeferredValue?",
+      question:
+        "What is the difference between startTransition and useDeferredValue?",
       answer:
         "startTransition marks specific state updates as low priority at the point where they are dispatched, and useTransition adds an isPending flag. useDeferredValue works on a value instead: during an urgent render it returns the previous value and schedules a transition-priority re-render with the new one. Use startTransition when you own the setter, and useDeferredValue when the value comes from props or a parent you cannot change.",
       codeExample: {
@@ -79,7 +80,8 @@ const deferredQuery = useDeferredValue(query);
       },
     },
     {
-      question: "Why does a transition that suspends not show the Suspense fallback?",
+      question:
+        "Why does a transition that suspends not show the Suspense fallback?",
       answer:
         "When a transition render suspends, React treats replacing already visible content with a fallback as a worse outcome than waiting. It leaves the current tree committed, marks the root as suspended, and retries the render when the promise resolves. A sync update that suspends has no such option and commits the nearest fallback, which is why data fetching triggered by user input is usually wrapped in a transition.",
     },

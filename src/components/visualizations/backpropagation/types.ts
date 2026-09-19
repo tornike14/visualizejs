@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type BackpropKind = "neuron" | "chain" | "loop";
@@ -53,10 +53,7 @@ export interface LossPoint {
   active?: boolean;
 }
 
-export interface BackpropStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface BackpropStep extends BaseStep {
   phase: GraphPhase;
   graph: GraphNode[];
   gradients: GradientEntry[];

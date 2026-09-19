@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type StateBatchingKind = "batch" | "updater" | "automatic";
@@ -54,10 +54,7 @@ export interface EventLoopSnapshot {
   pending: PendingWork[];
 }
 
-export interface StateBatchingStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface StateBatchingStep extends BaseStep {
   updateQueue: QueuedUpdate[];
   hooks: HookSnapshot[];
   renderLog: RenderLogEntry[];

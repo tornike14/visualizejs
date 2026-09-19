@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  openGraph: {
+    title: "JavaScript, React, Backend, and AI Visualizer | VisualizeJS",
+    description:
+      "Free visualizer for JavaScript, React, Vue, Svelte, Angular, backend systems, and AI models. Step through the event loop, closures, reconciliation, HTTP requests, attention, and more with interactive animations.",
+    url: "/",
+    type: "website",
+  },
 };
 
 export default function HomePage() {

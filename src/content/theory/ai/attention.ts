@@ -4,7 +4,7 @@ export const attentionTheory: TopicTheoryContent = {
   summary:
     "Self-attention lets every token in a sequence build a new representation by taking a weighted average of the other tokens, where the weights come from how well each token's query matches the others' keys. It is the operation that gives transformers their ability to relate words at any distance.",
   whatItIs: [
-    "Before attention, each token has a vector that only describes the token itself. Attention rewrites that vector so it also describes the token's context: after one attention layer, the vector for \"sat\" can carry information about \"cat\" because the layer let \"sat\" look at \"cat\" and copy part of it.",
+    'Before attention, each token has a vector that only describes the token itself. Attention rewrites that vector so it also describes the token\'s context: after one attention layer, the vector for "sat" can carry information about "cat" because the layer let "sat" look at "cat" and copy part of it.',
     "Three learned linear projections turn each input vector into a query, a key, and a value. The query is what the token is looking for, the key is what the token advertises about itself, and the value is the content it hands over when another token attends to it. Scores are dot products between one query and every key, softmax turns those scores into weights that sum to one, and the output is the weighted sum of the values.",
     "The scores are divided by the square root of the key dimension before softmax. Dot products grow with the number of dimensions, so without scaling the softmax input would be large, the weights would collapse toward a single one-hot entry, and the gradient through softmax would be close to zero. Scaling keeps the distribution soft enough to train.",
     "Because every query is scored against every key, the attention matrix is n by n for a sequence of n tokens. That quadratic cost in both time and memory is why context length is the expensive axis in a transformer and why so much engineering effort goes into sparse, linear, or cached variants of the same idea.",
@@ -45,7 +45,8 @@ export const attentionTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What do the query, key, and value represent in self-attention?",
+      question:
+        "What do the query, key, and value represent in self-attention?",
       answer:
         "All three are linear projections of the same input token. The query encodes what the token is looking for, the key encodes what the token offers for matching, and the value encodes the content the token contributes to the output once it has been selected. Scores compare queries with keys, and the output mixes values.",
     },
@@ -79,10 +80,16 @@ weights = softmax(scores, dim=-1)  # exp(-inf) == 0`,
         "Each head has its own projections, so different heads can learn different relevance patterns, for example one head tracking adjacent tokens and another tracking the subject of the sentence. The head outputs are concatenated and mixed by an output matrix Wo. At the same model dimension the total cost is the same as one big head, but each head works in a smaller subspace.",
     },
     {
-      question: "What is the time and memory complexity of self-attention, and what follows from it?",
+      question:
+        "What is the time and memory complexity of self-attention, and what follows from it?",
       answer:
         "Computing Q K^T for n tokens costs O(n squared d) time and the score matrix takes O(n squared) memory per head. Context length is therefore the expensive axis: doubling it quadruples the attention work. This is why generation uses a key-value cache to avoid recomputing past keys and values, and why long-context models rely on sparse, windowed, or otherwise approximate attention.",
     },
   ],
-  relatedTopicIds: ["embeddings", "next-token-prediction", "tokenization", "backpropagation"],
+  relatedTopicIds: [
+    "embeddings",
+    "next-token-prediction",
+    "tokenization",
+    "backpropagation",
+  ],
 };

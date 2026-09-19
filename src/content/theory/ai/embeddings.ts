@@ -56,7 +56,8 @@ const X = ids.map((id) => E[id]);    // shape [3, d]`,
       },
     },
     {
-      question: "How does cosine similarity differ from the dot product, and when does it matter?",
+      question:
+        "How does cosine similarity differ from the dot product, and when does it matter?",
       answer:
         "Cosine similarity is the dot product divided by the product of the two norms, so it measures the angle between vectors and ignores their length. It matters when vectors have different magnitudes, which is common in learned embeddings, because the raw dot product would favour long vectors regardless of direction.",
       codeExample: {
@@ -85,7 +86,8 @@ cosine([0.8, 0.5, 0.1], [0.6, 0.7, 0.1]); // 0.95`,
         "They are initialised randomly and updated by gradient descent like any other weight. The gradient of the loss with respect to the input vectors flows back into the rows that were looked up, so each training example nudges only the rows for the tokens it contains. Over many examples, tokens with similar contexts converge toward similar rows.",
     },
     {
-      question: "Why can you not compare embeddings produced by two different models?",
+      question:
+        "Why can you not compare embeddings produced by two different models?",
       answer:
         "Each model learns its own coordinate system. Even with equal dimension, a direction that encodes one property in model A encodes something unrelated in model B, so cosine similarity across models is meaningless. A retrieval index has to be rebuilt whenever the embedding model changes.",
     },

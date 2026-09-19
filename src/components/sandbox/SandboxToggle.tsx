@@ -14,12 +14,12 @@ interface SandboxToggleProps {
 const btnBase =
   "inline-flex cursor-pointer items-center justify-center rounded-lg border transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70";
 
-export function SandboxToggle({
+export const SandboxToggle = ({
   isActive,
   onToggle,
   tooltipForceVisible = false,
   tooltipSide = "top",
-}: SandboxToggleProps) {
+}: SandboxToggleProps) => {
   return (
     <Tooltip
       label={isActive ? "Exit Sandbox" : "Write and run your own code"}
@@ -49,4 +49,4 @@ export function SandboxToggle({
       </button>
     </Tooltip>
   );
-}
+};

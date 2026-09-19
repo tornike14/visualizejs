@@ -69,7 +69,8 @@ console.log(double); // cached, no recompute`,
         "A write pushes dirty flags along the recorded dependency edges without recomputing anything. When the flush runs an effect, the effect pulls values by reading them, and a dirty derived recomputes at that moment. This keeps writes cheap and avoids computing values nobody reads.",
     },
     {
-      question: "When does an $effect run relative to the DOM update, and how does it know its dependencies?",
+      question:
+        "When does an $effect run relative to the DOM update, and how does it know its dependencies?",
       answer:
         "Effects run in a microtask after template effects have updated the DOM, so DOM reads inside them see the new state. Dependencies are collected by tracking every signal read while the callback runs, and they are re-collected on each run, so conditional reads change the subscription set.",
       codeExample: {
@@ -83,7 +84,8 @@ $effect(() => {
       },
     },
     {
-      question: "How does $state track nested writes like todos[0].done = true?",
+      question:
+        "How does $state track nested writes like todos[0].done = true?",
       answer:
         "$state wraps objects and arrays in a Proxy. The get trap lazily creates a source signal per property the first time it is read and nests another proxy for object values. The set trap writes that per-property source, so only reactions that read todos[0].done are marked dirty; the array length and other items are unaffected.",
     },

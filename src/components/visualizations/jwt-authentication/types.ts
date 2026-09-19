@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { FlowMessage } from "@/components/visualization-ui/MessageFlow";
 import type { MetricBar } from "@/components/visualization-ui/MetricBars";
@@ -47,10 +47,7 @@ export interface StoreEntry {
   active?: boolean;
 }
 
-export interface JwtStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface JwtStep extends BaseStep {
   tokenParts: TokenPart[];
   messages: FlowMessage[];
   activeActorId?: string;

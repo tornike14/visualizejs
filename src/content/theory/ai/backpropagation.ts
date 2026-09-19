@@ -60,7 +60,8 @@ const dB = dYHat;                    // -1.8`,
       },
     },
     {
-      question: "How does the chain rule let backpropagation reach a weight in the first layer?",
+      question:
+        "How does the chain rule let backpropagation reach a weight in the first layer?",
       answer:
         "The loss depends on an early weight only through the intermediate values above it. The chain rule says the derivative along that path is the product of the local derivatives of each operation. Backpropagation computes the product incrementally from the loss backward, so by the time it reaches the first layer the incoming gradient already contains every factor from the layers above.",
       codeExample: {
@@ -74,7 +75,8 @@ const dW1 = dZ * x;                    // dL/dw1 = product of all factors`,
       },
     },
     {
-      question: "Why do we subtract the gradient in the update, and what does the learning rate do?",
+      question:
+        "Why do we subtract the gradient in the update, and what does the learning rate do?",
       answer:
         "The gradient is the direction of steepest increase of the loss, so subtracting a multiple of it moves toward lower loss. The learning rate scales that move. Too small and training takes many steps; too large and the step overshoots the minimum, which can make the loss oscillate or diverge.",
     },
@@ -84,7 +86,8 @@ const dW1 = dZ * x;                    // dL/dw1 = product of all factors`,
         "Local derivatives depend on the forward values. The derivative of w * h with respect to w is h, and ReLU's derivative depends on whether its input was positive. Without the saved activations the backward pass could not compute those factors. This is also why training uses far more memory than inference.",
     },
     {
-      question: "How does this scale to a transformer with billions of parameters?",
+      question:
+        "How does this scale to a transformer with billions of parameters?",
       answer:
         "The mechanism is identical. Automatic differentiation records every tensor operation of the forward pass into a graph, and each operation has a known backward rule, including matrix multiplication, softmax, and layer norm. The backward pass sweeps the graph once and produces a gradient tensor for every weight matrix, and the optimizer applies the update to all of them in parallel on the GPU.",
     },

@@ -21,7 +21,8 @@ export const heapStackTheory: TopicTheoryContent = {
   ],
   commonMistakes: [
     {
-      title: "Treating stack and heap as strict language guarantees for every value",
+      title:
+        "Treating stack and heap as strict language guarantees for every value",
       explanation:
         "The model is conceptual and implementation details can vary by engine optimization strategy.",
       fix: "Use stack and heap as a mental model for behavior, not as a strict byte-level storage contract.",
@@ -47,7 +48,8 @@ export const heapStackTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What is the difference between stack and heap memory in JavaScript?",
+      question:
+        "What is the difference between stack and heap memory in JavaScript?",
       answer:
         "The stack holds execution frames and local bindings in last-in-first-out order, with fast automatic cleanup and a small fixed size. The heap holds objects with dynamic lifetimes, costs more to allocate, and is reclaimed by the garbage collector when nothing reachable references the object.",
       codeExample: {
@@ -100,5 +102,11 @@ console.log(person.name); // "Ada"`,
         "Garbage collection reclaims heap objects that are no longer reachable from active roots.",
     },
   ],
-  relatedTopicIds: ["execution-context", "reference-value", "garbage-collection", "closures", "event-loop"],
+  relatedTopicIds: [
+    "execution-context",
+    "reference-value",
+    "garbage-collection",
+    "closures",
+    "event-loop",
+  ],
 };

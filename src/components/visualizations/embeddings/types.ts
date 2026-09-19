@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
 
@@ -24,10 +24,7 @@ export interface SignedBar {
   value: number;
 }
 
-export interface EmbeddingsStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface EmbeddingsStep extends BaseStep {
   primaryTable: VectorTable | null;
   secondaryTable: VectorTable | null;
   chips: TokenChip[];

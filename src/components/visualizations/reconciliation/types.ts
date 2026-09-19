@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type ReconciliationKind = "same-type" | "different-type" | "key-list";
@@ -9,10 +9,7 @@ export interface DiffOperation {
   detail: string;
 }
 
-export interface ReconciliationStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ReconciliationStep extends BaseStep {
   previousTree: TreeNodeData;
   newTree: TreeNodeData;
   activeNodeId?: string;

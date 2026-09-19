@@ -24,12 +24,18 @@ export const SCOPE_BOX_BASE =
 export const scopeHighlightClass = chainHighlightClass;
 export const scopeLabelClass = chainLabelClass;
 
-export function scopeTypeBadge(type: ScopeEntry["type"]): { letter: string; className: string } {
+export function scopeTypeBadge(type: ScopeEntry["type"]): {
+  letter: string;
+  className: string;
+} {
   switch (type) {
     case "global":
       return { letter: "Global", className: "bg-pink-500/20 text-pink-300" };
     case "function":
-      return { letter: "Function", className: "bg-amber-500/20 text-amber-300" };
+      return {
+        letter: "Function",
+        className: "bg-amber-500/20 text-amber-300",
+      };
     case "block":
       return { letter: "Block", className: "bg-cyan-500/20 text-cyan-300" };
   }

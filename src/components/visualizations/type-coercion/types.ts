@@ -1,5 +1,5 @@
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type CoercionKind = "equality" | "truthy" | "null" | "nan";
 
@@ -9,10 +9,7 @@ export interface CoercionOperation {
   color: "amber" | "emerald" | "red" | "cyan";
 }
 
-export interface CoercionStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface CoercionStep extends BaseStep {
   consoleOutput: string[];
   coercionOps: CoercionOperation[];
 }

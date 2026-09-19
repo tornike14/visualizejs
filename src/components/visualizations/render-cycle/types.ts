@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type RenderCycleKind = "two-phases" | "batched-updates";
@@ -20,10 +20,7 @@ export interface PhaseInfo {
   tags: string[];
 }
 
-export interface RenderCycleStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface RenderCycleStep extends BaseStep {
   phaseInfo: PhaseInfo;
   currentTree: TreeNodeData;
   wipTree: TreeNodeData | null;

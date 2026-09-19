@@ -1,7 +1,11 @@
 import { cn } from "@/lib/utils";
 import type { CreateElementCall } from "../types";
 
-export function CreateElementPanel({ calls }: { calls: CreateElementCall[] }) {
+export const CreateElementPanel = ({
+  calls,
+}: {
+  calls: CreateElementCall[];
+}) => {
   if (calls.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -27,4 +31,4 @@ export function CreateElementPanel({ calls }: { calls: CreateElementCall[] }) {
       ))}
     </div>
   );
-}
+};

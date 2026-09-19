@@ -52,7 +52,8 @@ export const DomPanel = ({ dom }: DomPanelProps) => {
           ) : (
             <>
               <p className="mb-1 text-slate-500">
-                query &quot;{dom.listQuery}&quot;, {dom.listCount.toLocaleString()} rows
+                query &quot;{dom.listQuery}&quot;,{" "}
+                {dom.listCount.toLocaleString()} rows
               </p>
               {rows.map((row) => (
                 <p
@@ -73,7 +74,11 @@ export const DomPanel = ({ dom }: DomPanelProps) => {
           {dom.isPending !== null && (
             <span className="text-slate-400">
               isPending{" "}
-              <span className={dom.isPending ? "text-amber-300" : "text-emerald-300"}>
+              <span
+                className={
+                  dom.isPending ? "text-amber-300" : "text-emerald-300"
+                }
+              >
                 {String(dom.isPending)}
               </span>
             </span>

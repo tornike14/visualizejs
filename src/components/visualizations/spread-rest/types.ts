@@ -1,9 +1,13 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 /* ── Types ── */
 
-export type SpreadRestKind = "array-spread" | "object-spread" | "rest-params" | "rest-destructuring";
+export type SpreadRestKind =
+  | "array-spread"
+  | "object-spread"
+  | "rest-params"
+  | "rest-destructuring";
 
 export interface VariableBinding {
   name: string;
@@ -12,10 +16,7 @@ export interface VariableBinding {
   tone: "amber" | "cyan" | "emerald" | "violet" | "pink";
 }
 
-export interface SpreadRestStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface SpreadRestStep extends BaseStep {
   consoleOutput: string[];
   bindings: VariableBinding[];
 }

@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { GCKind, GCRoot, HeapObject } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<GCKind>({

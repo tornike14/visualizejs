@@ -29,7 +29,11 @@ export const VectorTable = ({ rows }: { rows: VectorRow[] }) => {
               token
             </th>
             {columns.map((label) => (
-              <th key={label} scope="col" className="px-2 text-left font-semibold">
+              <th
+                key={label}
+                scope="col"
+                className="px-2 text-left font-semibold"
+              >
                 {label}
               </th>
             ))}

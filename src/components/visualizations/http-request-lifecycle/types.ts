@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { PipelineStage } from "@/components/visualization-ui/PipelineDiagram";
 import type {
@@ -16,10 +16,7 @@ export interface TableRow {
   tone?: TableRowTone;
 }
 
-export interface HttpRequestStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface HttpRequestStep extends BaseStep {
   /** Cumulative wall-clock time shown next to the pipeline, e.g. "80 ms". */
   elapsed?: string;
   stages: PipelineStage[];

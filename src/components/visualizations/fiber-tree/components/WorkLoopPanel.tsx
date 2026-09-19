@@ -8,11 +8,11 @@ interface WorkLoopPanelProps {
   pendingWork: string[];
 }
 
-export function WorkLoopPanel({
+export const WorkLoopPanel = ({
   phase,
   currentFiber,
   pendingWork,
-}: WorkLoopPanelProps) {
+}: WorkLoopPanelProps) => {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
@@ -53,4 +53,4 @@ export function WorkLoopPanel({
       </div>
     </div>
   );
-}
+};

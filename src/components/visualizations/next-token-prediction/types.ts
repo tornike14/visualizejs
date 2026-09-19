@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { PipelineStage } from "@/components/visualization-ui/PipelineDiagram";
 import type { TokenChip } from "@/components/visualization-ui/TokenChips";
@@ -37,10 +37,7 @@ export interface DetailTable {
   rows: TableRow[];
 }
 
-export interface NextTokenStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface NextTokenStep extends BaseStep {
   pipeline: PipelineStage[];
   candidateMode: CandidateMode;
   candidates: CandidateRow[];

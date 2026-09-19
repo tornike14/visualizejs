@@ -21,12 +21,15 @@ Node 20 or newer is required.
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start dev server (webpack mode) |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+| Command             | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| `npm run dev`       | Start dev server (webpack mode)                      |
+| `npm run build`     | Production build                                     |
+| `npm run start`     | Serve the production build                           |
+| `npm run lint`      | Run ESLint                                           |
+| `npm run typecheck` | Run TypeScript (also validates every topic registry) |
+| `npm run format`    | Format with Prettier (`format:check` in CI)          |
+| `npm run verify`    | Lint, typecheck, format check, and build             |
 
 ## Topics
 
@@ -36,81 +39,81 @@ Each topic lives at a single route, with the visualization at the top and the th
 
 Runtime internals: the event loop, scope, memory, and async.
 
-| Topic | Difficulty |
-|---|---|
-| [Event Loop](/javascript/event-loop) | Intermediate |
-| [Hoisting](/javascript/hoisting) | Beginner |
-| [Execution Context](/javascript/execution-context) | Intermediate |
-| [Closures](/javascript/closures) | Intermediate |
-| [Promises](/javascript/promises) | Intermediate |
-| [this Keyword](/javascript/this-keyword) | Intermediate |
-| [Scope Chain](/javascript/scope-chain) | Intermediate |
-| [Type Coercion](/javascript/type-coercion) | Beginner |
-| [Destructuring](/javascript/destructuring) | Beginner |
-| [Spread & Rest](/javascript/spread-rest) | Beginner |
-| [Prototypal Inheritance](/javascript/prototypal-inheritance) | Advanced |
-| [Reference vs Value](/javascript/reference-value) | Beginner |
-| [Heap & Stack](/javascript/heap-stack) | Advanced |
-| [Garbage Collection](/javascript/garbage-collection) | Advanced |
-| [Generators & Iterators](/javascript/generators) | Advanced |
-| [Event Delegation](/javascript/event-delegation) | Beginner |
-| [Modules & Imports](/javascript/modules-imports) | Intermediate |
-| [Async/Await](/javascript/async-await) | Intermediate |
-| [Debounce & Throttle](/javascript/debounce-throttle) | Beginner |
+| Topic                                                        | Difficulty   |
+| ------------------------------------------------------------ | ------------ |
+| [Event Loop](/javascript/event-loop)                         | Intermediate |
+| [Hoisting](/javascript/hoisting)                             | Beginner     |
+| [Execution Context](/javascript/execution-context)           | Intermediate |
+| [Closures](/javascript/closures)                             | Intermediate |
+| [Promises](/javascript/promises)                             | Intermediate |
+| [this Keyword](/javascript/this-keyword)                     | Intermediate |
+| [Scope Chain](/javascript/scope-chain)                       | Intermediate |
+| [Type Coercion](/javascript/type-coercion)                   | Beginner     |
+| [Destructuring](/javascript/destructuring)                   | Beginner     |
+| [Spread & Rest](/javascript/spread-rest)                     | Beginner     |
+| [Prototypal Inheritance](/javascript/prototypal-inheritance) | Advanced     |
+| [Reference vs Value](/javascript/reference-value)            | Beginner     |
+| [Heap & Stack](/javascript/heap-stack)                       | Advanced     |
+| [Garbage Collection](/javascript/garbage-collection)         | Advanced     |
+| [Generators & Iterators](/javascript/generators)             | Advanced     |
+| [Event Delegation](/javascript/event-delegation)             | Beginner     |
+| [Modules & Imports](/javascript/modules-imports)             | Intermediate |
+| [Async/Await](/javascript/async-await)                       | Intermediate |
+| [Debounce & Throttle](/javascript/debounce-throttle)         | Beginner     |
 
 ### React (13)
 
 How React decides what to render and what it commits to the DOM.
 
-| Topic | Difficulty |
-|---|---|
-| [Virtual DOM](/react/virtual-dom) | Beginner |
-| [Reconciliation](/react/reconciliation) | Intermediate |
-| [Context Propagation](/react/context-propagation) | Intermediate |
-| [Fiber Tree](/react/fiber-tree) | Advanced |
-| [Hooks](/react/hooks) | Intermediate |
-| [Render Cycle](/react/render-cycle) | Advanced |
-| [Memoization](/react/memoization) | Intermediate |
-| [Suspense](/react/suspense) | Intermediate |
-| [Server Components](/react/server-components) | Advanced |
-| [Error Boundaries](/react/error-boundaries) | Intermediate |
-| [useEffect Lifecycle](/react/use-effect-lifecycle) | Beginner |
-| [State Batching](/react/state-batching) | Intermediate |
-| [Concurrent Rendering](/react/concurrent-rendering) | Advanced |
+| Topic                                               | Difficulty   |
+| --------------------------------------------------- | ------------ |
+| [Virtual DOM](/react/virtual-dom)                   | Beginner     |
+| [Reconciliation](/react/reconciliation)             | Intermediate |
+| [Context Propagation](/react/context-propagation)   | Intermediate |
+| [Fiber Tree](/react/fiber-tree)                     | Advanced     |
+| [Hooks](/react/hooks)                               | Intermediate |
+| [Render Cycle](/react/render-cycle)                 | Advanced     |
+| [Memoization](/react/memoization)                   | Intermediate |
+| [Suspense](/react/suspense)                         | Intermediate |
+| [Server Components](/react/server-components)       | Advanced     |
+| [Error Boundaries](/react/error-boundaries)         | Intermediate |
+| [useEffect Lifecycle](/react/use-effect-lifecycle)  | Beginner     |
+| [State Batching](/react/state-batching)             | Intermediate |
+| [Concurrent Rendering](/react/concurrent-rendering) | Advanced     |
 
 ### Frameworks (3)
 
 How Vue, Svelte, and Angular track changes, compared side by side.
 
-| Topic | Difficulty |
-|---|---|
-| [Vue Reactivity](/frameworks/vue-reactivity) | Intermediate |
-| [Svelte Runes](/frameworks/svelte-runes) | Intermediate |
-| [Angular Change Detection](/frameworks/angular-change-detection) | Advanced |
+| Topic                                                            | Difficulty   |
+| ---------------------------------------------------------------- | ------------ |
+| [Vue Reactivity](/frameworks/vue-reactivity)                     | Intermediate |
+| [Svelte Runes](/frameworks/svelte-runes)                         | Intermediate |
+| [Angular Change Detection](/frameworks/angular-change-detection) | Advanced     |
 
 ### Backend (5)
 
 What happens between a request leaving the browser and the response.
 
-| Topic | Difficulty |
-|---|---|
-| [HTTP Request Lifecycle](/backend/http-request-lifecycle) | Beginner |
-| [Database Indexing](/backend/database-indexing) | Intermediate |
-| [Caching Strategies](/backend/caching-strategies) | Intermediate |
-| [JWT Authentication](/backend/jwt-authentication) | Intermediate |
-| [Rate Limiting](/backend/rate-limiting) | Intermediate |
+| Topic                                                     | Difficulty   |
+| --------------------------------------------------------- | ------------ |
+| [HTTP Request Lifecycle](/backend/http-request-lifecycle) | Beginner     |
+| [Database Indexing](/backend/database-indexing)           | Intermediate |
+| [Caching Strategies](/backend/caching-strategies)         | Intermediate |
+| [JWT Authentication](/backend/jwt-authentication)         | Intermediate |
+| [Rate Limiting](/backend/rate-limiting)                   | Intermediate |
 
 ### AI (5)
 
 What a language model does with your text, from tokens to the next word.
 
-| Topic | Difficulty |
-|---|---|
-| [Tokenization](/ai/tokenization) | Beginner |
-| [Embeddings](/ai/embeddings) | Beginner |
-| [Attention](/ai/attention) | Intermediate |
+| Topic                                              | Difficulty   |
+| -------------------------------------------------- | ------------ |
+| [Tokenization](/ai/tokenization)                   | Beginner     |
+| [Embeddings](/ai/embeddings)                       | Beginner     |
+| [Attention](/ai/attention)                         | Intermediate |
 | [Next Token Prediction](/ai/next-token-prediction) | Intermediate |
-| [Backpropagation](/ai/backpropagation) | Advanced |
+| [Backpropagation](/ai/backpropagation)             | Advanced     |
 
 Some topics also have a sandbox mode where you can edit the code and watch the visualization respond. Event Loop is the reference implementation.
 
@@ -118,30 +121,30 @@ Some topics also have a sandbox mode where you can edit the code and watch the v
 
 ```
 src/
-  app/                      Next.js App Router routes
+  app/[category]/           Generated category and topic routes
   components/
     layout/                 Page shell, navigation
-    visualization-ui/       Shared primitives (NeonPanel, CodeBlock, TransportControls)
-    visualizations/         One folder per topic
+    visualization-ui/       Shared primitives (VisualizationToolbar, SourceCodePanel, NeonPanel, ...)
+    visualizations/         One folder per topic, plus registry.tsx
   content/theory/           Theory content, one file per topic
-  hooks/                    useStepPlayback, useChangeFlash
+  hooks/                    useExampleTopic, useStepPlayback, useChangeFlash
   lib/
     topics.ts               Topic registry, the single source of truth
     metadata.ts             SEO metadata factory
     sandbox/                Sandbox mode infrastructure
 ```
 
-Adding a topic touches several registries. [`CONTRIBUTING.md`](CONTRIBUTING.md) lists all of them.
+Adding a topic touches several registries, all typed by `TopicId` so a missing entry fails the type check. [`CONTRIBUTING.md`](CONTRIBUTING.md) lists them.
 
 ## Environment Variables
 
 All are optional and have working defaults. Copy [`.env.example`](.env.example) to `.env.local` to override.
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `https://visualizejs.com` | Canonical URLs, sitemap, Open Graph tags |
-| `NEXT_PUBLIC_CREATOR_LINKEDIN_URL` | Maintainer's profile | Credit link in the footer |
-| `NEXT_PUBLIC_CREATOR_AVATAR_SRC` | `/personal-image.png` | Avatar in the footer |
+| Variable                           | Default                   | Purpose                                  |
+| ---------------------------------- | ------------------------- | ---------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`             | `https://visualizejs.com` | Canonical URLs, sitemap, Open Graph tags |
+| `NEXT_PUBLIC_CREATOR_LINKEDIN_URL` | Maintainer's profile      | Credit link in the footer                |
+| `NEXT_PUBLIC_CREATOR_AVATAR_SRC`   | `/personal-image.png`     | Avatar in the footer                     |
 
 If you fork this, set the last two to your own.
 
@@ -151,16 +154,16 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md) first. New topics are welcome, and the
 
 ## Documentation
 
-| Doc | Covers |
-|---|---|
-| [`docs/topic-authoring.md`](docs/topic-authoring.md) | JavaScript topic creation workflow |
-| [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) | React topic extensions |
-| [`docs/component-reference.md`](docs/component-reference.md) | Design system, components, hooks, animations |
-| [`docs/theory-authoring.md`](docs/theory-authoring.md) | Theory content authoring |
-| [`docs/sandbox-authoring.md`](docs/sandbox-authoring.md) | Sandbox mode |
-| [`docs/architecture.md`](docs/architecture.md) | Frontend architecture rules |
-| [`docs/categories.md`](docs/categories.md) | Category registry and adding a category |
-| [`docs/seo.md`](docs/seo.md) | SEO implementation |
+| Doc                                                              | Covers                                       |
+| ---------------------------------------------------------------- | -------------------------------------------- |
+| [`docs/topic-authoring.md`](docs/topic-authoring.md)             | JavaScript topic creation workflow           |
+| [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) | React topic extensions                       |
+| [`docs/component-reference.md`](docs/component-reference.md)     | Design system, components, hooks, animations |
+| [`docs/theory-authoring.md`](docs/theory-authoring.md)           | Theory content authoring                     |
+| [`docs/sandbox-authoring.md`](docs/sandbox-authoring.md)         | Sandbox mode                                 |
+| [`docs/architecture.md`](docs/architecture.md)                   | Frontend architecture rules                  |
+| [`docs/categories.md`](docs/categories.md)                       | Category registry and adding a category      |
+| [`docs/seo.md`](docs/seo.md)                                     | SEO implementation                           |
 
 ## Tech Stack
 

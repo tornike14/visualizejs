@@ -2,7 +2,7 @@ import { CategoryHero } from "@/components/layout/CategoryHero";
 import { TopicCard } from "@/components/layout/TopicCard";
 import { CATEGORIES } from "@/lib/categories";
 import { SITE_URL } from "@/lib/constants";
-import { getTopicsByCategory } from "@/lib/topics";
+import { getTopicsByCategory, groupTopics } from "@/lib/topics";
 import type { Category } from "@/types";
 
 interface CategoryTopicsPageProps {
@@ -11,6 +11,7 @@ interface CategoryTopicsPageProps {
 
 export const CategoryTopicsPage = ({ category }: CategoryTopicsPageProps) => {
   const topics = getTopicsByCategory(category);
+  const groups = groupTopics(topics);
   const config = CATEGORIES[category];
   const categoryUrl = `${SITE_URL}${config.route}`;
   const categorySchema = {
@@ -31,22 +32,11 @@ export const CategoryTopicsPage = ({ category }: CategoryTopicsPageProps) => {
     },
   };
 
-  const navigationSchema = {
-    "@context": "https://schema.org",
-    "@type": "SiteNavigationElement",
-    name: topics.map((topic) => topic.title),
-    url: topics.map((topic) => `${SITE_URL}${topic.route}`),
-  };
-
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-10 pt-3 lg:px-10 lg:py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
       />
       <CategoryHero config={config} />
 
@@ -59,11 +49,29 @@ export const CategoryTopicsPage = ({ category }: CategoryTopicsPageProps) => {
             {topics.length} topics, ordered from fundamentals to internals
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {topics.map((topic, index) => (
-            <TopicCard key={topic.id} topic={topic} index={index + 1} />
-          ))}
-        </div>
+        {groups.map((group, groupIndex) => {
+          const offset = groups
+            .slice(0, groupIndex)
+            .reduce((sum, entry) => sum + entry.topics.length, 0);
+          return (
+            <div key={group.label ?? "all"} className="flex flex-col gap-3">
+              {group.label && (
+                <h3 className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--app-text-secondary)]">
+                  {group.label}
+                </h3>
+              )}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {group.topics.map((topic, index) => (
+                  <TopicCard
+                    key={topic.id}
+                    topic={topic}
+                    index={offset + index + 1}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </section>
     </div>
   );

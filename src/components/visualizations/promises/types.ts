@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type PromiseKind = "basic" | "chaining" | "async-await";
 
@@ -8,10 +8,7 @@ export interface PromiseObj {
   value: string;
 }
 
-export interface PromiseStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface PromiseStep extends BaseStep {
   promises: PromiseObj[];
   microtasks: string[];
   consoleOutput: string[];

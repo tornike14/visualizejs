@@ -8,7 +8,11 @@ interface QueueListProps {
   emptyLabel?: string;
 }
 
-export const QueueList = ({ items, tone, emptyLabel = "empty" }: QueueListProps) => {
+export const QueueList = ({
+  items,
+  tone,
+  emptyLabel = "empty",
+}: QueueListProps) => {
   if (items.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">

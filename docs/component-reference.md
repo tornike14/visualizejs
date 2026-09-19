@@ -20,23 +20,23 @@ Design system, reusable visualization components, shared hooks, and animation sy
 
 ### Color Palette (CSS Variables)
 
-| Variable | Value | Usage |
-|---|---|---|
-| `--app-bg` | `#090f1f` | Page background |
-| `--app-surface` | `#0f1a30` | Card backgrounds |
-| `--app-surface-strong` | `#0d1528` | Sidebar, stronger surfaces |
-| `--app-border` | `rgba(71, 85, 105, 0.65)` | Borders |
-| `--app-text-primary` | `#e2e8f0` | Primary text |
-| `--app-text-secondary` | `#94a3b8` | Secondary/muted text |
-| `--app-accent` | `#f472b6` | Pink accent |
+| Variable               | Value                     | Usage                      |
+| ---------------------- | ------------------------- | -------------------------- |
+| `--app-bg`             | `#090f1f`                 | Page background            |
+| `--app-surface`        | `#0f1a30`                 | Card backgrounds           |
+| `--app-surface-strong` | `#0d1528`                 | Sidebar, stronger surfaces |
+| `--app-border`         | `rgba(71, 85, 105, 0.65)` | Borders                    |
+| `--app-text-primary`   | `#e2e8f0`                 | Primary text               |
+| `--app-text-secondary` | `#94a3b8`                 | Secondary/muted text       |
+| `--app-accent`         | `#f472b6`                 | Pink accent                |
 
 ### Surface Classes
 
-| Class | Use |
-|---|---|
-| `.app-surface` | Main cards - gradient bg, border, shadow, blur |
+| Class                 | Use                                                    |
+| --------------------- | ------------------------------------------------------ |
+| `.app-surface`        | Main cards - gradient bg, border, shadow, blur         |
 | `.app-surface-subtle` | Lighter containers - controls row and explanation pill |
-| `.app-surface-flat` | Minimal surface - inline code backgrounds |
+| `.app-surface-flat`   | Minimal surface - inline code backgrounds              |
 
 ### Difficulty Badge Colors
 
@@ -53,6 +53,83 @@ export const DIFFICULTY_COLORS = {
 ---
 
 ## Reusable Components
+
+### Topic Scaffold
+
+Four components plus one hook carry the layout every step-driven topic shares. Use them instead of assembling `ToolbarPortal`, `TransportControls`, `NeonPanel`, and `CodeBlock` by hand.
+
+**`VisualizationToolbar`** (`src/components/visualization-ui/VisualizationToolbar.tsx`)
+
+Portals the transport controls and the step description pill into the page shell's toolbar slot.
+
+```tsx
+<VisualizationToolbar
+  playback={playback}                         // StepPlayback from useStepPlayback / useExampleTopic
+  totalSteps={example.steps.length}
+  descriptionHtml={currentStep?.descriptionHtml}
+  descriptionFlash={flashes.description}
+  leading={<ExamplePicker ... />}             // optional: picker, badges, sandbox buttons
+  align="center"                              // optional: keep leading and transport together
+  hideTransport={isEditingSandbox}            // optional
+  descriptionOverride={<SandboxEditingHint />} // optional: replaces the pill content
+/>
+```
+
+Pass `simpleHtml` and `hasSimpleText` (both from `useExampleTopic`) to enable the Simple / Detailed toggle; `ExplanationToggle` and `useExplanationMode` back it. `StepDescription` is exported from the same file for the rare case a topic needs the pill on its own.
+
+**`ExamplePicker`** (`src/components/visualization-ui/ExamplePicker.tsx`)
+
+`ExampleSelector` plus the active example's badge. `KindBadge` is the small outline badge used inside `renderBadge`.
+
+```tsx
+<ExamplePicker
+  examples={EXAMPLES}
+  activeId={activeExampleId}
+  onSelect={handleExampleChange}
+  renderBadge={(ex) => (
+    <KindBadge className={kindBadgeClass(ex.kind)}>
+      {kindLabel(ex.kind)}
+    </KindBadge>
+  )}
+/>
+```
+
+**`SourceCodePanel`** (`src/components/visualization-ui/SourceCodePanel.tsx`)
+
+The amber Source Code panel. Derives line classes once per step and never fades the active line.
+
+```tsx
+<SourceCodePanel
+  lines={example.codeLines}
+  activeLine={currentStep?.activeLine}
+  doneLines={currentStep?.doneLines}
+  highlightLines={currentStep?.highlightLines} // optional
+  title="Compiled Output"
+  tone="violet" // optional overrides
+/>
+```
+
+**`VisualizationSection`, `SourceGrid`, `WaitingPlaceholder`** (`src/components/visualization-ui/VisualizationLayout.tsx`)
+
+The section wrapper below the toolbar, the two-column grid (source left, panels right at `xl`), and the "waiting" empty state for a panel before playback starts.
+
+**`useExampleTopic`** (`src/hooks/useExampleTopic.ts`)
+
+```tsx
+const { example, activeExampleId, handleExampleChange, playback, currentStep } =
+  useExampleTopic(EXAMPLES);
+```
+
+Owns the active example, restarts playback when it changes, and types `currentStep` from the example's `steps`.
+
+**`FlowConnector`** (`src/components/visualization-ui/FlowConnector.tsx`)
+
+A dotted track between two nodes with glowing dots travelling along it while `active`. `PipelineDiagram` uses it on the edges next to the active stage and `MessageFlow` on the active message. Tone is one of `cyan`, `emerald`, `pink`, `amber`, `violet`, `slate`; size it with width or height classes. Respects `prefers-reduced-motion` (the dot sits still in the middle).
+
+```tsx
+<FlowConnector active tone="cyan" className="w-6" />
+<FlowConnector orientation="vertical" active reverse className="h-4" />
+```
 
 ### NeonPanel
 
@@ -161,7 +238,7 @@ const EXAMPLES: MyExample[] = [
 ];
 
 // In your component:
-const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
+const { activeExampleId, handleExampleChange } = useExampleTopic(EXAMPLES);
 
 <ExampleSelector
   examples={EXAMPLES}
@@ -177,27 +254,16 @@ const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
 
 **Props:**
 
-| Prop | Type | Description |
-|---|---|---|
-| `examples` | `T[]` | Array of example objects (must extend `ExampleOption`) |
-| `activeId` | `string` | Currently selected example ID |
-| `onSelect` | `(id: string) => void` | Called when the user picks a different example |
+| Prop          | Type                        | Description                                                         |
+| ------------- | --------------------------- | ------------------------------------------------------------------- |
+| `examples`    | `T[]`                       | Array of example objects (must extend `ExampleOption`)              |
+| `activeId`    | `string`                    | Currently selected example ID                                       |
+| `onSelect`    | `(id: string) => void`      | Called when the user picks a different example                      |
 | `renderBadge` | `(example: T) => ReactNode` | Optional render prop for a badge next to each title in the dropdown |
 
-**Integration with playback:** When switching examples, reset playback using `useStepPlayback`'s `resetKey` option:
+**Integration with playback:** `useExampleTopic` wires the selector to playback (it passes `activeExampleId` as `resetKey`). Topics normally render it through `ExamplePicker` inside `VisualizationToolbar`'s `leading` slot.
 
-```typescript
-const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
-
-const { currentStepIndex, ... } = useStepPlayback({
-  totalSteps: example.steps.length,
-  initialStep: -1,
-  resetKey: activeExampleId, // resets playback when the example changes
-});
-```
-
-The selector renders in the toolbar area (inside `<ToolbarPortal>`), typically left-aligned with badges while transport controls stay on the right. It uses the shared `useClickOutside` hook internally for outside-click and Escape key dismissal.
-
+The list supports arrow keys, Home, End, Enter, and Space; it uses `useClickOutside` for outside-click and Escape dismissal.
 
 ### PipelineDiagram
 
@@ -207,7 +273,7 @@ Ordered stages with one active. Used for request lifecycles, middleware chains, 
 
 ```tsx
 <PipelineDiagram
-  orientation="horizontal"          // or "vertical"
+  orientation="horizontal" // or "vertical"
   stages={[
     { id: "dns", label: "DNS", detail: "20 ms", status: "done" },
     { id: "tcp", label: "TCP", detail: "1 RTT", status: "active" },
@@ -247,8 +313,16 @@ Matrix of 0 to 1 values with colour intensity, optional row/column highlight and
 <HeatmapGrid
   rowLabels={["The", "cat", "sat"]}
   colLabels={["The", "cat", "sat"]}
-  values={[[1, 0, 0], [0.4, 0.6, 0], [0.2, 0.3, 0.5]]}
-  mask={[[true, false, false], [true, true, false], [true, true, true]]}
+  values={[
+    [1, 0, 0],
+    [0.4, 0.6, 0],
+    [0.2, 0.3, 0.5],
+  ]}
+  mask={[
+    [true, false, false],
+    [true, true, false],
+    [true, true, true],
+  ]}
   activeRow={2}
   colorRgb="244 114 182"
 />
@@ -277,11 +351,26 @@ Sequence-diagram style panel: actors across the top, messages listed in order wi
 
 ```tsx
 <MessageFlow
-  actors={[{ id: "client", label: "Client" }, { id: "server", label: "Server" }]}
+  actors={[
+    { id: "client", label: "Client" },
+    { id: "server", label: "Server" },
+  ]}
   activeActorId="server"
   messages={[
-    { id: "m1", from: "client", to: "server", label: "POST /login", status: "done" },
-    { id: "m2", from: "server", to: "client", label: "200 + token", status: "active" },
+    {
+      id: "m1",
+      from: "client",
+      to: "server",
+      label: "POST /login",
+      status: "done",
+    },
+    {
+      id: "m2",
+      from: "server",
+      to: "client",
+      label: "200 + token",
+      status: "active",
+    },
   ]}
 />
 ```
@@ -292,12 +381,7 @@ Statuses: `done`, `active`, `pending`, `failed`.
 
 **File:** `src/components/visualization-ui/TransportControls/StepScrubber.tsx`
 
-Rendered automatically by `TransportControls` when `onJumpTo` is passed. A native range input mapped to step indexes. Every topic passes `jumpTo` from `useStepPlayback`:
-
-```tsx
-const { jumpTo, ...playback } = useStepPlayback({ ... });
-<TransportControls {...playback} onJumpTo={jumpTo} />
-```
+Rendered automatically by `TransportControls` when `onJumpTo` is passed. A native range input mapped to step indexes. `VisualizationToolbar` always passes `playback.jumpTo`, so every topic gets the scrubber.
 
 ### Tooltip
 
@@ -329,20 +413,22 @@ import { TopicLink } from "@/components/visualization-ui/TopicLink";
 
 **Props:**
 
-| Prop | Type | Description |
-|---|---|---|
-| `href` | `string` | Route to the related topic |
-| `label` | `string` | Descriptive link text |
-| `className` | `string?` | Optional extra classes |
+| Prop        | Type      | Description                |
+| ----------- | --------- | -------------------------- |
+| `href`      | `string`  | Route to the related topic |
+| `label`     | `string`  | Descriptive link text      |
+| `className` | `string?` | Optional extra classes     |
 
 Renders as a pink pill with an arrow icon. Show it conditionally on the last step of a relevant example:
 
 ```tsx
-{currentStepIndex === example.steps.length - 1 && (
-  <div className="flex justify-center pt-1">
-    <TopicLink href="/javascript/closures" label="Learn how Closures work" />
-  </div>
-)}
+{
+  currentStepIndex === example.steps.length - 1 && (
+    <div className="flex justify-center pt-1">
+      <TopicLink href="/javascript/closures" label="Learn how Closures work" />
+    </div>
+  );
+}
 ```
 
 ---
@@ -351,65 +437,64 @@ Renders as a pink pill with an arrow icon. Show it conditionally on the last ste
 
 **File:** `src/hooks/useStepPlayback.ts`
 
-Central playback engine used by all visualizations. Manages step index, auto-play timer, speed levels.
+Central playback engine used by all visualizations. Manages step index, auto-play timer, speed levels. Selector topics get it through `useExampleTopic`; single-example and sandbox topics call it directly. The return type is exported as `StepPlayback`, which is what `VisualizationToolbar` takes as its `playback` prop.
 
 ```typescript
 import { useStepPlayback } from "@/hooks/useStepPlayback";
 
 const {
-  currentStepIndex,  // -1 (not started) or 0..N
-  isPlaying,         // auto-advance active
-  speedLevel,        // 1-6
-  speedLabel,        // "0.25x" .. "2x"
-  canStep,           // can advance forward
-  canStepBack,       // can go backward
-  togglePlay,        // play/pause
-  step,              // advance one step
-  stepBack,          // go back one step
-  reset,             // return to initial state
-  setSpeedLevel,     // change speed
-  jumpTo,            // jump to specific step index
+  currentStepIndex, // -1 (not started) or 0..N
+  isPlaying, // auto-advance active
+  speedLevel, // 1-6
+  speedLabel, // "0.25x" .. "2x"
+  canStep, // can advance forward
+  canStepBack, // can go backward
+  togglePlay, // play/pause
+  step, // advance one step
+  stepBack, // go back one step
+  reset, // return to initial state
+  setSpeedLevel, // change speed
+  jumpTo, // jump to specific step index
 } = useStepPlayback({
   totalSteps: STEPS.length,
-  initialStep: -1,       // -1 = "not started", 0 = "first step visible"
-  resetKey: someValue,   // optional: reset when this changes
+  initialStep: -1, // -1 = "not started", 0 = "first step visible"
+  resetKey: someValue, // optional: reset when this changes
 });
 ```
 
 **Options:**
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `totalSteps` | `number` | required | Total number of steps |
-| `initialStep` | `number` | `-1` | Starting index. Use `-1` for "press play to start", `0` for "first step shown immediately" |
-| `resetKey` | `string \| number` | `undefined` | When this changes, playback resets. Use for switching between sub-examples (like Hoisting's example selector) |
+| Option        | Type               | Default     | Description                                                                                                   |
+| ------------- | ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| `totalSteps`  | `number`           | required    | Total number of steps                                                                                         |
+| `initialStep` | `number`           | `-1`        | Starting index. Use `-1` for "press play to start", `0` for "first step shown immediately"                    |
+| `resetKey`    | `string \| number` | `undefined` | When this changes, playback resets. Use for switching between sub-examples (like Hoisting's example selector) |
 
 Default speed level is `4` (`1x`).
 
 **Speed levels:**
 
-| Level | Label | Delay |
-|---|---|---|
-| 1 | 0.25x | 5000ms |
-| 2 | 0.5x | 2500ms |
-| 3 | 0.75x | 1800ms |
-| 4 | 1x | 1200ms |
-| 5 | 1.5x | 700ms |
-| 6 | 2x | 400ms |
+| Level | Label | Delay  |
+| ----- | ----- | ------ |
+| 1     | 0.25x | 5000ms |
+| 2     | 0.5x  | 2500ms |
+| 3     | 0.75x | 1800ms |
+| 4     | 1x    | 1200ms |
+| 5     | 1.5x  | 700ms  |
+| 6     | 2x    | 400ms  |
 
 ---
-
 
 ### Keyboard Shortcuts
 
 `useStepPlayback` binds global shortcuts while no text field, CodeMirror editor, or dialog has focus:
 
-| Key | Action |
-|---|---|
-| Space | Play / pause |
+| Key         | Action       |
+| ----------- | ------------ |
+| Space       | Play / pause |
 | Right arrow | Step forward |
-| Left arrow | Step back |
-| R | Reset |
+| Left arrow  | Step back    |
+| R           | Reset        |
 
 Pass `keyboardShortcuts: false` to opt out (for example when two playback instances share a page). The page shell shows a `KeyboardHint` next to the back link.
 
@@ -450,10 +535,10 @@ const flashes = useChangeFlash(
 
 **Parameters:**
 
-| Param | Type | Description |
-|---|---|---|
-| `channels` | `Record<K, unknown>` | Named data slices from the current step. Values are compared via `JSON.stringify` |
-| `stepIndex` | `number` | Current step index from `useStepPlayback`. Used as the effect trigger |
+| Param       | Type                 | Description                                                                       |
+| ----------- | -------------------- | --------------------------------------------------------------------------------- |
+| `channels`  | `Record<K, unknown>` | Named data slices from the current step. Values are compared via `JSON.stringify` |
+| `stepIndex` | `number`             | Current step index from `useStepPlayback`. Used as the effect trigger             |
 
 **Returns:** `Record<K, boolean>` - same keys as `channels`, each `true` if that channel changed on the most recent step transition.
 
@@ -468,9 +553,9 @@ const flashes = useChangeFlash(
 
 Two animation classes are available in `globals.css`:
 
-| Class | Effect | Apply to |
-|---|---|---|
-| `.viz-change-flash` | Outer pink glow pulse (`box-shadow`) | NeonPanels - via `className` prop |
+| Class                    | Effect                               | Apply to                              |
+| ------------------------ | ------------------------------------ | ------------------------------------- |
+| `.viz-change-flash`      | Outer pink glow pulse (`box-shadow`) | NeonPanels - via `className` prop     |
 | `.viz-change-flash-pill` | Inset pink glow pulse (`box-shadow`) | Explanation pill wrapper - via `cn()` |
 
 Both animations run for 850ms with peak at 40%. They honor `prefers-reduced-motion`.
@@ -524,7 +609,10 @@ function itemFingerprint(item: Item): string {
 
 function HeapItems({ items }: { items: Item[] }) {
   return items.map((item) => (
-    <div key={`${item.id}-${itemFingerprint(item)}`} className="viz-slide-in ...">
+    <div
+      key={`${item.id}-${itemFingerprint(item)}`}
+      className="viz-slide-in ..."
+    >
       {item.label}
     </div>
   ));
@@ -544,12 +632,12 @@ The fingerprint should include all properties that visually affect the item (lab
 
 Each channel key should map to the data that drives a specific panel. Common channels:
 
-| Channel | Data | Panel |
-|---|---|---|
-| `description` | `descriptionHtml` | Explanation pill |
-| `stack` | `stackFrames` / `stack` | Call Stack NeonPanel |
-| `heap` | `heapObjects` / `heapAllocations` | Heap NeonPanel |
-| `console` | `consoleOutput` | Console Output |
+| Channel       | Data                              | Panel                |
+| ------------- | --------------------------------- | -------------------- |
+| `description` | `descriptionHtml`                 | Explanation pill     |
+| `stack`       | `stackFrames` / `stack`           | Call Stack NeonPanel |
+| `heap`        | `heapObjects` / `heapAllocations` | Heap NeonPanel       |
+| `console`     | `consoleOutput`                   | Console Output       |
 
 Add topic-specific channels as needed (e.g., `roots`, `scope`, `taskQueue`).
 
@@ -565,16 +653,16 @@ Lightweight regex tokenizer for educational JavaScript snippets. Not a general p
 
 ### Token Types
 
-| Type | CSS Class | Color | Examples |
-|---|---|---|---|
-| `keyword` | `.tok-kw` | `#c084fc` (purple) | `let`, `const`, `function`, `return`, `if`, `async`, `await` |
-| `builtin` | `.tok-builtin` | `#e5c07b` (warm yellow) | `console`, `Promise`, `Array`, `Math`, `JSON`, `Error` |
-| `function` | `.tok-fn` | `#60a5fa` (blue) | `log`, `setTimeout`, `resolve`, `then`, `push`, `map` |
-| `string` | `.tok-str` | `#34d399` (green) | `'hello'`, `"world"`, `` `template` `` |
-| `number` | `.tok-num` | `#fbbf24` (amber) | `42`, `3.14` |
-| `comment` | `.tok-comment` | `#64748b` (slate) | `// comment` |
-| `punctuation` | `.tok-punct` | `#94a3b8` (light slate) | `{`, `}`, `(`, `)`, `;` |
-| `plain` | (none) | inherits | identifiers, whitespace |
+| Type          | CSS Class      | Color                   | Examples                                                     |
+| ------------- | -------------- | ----------------------- | ------------------------------------------------------------ |
+| `keyword`     | `.tok-kw`      | `#c084fc` (purple)      | `let`, `const`, `function`, `return`, `if`, `async`, `await` |
+| `builtin`     | `.tok-builtin` | `#e5c07b` (warm yellow) | `console`, `Promise`, `Array`, `Math`, `JSON`, `Error`       |
+| `function`    | `.tok-fn`      | `#60a5fa` (blue)        | `log`, `setTimeout`, `resolve`, `then`, `push`, `map`        |
+| `string`      | `.tok-str`     | `#34d399` (green)       | `'hello'`, `"world"`, `` `template` ``                       |
+| `number`      | `.tok-num`     | `#fbbf24` (amber)       | `42`, `3.14`                                                 |
+| `comment`     | `.tok-comment` | `#64748b` (slate)       | `// comment`                                                 |
+| `punctuation` | `.tok-punct`   | `#94a3b8` (light slate) | `{`, `}`, `(`, `)`, `;`                                      |
+| `plain`       | (none)         | inherits                | identifiers, whitespace                                      |
 
 ### Distinction: builtins vs functions
 
@@ -592,22 +680,20 @@ All animations are CSS-only (no Framer Motion). Shared keyframes live in `src/ap
 
 ### Shared Animation Classes
 
-| Class | Effect | Use Case |
-|---|---|---|
-| `.viz-slide-in` | Slide in from left with spring | Queue items entering |
-| `.viz-float-up` | Float up with fade-in | Hoisted declarations moving to top |
-| `.viz-pulse-dot` | Pulse opacity (0.55 to 1) | Playing indicator dot |
-| `.viz-change-flash` | Outer pink glow pulse (850ms) | NeonPanels whose data changed between steps |
-| `.viz-change-flash-pill` | Inset pink glow pulse (850ms) | Explanation pill when description changed |
+| Class                    | Effect                         | Use Case                                    |
+| ------------------------ | ------------------------------ | ------------------------------------------- |
+| `.viz-slide-in`          | Slide in from left with spring | Queue items entering                        |
+| `.viz-float-up`          | Float up with fade-in          | Hoisted declarations moving to top          |
+| `.viz-pulse-dot`         | Pulse opacity (0.55 to 1)      | Playing indicator dot                       |
+| `.viz-change-flash`      | Outer pink glow pulse (850ms)  | NeonPanels whose data changed between steps |
+| `.viz-change-flash-pill` | Inset pink glow pulse (850ms)  | Explanation pill when description changed   |
 
 ### Using `.viz-slide-in`
 
 Apply to items that appear in queues/lists:
 
 ```tsx
-<div className="viz-slide-in rounded-lg border px-3 py-2">
-  {item}
-</div>
+<div className="viz-slide-in rounded-lg border px-3 py-2">{item}</div>
 ```
 
 ### Using `.viz-float-up`
@@ -626,7 +712,9 @@ Apply to elements that represent hoisting (moving declarations upward):
 Shows a pulsing green dot when playback is active:
 
 ```tsx
-{isPlaying ? <span className="viz-pulse-dot" /> : null}
+{
+  isPlaying ? <span className="viz-pulse-dot" /> : null;
+}
 ```
 
 ### Topic-Specific Animations
@@ -655,23 +743,20 @@ Keep topic-specific CSS minimal. If an animation pattern is reused across 2+ top
 
 Applied via `className` on `CodeBlock` / `CodeLine` items:
 
-| Class | Effect | When to Use |
-|---|---|---|
-| `.is-active` | Yellow left border + amber background | Current execution line |
-| `.is-done` | 40% opacity | Lines already executed (never combine with `is-active`) |
-| `.is-highlighted` | Soft amber background + faint left border | Lines being referenced but not executing |
-| `.is-floating` | Green background + green left border | Lines being hoisted upward |
-| `.is-tdz` | Red background + red left border | Lines in Temporal Dead Zone |
+| Class             | Effect                                    | When to Use                                             |
+| ----------------- | ----------------------------------------- | ------------------------------------------------------- |
+| `.is-active`      | Yellow left border + amber background     | Current execution line                                  |
+| `.is-done`        | 40% opacity                               | Lines already executed (never combine with `is-active`) |
+| `.is-highlighted` | Soft amber background + faint left border | Lines being referenced but not executing                |
+| `.is-floating`    | Green background + green left border      | Lines being hoisted upward                              |
+| `.is-tdz`         | Red background + red left border          | Lines in Temporal Dead Zone                             |
 
 These classes are defined in `globals.css` under `@layer components` and apply to `.code-line` elements.
 
 **Critical rule:** When mapping lines, always guard `is-done` with `!isActive`:
 
 ```typescript
-className: cn(
-  isActive && "is-active",
-  isDone && !isActive && "is-done",
-)
+className: cn(isActive && "is-active", isDone && !isActive && "is-done");
 ```
 
 ### Code Line Structure

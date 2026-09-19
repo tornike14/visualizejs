@@ -22,7 +22,9 @@ export const WriteQueue = ({ items }: { items: QueuedWrite[] }) => {
             QUEUE_STYLES[item.status],
           )}
         >
-          <span className="text-[10px] text-slate-500 tabular-nums">{index}</span>
+          <span className="text-[10px] text-slate-500 tabular-nums">
+            {index}
+          </span>
           <span className="min-w-0 flex-1 truncate">{item.label}</span>
           <span className="shrink-0 rounded bg-black/20 px-1.5 py-0.5 text-[10px] font-bold uppercase">
             {QUEUE_LABELS[item.status]}

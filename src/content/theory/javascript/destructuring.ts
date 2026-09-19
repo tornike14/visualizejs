@@ -36,7 +36,8 @@ export const destructuringTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What is the difference between array and object destructuring?",
+      question:
+        "What is the difference between array and object destructuring?",
       answer:
         "Array destructuring matches by position (index), while object destructuring matches by property name. Arrays use square brackets, objects use curly braces.",
       codeExample: {

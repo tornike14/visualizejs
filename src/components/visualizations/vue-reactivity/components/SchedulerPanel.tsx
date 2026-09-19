@@ -1,7 +1,13 @@
 import { cn } from "@/lib/utils";
 import type { SchedulerState } from "../types";
 
-const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
+const Row = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) => (
   <div className="flex flex-wrap items-center gap-2">
     <span className="w-24 shrink-0 text-[10px] uppercase tracking-[0.18em] text-slate-500">
       {label}
@@ -10,7 +16,11 @@ const Row = ({ label, children }: { label: string; children: React.ReactNode }) 
   </div>
 );
 
-export const SchedulerPanel = ({ scheduler }: { scheduler: SchedulerState | null }) => {
+export const SchedulerPanel = ({
+  scheduler,
+}: {
+  scheduler: SchedulerState | null;
+}) => {
   if (!scheduler) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">

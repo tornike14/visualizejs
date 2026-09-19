@@ -50,12 +50,16 @@ export const eventDelegationTheory: TopicTheoryContent = {
         "Event delegation attaches a single event listener to a parent element instead of individual listeners on each child. It works because events bubble up. Benefits include fewer listeners (lower memory), automatic handling of dynamically added children, and simpler setup for lists and tables.",
     },
     {
-      question:
-        "What does stopPropagation() do and when should you use it?",
+      question: "What does stopPropagation() do and when should you use it?",
       answer:
         "stopPropagation() prevents the event from continuing to the next element in the propagation path. It does not prevent other listeners on the same element from firing (stopImmediatePropagation does that). Use it when a child component must handle an event exclusively and parent handlers should not react.",
     },
   ],
 
-  relatedTopicIds: ["event-loop", "debounce-throttle", "scope-chain", "closures"],
+  relatedTopicIds: [
+    "event-loop",
+    "debounce-throttle",
+    "scope-chain",
+    "closures",
+  ],
 };

@@ -25,9 +25,24 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
-          { id: "root-z", label: "global: z", refsTo: ["obj-3"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
+          {
+            id: "root-z",
+            label: "global: z",
+            refsTo: ["obj-3"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -63,9 +78,24 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
-          { id: "root-z", label: "global: z", refsTo: ["obj-3"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
+          {
+            id: "root-z",
+            label: "global: z",
+            refsTo: ["obj-3"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -101,9 +131,24 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
-          { id: "root-z", label: "global: z", refsTo: ["obj-3"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
+          {
+            id: "root-z",
+            label: "global: z",
+            refsTo: ["obj-3"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -139,8 +184,18 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -171,13 +226,23 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Mark phase:</strong> the GC scans from all roots (<code>x</code>, <code>y</code>). <code>Obj#1</code> is reachable via <code>x</code>. <code>Obj#2</code> is reachable via <code>y</code>. <code>Obj#3</code> has no root and is <strong>not marked</strong>.',
+          "<strong>Mark phase:</strong> the GC scans from all roots (<code>x</code>, <code>y</code>). <code>Obj#1</code> is reachable via <code>x</code>. <code>Obj#2</code> is reachable via <code>y</code>. <code>Obj#3</code> has no root and is <strong>not marked</strong>.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -214,8 +279,18 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: [],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -245,8 +320,18 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["1"],
         roots: [
-          { id: "root-x", label: "global: x", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-y", label: "global: y", refsTo: ["obj-2"], tone: "amber" },
+          {
+            id: "root-x",
+            label: "global: x",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-y",
+            label: "global: y",
+            refsTo: ["obj-2"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -276,46 +361,50 @@ export const EXAMPLES: GCExample[] = [
     id: "forgotten-timer",
     title: "Forgotten Timer Leak",
     description:
-      "A setInterval callback holds a closure reference, preventing GC even after the variable is nulled.",
+      "A setInterval callback closes over a local variable, keeping it alive long after the function that created it has returned.",
     kind: "leak",
     codeLines: [
-      { num: 1, text: "let data = { items: [1, 2, 3] };" },
-      { num: 2, text: "const timer = setInterval(() => {" },
-      { num: 3, text: "  console.log(data.items.length);" },
-      { num: 4, text: "}, 1000);" },
-      { num: 5, text: "data = null;" },
-      { num: 6, text: "// data is null, but timer callback still refs it!" },
-      { num: 7, text: "// clearInterval(timer); would fix the leak" },
+      { num: 1, text: "function startPolling() {" },
+      { num: 2, text: "  const data = { items: [1, 2, 3] };" },
+      { num: 3, text: "  const timer = setInterval(() => {" },
+      { num: 4, text: "    console.log(data.items.length);" },
+      { num: 5, text: "  }, 1000);" },
+      { num: 6, text: "  return timer;" },
+      { num: 7, text: "}" },
+      { num: 8, text: "const timer = startPolling();" },
+      { num: 9, text: "// the frame is gone, but the timer keeps data alive" },
+      { num: 10, text: "// clearInterval(timer); would fix the leak" },
     ],
     steps: [
       {
         descriptionHtml:
-          '<code>data</code> is assigned an object containing an array. The <span class="hl-task">root</span> <code>global: data</code> keeps <code>Obj#1</code> alive on the <span class="hl-micro">heap</span>.',
-        activeLine: 1,
+          '<code>startPolling()</code> is called. A call frame is pushed, and its local scope is a <span class="hl-task">root</span> for as long as the function runs.',
+        activeLine: 8,
         doneLines: [],
         consoleOutput: [],
         roots: [
-          { id: "root-data", label: "global: data", refsTo: ["obj-1"], tone: "amber" },
-        ],
-        heapObjects: [
           {
-            id: "obj-1",
-            label: "Obj#1",
-            props: [{ key: "items", value: "[1, 2, 3]" }],
-            tone: "violet",
-            status: "alive",
+            id: "root-frame",
+            label: "frame: startPolling",
+            refsTo: [],
+            tone: "amber",
           },
         ],
+        heapObjects: [],
       },
       {
         descriptionHtml:
-          '<code>setInterval</code> starts a repeating timer. The callback is a closure that captures <code>data</code>. The <span class="hl-task">active timer</span> is now also a GC root.',
+          '<code>data</code> is assigned an object containing an array. The frame scope holds the reference, so <code>Obj#1</code> is alive on the <span class="hl-micro">heap</span>.',
         activeLine: 2,
-        doneLines: [1],
+        doneLines: [1, 8],
         consoleOutput: [],
         roots: [
-          { id: "root-data", label: "global: data", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
+          {
+            id: "root-frame",
+            label: "frame: startPolling",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -329,13 +418,23 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          'The timer fires. The callback accesses <code>data.items.length</code> through its closure scope and outputs <code>3</code>.',
+          '<code>setInterval</code> registers a callback. The callback is a closure over <code>data</code>. The <span class="hl-task">active timer</span> is now a second root, and it reaches <code>Obj#1</code> through that closure.',
         activeLine: 3,
-        doneLines: [1, 2, 4],
-        consoleOutput: ["3"],
+        doneLines: [1, 2, 8],
+        consoleOutput: [],
         roots: [
-          { id: "root-data", label: "global: data", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
+          {
+            id: "root-frame",
+            label: "frame: startPolling",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-timer",
+            label: "setInterval #1",
+            refsTo: ["obj-1"],
+            tone: "emerald",
+          },
         ],
         heapObjects: [
           {
@@ -349,31 +448,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<code>data = null</code> removes the global variable root. You might expect <code>Obj#1</code> to be eligible for GC now.',
-        activeLine: 5,
-        doneLines: [1, 2, 3, 4],
-        consoleOutput: ["3"],
-        roots: [
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
-        ],
-        heapObjects: [
-          {
-            id: "obj-1",
-            label: "Obj#1",
-            props: [{ key: "items", value: "[1, 2, 3]" }],
-            tone: "violet",
-            status: "alive",
-          },
-        ],
-      },
-      {
-        descriptionHtml:
-          'But the <span class="hl-task">timer callback\'s closure</span> still holds a reference to the original <code>data</code> binding. The timer root keeps <code>Obj#1</code> alive. This is a <strong>memory leak</strong>.',
+          "<code>return timer</code> finishes the function and its frame is popped. The frame root is gone. If nothing else referenced <code>data</code>, <code>Obj#1</code> would be garbage right now.",
         activeLine: 6,
-        doneLines: [1, 2, 3, 4, 5],
-        consoleOutput: ["3"],
+        doneLines: [1, 2, 3, 4, 5, 8],
+        consoleOutput: [],
         roots: [
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
+          {
+            id: "root-timer",
+            label: "setInterval #1",
+            refsTo: ["obj-1"],
+            tone: "emerald",
+          },
         ],
         heapObjects: [
           {
@@ -387,12 +472,41 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          'GC runs but <code>Obj#1</code> is still <span class="hl-task">reachable</span> via the active timer. The scan finds a path from the timer root to the object. It <strong>cannot be collected</strong>.',
-        activeLine: 6,
-        doneLines: [1, 2, 3, 4, 5],
+          "The timer fires. The callback reads <code>data.items.length</code> through its closure scope and outputs <code>3</code>. It will keep doing this every second.",
+        activeLine: 4,
+        doneLines: [1, 2, 3, 5, 6, 7, 8],
         consoleOutput: ["3"],
         roots: [
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
+          {
+            id: "root-timer",
+            label: "setInterval #1",
+            refsTo: ["obj-1"],
+            tone: "emerald",
+          },
+        ],
+        heapObjects: [
+          {
+            id: "obj-1",
+            label: "Obj#1",
+            props: [{ key: "items", value: "[1, 2, 3]" }],
+            tone: "violet",
+            status: "alive",
+          },
+        ],
+      },
+      {
+        descriptionHtml:
+          'GC runs. The scan starts at the timer root, follows the closure scope to <code>data</code>, and marks <code>Obj#1</code> as <span class="hl-task">reachable</span>. It <strong>cannot be collected</strong>. This is a <strong>memory leak</strong>.',
+        activeLine: 9,
+        doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
+        consoleOutput: ["3"],
+        roots: [
+          {
+            id: "root-timer",
+            label: "setInterval #1",
+            refsTo: ["obj-1"],
+            tone: "emerald",
+          },
         ],
         heapObjects: [
           {
@@ -407,12 +521,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> active timers are GC roots. Their callbacks keep closure variables alive indefinitely. Always call <code>clearInterval</code> / <code>clearTimeout</code> when a timer is no longer needed to prevent <strong>memory leaks</strong>.',
-        activeLine: 7,
-        doneLines: [1, 2, 3, 4, 5, 6],
+          "<strong>Key takeaway:</strong> an active timer is a GC root, and its callback keeps every variable it closed over alive for as long as it runs. Call <code>clearInterval(timer)</code> when you are done with it, or the closure and everything it references stays in memory for the life of the page.",
+        activeLine: 10,
+        doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         consoleOutput: ["3"],
         roots: [
-          { id: "root-timer", label: "setInterval #1", refsTo: ["obj-1"], tone: "emerald" },
+          {
+            id: "root-timer",
+            label: "setInterval #1",
+            refsTo: ["obj-1"],
+            tone: "emerald",
+          },
         ],
         heapObjects: [
           {
@@ -452,7 +571,12 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 7],
         consoleOutput: [],
         roots: [
-          { id: "root-scope", label: "createHandler scope", refsTo: ["arr-1"], tone: "cyan" },
+          {
+            id: "root-scope",
+            label: "createHandler scope",
+            refsTo: ["arr-1"],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -469,12 +593,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          'The <code>handler</code> function is created. It closes over <code>createHandler</code>\'s scope, which includes <code>largeData</code>, even though <code>handler</code> never uses it.',
+          "The <code>handler</code> function is created. It closes over <code>createHandler</code>'s scope, which includes <code>largeData</code>, even though <code>handler</code> never uses it.",
         activeLine: 3,
         doneLines: [1, 2, 7],
         consoleOutput: [],
         roots: [
-          { id: "root-scope", label: "createHandler scope", refsTo: ["arr-1", "fn-1"], tone: "cyan" },
+          {
+            id: "root-scope",
+            label: "createHandler scope",
+            refsTo: ["arr-1", "fn-1"],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -498,12 +627,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<code>createHandler</code> returns <code>handler</code>. The call frame is popped, but the <strong>closure scope</strong> survives because <code>fn</code> holds a reference to <code>handler</code>.',
+          "<code>createHandler</code> returns <code>handler</code>. The call frame is popped, but the <strong>closure scope</strong> survives because <code>fn</code> holds a reference to <code>handler</code>.",
         activeLine: 7,
         doneLines: [1, 2, 3, 5, 6],
         consoleOutput: [],
         roots: [
-          { id: "root-fn", label: "global: fn", refsTo: ["fn-1"], tone: "amber" },
+          {
+            id: "root-fn",
+            label: "global: fn",
+            refsTo: ["fn-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -532,7 +666,12 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         consoleOutput: ["handler called"],
         roots: [
-          { id: "root-fn", label: "global: fn", refsTo: ["fn-1"], tone: "amber" },
+          {
+            id: "root-fn",
+            label: "global: fn",
+            refsTo: ["fn-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -556,12 +695,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          'The reference chain: <code>fn</code> (root) -> <code>handler</code> (closure) -> scope -> <code>largeData</code> (Arr#1). GC <strong>cannot collect</strong> the 10,000-element array because it is reachable.',
+          "The reference chain: <code>fn</code> (root) -> <code>handler</code> (closure) -> scope -> <code>largeData</code> (Arr#1). GC <strong>cannot collect</strong> the 10,000-element array because it is reachable.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         consoleOutput: ["handler called"],
         roots: [
-          { id: "root-fn", label: "global: fn", refsTo: ["fn-1"], tone: "amber" },
+          {
+            id: "root-fn",
+            label: "global: fn",
+            refsTo: ["fn-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -586,12 +730,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> closures retain the <strong>entire</strong> parent scope, including variables they never use. In V8, unused variables <em>may</em> be optimized away, but this is engine-specific. Restructure code to avoid holding unnecessary references in long-lived closures.',
+          "<strong>Key takeaway:</strong> closures retain the <strong>entire</strong> parent scope, including variables they never use. In V8, unused variables <em>may</em> be optimized away, but this is engine-specific. Restructure code to avoid holding unnecessary references in long-lived closures.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         consoleOutput: ["handler called"],
         roots: [
-          { id: "root-fn", label: "global: fn", refsTo: ["fn-1"], tone: "amber" },
+          {
+            id: "root-fn",
+            label: "global: fn",
+            refsTo: ["fn-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -640,7 +789,12 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [],
         consoleOutput: [],
         roots: [
-          { id: "root-obj", label: "global: obj", refsTo: ["obj-1"], tone: "amber" },
+          {
+            id: "root-obj",
+            label: "global: obj",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -654,13 +808,23 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<code>new WeakRef(obj)</code> creates a <strong>weak reference</strong> to <code>Obj#1</code>. Unlike a normal reference, a WeakRef does <strong>not</strong> count as a GC root. It will not prevent collection.',
+          "<code>new WeakRef(obj)</code> creates a <strong>weak reference</strong> to <code>Obj#1</code>. Unlike a normal reference, a WeakRef does <strong>not</strong> count as a GC root. It will not prevent collection.",
         activeLine: 2,
         doneLines: [1],
         consoleOutput: [],
         roots: [
-          { id: "root-obj", label: "global: obj", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-obj",
+            label: "global: obj",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -674,13 +838,23 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<code>weak.deref()</code> returns the target object (still alive). <code>?.value</code> reads <code>42</code> and outputs it.',
+          "<code>weak.deref()</code> returns the target object (still alive). <code>?.value</code> reads <code>42</code> and outputs it.",
         activeLine: 3,
         doneLines: [1, 2],
         consoleOutput: ["42"],
         roots: [
-          { id: "root-obj", label: "global: obj", refsTo: ["obj-1"], tone: "amber" },
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-obj",
+            label: "global: obj",
+            refsTo: ["obj-1"],
+            tone: "amber",
+          },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -694,12 +868,17 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          '<code>obj = null</code> removes the only <strong>strong</strong> reference. The WeakRef still exists, but it does not count as a root for GC purposes.',
+          "<code>obj = null</code> removes the only <strong>strong</strong> reference. The WeakRef still exists, but it does not count as a root for GC purposes.",
         activeLine: 4,
         doneLines: [1, 2, 3],
         consoleOutput: ["42"],
         roots: [
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -718,7 +897,12 @@ export const EXAMPLES: GCExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["42"],
         roots: [
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -733,24 +917,34 @@ export const EXAMPLES: GCExample[] = [
       },
       {
         descriptionHtml:
-          'GC collects <code>Obj#1</code>. The memory is freed. The WeakRef\'s internal target is now gone.',
+          "GC collects <code>Obj#1</code>. The memory is freed. The WeakRef's internal target is now gone.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["42"],
         roots: [
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [],
         gcSweep: true,
       },
       {
         descriptionHtml:
-          '<code>weak.deref()</code> returns <code>undefined</code> because the target was collected. <strong>Key takeaway:</strong> <code>WeakRef</code> allows holding a reference without preventing GC. Useful for caches and observers where you want automatic cleanup.',
+          "<code>weak.deref()</code> returns <code>undefined</code> because the target was collected. <strong>Key takeaway:</strong> <code>WeakRef</code> allows holding a reference without preventing GC. Useful for caches and observers where you want automatic cleanup.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["42", "undefined"],
         roots: [
-          { id: "root-weak", label: "global: weak (WeakRef)", refsTo: [], tone: "cyan" },
+          {
+            id: "root-weak",
+            label: "global: weak (WeakRef)",
+            refsTo: [],
+            tone: "cyan",
+          },
         ],
         heapObjects: [],
       },

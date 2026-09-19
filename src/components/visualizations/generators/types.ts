@@ -1,9 +1,13 @@
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type GeneratorKind = "basic" | "data-flow" | "iterator";
 
-export type GeneratorStatus = "created" | "suspended" | "executing" | "completed";
+export type GeneratorStatus =
+  | "created"
+  | "suspended"
+  | "executing"
+  | "completed";
 
 export interface GeneratorState {
   status: GeneratorStatus;
@@ -19,10 +23,7 @@ export interface CallFlowEntry {
   direction: "call" | "yield" | "return";
 }
 
-export interface GeneratorStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface GeneratorStep extends BaseStep {
   consoleOutput: string[];
   generatorState: GeneratorState | null;
   callFlow: CallFlowEntry[];

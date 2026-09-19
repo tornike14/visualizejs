@@ -64,5 +64,10 @@ console.log(a.count); // 2 (shared object identity)`,
         "No. freeze is shallow and does not recursively freeze nested objects unless you do so manually.",
     },
   ],
-  relatedTopicIds: ["heap-stack", "garbage-collection", "type-coercion", "closures"],
+  relatedTopicIds: [
+    "heap-stack",
+    "garbage-collection",
+    "type-coercion",
+    "closures",
+  ],
 };

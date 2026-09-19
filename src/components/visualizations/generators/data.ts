@@ -24,7 +24,7 @@ export const EXAMPLES: GeneratorExample[] = [
     steps: [
       {
         descriptionHtml:
-          'The engine registers the <code>counter</code> generator function (<code>function*</code>). The body is <strong>not</strong> executed yet.',
+          "The engine registers the <code>counter</code> generator function (<code>function*</code>). The body is <strong>not</strong> executed yet.",
         activeLine: 1,
         doneLines: [],
         consoleOutput: [],
@@ -236,7 +236,7 @@ export const EXAMPLES: GeneratorExample[] = [
     steps: [
       {
         descriptionHtml:
-          'The <code>conversation</code> generator function is declared. It uses <code>yield</code> both to send values <strong>out</strong> and receive values <strong>in</strong>.',
+          "The <code>conversation</code> generator function is declared. It uses <code>yield</code> both to send values <strong>out</strong> and receive values <strong>in</strong>.",
         activeLine: 1,
         doneLines: [],
         consoleOutput: [],
@@ -509,7 +509,7 @@ export const EXAMPLES: GeneratorExample[] = [
       },
       {
         descriptionHtml:
-          'Third iteration: the generator resumes, <code>i</code> increments to <code>3</code>, and <code>yield 3</code> pauses execution.',
+          "Third iteration: the generator resumes, <code>i</code> increments to <code>3</code>, and <code>yield 3</code> pauses execution.",
         activeLine: 3,
         doneLines: [1, 2, 5, 7, 8],
         consoleOutput: ["1", "2"],
@@ -611,7 +611,7 @@ export const EXAMPLES: GeneratorExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Done.</strong> Output: 1, 2, 3. The <span class="hl-loop">for...of</span> loop automatically calls <span class="hl-api">.next()</span> and extracts the <code>value</code> on each iteration. When <code>done: true</code> is returned, the loop exits. This is the <strong>iterator protocol</strong> in action \u2014 generators implement it for free.',
+          '<strong>Done.</strong> Output: 1, 2, 3. The <span class="hl-loop">for...of</span> loop automatically calls <span class="hl-api">.next()</span> and extracts the <code>value</code> on each iteration. When <code>done: true</code> is returned, the loop exits. This is the <strong>iterator protocol</strong> in action - generators implement it for free.',
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         consoleOutput: ["1", "2", "3"],

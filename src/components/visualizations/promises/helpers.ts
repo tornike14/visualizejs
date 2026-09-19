@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { PromiseKind, PromiseObj } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<PromiseKind>({

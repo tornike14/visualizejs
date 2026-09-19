@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 import type { NeonTone } from "@/components/visualization-ui/NeonPanel";
 
@@ -57,10 +57,7 @@ export interface ComparisonRow {
   throttle: string;
 }
 
-export interface DebounceThrottleStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface DebounceThrottleStep extends BaseStep {
   timeline: TimelineState;
   panelState: Record<string, StateEntry[]>;
   comparison: ComparisonRow[];

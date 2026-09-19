@@ -47,7 +47,8 @@ export const SIGNAL_KIND_LABELS: Record<SignalNodeKind, string> = {
 
 export const SIGNAL_STATE_STYLES: Record<SignalNodeState, string> = {
   clean: "border-slate-500/30 bg-slate-800/40 text-slate-300",
-  dirty: "border-rose-400/40 bg-rose-400/10 text-rose-200 shadow-[0_0_14px_rgba(244,63,94,0.1)]",
+  dirty:
+    "border-rose-400/40 bg-rose-400/10 text-rose-200 shadow-[0_0_14px_rgba(244,63,94,0.1)]",
   updated:
     "border-amber-300/40 bg-amber-400/10 text-amber-200 shadow-[0_0_14px_rgba(251,191,36,0.1)]",
   reading:

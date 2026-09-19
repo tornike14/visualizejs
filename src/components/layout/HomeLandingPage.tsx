@@ -68,7 +68,10 @@ export const HomeLandingPage = () => {
       />
 
       <section className="home-hero relative overflow-hidden rounded-3xl px-6 py-12 text-center lg:px-12 lg:py-16">
-        <div aria-hidden className="home-hero-grid pointer-events-none absolute inset-0" />
+        <div
+          aria-hidden
+          className="home-hero-grid pointer-events-none absolute inset-0"
+        />
         <div className="relative flex flex-col items-center gap-5">
           <p className="rounded-full border border-yellow-200/25 bg-yellow-200/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-yellow-100/90">
             Free and interactive. {topics.length} topics
@@ -93,10 +96,10 @@ export const HomeLandingPage = () => {
             actually run
           </h1>
           <p className="max-w-3xl text-base leading-relaxed text-[color:var(--app-text-secondary)] lg:text-xl">
-            Step-by-step animations of the mechanisms behind the code: the
-            event loop, closures, reconciliation, HTTP requests, database
-            indexes, attention heads, and more. Then read the theory and
-            interview questions on the same page.
+            Step-by-step animations of the mechanisms behind the code: the event
+            loop, closures, reconciliation, HTTP requests, database indexes,
+            attention heads, and more. Then read the theory and interview
+            questions on the same page.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             {CATEGORY_LIST.map((category) => {
@@ -118,7 +121,9 @@ export const HomeLandingPage = () => {
                     className="h-4 w-4 object-contain"
                   />
                   {category.label}
-                  <span className="font-mono text-[11px] opacity-70">{count}</span>
+                  <span className="font-mono text-[11px] opacity-70">
+                    {count}
+                  </span>
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               );
@@ -143,7 +148,9 @@ export const HomeLandingPage = () => {
             className="app-surface-subtle flex flex-col gap-2 rounded-2xl px-5 py-4"
           >
             <item.icon className="h-5 w-5 text-cyan-300" />
-            <h2 className="text-sm font-semibold text-slate-100">{item.title}</h2>
+            <h2 className="text-sm font-semibold text-slate-100">
+              {item.title}
+            </h2>
             <p className="text-sm leading-relaxed text-[color:var(--app-text-secondary)]">
               {item.body}
             </p>
@@ -154,7 +161,9 @@ export const HomeLandingPage = () => {
       {featured.length > 0 && (
         <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-semibold tracking-tight">Start here</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Start here
+            </h2>
             <p className="text-sm text-[color:var(--app-text-secondary)]">
               One topic from each area, picked to show what the site does.
             </p>

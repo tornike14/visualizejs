@@ -1,5 +1,11 @@
-import { MetricBars, type MetricBar } from "@/components/visualization-ui/MetricBars";
-import { TokenChips, type TokenChip } from "@/components/visualization-ui/TokenChips";
+import {
+  MetricBars,
+  type MetricBar,
+} from "@/components/visualization-ui/MetricBars";
+import {
+  TokenChips,
+  type TokenChip,
+} from "@/components/visualization-ui/TokenChips";
 
 interface LimiterStateProps {
   bars: MetricBar[];
@@ -8,7 +14,12 @@ interface LimiterStateProps {
   started: boolean;
 }
 
-export const LimiterState = ({ bars, chips, note, started }: LimiterStateProps) => {
+export const LimiterState = ({
+  bars,
+  chips,
+  note,
+  started,
+}: LimiterStateProps) => {
   if (!started) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">

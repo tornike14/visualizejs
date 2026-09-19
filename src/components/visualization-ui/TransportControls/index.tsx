@@ -5,7 +5,12 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "../Tooltip";
 import type { TransportControlsProps } from "./types";
-import { SPEED_OPTIONS, iconBtnBase, iconBtnDefault, iconBtnPrimary } from "./constants";
+import {
+  SPEED_OPTIONS,
+  iconBtnBase,
+  iconBtnDefault,
+  iconBtnPrimary,
+} from "./constants";
 import { StepScrubber } from "./StepScrubber";
 import {
   PlayIcon,
@@ -18,7 +23,7 @@ import {
 
 export type { PlaybackSpeedLevel } from "./types";
 
-export function TransportControls({
+export const TransportControls = ({
   isPlaying,
   canStep,
   canStepBack,
@@ -34,12 +39,13 @@ export function TransportControls({
   onJumpTo,
   tooltipConfig,
   className,
-}: TransportControlsProps) {
+}: TransportControlsProps) => {
   const [speedOpen, setSpeedOpen] = useState(false);
   const handleSpeedClose = useCallback(() => setSpeedOpen(false), []);
   const speedRef = useClickOutside<HTMLDivElement>(speedOpen, handleSpeedClose);
   const showStepPill = stepIndex != null && totalSteps != null;
-  const showScrubber = showStepPill && onJumpTo != null && (totalSteps ?? 0) > 1;
+  const showScrubber =
+    showStepPill && onJumpTo != null && (totalSteps ?? 0) > 1;
   const normalizedStepIndex = stepIndex ?? -1;
   const normalizedTotalSteps = totalSteps ?? 0;
   const forceVisibleTooltips = tooltipConfig?.forceVisible ?? false;
@@ -149,7 +155,7 @@ export function TransportControls({
               iconBtnBase,
               iconBtnDefault,
               "gap-1 px-2.5 font-mono text-xs",
-              speedOpen && "ring-2 ring-pink-300/50"
+              speedOpen && "ring-2 ring-pink-300/50",
             )}
           >
             <span>{speedLabel}</span>
@@ -177,7 +183,7 @@ export function TransportControls({
                   "flex w-full cursor-pointer items-center rounded-lg px-3 py-1.5 font-mono text-xs transition-colors",
                   opt.level === speedLevel
                     ? "bg-pink-400/15 text-pink-300"
-                    : "text-slate-300 hover:bg-slate-700/50 hover:text-slate-100"
+                    : "text-slate-300 hover:bg-slate-700/50 hover:text-slate-100",
                 )}
               >
                 {opt.label}
@@ -188,4 +194,4 @@ export function TransportControls({
       </div>
     </div>
   );
-}
+};
