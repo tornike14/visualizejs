@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint and build
+    name: Lint, test, and build
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -34,6 +34,9 @@ jobs:
 
       - name: Format check
         run: npm run format:check
+
+      - name: Test
+        run: npm run test
 
       - name: Audit step data
         run: npm run audit:steps

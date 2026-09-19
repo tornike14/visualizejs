@@ -9,8 +9,9 @@ Interactive visualizations of JavaScript, React, framework (Vue, Svelte, Angular
 - `npm run lint` -- ESLint
 - `npm run typecheck` -- TypeScript (also validates every topic registry)
 - `npm run format` / `npm run format:check` -- Prettier
+- `npm run test` -- Vitest unit and component tests (`npm run test:watch` for watch mode, `npm run test:coverage` for a coverage report)
 - `npm run audit:steps` -- checks every step's activeLine and doneLines against its code (`-- <topic>` to narrow, `-- --strict` for extra hints)
-- `npm run verify` -- lint, typecheck, format check, step audit, build (what CI runs)
+- `npm run verify` -- lint, typecheck, format check, tests, step audit, build (what CI runs)
 - `npm run start` -- serve production build
 
 ## Project Structure
@@ -49,6 +50,7 @@ Interactive visualizations of JavaScript, React, framework (Vue, Svelte, Angular
 - Component files target 200 lines or fewer, hard limit at 300
 - Visualization components use `"use client"` directive and named exports
 - Run `npm run format` before finishing; CI checks formatting
+- Tests live next to the code as `*.test.ts(x)`; cross-topic convention checks live in `src/test/conventions/`. New library code, hooks, and shared primitives get tests; run `npm run test` before finishing
 
 ## Topic Patterns
 
@@ -67,3 +69,4 @@ Interactive visualizations of JavaScript, React, framework (Vue, Svelte, Angular
 - `docs/architecture.md` -- frontend architecture rules
 - `docs/categories.md` -- category registry and how to add a category
 - `docs/seo.md` -- SEO implementation
+- `docs/testing.md` -- test setup, what is covered, and how to add tests

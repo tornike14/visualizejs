@@ -16,12 +16,17 @@ let cache: TopicProgressMap | null = null;
 
 const canUseStorage = () => typeof window !== "undefined";
 
+/** Storage can hold anything; only a plain object counts as a progress map. */
+const isProgressMap = (value: unknown): value is TopicProgressMap =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
 export const readTopicProgress = (): TopicProgressMap => {
   if (!canUseStorage()) return EMPTY;
   if (cache) return cache;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEYS.topicProgress);
-    cache = raw ? (JSON.parse(raw) as TopicProgressMap) : {};
+    const parsed: unknown = raw ? JSON.parse(raw) : {};
+    cache = isProgressMap(parsed) ? parsed : {};
   } catch {
     cache = {};
   }

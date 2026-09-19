@@ -319,7 +319,7 @@ export function getCategory(id: Category): CategoryConfig {
 }
 
 export function isCategory(value: string): value is Category {
-  return value in CATEGORIES;
+  return Object.hasOwn(CATEGORIES, value);
 }
 
 export function categoryFromPathname(pathname: string): Category {
