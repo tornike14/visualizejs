@@ -295,6 +295,33 @@ describe("useStepPlayback", () => {
       dialog.remove();
     });
 
+    it("drops focus from a link when a shortcut fires, but not from a button", () => {
+      const { result } = renderHook(() => useStepPlayback({ totalSteps: 5 }));
+      const link = document.createElement("a");
+      link.href = "/javascript/hoisting";
+      const button = document.createElement("button");
+      document.body.append(link, button);
+      try {
+        link.focus();
+        expect(document.activeElement).toBe(link);
+        act(() => {
+          fireEvent.keyDown(link, { key: "ArrowRight" });
+        });
+        expect(result.current.currentStepIndex).toBe(0);
+        expect(document.activeElement).not.toBe(link);
+
+        button.focus();
+        act(() => {
+          fireEvent.keyDown(button, { key: "ArrowRight" });
+        });
+        expect(result.current.currentStepIndex).toBe(1);
+        expect(document.activeElement).toBe(button);
+      } finally {
+        link.remove();
+        button.remove();
+      }
+    });
+
     it("can be switched off", () => {
       const { result } = renderHook(() =>
         useStepPlayback({ totalSteps: 5, keyboardShortcuts: false }),

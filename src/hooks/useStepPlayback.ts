@@ -35,6 +35,15 @@ const isTypingTarget = (target: EventTarget | null) => {
   );
 };
 
+/**
+ * A link clicked with the mouse keeps focus after navigation, and the first
+ * keypress would then paint the focus ring on it. Playback shortcuts are not
+ * link actions, so drop that incidental focus; buttons and inputs keep theirs.
+ */
+const releaseLinkFocus = (target: EventTarget | null) => {
+  if (target instanceof HTMLAnchorElement) target.blur();
+};
+
 export interface StepPlayback {
   currentStepIndex: number;
   isPlaying: boolean;
@@ -150,18 +159,22 @@ export const useStepPlayback = ({
       switch (event.key) {
         case " ":
           event.preventDefault();
+          releaseLinkFocus(event.target);
           togglePlay();
           break;
         case "ArrowRight":
           event.preventDefault();
+          releaseLinkFocus(event.target);
           step();
           break;
         case "ArrowLeft":
           event.preventDefault();
+          releaseLinkFocus(event.target);
           stepBack();
           break;
         case "r":
         case "R":
+          releaseLinkFocus(event.target);
           reset();
           break;
         default:
