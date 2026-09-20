@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { SearchTrigger } from "@/components/search/SearchTrigger";
 import { ExpandIcon } from "./SidebarIcons";
 
-export function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
+export const CollapsedSidebar = ({ onExpand }: { onExpand: () => void }) => {
   return (
     <aside className="app-surface hidden h-screen flex-col items-center bg-[color:var(--app-surface-strong)] lg:sticky lg:top-0 lg:flex lg:w-16 lg:rounded-none lg:border-r lg:border-t-0 lg:border-b-0 lg:border-l-0">
       <div className="flex flex-col items-center gap-4 pt-5">
@@ -23,7 +24,9 @@ export function CollapsedSidebar({ onExpand }: { onExpand: () => void }) {
         >
           <ExpandIcon />
         </button>
+
+        <SearchTrigger compact />
       </div>
     </aside>
   );
-}
+};

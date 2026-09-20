@@ -171,12 +171,7 @@ export const EXAMPLES: VirtualDomExample[] = [
             highlight: false,
           },
         ],
-        domOutput: [
-          "<div>",
-          "  <h1>Hello</h1>",
-          "  <p>World</p>",
-          "</div>",
-        ],
+        domOutput: ["<div>", "  <h1>Hello</h1>", "  <p>World</p>", "</div>"],
       },
     ],
   },
@@ -190,7 +185,7 @@ export const EXAMPLES: VirtualDomExample[] = [
     kind: "component",
     codeLines: [
       { num: 1, text: "function Header() {" },
-      { num: 2, text: '  return <h1>My App</h1>;' },
+      { num: 2, text: "  return <h1>My App</h1>;" },
       { num: 3, text: "}" },
       { num: 4, text: "" },
       { num: 5, text: "function Content() {" },
@@ -363,7 +358,7 @@ export const EXAMPLES: VirtualDomExample[] = [
       },
       {
         descriptionHtml:
-          "All components are resolved. The virtual DOM tree now contains only <strong>host elements</strong> (div, h1, p) that map directly to real DOM nodes.",
+          "All components are resolved. The virtual DOM tree now contains only <strong>host elements</strong> (main, h1, p) that map directly to real DOM nodes.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         vdomTree: {

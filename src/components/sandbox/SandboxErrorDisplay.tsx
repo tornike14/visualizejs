@@ -8,7 +8,10 @@ interface SandboxErrorDisplayProps {
   supportedPatterns?: string[];
 }
 
-export function SandboxErrorDisplay({ error, supportedPatterns }: SandboxErrorDisplayProps) {
+export const SandboxErrorDisplay = ({
+  error,
+  supportedPatterns,
+}: SandboxErrorDisplayProps) => {
   const isParseError = error.type === "parse-error";
 
   return (
@@ -36,18 +39,22 @@ export function SandboxErrorDisplay({ error, supportedPatterns }: SandboxErrorDi
             )}
           </p>
 
-          {error.type === "unsupported-pattern" && supportedPatterns && supportedPatterns.length > 0 && (
-            <details className="mt-1.5 text-[11px] opacity-75">
-              <summary className="cursor-pointer font-medium">Supported patterns</summary>
-              <ul className="mt-0.5 list-inside list-disc space-y-0.5 pl-1">
-                {supportedPatterns.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </details>
-          )}
+          {error.type === "unsupported-pattern" &&
+            supportedPatterns &&
+            supportedPatterns.length > 0 && (
+              <details className="mt-1.5 text-[11px] opacity-75">
+                <summary className="cursor-pointer font-medium">
+                  Supported patterns
+                </summary>
+                <ul className="mt-0.5 list-inside list-disc space-y-0.5 pl-1">
+                  {supportedPatterns.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
         </div>
       </div>
     </div>
   );
-}
+};

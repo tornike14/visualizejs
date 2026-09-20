@@ -65,5 +65,10 @@ console.log(Object.getPrototypeOf(u) === User.prototype); // true`,
         "The chain ends at null, typically after reaching Object.prototype for ordinary objects.",
     },
   ],
-  relatedTopicIds: ["this-keyword", "reference-value", "scope-chain", "heap-stack"],
+  relatedTopicIds: [
+    "this-keyword",
+    "reference-value",
+    "scope-chain",
+    "heap-stack",
+  ],
 };

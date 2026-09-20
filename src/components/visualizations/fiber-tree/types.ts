@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type FiberTreeKind = "work-loop" | "unit-of-work";
@@ -13,10 +13,7 @@ export interface FiberNodeState {
   return: string | null;
 }
 
-export interface FiberTreeStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface FiberTreeStep extends BaseStep {
   tree: TreeNodeData;
   activeNodeId?: string;
   phase: WorkLoopPhase;

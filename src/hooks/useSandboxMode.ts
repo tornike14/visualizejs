@@ -3,7 +3,11 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { STORAGE_KEYS } from "@/content/static/storageKeys";
 import { parseUserCode } from "@/lib/sandbox/parser";
-import type { SandboxConfig, SandboxError, StepGenerator } from "@/types/sandbox";
+import type {
+  SandboxConfig,
+  SandboxError,
+  StepGenerator,
+} from "@/types/sandbox";
 
 interface SandboxModeReturn<TStep, TCodeLine> {
   isSandboxActive: boolean;
@@ -63,7 +67,9 @@ export function useSandboxMode<TStep, TCodeLine>(
     ),
   );
   const [generatedSteps, setGeneratedSteps] = useState<TStep[] | null>(null);
-  const [generatedCodeLines, setGeneratedCodeLines] = useState<TCodeLine[] | null>(null);
+  const [generatedCodeLines, setGeneratedCodeLines] = useState<
+    TCodeLine[] | null
+  >(null);
   const [error, setError] = useState<SandboxError | null>(null);
   const [generationId, setGenerationId] = useState(0);
   const [codeVersion, setCodeVersion] = useState(0);
@@ -147,16 +153,14 @@ export function useSandboxMode<TStep, TCodeLine>(
   }, [config.defaultCode, config.maxCodeLength, config.topicId]);
 
   const toggleSandbox = useCallback(() => {
-    setIsSandboxActive((prev) => {
-      if (prev) {
-        // Turning off - clear generated state
-        setGeneratedSteps(null);
-        setGeneratedCodeLines(null);
-        setError(null);
-      }
-      return !prev;
-    });
-  }, []);
+    if (isSandboxActive) {
+      // Turning off clears everything the last generation produced.
+      setGeneratedSteps(null);
+      setGeneratedCodeLines(null);
+      setError(null);
+    }
+    setIsSandboxActive(!isSandboxActive);
+  }, [isSandboxActive]);
 
   // Cleanup timer on unmount
   useEffect(() => {

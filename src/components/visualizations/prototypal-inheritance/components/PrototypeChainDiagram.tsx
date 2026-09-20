@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import type { ProtoObject } from "../types";
 import { CHAIN_OBJ_BASE, chainObjectClass, chainLabelClass } from "../helpers";
 
-export function PrototypeChainDiagram({
+export const PrototypeChainDiagram = ({
   chain,
   activeLink,
 }: {
   chain: ProtoObject[];
   activeLink?: number;
-}) {
+}) => {
   if (chain.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -125,4 +125,4 @@ export function PrototypeChainDiagram({
       })}
     </div>
   );
-}
+};

@@ -1,9 +1,12 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 /* ── Types ── */
 
-export type EventDelegationKind = "bubbling" | "stop-propagation" | "delegation";
+export type EventDelegationKind =
+  | "bubbling"
+  | "stop-propagation"
+  | "delegation";
 
 export type EventPhase = "capture" | "target" | "bubble";
 
@@ -31,10 +34,7 @@ export interface EventPathEntry {
   stopped: boolean;
 }
 
-export interface EventDelegationStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface EventDelegationStep extends BaseStep {
   consoleOutput: string[];
   domTree: DOMNodeData;
   eventPath: EventPathEntry[];

@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type BindingKind = "implicit" | "explicit" | "new" | "arrow";
 
@@ -25,10 +25,7 @@ export interface ThisBinding {
   callExpression: string;
 }
 
-export interface ThisStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ThisStep extends BaseStep {
   objects: MemoryObject[];
   thisBinding: ThisBinding | null;
   consoleOutput: string[];

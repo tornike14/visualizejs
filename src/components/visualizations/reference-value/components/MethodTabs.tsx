@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { DeepCopyVariant } from "../types";
 
-export function MethodTabs({
+export const MethodTabs = ({
   variants,
   activeMethodId,
   onSelect,
@@ -9,7 +9,7 @@ export function MethodTabs({
   variants: DeepCopyVariant[];
   activeMethodId: string;
   onSelect: (id: string) => void;
-}) {
+}) => {
   return (
     <div className="mb-4 flex flex-wrap items-center gap-1.5">
       <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -24,7 +24,7 @@ export function MethodTabs({
             "cursor-pointer rounded-lg border px-3 py-1.5 font-mono text-xs transition-all",
             v.methodId === activeMethodId
               ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-              : "border-slate-600/60 bg-slate-800/40 text-slate-400 hover:border-slate-500 hover:text-slate-200"
+              : "border-slate-600/60 bg-slate-800/40 text-slate-400 hover:border-slate-500 hover:text-slate-200",
           )}
         >
           {v.methodLabel}
@@ -32,4 +32,4 @@ export function MethodTabs({
       ))}
     </div>
   );
-}
+};

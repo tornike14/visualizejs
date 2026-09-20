@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { SpreadRestKind } from "./types";
 
 /* ── Helpers ── */
@@ -7,7 +10,8 @@ export const kindBadgeClass = createKindBadgeClass<SpreadRestKind>({
   "array-spread": "bg-amber-500/15 text-amber-400 border-amber-500/25",
   "object-spread": "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
   "rest-params": "bg-violet-500/15 text-violet-400 border-violet-500/25",
-  "rest-destructuring": "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
+  "rest-destructuring":
+    "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
 });
 
 export const kindLabel = createKindLabel<SpreadRestKind>({

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { MemoryObject } from "../types";
 
-export function MemoryObjects({ objects }: { objects: MemoryObject[] }) {
+export const MemoryObjects = ({ objects }: { objects: MemoryObject[] }) => {
   if (objects.length === 0) {
     return (
       <p className="py-6 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60 uppercase">
@@ -21,7 +21,7 @@ export function MemoryObjects({ objects }: { objects: MemoryObject[] }) {
               ? "border-emerald-300/40 bg-emerald-400/8 shadow-[0_0_18px_rgba(52,211,153,0.1)]"
               : obj.highlight === "active"
                 ? "border-amber-300/40 bg-amber-400/8 shadow-[0_0_18px_rgba(251,191,36,0.1)]"
-                : "border-slate-500/30 bg-slate-800/30"
+                : "border-slate-500/30 bg-slate-800/30",
           )}
         >
           <div className="mb-1.5 flex items-center gap-2">
@@ -32,7 +32,7 @@ export function MemoryObjects({ objects }: { objects: MemoryObject[] }) {
                   ? "text-emerald-300"
                   : obj.highlight === "active"
                     ? "text-amber-300"
-                    : "text-slate-400"
+                    : "text-slate-400",
               )}
             >
               {obj.label}
@@ -64,4 +64,4 @@ export function MemoryObjects({ objects }: { objects: MemoryObject[] }) {
       ))}
     </div>
   );
-}
+};

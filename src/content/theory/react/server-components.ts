@@ -6,14 +6,14 @@ export const serverComponentsTheory: TopicTheoryContent = {
   whatItIs: [
     "Server Components are React components that execute exclusively on the server. They can use async/await, access databases and file systems directly, and their code never reaches the browser bundle.",
     "Client Components are marked with 'use client' at the top of their file. They run in the browser (and optionally on the server for SSR) and can use hooks like useState, useEffect, and event handlers.",
-    "The RSC protocol serializes the server render output into a streaming payload: HTML chunks for server-rendered content, client references for 'use client' components, and serialized props at the boundary between server and client.",
+    "The RSC protocol serializes the server render output into a streaming payload: a serialized element tree for server-rendered content, client references for 'use client' components, and serialized props at the boundary between server and client. The framework turns that payload into HTML for the first paint.",
   ],
   howItWorks: [
     "Step 1: React starts a server render pass. It calls Server Component functions on the server, executes async operations, and produces rendered output.",
     "Step 2: when React encounters a 'use client' component, it stops rendering and records a client reference (module path + export name) in the payload.",
     "Step 3: props crossing the server/client boundary are serialized. Only JSON-serializable values (strings, numbers, booleans, arrays, plain objects, Promises) can cross. Functions, classes, and Symbols cannot.",
     "Step 4: the RSC payload streams to the browser. The client runtime loads the referenced client modules and hydrates them with the serialized props.",
-    "Step 5: Server Components that were passed as children to Client Components (the composition pattern) are already rendered to HTML on the server. The client component receives them as opaque JSX it can render without re-executing.",
+    "Step 5: Server Components that were passed as children to Client Components (the composition pattern) are already rendered on the server. The client component receives them as an opaque, serialized element tree it can place without re-executing.",
   ],
   commonMistakes: [
     {
@@ -65,7 +65,7 @@ export default function ServerParent() {
     {
       question: "Why do Server Components reduce bundle size?",
       answer:
-        "Server Component code runs only on the server. Their imports (database drivers, markdown parsers, large data processing libraries) are never sent to the browser. Only the rendered output (HTML) and client references are included in the payload.",
+        "Server Component code runs only on the server. Their imports (database drivers, markdown parsers, large data processing libraries) are never sent to the browser. Only the rendered output (a serialized element tree) and client references are included in the payload.",
     },
   ],
   relatedTopicIds: [

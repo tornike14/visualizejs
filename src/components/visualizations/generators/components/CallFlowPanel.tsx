@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { CallFlowEntry } from "../types";
 import { FLOW_DIRECTION_STYLES } from "../helpers";
 
-export function CallFlowPanel({ entries }: { entries: CallFlowEntry[] }) {
+export const CallFlowPanel = ({ entries }: { entries: CallFlowEntry[] }) => {
   if (entries.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -37,4 +37,4 @@ export function CallFlowPanel({ entries }: { entries: CallFlowEntry[] }) {
       })}
     </div>
   );
-}
+};

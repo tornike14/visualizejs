@@ -5,7 +5,10 @@ interface EventLoopRingProps {
   loopLabel: string;
 }
 
-export const EventLoopRing = ({ loopActive, loopLabel }: EventLoopRingProps) => {
+export const EventLoopRing = ({
+  loopActive,
+  loopLabel,
+}: EventLoopRingProps) => {
   return (
     <>
       <style>{`
@@ -62,16 +65,9 @@ export const EventLoopRing = ({ loopActive, loopLabel }: EventLoopRingProps) => 
           to { transform: rotate(360deg) translateX(42px) rotate(-360deg); }
         }
       `}</style>
-      <div
-        className={cn(
-          "el-loop-ring",
-          loopActive && "el-loop-ring--active"
-        )}
-      >
+      <div className={cn("el-loop-ring", loopActive && "el-loop-ring--active")}>
         <span className="el-loop-dot" />
-        <span className="el-loop-label">
-          {loopLabel}
-        </span>
+        <span className="el-loop-label">{loopLabel}</span>
       </div>
     </>
   );

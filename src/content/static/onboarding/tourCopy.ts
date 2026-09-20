@@ -24,6 +24,7 @@ export const ONBOARDING_TOUR_STEP_COPY: OnboardingTourStepCopy[] = [
       "Step Back and Step Forward move one frame at a time.",
       "Play/Pause auto-runs the full sequence.",
       "Speed adjusts playback from 0.25x to 2x.",
+      "Space, the arrow keys, and R work as shortcuts. Drag the scrubber to jump.",
     ],
   },
   {

@@ -22,25 +22,27 @@ When the user asks to create, add, or build a new React topic or visualization.
 
 2. **Read the reference implementation** at `src/components/visualizations/reconciliation/` -- read all files (`types.ts`, `helpers.ts`, `data.ts`, `index.tsx`, `components/DiffPanel.tsx`) to understand the exact pattern.
 
-3. **Register the topic** in `src/lib/topics.ts` with `category: "react"` and `route: "/react/<id>"`.
+3. **Register the topic** in `src/lib/topics.ts` with `category: "react"`. The route is derived; do not add one. Once registered, `npm run typecheck` reports every registry that still lacks an entry.
 
 4. **Add SEO keywords** in `src/lib/metadata.ts` under `TOPIC_KEYWORDS`.
 
-5. **Create the route page** at `src/app/react/<id>/page.tsx`. Follow the pattern from `src/app/react/reconciliation/page.tsx`.
+5. **Register the component** in `VISUALIZATIONS` in `src/components/visualizations/registry.tsx` (one `dynamic()` entry keyed by topic id). Routing is generated from the registry.
 
 6. **Scaffold the folder structure:**
+
    ```
    src/components/visualizations/<topic-id>/
      types.ts       # Step, Example, Kind types
      helpers.ts     # kindBadgeClass, kindLabel using shared factories
      data.ts        # EXAMPLES array with step data
-     index.tsx      # Main component with ExampleSelector + ComponentTreeDiagram
+     index.tsx      # useExampleTopic + VisualizationToolbar + ExamplePicker + ComponentTreeDiagram
      components/    # Sub-components as needed
    ```
+
    - Read `docs/react-topic-authoring.md` for React-specific patterns
    - Read `docs/component-reference.md` for ComponentTreeDiagram API
 
-7. **Add to SELECTOR_TOOLBAR_TOPIC_IDS** in `src/components/layout/VisualizationPageShell.tsx`.
+7. **Set `toolbar: "simple"`** in the topic entry only if the topic has no example picker (React topics normally do, so skip this).
 
 8. **Create theory content** at `src/content/theory/react/<id>.ts`. Read `docs/theory-authoring.md` for requirements.
 
@@ -48,17 +50,16 @@ When the user asks to create, add, or build a new React topic or visualization.
 
 10. **Add theory description** in `src/lib/metadata.ts` under `TOPIC_THEORY_DESCRIPTIONS`.
 
-11. **Verify:** Run `npm run build`. Fix any errors.
+11. **Verify:** Run `npm run audit:steps -- <id>` and fix anything it flags, then `npm run verify`.
 
 ## Key Files
 
 - `src/lib/topics.ts` -- topic registry
 - `src/lib/metadata.ts` -- keywords and theory descriptions
-- `src/app/react/<id>/page.tsx` -- route page (new)
+- `src/components/visualizations/registry.tsx` -- component registry
 - `src/components/visualizations/<topic-id>/` -- visualization folder (new)
 - `src/content/theory/react/<id>.ts` -- theory content (new)
 - `src/content/theory/index.ts` -- theory registry
-- `src/components/layout/VisualizationPageShell.tsx` -- SELECTOR_TOOLBAR_TOPIC_IDS
 - `src/components/visualizations/reconciliation/` -- reference implementation
 
 ## Documentation
@@ -71,7 +72,7 @@ When the user asks to create, add, or build a new React topic or visualization.
 ## NeonPanel Tone Conventions
 
 | Panel          | Tone     |
-|----------------|----------|
+| -------------- | -------- |
 | Source Code    | `amber`  |
 | Previous Tree  | `cyan`   |
 | New Tree       | `green`  |
@@ -83,5 +84,5 @@ When the user asks to create, add, or build a new React topic or visualization.
 - Use `ComponentTreeDiagram` for tree visualizations (auto-scales, no horizontal scroll)
 - No em dashes or AI-sounding language in content
 - No emojis in step descriptions or UI text
-- Use `handleExampleChange` callback wrapper
+- Use `useExampleTopic` + `VisualizationToolbar` + `ExamplePicker`; never hand-roll the toolbar or step pill
 - Theory `relatedTopicIds` must have 3-5 valid IDs (never empty)

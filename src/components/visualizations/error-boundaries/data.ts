@@ -44,16 +44,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
             {
               id: "counter",
               label: "<BuggyCounter>",
-              children: [
-                { id: "btn", label: '<button> "0"' },
-              ],
+              children: [{ id: "btn", label: '<button> "0"' }],
             },
           ],
         },
         activeNodeId: "boundary",
-        boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "normal" },
-        ],
+        boundaries: [{ id: "b1", label: "<ErrorBoundary>", phase: "normal" }],
       },
       {
         descriptionHtml:
@@ -68,16 +64,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
               id: "counter",
               label: "<BuggyCounter>",
               highlight: "active",
-              children: [
-                { id: "btn", label: '<button> "0"' },
-              ],
+              children: [{ id: "btn", label: '<button> "0"' }],
             },
           ],
         },
         activeNodeId: "counter",
-        boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "normal" },
-        ],
+        boundaries: [{ id: "b1", label: "<ErrorBoundary>", phase: "normal" }],
       },
       {
         descriptionHtml:
@@ -92,20 +84,23 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
               id: "counter",
               label: "<BuggyCounter>",
               highlight: "removed",
-              children: [
-                { id: "btn", label: '<button> "2"' },
-              ],
+              children: [{ id: "btn", label: '<button> "2"' }],
             },
           ],
         },
         activeNodeId: "counter",
         boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "error-thrown", errorMessage: "Crashed!" },
+          {
+            id: "b1",
+            label: "<ErrorBoundary>",
+            phase: "error-thrown",
+            errorMessage: "Crashed!",
+          },
         ],
       },
       {
         descriptionHtml:
-          'React catches the error during render. <code>getDerivedStateFromError</code> is called with the error object. It returns <code>{ hasError: true }</code> to update the boundary\'s state.',
+          "React catches the error during render. <code>getDerivedStateFromError</code> is called with the error object. It returns <code>{ hasError: true }</code> to update the boundary's state.",
         activeLine: 4,
         doneLines: [1, 2],
         componentTree: {
@@ -122,7 +117,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         },
         activeNodeId: "boundary",
         boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "getDerivedStateFromError", errorMessage: "Crashed!" },
+          {
+            id: "b1",
+            label: "<ErrorBoundary>",
+            phase: "getDerivedStateFromError",
+            errorMessage: "Crashed!",
+          },
         ],
       },
       {
@@ -144,7 +144,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         },
         activeNodeId: "boundary",
         boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "componentDidCatch", errorMessage: "Crashed!" },
+          {
+            id: "b1",
+            label: "<ErrorBoundary>",
+            phase: "componentDidCatch",
+            errorMessage: "Crashed!",
+          },
         ],
       },
       {
@@ -165,7 +170,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         },
         activeNodeId: "boundary",
         boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "fallback-rendered", fallbackLabel: "Something went wrong." },
+          {
+            id: "b1",
+            label: "<ErrorBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Something went wrong.",
+          },
         ],
       },
       {
@@ -185,7 +195,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         },
         activeNodeId: undefined,
         boundaries: [
-          { id: "b1", label: "<ErrorBoundary>", phase: "fallback-rendered", fallbackLabel: "Something went wrong." },
+          {
+            id: "b1",
+            label: "<ErrorBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Something went wrong.",
+          },
         ],
       },
     ],
@@ -222,9 +237,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
             {
               id: "inner",
               label: "<InnerBoundary>",
-              children: [
-                { id: "widget", label: "<BuggyWidget>" },
-              ],
+              children: [{ id: "widget", label: "<BuggyWidget>" }],
             },
             { id: "footer", label: "<Footer>" },
           ],
@@ -263,7 +276,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
       },
       {
         descriptionHtml:
-          '<code>BuggyWidget</code> throws an error during render. React starts walking <strong>up</strong> the tree looking for the nearest error boundary.',
+          "<code>BuggyWidget</code> throws an error during render. React starts walking <strong>up</strong> the tree looking for the nearest error boundary.",
         activeLine: 4,
         doneLines: [1, 2, 3, 5, 6, 7],
         componentTree: {
@@ -284,12 +297,17 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         activeNodeId: "widget",
         boundaries: [
           { id: "b1", label: "<OuterBoundary>", phase: "normal" },
-          { id: "b2", label: "<InnerBoundary>", phase: "error-thrown", errorMessage: "Widget error" },
+          {
+            id: "b2",
+            label: "<InnerBoundary>",
+            phase: "error-thrown",
+            errorMessage: "Widget error",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>InnerBoundary</code> is the <strong>closest</strong> error boundary. It catches the error. <code>getDerivedStateFromError</code> updates its state.',
+          "<code>InnerBoundary</code> is the <strong>closest</strong> error boundary. It catches the error. <code>getDerivedStateFromError</code> updates its state.",
         activeLine: 3,
         doneLines: [1, 2, 5, 6, 7],
         componentTree: {
@@ -311,7 +329,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         activeNodeId: "inner",
         boundaries: [
           { id: "b1", label: "<OuterBoundary>", phase: "normal" },
-          { id: "b2", label: "<InnerBoundary>", phase: "getDerivedStateFromError", errorMessage: "Widget error" },
+          {
+            id: "b2",
+            label: "<InnerBoundary>",
+            phase: "getDerivedStateFromError",
+            errorMessage: "Widget error",
+          },
         ],
       },
       {
@@ -328,7 +351,11 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
               id: "inner",
               label: "<InnerBoundary>",
               children: [
-                { id: "fallback", label: '"Widget failed"', highlight: "added" },
+                {
+                  id: "fallback",
+                  label: '"Widget failed"',
+                  highlight: "added",
+                },
               ],
             },
             { id: "footer", label: "<Footer>" },
@@ -337,7 +364,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         activeNodeId: "inner",
         boundaries: [
           { id: "b1", label: "<OuterBoundary>", phase: "normal" },
-          { id: "b2", label: "<InnerBoundary>", phase: "fallback-rendered", fallbackLabel: "Widget failed" },
+          {
+            id: "b2",
+            label: "<InnerBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Widget failed",
+          },
         ],
       },
       {
@@ -353,9 +385,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
             {
               id: "inner",
               label: "<InnerBoundary>",
-              children: [
-                { id: "fallback", label: '"Widget failed"' },
-              ],
+              children: [{ id: "fallback", label: '"Widget failed"' }],
             },
             { id: "footer", label: "<Footer>" },
           ],
@@ -363,7 +393,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         activeNodeId: undefined,
         boundaries: [
           { id: "b1", label: "<OuterBoundary>", phase: "normal" },
-          { id: "b2", label: "<InnerBoundary>", phase: "fallback-rendered", fallbackLabel: "Widget failed" },
+          {
+            id: "b2",
+            label: "<InnerBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Widget failed",
+          },
         ],
       },
       {
@@ -379,9 +414,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
             {
               id: "inner",
               label: "<InnerBoundary>",
-              children: [
-                { id: "fallback", label: '"Widget failed"' },
-              ],
+              children: [{ id: "fallback", label: '"Widget failed"' }],
             },
             { id: "footer", label: "<Footer>" },
           ],
@@ -389,7 +422,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         activeNodeId: undefined,
         boundaries: [
           { id: "b1", label: "<OuterBoundary>", phase: "normal" },
-          { id: "b2", label: "<InnerBoundary>", phase: "fallback-rendered", fallbackLabel: "Widget failed" },
+          {
+            id: "b2",
+            label: "<InnerBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Widget failed",
+          },
         ],
       },
     ],
@@ -436,9 +474,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
           id: "boundary",
           label: "<ResettableBoundary>",
           highlight: "active",
-          children: [
-            { id: "child", label: "<DataPanel>" },
-          ],
+          children: [{ id: "child", label: "<DataPanel>" }],
         },
         activeNodeId: "boundary",
         boundaries: [
@@ -459,7 +495,12 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         },
         activeNodeId: "child",
         boundaries: [
-          { id: "b1", label: "<ResettableBoundary>", phase: "error-thrown", errorMessage: "Bad data" },
+          {
+            id: "b1",
+            label: "<ResettableBoundary>",
+            phase: "error-thrown",
+            errorMessage: "Bad data",
+          },
         ],
       },
       {
@@ -471,12 +512,21 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
           id: "boundary",
           label: "<ResettableBoundary>",
           children: [
-            { id: "fallback", label: '<button> "Try again"', highlight: "added" },
+            {
+              id: "fallback",
+              label: '<button> "Try again"',
+              highlight: "added",
+            },
           ],
         },
         activeNodeId: "boundary",
         boundaries: [
-          { id: "b1", label: "<ResettableBoundary>", phase: "fallback-rendered", fallbackLabel: "Try again" },
+          {
+            id: "b1",
+            label: "<ResettableBoundary>",
+            phase: "fallback-rendered",
+            fallbackLabel: "Try again",
+          },
         ],
       },
       {
@@ -488,9 +538,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
           id: "boundary",
           label: "<ResettableBoundary>",
           highlight: "updated",
-          children: [
-            { id: "fallback", label: '<button> "Try again"' },
-          ],
+          children: [{ id: "fallback", label: '<button> "Try again"' }],
         },
         activeNodeId: "boundary",
         boundaries: [
@@ -505,9 +553,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         componentTree: {
           id: "boundary",
           label: "<ResettableBoundary>",
-          children: [
-            { id: "child", label: "<DataPanel>", highlight: "added" },
-          ],
+          children: [{ id: "child", label: "<DataPanel>", highlight: "added" }],
         },
         activeNodeId: "boundary",
         boundaries: [
@@ -522,9 +568,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         componentTree: {
           id: "boundary",
           label: "<ResettableBoundary>",
-          children: [
-            { id: "child", label: "<DataPanel>" },
-          ],
+          children: [{ id: "child", label: "<DataPanel>" }],
         },
         activeNodeId: undefined,
         boundaries: [
@@ -539,9 +583,7 @@ export const EXAMPLES: ErrorBoundaryExample[] = [
         componentTree: {
           id: "boundary",
           label: "<ResettableBoundary>",
-          children: [
-            { id: "child", label: "<DataPanel>" },
-          ],
+          children: [{ id: "child", label: "<DataPanel>" }],
         },
         activeNodeId: undefined,
         boundaries: [

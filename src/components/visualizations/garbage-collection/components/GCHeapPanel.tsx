@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import type { HeapObject } from "../types";
 import { HEAP_TONE_MAP, HEAP_STATUS_MAP, heapFingerprint } from "../helpers";
 
-export function GCHeapPanel({
+export const GCHeapPanel = ({
   objects,
   gcSweep,
 }: {
   objects: HeapObject[];
   gcSweep: boolean;
-}) {
+}) => {
   const visible = objects.filter((o) => o.status !== "collected");
 
   if (visible.length === 0 && !gcSweep) {
@@ -41,7 +41,7 @@ export function GCHeapPanel({
             "viz-slide-in rounded-lg border px-3 py-2.5",
             HEAP_TONE_MAP[obj.tone],
             HEAP_STATUS_MAP[obj.status],
-            gcSweep && obj.status === "unreachable" && "gc-shake"
+            gcSweep && obj.status === "unreachable" && "gc-shake",
           )}
         >
           <div className="mb-1.5 flex items-center gap-2">
@@ -69,4 +69,4 @@ export function GCHeapPanel({
       ))}
     </div>
   );
-}
+};

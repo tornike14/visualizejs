@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 /* ── Types ── */
@@ -20,10 +20,7 @@ export interface HeapObject {
   isShared: boolean;
 }
 
-export interface ReferenceStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ReferenceStep extends BaseStep {
   consoleOutput: string[];
   memorySlots: MemorySlot[];
   heapObjects: HeapObject[];

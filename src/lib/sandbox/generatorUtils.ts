@@ -38,7 +38,11 @@ export function getLineRange(node: Node): number[] {
 /* ------------------------------------------------------------------ */
 
 /** Create a short label from a node's source text (truncated to `maxLen`). */
-export function expressionToLabel(node: Node, source: string, maxLen = 45): string {
+export function expressionToLabel(
+  node: Node,
+  source: string,
+  maxLen = 45,
+): string {
   const raw = source.slice(node.start, node.end);
   if (raw.length <= maxLen) return raw;
   return raw.slice(0, maxLen - 3) + "...";
@@ -138,8 +142,10 @@ export function extractConsoleLogArg(
   const callee = node.callee;
   if (
     callee.type === "MemberExpression" &&
-    ((callee as unknown as MemberExpression).object as Identifier).name === "console" &&
-    ((callee as unknown as MemberExpression).property as Identifier).name === "log"
+    ((callee as unknown as MemberExpression).object as Identifier).name ===
+      "console" &&
+    ((callee as unknown as MemberExpression).property as Identifier).name ===
+      "log"
   ) {
     if (node.arguments.length === 0) return "";
     return resolveNodeToString(node.arguments[0], source, scope);
@@ -158,7 +164,12 @@ export function createError(
   line?: number,
   column?: number,
 ): SandboxError {
-  return { type, message, ...(line != null ? { line } : {}), ...(column != null ? { column } : {}) };
+  return {
+    type,
+    message,
+    ...(line != null ? { line } : {}),
+    ...(column != null ? { column } : {}),
+  };
 }
 
 /** Escape untrusted text before interpolating into HTML strings. */

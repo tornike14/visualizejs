@@ -18,13 +18,15 @@ export const useFocusTrap = (
     if (!container) return;
 
     // Focus the first focusable element
-    const firstFocusable = container.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+    const firstFocusable =
+      container.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
     firstFocusable?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
 
-      const focusableElements = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      const focusableElements =
+        container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
       if (focusableElements.length === 0) {
         event.preventDefault();
         return;

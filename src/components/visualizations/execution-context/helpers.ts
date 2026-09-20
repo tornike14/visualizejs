@@ -20,7 +20,10 @@ export function phaseColors(phase: "creation" | "execution") {
       };
 }
 
-export function kindBadge(kind: Binding["kind"]): { label: string; className: string } {
+export function kindBadge(kind: Binding["kind"]): {
+  label: string;
+  className: string;
+} {
   switch (kind) {
     case "var":
       return { label: "var", className: "text-amber-300 bg-amber-500/15" };

@@ -3,10 +3,7 @@
 import Image from "next/image";
 import { track } from "@vercel/analytics";
 import { Linkedin } from "lucide-react";
-import {
-  CREATOR_AVATAR_SRC,
-  CREATOR_LINKEDIN_URL,
-} from "@/lib/constants";
+import { CREATOR_AVATAR_SRC, CREATOR_LINKEDIN_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 interface FollowLinkedInButtonProps {

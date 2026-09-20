@@ -23,8 +23,8 @@ React topics visualize component/element trees instead of linear structures (cal
 
 ```typescript
 interface ComponentTreeDiagramProps {
-  tree: TreeNodeData;        // Root node of the tree
-  activeNodeId?: string;     // Node highlighted with a cyan ring
+  tree: TreeNodeData; // Root node of the tree
+  activeNodeId?: string; // Node highlighted with a cyan ring
 }
 ```
 
@@ -33,7 +33,12 @@ interface ComponentTreeDiagramProps {
 Defined in `src/types/visualization.ts`:
 
 ```typescript
-export type TreeNodeHighlight = "unchanged" | "updated" | "added" | "removed" | "active";
+export type TreeNodeHighlight =
+  | "unchanged"
+  | "updated"
+  | "added"
+  | "removed"
+  | "active";
 
 export interface TreeNodeData {
   id: string;
@@ -46,17 +51,18 @@ export interface TreeNodeData {
 
 ### Highlight Color Scheme
 
-| Highlight   | Border/BG   | Text Color  | Use Case                          |
-|-------------|-------------|-------------|-----------------------------------|
-| `unchanged` | slate       | slate-400   | Nodes that didn't change          |
-| `updated`   | amber       | amber-300   | Props or text content changed     |
-| `added`     | emerald     | emerald-300 | Newly mounted nodes               |
-| `removed`   | rose        | rose-400    | Nodes being unmounted (strikethrough) |
-| `active`    | cyan        | cyan-300    | Currently being compared/diffed   |
+| Highlight   | Border/BG | Text Color  | Use Case                              |
+| ----------- | --------- | ----------- | ------------------------------------- |
+| `unchanged` | slate     | slate-400   | Nodes that didn't change              |
+| `updated`   | amber     | amber-300   | Props or text content changed         |
+| `added`     | emerald   | emerald-300 | Newly mounted nodes                   |
+| `removed`   | rose      | rose-400    | Nodes being unmounted (strikethrough) |
+| `active`    | cyan      | cyan-300    | Currently being compared/diffed       |
 
 ### Connector Lines (Split-Half Technique)
 
 Tree connectors use a split-half pattern for each child column:
+
 - **First child**: right half of horizontal rail only
 - **Middle children**: both left and right halves
 - **Last child**: left half only
@@ -67,6 +73,7 @@ Child columns use `flex` layout edge-to-edge (no gap) so the rail segments conne
 ### Auto-Scaling
 
 The component automatically scales down when the tree is wider than its container:
+
 - Uses `ResizeObserver` + `useLayoutEffect` to measure natural width vs container width
 - Applies `transform: scale(ratio)` with `transformOrigin: "top center"`
 - Adjusts wrapper height to `Math.ceil(naturalHeight * scale)` to prevent layout gaps
@@ -75,7 +82,7 @@ The component automatically scales down when the tree is wider than its containe
 ### NeonPanel Tone Conventions for React Topics
 
 | Panel          | Tone     |
-|----------------|----------|
+| -------------- | -------- |
 | Source Code    | `amber`  |
 | Previous Tree  | `cyan`   |
 | New Tree       | `green`  |
@@ -86,7 +93,10 @@ The component automatically scales down when the tree is wider than its containe
 ```tsx
 import { ComponentTreeDiagram } from "@/components/visualization-ui/ComponentTreeDiagram";
 
-<NeonPanel title="Previous Tree" tone="cyan" bodyClassName="min-h-[10rem]"
+<NeonPanel
+  title="Previous Tree"
+  tone="cyan"
+  bodyClassName="min-h-[10rem]"
   className={flashes.previousTree ? "viz-change-flash" : undefined}
 >
   {currentStep ? (
@@ -99,7 +109,7 @@ import { ComponentTreeDiagram } from "@/components/visualization-ui/ComponentTre
       waiting
     </p>
   )}
-</NeonPanel>
+</NeonPanel>;
 ```
 
 ---
@@ -152,7 +162,10 @@ export interface YourExample extends ExampleOption {
 Use the shared helper factories for consistent badge/label patterns:
 
 ```typescript
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { YourKind } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<YourKind>({
@@ -171,18 +184,11 @@ export const kindLabel = createKindLabel<YourKind>({
 ### Main Component Pattern
 
 ```typescript
-export function YourTopic() {
-  const [activeExampleId, setActiveExampleId] = useState(EXAMPLES[0].id);
-  const handleExampleChange = (id: string) => setActiveExampleId(id);
-  const example = EXAMPLES.find((e) => e.id === activeExampleId) ?? EXAMPLES[0];
+export const YourTopic = () => {
+  const { example, activeExampleId, handleExampleChange, playback, currentStep } =
+    useExampleTopic(EXAMPLES);
+  const { currentStepIndex } = playback;
 
-  const { currentStepIndex, ... } = useStepPlayback({
-    totalSteps: example.steps.length,
-    initialStep: -1,
-    resetKey: activeExampleId,
-  });
-
-  const currentStep = currentStepIndex >= 0 ? example.steps[currentStepIndex] : null;
   const flashes = useChangeFlash({
     description: currentStep?.descriptionHtml,
     previousTree: currentStep?.previousTree,
@@ -192,15 +198,22 @@ export function YourTopic() {
 
   return (
     <>
-      <ToolbarPortal>
-        {/* ExampleSelector + Badge + TransportControls + step description pill */}
-      </ToolbarPortal>
-      <section>
-        {/* CodeBlock (amber) | Previous Tree (cyan) + New Tree (green) | DiffPanel (violet) */}
-      </section>
+      <VisualizationToolbar
+        playback={playback}
+        totalSteps={example.steps.length}
+        descriptionHtml={currentStep?.descriptionHtml}
+        descriptionFlash={flashes.description}
+        leading={<ExamplePicker examples={EXAMPLES} activeId={activeExampleId} onSelect={handleExampleChange} renderBadge={...} />}
+      />
+      <VisualizationSection>
+        <SourceGrid>
+          <SourceCodePanel lines={example.codeLines} activeLine={currentStep?.activeLine} doneLines={currentStep?.doneLines} />
+          {/* Previous Tree (cyan) + New Tree (green) | DiffPanel (violet) */}
+        </SourceGrid>
+      </VisualizationSection>
     </>
   );
-}
+};
 ```
 
 ### Reference Implementation
@@ -213,12 +226,10 @@ The **Reconciliation** topic (`src/components/visualizations/reconciliation/`) i
 
 When adding a new React topic, follow these additional steps beyond the base checklist:
 
-1. Register in `src/lib/topics.ts` with `category: "react"` and `route: "/react/<id>"`
-2. Create route page at `src/app/react/<id>/page.tsx`
-3. Create theory file at `src/content/theory/react/<id>.ts` (if applicable)
-4. Add to `SELECTOR_TOOLBAR_TOPIC_IDS` in `VisualizationPageShell.tsx` (if using ExampleSelector)
-5. Sitemap updates automatically (category-agnostic), and the theory sections
-   render on the topic page once the content is registered
+1. Register in `src/lib/topics.ts` with `category: "react"` (the route is derived)
+2. Add the component to `VISUALIZATIONS` in `src/components/visualizations/registry.tsx`
+3. Create theory file at `src/content/theory/react/<id>.ts`
+4. The route, sitemap, and theory sections all follow from the registries; `npm run typecheck` fails until every registry has the new id
 
 ---
 
@@ -226,7 +237,7 @@ When adding a new React topic, follow these additional steps beyond the base che
 
 React-specific items (in addition to the "All Topics" checklist in [topic-authoring.md](topic-authoring.md)):
 
-- [ ] Route page at `src/app/react/<id>/page.tsx`
+- [ ] Component registered in `VISUALIZATIONS`
 - [ ] Topic uses folder-based structure: `types.ts`, `helpers.ts`, `data.ts`, `components/`, `index.tsx`
 - [ ] Tree panels use `ComponentTreeDiagram` from `visualization-ui/`
 - [ ] Tree panels follow tone conventions: Previous Tree (cyan), New Tree (green)

@@ -8,24 +8,27 @@ import {
   type OnboardingTourStepId,
 } from "@/content/static/onboarding/tourCopy";
 
-const PREVIEW_BY_ID: Record<OnboardingTourStepId, OnboardingTourStep["Preview"]> = {
+const PREVIEW_BY_ID: Record<
+  OnboardingTourStepId,
+  OnboardingTourStep["Preview"]
+> = {
   transport: ControlsPreview,
   sandbox: SandboxPreview,
   theory: TheoryPreview,
   linkedin: LinkedInPreview,
 };
 
-const LAYOUT_BY_ID: Record<OnboardingTourStepId, OnboardingTourStep["layout"]> = {
-  transport: "split",
-  sandbox: "split",
-  theory: "compact",
-  linkedin: "compact",
-};
+const LAYOUT_BY_ID: Record<OnboardingTourStepId, OnboardingTourStep["layout"]> =
+  {
+    transport: "split",
+    sandbox: "split",
+    theory: "compact",
+    linkedin: "compact",
+  };
 
-export const ONBOARDING_TOUR_STEPS: OnboardingTourStep[] = ONBOARDING_TOUR_STEP_COPY.map(
-  (stepCopy) => ({
+export const ONBOARDING_TOUR_STEPS: OnboardingTourStep[] =
+  ONBOARDING_TOUR_STEP_COPY.map((stepCopy) => ({
     ...stepCopy,
     Preview: PREVIEW_BY_ID[stepCopy.id],
     layout: LAYOUT_BY_ID[stepCopy.id],
-  }),
-);
+  }));

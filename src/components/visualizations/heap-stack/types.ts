@@ -1,4 +1,4 @@
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type HeapStackKind = "stack" | "heap" | "call-stack" | "gc";
@@ -23,10 +23,7 @@ export interface HeapAllocation {
   status: "alive" | "unreachable" | "collected";
 }
 
-export interface HeapStackStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface HeapStackStep extends BaseStep {
   consoleOutput: string[];
   stackFrames: StackFrame[];
   heapAllocations: HeapAllocation[];

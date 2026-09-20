@@ -1,7 +1,12 @@
 export type PlaybackSpeedLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 type TooltipSide = "top" | "bottom";
-type TransportTooltipKey = "reset" | "stepBack" | "play" | "stepForward" | "speed";
+type TransportTooltipKey =
+  | "reset"
+  | "stepBack"
+  | "play"
+  | "stepForward"
+  | "speed";
 
 export interface TransportTooltipConfig {
   forceVisible?: boolean;
@@ -21,6 +26,8 @@ export interface TransportControlsProps {
   onStepBack: () => void;
   onReset: () => void;
   onSpeedLevelChange: (level: PlaybackSpeedLevel) => void;
+  /** When provided, a scrubber lets the reader jump straight to any step. */
+  onJumpTo?: (index: number) => void;
   tooltipConfig?: TransportTooltipConfig;
   className?: string;
 }

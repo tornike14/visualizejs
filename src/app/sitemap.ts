@@ -1,37 +1,24 @@
 import type { MetadataRoute } from "next";
+import { CATEGORY_LIST } from "@/lib/categories";
 import { SITE_URL } from "@/lib/constants";
 import { topics } from "@/lib/topics";
 
+/**
+ * lastModified is deliberately omitted: stamping every URL with the build
+ * time tells crawlers nothing and makes real changes indistinguishable.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: SITE_URL,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${SITE_URL}/javascript`,
-      lastModified: now,
-      changeFrequency: "weekly",
+  return [
+    { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    ...CATEGORY_LIST.map((category) => ({
+      url: `${SITE_URL}${category.route}`,
+      changeFrequency: "weekly" as const,
       priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/react`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+    })),
+    ...topics.map((topic) => ({
+      url: `${SITE_URL}${topic.route}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
   ];
-
-  const topicRoutes: MetadataRoute.Sitemap = topics.map((topic) => ({
-    url: `${SITE_URL}${topic.route}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }));
-
-  return [...staticRoutes, ...topicRoutes];
 }

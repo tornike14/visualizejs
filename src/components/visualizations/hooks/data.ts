@@ -15,7 +15,10 @@ export const EXAMPLES: HooksExample[] = [
       { num: 4, text: "  useEffect(() => {" },
       { num: 5, text: "    document.title = `${name}: ${count}`;" },
       { num: 6, text: "  }, [count, name]);" },
-      { num: 7, text: "  return <button onClick={() => setCount(count + 1)}>+</button>;" },
+      {
+        num: 7,
+        text: "  return <button onClick={() => setCount(count + 1)}>+</button>;",
+      },
       { num: 8, text: "}" },
     ],
     steps: [
@@ -25,17 +28,32 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 1,
         doneLines: [],
         hookNodes: [],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: null, hookCount: 0, currentHookIndex: null },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: null,
+          hookCount: 0,
+          currentHookIndex: null,
+        },
       },
       {
         descriptionHtml:
-          "First <code>useState(0)</code> call. React <span class=\"hl-api\">creates hook #0</span> and appends it to the list. Initial state: <code>0</code>.",
+          'First <code>useState(0)</code> call. React <span class="hl-api">creates hook #0</span> and appends it to the list. Initial state: <code>0</code>.',
         activeLine: 2,
         doneLines: [1],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "0", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "0",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 1, currentHookIndex: 0 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 1,
+          currentHookIndex: 0,
+        },
       },
       {
         descriptionHtml:
@@ -43,10 +61,25 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 3,
         doneLines: [1, 2],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "0", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "0",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 2, currentHookIndex: 1 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 2,
+          currentHookIndex: 1,
+        },
       },
       {
         descriptionHtml:
@@ -54,11 +87,31 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 4,
         doneLines: [1, 2, 3],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "0", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "idle" },
-          { index: 2, hookType: "useEffect", memoizedState: "[0, 'React']", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "0",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[0, 'React']",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 2 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 2,
+        },
       },
       {
         descriptionHtml:
@@ -66,11 +119,30 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "0", status: "mounted" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "mounted" },
-          { index: 2, hookType: "useEffect", memoizedState: "[0, 'React']", status: "mounted" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "0",
+            status: "mounted",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "mounted",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[0, 'React']",
+            status: "mounted",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+        },
       },
       {
         descriptionHtml:
@@ -78,23 +150,63 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 1,
         doneLines: [],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "0", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "idle" },
-          { index: 2, hookType: "useEffect", memoizedState: "[0, 'React']", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "0",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[0, 'React']",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: null },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: null,
+        },
       },
       {
         descriptionHtml:
-          "First <code>useState</code> on re-render. React <span class=\"hl-task\">reads hook #0</span> from the existing list. Returns updated state: <code>1</code>.",
+          'First <code>useState</code> on re-render. React <span class="hl-task">reads hook #0</span> from the existing list. Returns updated state: <code>1</code>.',
         activeLine: 2,
         doneLines: [1],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "1", status: "reading" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "idle" },
-          { index: 2, hookType: "useEffect", memoizedState: "[0, 'React']", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "1",
+            status: "reading",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[0, 'React']",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 0 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 0,
+        },
       },
       {
         descriptionHtml:
@@ -102,11 +214,31 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 3,
         doneLines: [1, 2],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "1", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "reading" },
-          { index: 2, hookType: "useEffect", memoizedState: "[0, 'React']", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "1",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "reading",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[0, 'React']",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 1 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 1,
+        },
       },
       {
         descriptionHtml:
@@ -114,11 +246,31 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 4,
         doneLines: [1, 2, 3],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "1", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "idle" },
-          { index: 2, hookType: "useEffect", memoizedState: "[1, 'React']", status: "reading" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "1",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[1, 'React']",
+            status: "reading",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 2 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 2,
+        },
       },
       {
         descriptionHtml:
@@ -126,11 +278,30 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "1", status: "mounted" },
-          { index: 1, hookType: "useState", memoizedState: "'React'", status: "mounted" },
-          { index: 2, hookType: "useEffect", memoizedState: "[1, 'React']", status: "mounted" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "1",
+            status: "mounted",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "'React'",
+            status: "mounted",
+          },
+          {
+            index: 2,
+            hookType: "useEffect",
+            memoizedState: "[1, 'React']",
+            status: "mounted",
+          },
         ],
-        fiberState: { fiberLabel: "Counter fiber", memoizedStatePointer: 0, hookCount: 3 },
+        fiberState: {
+          fiberLabel: "Counter fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+        },
       },
     ],
   },
@@ -159,7 +330,12 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 1,
         doneLines: [],
         hookNodes: [],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: null, hookCount: 0, currentHookIndex: null },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: null,
+          hookCount: 0,
+          currentHookIndex: null,
+        },
       },
       {
         descriptionHtml:
@@ -167,9 +343,19 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 2,
         doneLines: [1],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 1, currentHookIndex: 0 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 1,
+          currentHookIndex: 0,
+        },
       },
       {
         descriptionHtml:
@@ -177,10 +363,25 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 4,
         doneLines: [1, 2, 3],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 2, currentHookIndex: 1 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 2,
+          currentHookIndex: 1,
+        },
       },
       {
         descriptionHtml:
@@ -188,11 +389,31 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 2, hookType: "useState", memoizedState: "false", status: "creating" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useState",
+            memoizedState: "false",
+            status: "creating",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 2 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 2,
+        },
       },
       {
         descriptionHtml:
@@ -200,11 +421,30 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "mounted" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "mounted" },
-          { index: 2, hookType: "useState", memoizedState: "false", status: "mounted" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "mounted",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "mounted",
+          },
+          {
+            index: 2,
+            hookType: "useState",
+            memoizedState: "false",
+            status: "mounted",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 3 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+        },
       },
       {
         descriptionHtml:
@@ -212,36 +452,97 @@ export const EXAMPLES: HooksExample[] = [
         activeLine: 2,
         doneLines: [1],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "reading" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 2, hookType: "useState", memoizedState: "false", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "reading",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useState",
+            memoizedState: "false",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 0 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 0,
+        },
       },
       {
         descriptionHtml:
-          "<code>showName</code> is false. The conditional <span class=\"hl-api\">skips hook #1</span>. Cursor stays at position 1.",
+          '<code>showName</code> is false. The conditional <span class="hl-api">skips hook #1</span>. Cursor stays at position 1.',
         activeLine: 3,
         doneLines: [1, 2],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 2, hookType: "useState", memoizedState: "false", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 2,
+            hookType: "useState",
+            memoizedState: "false",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 1 },
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 1,
+        },
       },
       {
         descriptionHtml:
-          "<code>useState(false)</code> for submitted now reads hook #1 (the <span class=\"hl-api\">name hook</span>). It gets <code>''</code> instead of <code>false</code>. <strong>Wrong state!</strong>",
+          "<code>useState(false)</code> for submitted now reads hook #1 (the <span class=\"hl-api\">name hook</span>). It gets <code>''</code> instead of <code>false</code>. <strong>Wrong state!</strong> React notices the list is now shorter than before and throws <code>Rendered fewer hooks than expected</code>, which is why hooks must always run in the same order.",
         activeLine: 6,
         doneLines: [1, 2, 3, 5],
         hookNodes: [
-          { index: 0, hookType: "useState", memoizedState: "''", status: "idle" },
-          { index: 1, hookType: "useState", memoizedState: "''", status: "error" },
-          { index: 2, hookType: "useState", memoizedState: "false", status: "idle" },
+          {
+            index: 0,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "idle",
+          },
+          {
+            index: 1,
+            hookType: "useState",
+            memoizedState: "''",
+            status: "error",
+          },
+          {
+            index: 2,
+            hookType: "useState",
+            memoizedState: "false",
+            status: "idle",
+          },
         ],
-        fiberState: { fiberLabel: "Form fiber", memoizedStatePointer: 0, hookCount: 3, currentHookIndex: 1 },
-        errorMessage: "Hook mismatch: expected useState(false) at #1 but found name state ''",
+        fiberState: {
+          fiberLabel: "Form fiber",
+          memoizedStatePointer: 0,
+          hookCount: 3,
+          currentHookIndex: 1,
+        },
+        errorMessage:
+          "Hook mismatch: expected useState(false) at #1 but found name state ''",
       },
     ],
   },

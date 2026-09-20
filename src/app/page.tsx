@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { HomeLandingPage } from "@/components/layout/HomeLandingPage";
 
 export const metadata: Metadata = {
-  title: "JavaScript and React Visualizer",
+  title: "JavaScript, React, Backend, and AI Visualizer",
   description:
-    "Free JavaScript and React visualizer. Step through the event loop, closures, hoisting, promises, the virtual DOM, and hooks with interactive animations.",
+    "Free visualizer for JavaScript, React, Vue, Svelte, Angular, backend systems, and AI models. Step through the event loop, closures, reconciliation, HTTP requests, attention, and more with interactive animations.",
   keywords: [
     "javascript visualizer",
     "js visualizer",
@@ -15,9 +15,19 @@ export const metadata: Metadata = {
     "javascript execution visualizer",
     "learn javascript visually",
     "javascript interview preparation",
+    "backend visualizer",
+    "how llms work visualized",
+    "vue svelte angular reactivity",
   ],
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: "JavaScript, React, Backend, and AI Visualizer | VisualizeJS",
+    description:
+      "Free visualizer for JavaScript, React, Vue, Svelte, Angular, backend systems, and AI models. Step through the event loop, closures, reconciliation, HTTP requests, attention, and more with interactive animations.",
+    url: "/",
+    type: "website",
   },
 };
 

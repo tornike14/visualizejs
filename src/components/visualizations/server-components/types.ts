@@ -1,4 +1,4 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
 export type RSCKind = "basic" | "payload" | "composition";
@@ -18,10 +18,7 @@ export interface PayloadEntry {
   status: "pending" | "streaming" | "sent";
 }
 
-export interface RSCStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface RSCStep extends BaseStep {
   componentTree: TreeNodeData;
   activeNodeId?: string;
   renderPhase: RenderPhase;

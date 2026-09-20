@@ -69,7 +69,7 @@ export const hooksTheory: TopicTheoryContent = {
     "fiber-tree",
     "render-cycle",
     "use-effect-lifecycle",
+    "state-batching",
     "closures",
-    "reconciliation",
   ],
 };

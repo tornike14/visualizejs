@@ -1,5 +1,4 @@
-import { useMemo, type ReactNode } from "react";
-import { tokenize, type Token } from "@/lib/visualization/syntax";
+import type { ReactNode } from "react";
 import { CodeLine } from "./CodeLine";
 import { cn } from "@/lib/utils";
 
@@ -16,24 +15,16 @@ interface CodeBlockProps {
   className?: string;
 }
 
-export function CodeBlock({ lines, className }: CodeBlockProps) {
-  const tokensByLine = useMemo<Token[][]>(
-    () => lines.map((line) => tokenize(line.text)),
-    [lines]
-  );
-
-  return (
-    <div className={cn("space-y-0.5 overflow-x-auto", className)}>
-      {lines.map((line, index) => (
-        <CodeLine
-          key={line.key}
-          lineNumber={line.lineNumber}
-          text={line.text}
-          tokens={tokensByLine[index]}
-          className={line.className}
-          leftSlot={line.leftSlot}
-        />
-      ))}
-    </div>
-  );
-}
+export const CodeBlock = ({ lines, className }: CodeBlockProps) => (
+  <div className={cn("space-y-0.5 overflow-x-auto", className)}>
+    {lines.map((line) => (
+      <CodeLine
+        key={line.key}
+        lineNumber={line.lineNumber}
+        text={line.text}
+        className={line.className}
+        leftSlot={line.leftSlot}
+      />
+    ))}
+  </div>
+);

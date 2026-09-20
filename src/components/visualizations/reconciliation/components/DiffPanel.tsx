@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { DiffOperation } from "../types";
 import { operationStyle, operationLabel } from "../helpers";
 
-export function DiffPanel({ operations }: { operations: DiffOperation[] }) {
+export const DiffPanel = ({ operations }: { operations: DiffOperation[] }) => {
   if (operations.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -30,4 +30,4 @@ export function DiffPanel({ operations }: { operations: DiffOperation[] }) {
       ))}
     </div>
   );
-}
+};

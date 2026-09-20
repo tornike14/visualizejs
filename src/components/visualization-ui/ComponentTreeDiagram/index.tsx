@@ -9,10 +9,10 @@ interface ComponentTreeDiagramProps {
   activeNodeId?: string;
 }
 
-export function ComponentTreeDiagram({
+export const ComponentTreeDiagram = ({
   tree,
   activeNodeId,
-}: ComponentTreeDiagramProps) {
+}: ComponentTreeDiagramProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -33,9 +33,7 @@ export function ComponentTreeDiagram({
     const available = container.clientWidth;
 
     const s =
-      naturalWidth > available && available > 0
-        ? available / naturalWidth
-        : 1;
+      naturalWidth > available && available > 0 ? available / naturalWidth : 1;
 
     inner.style.transform = s < 1 ? `scale(${s})` : "none";
     viewport.style.height = s < 1 ? `${Math.ceil(naturalHeight * s)}px` : "";
@@ -67,4 +65,4 @@ export function ComponentTreeDiagram({
       </div>
     </div>
   );
-}
+};

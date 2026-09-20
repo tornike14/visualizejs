@@ -7,7 +7,7 @@ interface DualTreePanelProps {
   wipTree: TreeNodeData | null;
 }
 
-export function DualTreePanel({ currentTree, wipTree }: DualTreePanelProps) {
+export const DualTreePanel = ({ currentTree, wipTree }: DualTreePanelProps) => {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <NeonPanel title="Current Tree" tone="cyan" bodyClassName="min-h-[8rem]">
@@ -25,4 +25,4 @@ export function DualTreePanel({ currentTree, wipTree }: DualTreePanelProps) {
       </NeonPanel>
     </div>
   );
-}
+};

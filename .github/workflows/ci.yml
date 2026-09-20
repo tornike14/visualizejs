@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint and build
+    name: Lint, test, and build
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -29,19 +29,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Test
+        run: npm run test
+
+      - name: Audit step data
+        run: npm run audit:steps
+
       - name: Build
         run: npm run build
-
-  registry-check:
-    name: Registry integrity
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Verify every topic is fully registered
-        run: node scripts/check-registries.mjs

@@ -1,7 +1,11 @@
-import type { SourceLine, TreeNodeData } from "@/types/visualization";
+import type { SourceLine, TreeNodeData, BaseStep } from "@/types/visualization";
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
 
-export type MemoizationKind = "memo" | "use-memo" | "use-callback" | "invalidation";
+export type MemoizationKind =
+  | "memo"
+  | "use-memo"
+  | "use-callback"
+  | "invalidation";
 
 export type CacheStatus = "empty" | "hit" | "miss" | "stale";
 
@@ -22,10 +26,7 @@ export interface RenderDecision {
   reason: string;
 }
 
-export interface MemoizationStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface MemoizationStep extends BaseStep {
   componentTree: TreeNodeData;
   activeNodeId?: string;
   memoEntries: MemoEntry[];

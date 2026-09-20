@@ -11,7 +11,7 @@ interface TreeNodeProps {
   activeNodeId?: string;
 }
 
-export function TreeNode({ node, activeNodeId }: TreeNodeProps) {
+export const TreeNode = ({ node, activeNodeId }: TreeNodeProps) => {
   const highlight = node.highlight ?? "unchanged";
   const isActive = activeNodeId === node.id;
   const children = node.children ?? [];
@@ -32,11 +32,7 @@ export function TreeNode({ node, activeNodeId }: TreeNodeProps) {
             NODE_LABEL_STYLES[highlight],
           )}
         >
-          {highlight === "removed" ? (
-            <s>{node.label}</s>
-          ) : (
-            node.label
-          )}
+          {highlight === "removed" ? <s>{node.label}</s> : node.label}
         </span>
 
         {node.props && node.props.length > 0 && (
@@ -74,10 +70,7 @@ export function TreeNode({ node, activeNodeId }: TreeNodeProps) {
               const isOnly = children.length === 1;
 
               return (
-                <div
-                  key={child.id}
-                  className="flex flex-col items-center"
-                >
+                <div key={child.id} className="flex flex-col items-center">
                   {/* Horizontal rail: left half + right half */}
                   <div className="flex self-stretch">
                     <div
@@ -104,10 +97,7 @@ export function TreeNode({ node, activeNodeId }: TreeNodeProps) {
 
                   {/* Child node with horizontal spacing */}
                   <div className="px-2">
-                    <TreeNode
-                      node={child}
-                      activeNodeId={activeNodeId}
-                    />
+                    <TreeNode node={child} activeNodeId={activeNodeId} />
                   </div>
                 </div>
               );
@@ -117,4 +107,4 @@ export function TreeNode({ node, activeNodeId }: TreeNodeProps) {
       )}
     </div>
   );
-}
+};

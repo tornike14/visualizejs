@@ -77,7 +77,7 @@ export const renderCycleTheory: TopicTheoryContent = {
     "fiber-tree",
     "hooks",
     "reconciliation",
-    "event-loop",
-    "use-effect-lifecycle",
+    "concurrent-rendering",
+    "vue-reactivity",
   ],
 };

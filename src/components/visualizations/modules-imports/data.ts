@@ -29,113 +29,307 @@ export const EXAMPLES: ModulesExample[] = [
     steps: [
       {
         descriptionHtml:
-          'The engine encounters <code>import</code> in <code>app.js</code>. Before executing any code, it begins resolving the module graph by loading <code>math.js</code>.',
+          "The engine encounters <code>import</code> in <code>app.js</code>. Before executing any code, it begins resolving the module graph by loading <code>math.js</code>.",
         activeLine: 11,
         doneLines: [],
         consoleOutput: [],
         modules: [
           { id: "app", filename: "app.js", phase: "unlinked", exports: [] },
-          { id: "math", filename: "math.js", phase: "unlinked", exports: [], highlight: "active" },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "unlinked",
+            exports: [],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"] }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+          },
+        ],
         bindings: [],
       },
       {
         descriptionHtml:
-          '<code>math.js</code> is parsed. The engine discovers three exports: named <code>PI</code>, named <code>double</code>, and default <code>square</code>. Module records are created.',
+          "<code>math.js</code> is parsed. The engine discovers three exports: named <code>PI</code>, named <code>double</code>, and default <code>square</code>. Module records are created.",
         activeLine: 2,
         doneLines: [],
         consoleOutput: [],
         modules: [
           { id: "app", filename: "app.js", phase: "unlinked", exports: [] },
-          { id: "math", filename: "math.js", phase: "linking", exports: ["PI", "double", "default (square)"], highlight: "active" },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "linking",
+            exports: ["PI", "double", "default (square)"],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "active" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "active",
+          },
+        ],
         bindings: [],
       },
       {
         descriptionHtml:
-          'Named exports <code>PI</code> and <code>double</code> are linked. Each import in <code>app.js</code> gets a live binding that points to the same memory slot as the export in <code>math.js</code>.',
+          "Named exports <code>PI</code> and <code>double</code> are linked. Each import in <code>app.js</code> gets a live binding that points to the same memory slot as the export in <code>math.js</code>.",
         activeLine: 11,
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: [],
         modules: [
-          { id: "app", filename: "app.js", phase: "linking", exports: [], highlight: "active" },
-          { id: "math", filename: "math.js", phase: "linked", exports: ["PI", "double", "default (square)"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "linking",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "linked",
+            exports: ["PI", "double", "default (square)"],
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "PI", sourceModule: "math.js", sourceExport: "PI", value: "3.14", isLive: true },
-          { name: "double", sourceModule: "math.js", sourceExport: "double", value: "function", isLive: true },
-          { name: "square", sourceModule: "math.js", sourceExport: "default", value: "function", isLive: true },
+          {
+            name: "PI",
+            sourceModule: "math.js",
+            sourceExport: "PI",
+            value: "3.14",
+            isLive: true,
+          },
+          {
+            name: "double",
+            sourceModule: "math.js",
+            sourceExport: "double",
+            value: "function",
+            isLive: true,
+          },
+          {
+            name: "square",
+            sourceModule: "math.js",
+            sourceExport: "default",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          'Module graph is fully linked. Evaluation begins depth-first: <code>math.js</code> evaluates first since it has no imports.',
+          "Module graph is fully linked. Evaluation begins depth-first: <code>math.js</code> evaluates first since it has no imports.",
         activeLine: 2,
         doneLines: [1],
         consoleOutput: [],
         modules: [
           { id: "app", filename: "app.js", phase: "linked", exports: [] },
-          { id: "math", filename: "math.js", phase: "evaluating", exports: ["PI", "double", "default (square)"], highlight: "active" },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "evaluating",
+            exports: ["PI", "double", "default (square)"],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "PI", sourceModule: "math.js", sourceExport: "PI", value: "3.14", isLive: true },
-          { name: "double", sourceModule: "math.js", sourceExport: "double", value: "function", isLive: true },
-          { name: "square", sourceModule: "math.js", sourceExport: "default", value: "function", isLive: true },
+          {
+            name: "PI",
+            sourceModule: "math.js",
+            sourceExport: "PI",
+            value: "3.14",
+            isLive: true,
+          },
+          {
+            name: "double",
+            sourceModule: "math.js",
+            sourceExport: "double",
+            value: "function",
+            isLive: true,
+          },
+          {
+            name: "square",
+            sourceModule: "math.js",
+            sourceExport: "default",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>math.js</code> evaluated. <code>app.js</code> now evaluates. <code>console.log(PI)</code> reads the live binding and outputs <code>3.14</code>.',
+          "<code>math.js</code> evaluated. <code>app.js</code> now evaluates. <code>console.log(PI)</code> reads the live binding and outputs <code>3.14</code>.",
         activeLine: 12,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 10, 11],
         consoleOutput: ["3.14"],
         modules: [
-          { id: "app", filename: "app.js", phase: "evaluating", exports: [], highlight: "active" },
-          { id: "math", filename: "math.js", phase: "evaluated", exports: ["PI", "double", "default (square)"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "evaluating",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "evaluated",
+            exports: ["PI", "double", "default (square)"],
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "PI", sourceModule: "math.js", sourceExport: "PI", value: "3.14", isLive: true },
-          { name: "double", sourceModule: "math.js", sourceExport: "double", value: "function", isLive: true },
-          { name: "square", sourceModule: "math.js", sourceExport: "default", value: "function", isLive: true },
+          {
+            name: "PI",
+            sourceModule: "math.js",
+            sourceExport: "PI",
+            value: "3.14",
+            isLive: true,
+          },
+          {
+            name: "double",
+            sourceModule: "math.js",
+            sourceExport: "double",
+            value: "function",
+            isLive: true,
+          },
+          {
+            name: "square",
+            sourceModule: "math.js",
+            sourceExport: "default",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>double(5)</code> returns 10. <code>square(3)</code> returns 9. Both functions were imported and called successfully.',
+          "<code>double(5)</code> returns 10. <code>square(3)</code> returns 9. Both functions were imported and called successfully.",
         activeLine: 14,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13],
         consoleOutput: ["3.14", "10", "9"],
         modules: [
-          { id: "app", filename: "app.js", phase: "evaluated", exports: [], highlight: "active" },
-          { id: "math", filename: "math.js", phase: "evaluated", exports: ["PI", "double", "default (square)"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "evaluated",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "evaluated",
+            exports: ["PI", "double", "default (square)"],
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "PI", sourceModule: "math.js", sourceExport: "PI", value: "3.14", isLive: true },
-          { name: "double", sourceModule: "math.js", sourceExport: "double", value: "function", isLive: true },
-          { name: "square", sourceModule: "math.js", sourceExport: "default", value: "function", isLive: true },
+          {
+            name: "PI",
+            sourceModule: "math.js",
+            sourceExport: "PI",
+            value: "3.14",
+            isLive: true,
+          },
+          {
+            name: "double",
+            sourceModule: "math.js",
+            sourceExport: "double",
+            value: "function",
+            isLive: true,
+          },
+          {
+            name: "square",
+            sourceModule: "math.js",
+            sourceExport: "default",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          'Named exports bind by name: <code>{ PI, double }</code>. The default export binds via the <code>default</code> key and is imported without braces. A module can have one default and many named exports.',
+          "Named exports bind by name: <code>{ PI, double }</code>. The default export binds via the <code>default</code> key and is imported without braces. A module can have one default and many named exports.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14],
         consoleOutput: ["3.14", "10", "9"],
         modules: [
           { id: "app", filename: "app.js", phase: "evaluated", exports: [] },
-          { id: "math", filename: "math.js", phase: "evaluated", exports: ["PI", "double", "default (square)"] },
+          {
+            id: "math",
+            filename: "math.js",
+            phase: "evaluated",
+            exports: ["PI", "double", "default (square)"],
+          },
         ],
-        edges: [{ from: "app", to: "math", imports: ["square (default)", "PI", "double"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "math",
+            imports: ["square (default)", "PI", "double"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "PI", sourceModule: "math.js", sourceExport: "PI", value: "3.14", isLive: true },
-          { name: "double", sourceModule: "math.js", sourceExport: "double", value: "function", isLive: true },
-          { name: "square", sourceModule: "math.js", sourceExport: "default", value: "function", isLive: true },
+          {
+            name: "PI",
+            sourceModule: "math.js",
+            sourceExport: "PI",
+            value: "3.14",
+            isLive: true,
+          },
+          {
+            name: "double",
+            sourceModule: "math.js",
+            sourceExport: "double",
+            value: "function",
+            isLive: true,
+          },
+          {
+            name: "square",
+            sourceModule: "math.js",
+            sourceExport: "default",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
     ],
@@ -164,108 +358,268 @@ export const EXAMPLES: ModulesExample[] = [
     steps: [
       {
         descriptionHtml:
-          '<code>app.js</code> imports from <code>counter.js</code>. The engine loads and parses both modules.',
+          "<code>app.js</code> imports from <code>counter.js</code>. The engine loads and parses both modules.",
         activeLine: 8,
         doneLines: [],
         consoleOutput: [],
         modules: [
           { id: "app", filename: "app.js", phase: "unlinked", exports: [] },
-          { id: "counter", filename: "counter.js", phase: "unlinked", exports: [], highlight: "active" },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "unlinked",
+            exports: [],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"] }],
+        edges: [
+          { from: "app", to: "counter", imports: ["count", "increment"] },
+        ],
         bindings: [],
       },
       {
         descriptionHtml:
-          '<code>counter.js</code> is parsed. Exports <code>count</code> and <code>increment</code> are discovered. Module records are created.',
+          "<code>counter.js</code> is parsed. Exports <code>count</code> and <code>increment</code> are discovered. Module records are created.",
         activeLine: 2,
         doneLines: [1],
         consoleOutput: [],
         modules: [
           { id: "app", filename: "app.js", phase: "unlinked", exports: [] },
-          { id: "counter", filename: "counter.js", phase: "linking", exports: ["count", "increment"], highlight: "active" },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "linking",
+            exports: ["count", "increment"],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "active" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "active",
+          },
+        ],
         bindings: [],
       },
       {
         descriptionHtml:
-          'Bindings linked. <code>count</code> in app.js points to the <strong>same memory slot</strong> as <code>count</code> in counter.js. This is a live binding, not a copy.',
+          "Bindings linked. <code>count</code> in app.js points to the <strong>same memory slot</strong> as <code>count</code> in counter.js. This is a live binding, not a copy.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: [],
         modules: [
-          { id: "app", filename: "app.js", phase: "linked", exports: [], highlight: "active" },
-          { id: "counter", filename: "counter.js", phase: "linked", exports: ["count", "increment"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "linked",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "linked",
+            exports: ["count", "increment"],
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "count", sourceModule: "counter.js", sourceExport: "count", value: "0", isLive: true },
-          { name: "increment", sourceModule: "counter.js", sourceExport: "increment", value: "function", isLive: true },
+          {
+            name: "count",
+            sourceModule: "counter.js",
+            sourceExport: "count",
+            value: "0",
+            isLive: true,
+          },
+          {
+            name: "increment",
+            sourceModule: "counter.js",
+            sourceExport: "increment",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          'Evaluation begins. <code>counter.js</code> evaluates: <code>count</code> is initialized to 0. Then <code>app.js</code> starts. <code>console.log(count)</code> reads <strong>0</strong> from the live binding.',
+          "Evaluation begins. <code>counter.js</code> evaluates: <code>count</code> is initialized to 0. Then <code>app.js</code> starts. <code>console.log(count)</code> reads <strong>0</strong> from the live binding.",
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 7, 8],
         consoleOutput: ["0"],
         modules: [
-          { id: "app", filename: "app.js", phase: "evaluating", exports: [], highlight: "active" },
-          { id: "counter", filename: "counter.js", phase: "evaluated", exports: ["count", "increment"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "evaluating",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "evaluated",
+            exports: ["count", "increment"],
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "count", sourceModule: "counter.js", sourceExport: "count", value: "0", isLive: true },
-          { name: "increment", sourceModule: "counter.js", sourceExport: "increment", value: "function", isLive: true },
+          {
+            name: "count",
+            sourceModule: "counter.js",
+            sourceExport: "count",
+            value: "0",
+            isLive: true,
+          },
+          {
+            name: "increment",
+            sourceModule: "counter.js",
+            sourceExport: "increment",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>increment()</code> is called. Inside <code>counter.js</code>, <code>count++</code> changes count from 0 to 1. The mutation happens in the source module.',
+          "<code>increment()</code> is called. Inside <code>counter.js</code>, <code>count++</code> changes count from 0 to 1. The mutation happens in the source module.",
         activeLine: 4,
         doneLines: [1, 2, 3, 5, 7, 8, 9, 10],
         consoleOutput: ["0"],
         modules: [
           { id: "app", filename: "app.js", phase: "evaluating", exports: [] },
-          { id: "counter", filename: "counter.js", phase: "evaluated", exports: ["count", "increment"], highlight: "active" },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "evaluated",
+            exports: ["count", "increment"],
+            highlight: "active",
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "count", sourceModule: "counter.js", sourceExport: "count", value: "1", isLive: true },
-          { name: "increment", sourceModule: "counter.js", sourceExport: "increment", value: "function", isLive: true },
+          {
+            name: "count",
+            sourceModule: "counter.js",
+            sourceExport: "count",
+            value: "1",
+            isLive: true,
+          },
+          {
+            name: "increment",
+            sourceModule: "counter.js",
+            sourceExport: "increment",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>console.log(count)</code> reads <strong>1</strong>. The import sees the updated value because ES module imports are live bindings. They reference the same memory slot, not a copied value.',
+          "<code>console.log(count)</code> reads <strong>1</strong>. The import sees the updated value because ES module imports are live bindings. They reference the same memory slot, not a copied value.",
         activeLine: 11,
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10],
         consoleOutput: ["0", "1"],
         modules: [
-          { id: "app", filename: "app.js", phase: "evaluating", exports: [], highlight: "active" },
-          { id: "counter", filename: "counter.js", phase: "evaluated", exports: ["count", "increment"] },
+          {
+            id: "app",
+            filename: "app.js",
+            phase: "evaluating",
+            exports: [],
+            highlight: "active",
+          },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "evaluated",
+            exports: ["count", "increment"],
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "count", sourceModule: "counter.js", sourceExport: "count", value: "1", isLive: true },
-          { name: "increment", sourceModule: "counter.js", sourceExport: "increment", value: "function", isLive: true },
+          {
+            name: "count",
+            sourceModule: "counter.js",
+            sourceExport: "count",
+            value: "1",
+            isLive: true,
+          },
+          {
+            name: "increment",
+            sourceModule: "counter.js",
+            sourceExport: "increment",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          'Imports are read-only from the importer side. <code>count = 5</code> in app.js would throw a TypeError. Only the exporting module can change its own exports. This is different from CommonJS <code>require()</code>, which copies values.',
+          "Imports are read-only from the importer side. <code>count = 5</code> in app.js would throw a TypeError. Only the exporting module can change its own exports. This is different from CommonJS <code>require()</code>, which copies values.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11],
         consoleOutput: ["0", "1"],
         modules: [
           { id: "app", filename: "app.js", phase: "evaluated", exports: [] },
-          { id: "counter", filename: "counter.js", phase: "evaluated", exports: ["count", "increment"] },
+          {
+            id: "counter",
+            filename: "counter.js",
+            phase: "evaluated",
+            exports: ["count", "increment"],
+          },
         ],
-        edges: [{ from: "app", to: "counter", imports: ["count", "increment"], highlight: "resolved" }],
+        edges: [
+          {
+            from: "app",
+            to: "counter",
+            imports: ["count", "increment"],
+            highlight: "resolved",
+          },
+        ],
         bindings: [
-          { name: "count", sourceModule: "counter.js", sourceExport: "count", value: "1", isLive: true },
-          { name: "increment", sourceModule: "counter.js", sourceExport: "increment", value: "function", isLive: true },
+          {
+            name: "count",
+            sourceModule: "counter.js",
+            sourceExport: "count",
+            value: "1",
+            isLive: true,
+          },
+          {
+            name: "increment",
+            sourceModule: "counter.js",
+            sourceExport: "increment",
+            value: "function",
+            isLive: true,
+          },
         ],
       },
     ],
@@ -281,7 +635,7 @@ export const EXAMPLES: ModulesExample[] = [
     codeLines: [
       { num: 1, text: "// ── a.js ──" },
       { num: 2, text: 'import { b } from "./b.js";' },
-      { num: 3, text: 'export const a = "A";' },
+      { num: 3, text: 'export var a = "A";' },
       { num: 4, text: 'console.log("a.js sees b:", b);' },
       { num: 5, text: "" },
       { num: 6, text: "// ── b.js ──" },
@@ -297,31 +651,53 @@ export const EXAMPLES: ModulesExample[] = [
         doneLines: [1],
         consoleOutput: [],
         modules: [
-          { id: "a", filename: "a.js", phase: "linking", exports: ["a"], highlight: "active" },
+          {
+            id: "a",
+            filename: "a.js",
+            phase: "linking",
+            exports: ["a"],
+            highlight: "active",
+          },
           { id: "b", filename: "b.js", phase: "unlinked", exports: [] },
         ],
-        edges: [
-          { from: "a", to: "b", imports: ["b"], highlight: "active" },
-        ],
+        edges: [{ from: "a", to: "b", imports: ["b"], highlight: "active" }],
         bindings: [],
       },
       {
         descriptionHtml:
-          '<code>b.js</code> is loaded. It imports <code>{ a }</code> from <code>a.js</code>. The engine detects a <strong>circular reference</strong>. It uses the partially-initialized module record for <code>a.js</code>.',
+          "<code>b.js</code> is loaded. It imports <code>{ a }</code> from <code>a.js</code>. The engine detects a <strong>circular reference</strong>. It uses the partially-initialized module record for <code>a.js</code>.",
         activeLine: 7,
         doneLines: [1, 2, 6],
         consoleOutput: [],
         modules: [
           { id: "a", filename: "a.js", phase: "linking", exports: ["a"] },
-          { id: "b", filename: "b.js", phase: "linking", exports: ["b"], highlight: "active" },
+          {
+            id: "b",
+            filename: "b.js",
+            phase: "linking",
+            exports: ["b"],
+            highlight: "active",
+          },
         ],
         edges: [
           { from: "a", to: "b", imports: ["b"], highlight: "active" },
           { from: "b", to: "a", imports: ["a"], highlight: "active" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: "uninitialized", isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: "uninitialized", isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: "uninitialized",
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: "uninitialized",
+            isLive: true,
+          },
         ],
       },
       {
@@ -332,34 +708,70 @@ export const EXAMPLES: ModulesExample[] = [
         consoleOutput: [],
         modules: [
           { id: "a", filename: "a.js", phase: "linked", exports: ["a"] },
-          { id: "b", filename: "b.js", phase: "evaluating", exports: ["b"], highlight: "active" },
+          {
+            id: "b",
+            filename: "b.js",
+            phase: "evaluating",
+            exports: ["b"],
+            highlight: "active",
+          },
         ],
         edges: [
           { from: "a", to: "b", imports: ["b"], highlight: "resolved" },
           { from: "b", to: "a", imports: ["a"], highlight: "resolved" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: "uninitialized", isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: '"B"', isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: "uninitialized",
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: '"B"',
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>b.js</code> reads <code>a</code> from its import. But <code>a.js</code> has not evaluated yet, so <code>a</code> is still in the temporal dead zone. The value is <code>undefined</code>.',
+          "<code>b.js</code> reads <code>a</code> from its import. But <code>a.js</code> has not evaluated yet. Because <code>a</code> was declared with <code>var</code>, its binding exists but still holds <code>undefined</code>. Had it been <code>let</code> or <code>const</code>, this read would throw a <code>ReferenceError</code> (temporal dead zone).",
         activeLine: 9,
         doneLines: [1, 2, 6, 7, 8],
         consoleOutput: ["b.js sees a: undefined"],
         modules: [
           { id: "a", filename: "a.js", phase: "linked", exports: ["a"] },
-          { id: "b", filename: "b.js", phase: "evaluating", exports: ["b"], highlight: "active" },
+          {
+            id: "b",
+            filename: "b.js",
+            phase: "evaluating",
+            exports: ["b"],
+            highlight: "active",
+          },
         ],
         edges: [
           { from: "a", to: "b", imports: ["b"], highlight: "resolved" },
           { from: "b", to: "a", imports: ["a"], highlight: "resolved" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: "undefined", isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: '"B"', isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: "undefined",
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: '"B"',
+            isLive: true,
+          },
         ],
       },
       {
@@ -369,7 +781,13 @@ export const EXAMPLES: ModulesExample[] = [
         doneLines: [1, 2, 6, 7, 8, 9],
         consoleOutput: ["b.js sees a: undefined"],
         modules: [
-          { id: "a", filename: "a.js", phase: "evaluating", exports: ["a"], highlight: "active" },
+          {
+            id: "a",
+            filename: "a.js",
+            phase: "evaluating",
+            exports: ["a"],
+            highlight: "active",
+          },
           { id: "b", filename: "b.js", phase: "evaluated", exports: ["b"] },
         ],
         edges: [
@@ -377,8 +795,20 @@ export const EXAMPLES: ModulesExample[] = [
           { from: "b", to: "a", imports: ["a"], highlight: "resolved" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: '"A"', isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: '"B"', isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: '"A"',
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: '"B"',
+            isLive: true,
+          },
         ],
       },
       {
@@ -388,7 +818,13 @@ export const EXAMPLES: ModulesExample[] = [
         doneLines: [1, 2, 3, 6, 7, 8, 9],
         consoleOutput: ["b.js sees a: undefined", "a.js sees b: B"],
         modules: [
-          { id: "a", filename: "a.js", phase: "evaluating", exports: ["a"], highlight: "active" },
+          {
+            id: "a",
+            filename: "a.js",
+            phase: "evaluating",
+            exports: ["a"],
+            highlight: "active",
+          },
           { id: "b", filename: "b.js", phase: "evaluated", exports: ["b"] },
         ],
         edges: [
@@ -396,13 +832,25 @@ export const EXAMPLES: ModulesExample[] = [
           { from: "b", to: "a", imports: ["a"], highlight: "resolved" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: '"A"', isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: '"B"', isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: '"A"',
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: '"B"',
+            isLive: true,
+          },
         ],
       },
       {
         descriptionHtml:
-          'Circular dependencies work because the engine creates module records before evaluation. But bindings can be uninitialized if read before the exporter has finished evaluating. Avoid reading circular imports at the top level; instead, read them inside functions that run later.',
+          "Circular dependencies work because the engine creates module records before evaluation. But bindings can be uninitialized if read before the exporter has finished evaluating: <code>var</code> reads as <code>undefined</code>, <code>let</code> and <code>const</code> throw. Avoid reading circular imports at the top level; instead, read them inside functions that run later.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 6, 7, 8, 9],
         consoleOutput: ["b.js sees a: undefined", "a.js sees b: B"],
@@ -415,8 +863,20 @@ export const EXAMPLES: ModulesExample[] = [
           { from: "b", to: "a", imports: ["a"], highlight: "resolved" },
         ],
         bindings: [
-          { name: "a (in b.js)", sourceModule: "a.js", sourceExport: "a", value: '"A"', isLive: true },
-          { name: "b (in a.js)", sourceModule: "b.js", sourceExport: "b", value: '"B"', isLive: true },
+          {
+            name: "a (in b.js)",
+            sourceModule: "a.js",
+            sourceExport: "a",
+            value: '"A"',
+            isLive: true,
+          },
+          {
+            name: "b (in a.js)",
+            sourceModule: "b.js",
+            sourceExport: "b",
+            value: '"B"',
+            isLive: true,
+          },
         ],
       },
     ],

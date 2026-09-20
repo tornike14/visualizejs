@@ -17,16 +17,11 @@ export const kindLabel = createKindLabel<ReconciliationKind>({
 });
 
 const OPERATION_STYLES: Record<DiffOperation["type"], string> = {
-  update:
-    "border-amber-500/30 bg-amber-500/8 text-amber-300",
-  insert:
-    "border-emerald-500/30 bg-emerald-500/8 text-emerald-300",
-  remove:
-    "border-rose-500/30 bg-rose-500/8 text-rose-300",
-  move:
-    "border-cyan-500/30 bg-cyan-500/8 text-cyan-300",
-  noop:
-    "border-slate-500/30 bg-slate-500/8 text-slate-400",
+  update: "border-amber-500/30 bg-amber-500/8 text-amber-300",
+  insert: "border-emerald-500/30 bg-emerald-500/8 text-emerald-300",
+  remove: "border-rose-500/30 bg-rose-500/8 text-rose-300",
+  move: "border-cyan-500/30 bg-cyan-500/8 text-cyan-300",
+  noop: "border-slate-500/30 bg-slate-500/8 text-slate-400",
 };
 
 const OPERATION_LABELS: Record<DiffOperation["type"], string> = {

@@ -103,7 +103,12 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [],
         consoleOutput: [],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -125,8 +130,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1],
         consoleOutput: [],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "obj2", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "obj2",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -148,8 +163,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "obj2", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "obj2",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -171,8 +196,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["Bob"],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "obj2", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "obj2",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -194,8 +229,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["Bob", "Bob"],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "obj2", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "obj2",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -217,8 +262,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["Bob", "Bob", "true"],
         memorySlots: [
-          { variable: "obj1", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "obj2", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "obj1",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "obj2",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -261,7 +316,12 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [],
         consoleOutput: [],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
         ],
         heapObjects: [
           {
@@ -293,8 +353,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1],
         consoleOutput: [],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -336,8 +406,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -379,8 +459,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -423,8 +513,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["Alice"],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -467,8 +567,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["Alice", "Bob"],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -511,8 +621,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["Alice", "Bob", "[90, 85, 100]"],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -555,8 +675,18 @@ export const EXAMPLES: ReferenceExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         consoleOutput: ["Alice", "Bob", "[90, 85, 100]", "[90, 85, 100]"],
         memorySlots: [
-          { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-          { variable: "copy", value: "-> Obj#2", heapId: "obj-2", tone: "cyan" },
+          {
+            variable: "original",
+            value: "-> Obj#1",
+            heapId: "obj-1",
+            tone: "amber",
+          },
+          {
+            variable: "copy",
+            value: "-> Obj#2",
+            heapId: "obj-2",
+            tone: "cyan",
+          },
         ],
         heapObjects: [
           {
@@ -608,7 +738,10 @@ export const EXAMPLES: ReferenceExample[] = [
         methodId: "structured-clone",
         methodLabel: "structuredClone",
         codeLines: [
-          { num: 1, text: 'const original = { name: "Alice", scores: [90, 85] };' },
+          {
+            num: 1,
+            text: 'const original = { name: "Alice", scores: [90, 85] };',
+          },
           { num: 2, text: "const clone = structuredClone(original);" },
           { num: 3, text: "clone.scores.push(100);" },
           { num: 4, text: "console.log(original.scores);" },
@@ -622,11 +755,34 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
             ],
           },
           {
@@ -636,14 +792,60 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (deep clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (deep clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (deep clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (deep clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -653,14 +855,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (deep clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (deep clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (deep clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (deep clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -670,14 +919,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3],
             consoleOutput: ["[90, 85]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (deep clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (deep clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (deep clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (deep clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -687,14 +983,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4],
             consoleOutput: ["[90, 85]", "[90, 85, 100]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (deep clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (deep clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (deep clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (deep clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
         ],
@@ -705,8 +1048,14 @@ export const EXAMPLES: ReferenceExample[] = [
         methodId: "json-roundtrip",
         methodLabel: "JSON round-trip",
         codeLines: [
-          { num: 1, text: 'const original = { name: "Alice", scores: [90, 85] };' },
-          { num: 2, text: "const clone = JSON.parse(JSON.stringify(original));" },
+          {
+            num: 1,
+            text: 'const original = { name: "Alice", scores: [90, 85] };',
+          },
+          {
+            num: 2,
+            text: "const clone = JSON.parse(JSON.stringify(original));",
+          },
           { num: 3, text: "clone.scores.push(100);" },
           { num: 4, text: "console.log(original.scores);" },
           { num: 5, text: "console.log(clone.scores);" },
@@ -719,11 +1068,34 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
             ],
           },
           {
@@ -733,14 +1105,60 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (JSON clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (JSON clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (JSON clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (JSON clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -750,14 +1168,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (JSON clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (JSON clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (JSON clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (JSON clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -767,14 +1232,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3],
             consoleOutput: ["[90, 85]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (JSON clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (JSON clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (JSON clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (JSON clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -784,14 +1296,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4],
             consoleOutput: ["[90, 85]", "[90, 85, 100]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (JSON clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (JSON clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (JSON clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (JSON clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
         ],
@@ -803,12 +1362,21 @@ export const EXAMPLES: ReferenceExample[] = [
         methodLabel: "Manual (recursive)",
         codeLines: [
           { num: 1, text: "function deepClone(obj) {" },
-          { num: 2, text: "  if (obj === null || typeof obj !== 'object') return obj;" },
+          {
+            num: 2,
+            text: "  if (obj === null || typeof obj !== 'object') return obj;",
+          },
           { num: 3, text: "  const clone = Array.isArray(obj) ? [] : {};" },
-          { num: 4, text: "  for (const key in obj) clone[key] = deepClone(obj[key]);" },
+          {
+            num: 4,
+            text: "  for (const key in obj) clone[key] = deepClone(obj[key]);",
+          },
           { num: 5, text: "  return clone;" },
           { num: 6, text: "}" },
-          { num: 7, text: 'const original = { name: "Alice", scores: [90, 85] };' },
+          {
+            num: 7,
+            text: 'const original = { name: "Alice", scores: [90, 85] };',
+          },
           { num: 8, text: "const clone = deepClone(original);" },
           { num: 9, text: "clone.scores.push(100);" },
           { num: 10, text: "console.log(original.scores);" },
@@ -831,11 +1399,34 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4, 5, 6],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
             ],
           },
           {
@@ -845,14 +1436,60 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4, 5, 6, 7],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (recursive clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (recursive clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (recursive clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (recursive clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -862,31 +1499,124 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4, 5, 6, 7, 8],
             consoleOutput: [],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (recursive clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (recursive clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (recursive clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (recursive clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
-            descriptionHtml:
-              "Original scores remain <code>[90, 85]</code>.",
+            descriptionHtml: "Original scores remain <code>[90, 85]</code>.",
             activeLine: 10,
             doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9],
             consoleOutput: ["[90, 85]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (recursive clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (recursive clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (recursive clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (recursive clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
           {
@@ -896,14 +1626,61 @@ export const EXAMPLES: ReferenceExample[] = [
             doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             consoleOutput: ["[90, 85]", "[90, 85, 100]"],
             memorySlots: [
-              { variable: "original", value: "-> Obj#1", heapId: "obj-1", tone: "amber" },
-              { variable: "clone", value: "-> Obj#2", heapId: "obj-2", tone: "emerald" },
+              {
+                variable: "original",
+                value: "-> Obj#1",
+                heapId: "obj-1",
+                tone: "amber",
+              },
+              {
+                variable: "clone",
+                value: "-> Obj#2",
+                heapId: "obj-2",
+                tone: "emerald",
+              },
             ],
             heapObjects: [
-              { id: "obj-1", label: "Obj#1", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#1" }], tone: "amber", isShared: false },
-              { id: "arr-1", label: "Arr#1", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }], tone: "amber", isShared: false },
-              { id: "obj-2", label: "Obj#2 (recursive clone)", props: [{ key: "name", value: '"Alice"' }, { key: "scores", value: "-> Arr#2" }], tone: "emerald", isShared: false },
-              { id: "arr-2", label: "Arr#2 (recursive clone)", props: [{ key: "0", value: "90" }, { key: "1", value: "85" }, { key: "2", value: "100" }], tone: "emerald", isShared: false },
+              {
+                id: "obj-1",
+                label: "Obj#1",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#1" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "arr-1",
+                label: "Arr#1",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                ],
+                tone: "amber",
+                isShared: false,
+              },
+              {
+                id: "obj-2",
+                label: "Obj#2 (recursive clone)",
+                props: [
+                  { key: "name", value: '"Alice"' },
+                  { key: "scores", value: "-> Arr#2" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
+              {
+                id: "arr-2",
+                label: "Arr#2 (recursive clone)",
+                props: [
+                  { key: "0", value: "90" },
+                  { key: "1", value: "85" },
+                  { key: "2", value: "100" },
+                ],
+                tone: "emerald",
+                isShared: false,
+              },
             ],
           },
         ],

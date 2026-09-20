@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import type { SuspenseBoundary } from "../types";
 import { boundaryStatusStyle, boundaryStatusLabel } from "../helpers";
 
-export function BoundaryStatusPanel({
+export const BoundaryStatusPanel = ({
   boundaries,
 }: {
   boundaries: SuspenseBoundary[];
-}) {
+}) => {
   if (boundaries.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -33,10 +33,12 @@ export function BoundaryStatusPanel({
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[10px] text-slate-500">
             <span>fallback: {b.fallbackLabel}</span>
-            {b.promiseLabel && <span className="break-words">promise: {b.promiseLabel}</span>}
+            {b.promiseLabel && (
+              <span className="break-words">promise: {b.promiseLabel}</span>
+            )}
           </div>
         </div>
       ))}
     </div>
   );
-}
+};

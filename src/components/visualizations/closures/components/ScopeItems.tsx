@@ -18,7 +18,7 @@ export const ScopeItems = ({ entries }: { entries: ScopeEntry[] }) => {
           key={`${entry.name}-${index}`}
           className={cn(
             "viz-slide-in rounded-lg border px-3 py-2.5",
-            SCOPE_ITEM_STYLE
+            SCOPE_ITEM_STYLE,
           )}
         >
           <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-cyan-300/80">

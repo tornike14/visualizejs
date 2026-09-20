@@ -16,7 +16,8 @@ export const garbageCollectionTheory: TopicTheoryContent = {
   ],
   commonMistakes: [
     {
-      title: "Expecting immediate memory release after setting a variable to null",
+      title:
+        "Expecting immediate memory release after setting a variable to null",
       explanation:
         "Nulling a reference only makes an object eligible for collection if no other reachable references exist.",
       fix: "Remove all strong references and let the collector run naturally.",

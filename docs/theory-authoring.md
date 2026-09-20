@@ -9,8 +9,7 @@ How to add theory content for visualization topics. Theory sections render on th
 - Content model types: `src/content/theory/types.ts`
 - Content registry: `src/content/theory/index.ts`
 - Topic content files:
-  - `src/content/theory/javascript/<topic-id>.ts`
-  - `src/content/theory/react/<topic-id>.ts`
+  - `src/content/theory/<category>/<topic-id>.ts` (one folder per category: `javascript`, `react`, `frameworks`, `backend`, `ai`)
 - Shared theory renderer: `src/components/theory/TopicTheorySections.tsx`
 - Rendered by `src/components/layout/VisualizationPageShell.tsx`, which pulls
   content from the registry and places it below the visualization. There is no
@@ -21,6 +20,7 @@ How to add theory content for visualization topics. Theory sections render on th
 ## Naming Convention
 
 File name must match topic id exactly:
+
 - JS example: topic id `promises` -> `src/content/theory/javascript/promises.ts`
 - React example: topic id `reconciliation` -> `src/content/theory/react/reconciliation.ts`
 
@@ -35,6 +35,7 @@ File name must match topic id exactly:
 5. Run `npm run lint` and `npm run build`.
 
 After registration:
+
 - The theory sections render on `/<category>/<topic-id>`, below the visualization.
 - The topic page header shows the `Theory` button, which scrolls to those sections.
 - No sitemap change is needed, since the content shares the topic's URL.
@@ -88,6 +89,7 @@ Example: "Reconciliation is the algorithm React uses to diff two virtual DOM tre
 Array of 3+ paragraphs (strings). Progressively deeper explanation of the concept. Start accessible and build toward technical detail. This is not a reproduction of MDN or React docs. Focus on the "why" and mental model, not exhaustive API coverage.
 
 Guidelines:
+
 - First paragraph: accessible explanation anyone can understand
 - Second paragraph: key technical insight or mechanism
 - Third paragraph: how it connects to the runtime or broader system
@@ -98,6 +100,7 @@ Guidelines:
 Array of ordered steps (strings). Each step starts with "Step N:" prefix. Describes the runtime or engine behavior in sequence. Focus on what happens internally, not how to use the API.
 
 Guidelines:
+
 - 3-6 steps
 - Each step is 1-2 sentences
 - Steps should follow a logical execution order
@@ -107,6 +110,7 @@ Guidelines:
 Array of `TheoryMistake` objects. Each has `title`, `explanation`, and `fix`.
 
 Guidelines:
+
 - 2-4 mistakes per topic
 - `title`: short label (3-8 words)
 - `explanation`: why this mistake happens (1-2 sentences)
@@ -117,6 +121,7 @@ Guidelines:
 Array of `TheoryInterviewQuestion` objects. At least 3 Q&A pairs.
 
 Guidelines:
+
 - Questions should cover different difficulty levels
 - Answers should be concise but complete (2-4 sentences)
 - Optional `codeExample` with `code` string and `language` field (defaults to `"javascript"`)
@@ -127,6 +132,7 @@ Guidelines:
 Array of 3-5 topic IDs from `src/lib/topics.ts`. **Never leave this empty.** Cross-category links are allowed (e.g., a React topic can link to JS topics).
 
 Guidelines:
+
 - Choose topics that share conceptual overlap
 - Prefer topics that help build understanding (prerequisites or next steps)
 - Verify each ID exists in `src/lib/topics.ts`

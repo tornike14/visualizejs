@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { HeapStackKind } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<HeapStackKind>({
@@ -15,10 +18,7 @@ export const kindLabel = createKindLabel<HeapStackKind>({
   gc: "GC",
 });
 
-export const FRAME_TONE_MAP: Record<
-  number,
-  string
-> = {
+export const FRAME_TONE_MAP: Record<number, string> = {
   0: "border-slate-500/30 bg-slate-500/8 text-slate-300",
   1: "border-amber-500/30 bg-amber-500/8 text-amber-300",
   2: "border-cyan-500/30 bg-cyan-500/8 text-cyan-300",

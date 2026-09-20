@@ -10,7 +10,7 @@ interface ConsoleOutputProps {
   className?: string;
 }
 
-export function ConsoleOutput({ lines, className }: ConsoleOutputProps) {
+export const ConsoleOutput = ({ lines, className }: ConsoleOutputProps) => {
   return (
     <NeonPanel
       title={VISUALIZATION_PANEL_TITLES.consoleOutput}
@@ -34,10 +34,7 @@ export function ConsoleOutput({ lines, className }: ConsoleOutputProps) {
           return (
             <div
               key={`${line}-${index}`}
-              className={cn(
-                "console-line",
-                isError && "text-rose-300",
-              )}
+              className={cn("console-line", isError && "text-rose-300")}
             >
               <span className="console-prefix">›</span>
               {line}
@@ -47,4 +44,4 @@ export function ConsoleOutput({ lines, className }: ConsoleOutputProps) {
       )}
     </NeonPanel>
   );
-}
+};

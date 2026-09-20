@@ -1,35 +1,50 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import {
+  SPEED_LABELS,
+  SPEED_TO_DELAY_MS,
+} from "@/components/visualization-ui/TransportControls/constants";
 import type { PlaybackSpeedLevel } from "@/components/visualization-ui/TransportControls";
+import { useCurrentTopicId } from "@/components/progress/TopicProgressContext";
+import { markTopicCompleted } from "@/lib/progress/topicProgress";
 
-
-export const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
-  1: 5000,
-  2: 2500,
-  3: 1800,
-  4: 1200,
-  5: 700,
-  6: 400,
-};
-
-export const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
-  1: "0.25x",
-  2: "0.5x",
-  3: "0.75x",
-  4: "1x",
-  5: "1.5x",
-  6: "2x",
-};
-
+const DEFAULT_SPEED_LEVEL: PlaybackSpeedLevel = 4;
 
 interface UseStepPlaybackOptions {
   totalSteps: number;
   initialStep?: number;
   resetKey?: string | number;
+  /**
+   * Bind Space, ArrowLeft, ArrowRight, and R to playback while no text field
+   * is focused. On by default so every topic gets the same shortcuts.
+   */
+  keyboardShortcuts?: boolean;
 }
 
-interface UseStepPlaybackReturn {
+const isTypingTarget = (target: EventTarget | null) => {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tag = target.tagName;
+  return (
+    tag === "INPUT" ||
+    tag === "TEXTAREA" ||
+    tag === "SELECT" ||
+    Boolean(target.closest(".cm-editor")) ||
+    Boolean(target.closest("[role='dialog'], [role='listbox']"))
+  );
+};
+
+/**
+ * A link clicked with the mouse keeps focus after navigation, and the first
+ * keypress would then paint the focus ring on it. Playback shortcuts are not
+ * link actions, so drop that incidental focus; buttons and inputs keep theirs.
+ */
+const releaseLinkFocus = (target: EventTarget | null) => {
+  if (target instanceof HTMLAnchorElement) target.blur();
+};
+
+export interface StepPlayback {
   currentStepIndex: number;
   isPlaying: boolean;
   speedLevel: PlaybackSpeedLevel;
@@ -44,63 +59,66 @@ interface UseStepPlaybackReturn {
   jumpTo: (index: number) => void;
 }
 
-export function useStepPlayback({
+export const useStepPlayback = ({
   totalSteps,
   initialStep = -1,
   resetKey,
-}: UseStepPlaybackOptions): UseStepPlaybackReturn {
+  keyboardShortcuts = true,
+}: UseStepPlaybackOptions): StepPlayback => {
   const [currentStepIndex, setCurrentStepIndex] = useState(initialStep);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [speedLevel, setSpeedLevel] = useState<PlaybackSpeedLevel>(4);
+  const [isPlayingState, setIsPlaying] = useState(false);
+  const [speedLevel, setSpeedLevel] =
+    useState<PlaybackSpeedLevel>(DEFAULT_SPEED_LEVEL);
+  const topicId = useCurrentTopicId();
 
   const lastStepIndex = totalSteps - 1;
-  const firstStep = initialStep < 0 ? 0 : initialStep;
+  const firstStep = Math.max(initialStep, 0);
   const canStep = currentStepIndex < lastStepIndex;
   const canStepBack = currentStepIndex > firstStep;
+  // Playback ends by itself once the last step is on screen.
+  const isPlaying = isPlayingState && canStep;
 
-  useEffect(() => {
+  // A new example (or regenerated sandbox) restarts playback from the top.
+  // The reset happens during render so no frame sees the previous example's
+  // index applied to the new example's steps.
+  const [appliedResetKey, setAppliedResetKey] = useState(resetKey);
+  if (resetKey !== appliedResetKey) {
+    setAppliedResetKey(resetKey);
     setIsPlaying(false);
     setCurrentStepIndex(initialStep);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetKey]);
+  }
 
+  // Auto-advance. The effect re-runs on every step, so the closure always
+  // holds the current index and no state updater needs to know about it.
   useEffect(() => {
     if (!isPlaying) return;
 
     const timeoutId = window.setTimeout(() => {
-      setCurrentStepIndex((prev) => {
-        if (prev >= lastStepIndex) {
-          setIsPlaying(false);
-          return prev;
-        }
-        const next = prev + 1;
-        if (next >= lastStepIndex) {
-          setIsPlaying(false);
-        }
-        return next;
-      });
+      const next = currentStepIndex + 1;
+      setCurrentStepIndex(next);
+      if (next >= lastStepIndex) setIsPlaying(false);
     }, SPEED_TO_DELAY_MS[speedLevel]);
 
     return () => window.clearTimeout(timeoutId);
   }, [currentStepIndex, isPlaying, speedLevel, lastStepIndex]);
 
   const togglePlay = useCallback(() => {
-    setIsPlaying((prev) => {
-      if (prev) return false;
-      setCurrentStepIndex((prevStep) => {
-        if (prevStep < 0 || prevStep >= lastStepIndex) return 0;
-        return prevStep;
-      });
-      return true;
-    });
-  }, [lastStepIndex]);
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
+    // Pressing play before the first step, or after the last, starts over.
+    if (currentStepIndex < 0 || currentStepIndex >= lastStepIndex) {
+      setCurrentStepIndex(0);
+    }
+    setIsPlaying(true);
+  }, [isPlaying, currentStepIndex, lastStepIndex]);
 
   const step = useCallback(() => {
     setIsPlaying(false);
-    setCurrentStepIndex((prev) => {
-      if (prev < 0) return 0;
-      return Math.min(prev + 1, lastStepIndex);
-    });
+    setCurrentStepIndex((prev) =>
+      Math.min(Math.max(prev + 1, 0), lastStepIndex),
+    );
   }, [lastStepIndex]);
 
   const stepBack = useCallback(() => {
@@ -116,10 +134,57 @@ export function useStepPlayback({
   const jumpTo = useCallback(
     (index: number) => {
       setIsPlaying(false);
-      setCurrentStepIndex(Math.max(initialStep, Math.min(index, lastStepIndex)));
+      setCurrentStepIndex(
+        Math.max(initialStep, Math.min(index, lastStepIndex)),
+      );
     },
     [initialStep, lastStepIndex],
   );
+
+  useEffect(() => {
+    if (!topicId || totalSteps === 0) return;
+    if (currentStepIndex >= lastStepIndex) {
+      markTopicCompleted(topicId);
+    }
+  }, [topicId, totalSteps, currentStepIndex, lastStepIndex]);
+
+  useEffect(() => {
+    if (!keyboardShortcuts) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+
+      switch (event.key) {
+        case " ":
+          event.preventDefault();
+          releaseLinkFocus(event.target);
+          togglePlay();
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          releaseLinkFocus(event.target);
+          step();
+          break;
+        case "ArrowLeft":
+          event.preventDefault();
+          releaseLinkFocus(event.target);
+          stepBack();
+          break;
+        case "r":
+        case "R":
+          releaseLinkFocus(event.target);
+          reset();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [keyboardShortcuts, togglePlay, step, stepBack, reset]);
 
   return {
     currentStepIndex,
@@ -135,4 +200,4 @@ export function useStepPlayback({
     setSpeedLevel,
     jumpTo,
   };
-}
+};

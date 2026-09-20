@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { BindingKind, BindingRule } from "./types";
 
 export const kindBadgeClass = createKindBadgeClass<BindingKind>({

@@ -183,11 +183,18 @@ const OnboardingStepDetails = ({
   highlightsClassName,
 }: OnboardingStepDetailsProps) => {
   return (
-    <section className={cn("app-surface-subtle h-full rounded-2xl p-4 lg:p-5", className)}>
+    <section
+      className={cn(
+        "app-surface-subtle h-full rounded-2xl p-4 lg:p-5",
+        className,
+      )}
+    >
       <p className="text-xs font-semibold tracking-[0.14em] text-pink-200/85 uppercase">
         {step.sectionLabel}
       </p>
-      <h3 className="mt-2 text-xl font-semibold text-slate-100 lg:text-2xl">{step.title}</h3>
+      <h3 className="mt-2 text-xl font-semibold text-slate-100 lg:text-2xl">
+        {step.title}
+      </h3>
       <p className="mt-3 text-sm leading-relaxed text-slate-300 lg:text-base">
         {step.description}
       </p>

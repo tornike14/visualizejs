@@ -56,5 +56,11 @@ export const errorBoundariesTheory: TopicTheoryContent = {
     },
   ],
 
-  relatedTopicIds: ["reconciliation", "render-cycle", "suspense", "hooks", "fiber-tree"],
+  relatedTopicIds: [
+    "reconciliation",
+    "render-cycle",
+    "suspense",
+    "hooks",
+    "fiber-tree",
+  ],
 };

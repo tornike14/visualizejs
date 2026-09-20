@@ -28,7 +28,8 @@ export const thisKeywordTheory: TopicTheoryContent = {
       fix: "Use bind, wrapper callbacks, or class fields with arrow functions when appropriate.",
     },
     {
-      title: "Using arrow functions for prototype methods that need dynamic this",
+      title:
+        "Using arrow functions for prototype methods that need dynamic this",
       explanation:
         "Arrow functions capture outer this and ignore call-site binding, which can break method semantics on instances.",
       fix: "Use regular methods when behavior depends on the receiver object.",
@@ -66,5 +67,11 @@ showThis(); // undefined`,
         "When a bound function is called with new, constructor behavior takes priority and this points to the newly created instance.",
     },
   ],
-  relatedTopicIds: ["execution-context", "prototypal-inheritance", "scope-chain", "closures", "hoisting"],
+  relatedTopicIds: [
+    "execution-context",
+    "prototypal-inheritance",
+    "scope-chain",
+    "closures",
+    "hoisting",
+  ],
 };

@@ -37,7 +37,8 @@ export const executionContextTheory: TopicTheoryContent = {
   ],
   interviewQuestions: [
     {
-      question: "What happens during the creation phase of an execution context?",
+      question:
+        "What happens during the creation phase of an execution context?",
       answer:
         "The engine scans the code for declarations. var variables are hoisted and set to undefined, function declarations are stored in full, parameters are bound to argument values, and the this value is determined. No code is executed yet.",
     },
@@ -47,7 +48,8 @@ export const executionContextTheory: TopicTheoryContent = {
         "Exactly one. The Global EC is created when the script starts and remains at the bottom of the call stack until the program ends.",
     },
     {
-      question: "What is the difference between Variable Environment and Lexical Environment?",
+      question:
+        "What is the difference between Variable Environment and Lexical Environment?",
       answer:
         "The Variable Environment holds var and function declarations. The Lexical Environment additionally tracks let and const bindings. In practice both are part of the same execution context, but the spec separates them to handle block scoping for let/const.",
       codeExample: {

@@ -1,13 +1,26 @@
 import type { PlaybackSpeedLevel } from "./types";
 
-export const SPEED_OPTIONS: { level: PlaybackSpeedLevel; label: string }[] = [
-  { level: 1, label: "0.25x" },
-  { level: 2, label: "0.5x" },
-  { level: 3, label: "0.75x" },
-  { level: 4, label: "1x" },
-  { level: 5, label: "1.5x" },
-  { level: 6, label: "2x" },
-];
+export const SPEED_LABELS: Record<PlaybackSpeedLevel, string> = {
+  1: "0.25x",
+  2: "0.5x",
+  3: "0.75x",
+  4: "1x",
+  5: "1.5x",
+  6: "2x",
+};
+
+export const SPEED_TO_DELAY_MS: Record<PlaybackSpeedLevel, number> = {
+  1: 5000,
+  2: 2500,
+  3: 1800,
+  4: 1200,
+  5: 700,
+  6: 400,
+};
+
+export const SPEED_OPTIONS = (
+  Object.keys(SPEED_LABELS).map(Number) as PlaybackSpeedLevel[]
+).map((level) => ({ level, label: SPEED_LABELS[level] }));
 
 export const iconBtnBase =
   "inline-flex cursor-pointer items-center justify-center rounded-lg border p-2 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300/70 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:translate-y-0";

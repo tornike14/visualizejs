@@ -1,43 +1,177 @@
 import type { Metadata } from "next";
+import {
+  CATEGORIES,
+  CATEGORY_LIST,
+  type CategoryConfig,
+} from "@/lib/categories";
+import type { TopicId } from "@/lib/topics";
 import type { Topic } from "@/types";
 import {
   CREATOR_LINKEDIN_URL,
   CREATOR_NAME,
-  OPEN_GRAPH_IMAGE_URL,
   SITE_NAME,
   SITE_URL,
-  SOCIAL_IMAGE_ALT,
-  SOCIAL_IMAGE_HEIGHT,
-  SOCIAL_IMAGE_WIDTH,
-  TWITTER_IMAGE_URL,
 } from "@/lib/constants";
 
-const GLOBAL_KEYWORDS = [
-  "VisualizeJS",
-  "javascript visualizer",
-  "javascript concepts",
-  "interactive javascript tutorial",
-  "javascript interview preparation",
-  "frontend fundamentals",
-];
+const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> =
+  Object.fromEntries(
+    CATEGORY_LIST.map((category) => [category.id, category.keywords]),
+  ) as Record<Topic["category"], string[]>;
 
-const CATEGORY_KEYWORDS: Record<Topic["category"], string[]> = {
-  javascript: [
-    "javascript fundamentals",
-    "learn javascript visually",
-    "js runtime",
-    "js internals",
+const TOPIC_KEYWORDS: Record<TopicId, string[]> = {
+  tokenization: [
+    "tokenization explained",
+    "byte pair encoding",
+    "bpe tokenizer",
+    "how llm tokenization works",
+    "subword tokenization",
+    "token ids explained",
+    "why do llms count tokens",
   ],
-  react: [
-    "react fundamentals",
-    "react concepts",
-    "react internals",
-    "react rendering",
-    "learn react visually",
+  embeddings: [
+    "embeddings explained",
+    "word embeddings visualized",
+    "cosine similarity explained",
+    "vector representation of text",
+    "embedding lookup table",
+    "semantic search embeddings",
+    "what is an embedding",
   ],
-};
-
-const TOPIC_KEYWORDS: Record<string, string[]> = {
+  attention: [
+    "self attention explained",
+    "attention mechanism visualized",
+    "query key value explained",
+    "transformer attention",
+    "causal mask explained",
+    "softmax attention weights",
+    "multi head attention",
+  ],
+  "next-token-prediction": [
+    "next token prediction explained",
+    "llm sampling explained",
+    "temperature top k top p",
+    "how llms generate text",
+    "logits to probabilities softmax",
+    "autoregressive generation",
+    "greedy decoding vs sampling",
+  ],
+  backpropagation: [
+    "backpropagation explained",
+    "gradient descent visualized",
+    "chain rule neural network",
+    "how neural networks learn",
+    "loss function explained",
+    "forward pass backward pass",
+    "training loop explained",
+  ],
+  "http-request-lifecycle": [
+    "http request lifecycle",
+    "what happens when you type a url",
+    "dns tcp tls handshake explained",
+    "http request response cycle",
+    "how a web server handles a request",
+    "http headers status codes explained",
+    "backend request flow",
+  ],
+  "database-indexing": [
+    "database indexing explained",
+    "b tree index visualized",
+    "full table scan vs index",
+    "how sql indexes work",
+    "composite index explained",
+    "index selectivity",
+    "database performance basics",
+  ],
+  "caching-strategies": [
+    "caching strategies explained",
+    "cache aside vs write through",
+    "lru cache visualized",
+    "cache invalidation explained",
+    "ttl cache expiry",
+    "redis caching pattern",
+    "cache hit miss ratio",
+  ],
+  "jwt-authentication": [
+    "jwt authentication explained",
+    "json web token visualized",
+    "jwt header payload signature",
+    "how jwt verification works",
+    "access token refresh token flow",
+    "jwt vs session auth",
+    "stateless authentication",
+  ],
+  "rate-limiting": [
+    "rate limiting explained",
+    "token bucket algorithm visualized",
+    "sliding window rate limiter",
+    "fixed window vs sliding window",
+    "429 too many requests",
+    "api rate limiting strategies",
+    "leaky bucket vs token bucket",
+  ],
+  "vue-reactivity": [
+    "vue reactivity explained",
+    "vue proxy reactivity",
+    "vue ref vs reactive",
+    "vue computed caching",
+    "dependency tracking vue",
+    "vue 3 reactivity system",
+    "track and trigger vue",
+  ],
+  "svelte-runes": [
+    "svelte runes explained",
+    "svelte 5 signals",
+    "$state $derived $effect",
+    "svelte compiler explained",
+    "fine grained reactivity svelte",
+    "svelte vs react rendering",
+    "no virtual dom svelte",
+  ],
+  "angular-change-detection": [
+    "angular change detection explained",
+    "zone.js explained",
+    "onpush change detection",
+    "angular signals explained",
+    "angular zoneless",
+    "angular dirty checking",
+    "angular rendering internals",
+  ],
+  "async-await": [
+    "async await explained",
+    "how async await works under the hood",
+    "await microtask queue",
+    "async function execution order",
+    "promise.all vs sequential await",
+    "async await vs promises",
+    "javascript async await visualizer",
+  ],
+  "debounce-throttle": [
+    "debounce vs throttle",
+    "debounce explained",
+    "throttle explained",
+    "debounce implementation javascript",
+    "throttle implementation javascript",
+    "search input debounce",
+    "scroll handler throttle",
+  ],
+  "state-batching": [
+    "react state batching explained",
+    "automatic batching react 18",
+    "setstate updater function",
+    "why setstate is asynchronous",
+    "react update queue",
+    "multiple setstate one render",
+    "react 18 batching timeouts",
+  ],
+  "concurrent-rendering": [
+    "react concurrent rendering explained",
+    "usetransition explained",
+    "react lanes priority",
+    "interruptible rendering react",
+    "startTransition vs setState",
+    "react scheduler explained",
+    "time slicing react",
+  ],
   "event-loop": [
     "javascript event loop explained",
     "microtask queue vs macrotask queue",
@@ -265,20 +399,41 @@ const TOPIC_KEYWORDS: Record<string, string[]> = {
   ],
 };
 
-const THEORY_INTENT_KEYWORDS = [
-  "theory",
-  "explained",
-  "guide",
-  "deep dive",
-  "common mistakes",
-  "faq",
-  "how it works",
-  "interview questions",
-  "examples",
-  "tutorial",
-];
-
-const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
+const TOPIC_THEORY_DESCRIPTIONS: Record<TopicId, string> = {
+  tokenization:
+    "Learn how tokenizers split text into subword tokens with byte pair encoding, why token counts matter, and how ids feed the model.",
+  embeddings:
+    "Learn how token ids become vectors, why similar meanings land near each other, and how cosine similarity compares embeddings.",
+  attention:
+    "Learn how self-attention scores queries against keys, applies softmax and a causal mask, and mixes values so each token sees its context.",
+  "next-token-prediction":
+    "Learn how logits become a probability distribution, how temperature and top-p change sampling, and why generation runs one token at a time.",
+  backpropagation:
+    "Learn how a forward pass produces a loss, how the chain rule sends gradients backward, and how gradient descent nudges weights.",
+  "http-request-lifecycle":
+    "Learn the full path of an HTTP request: DNS, TCP and TLS handshakes, routing, middleware, the database call, and the response.",
+  "database-indexing":
+    "Learn how a B-tree index turns a full scan into a few page reads, how composite indexes match query order, and what indexes cost on writes.",
+  "caching-strategies":
+    "Learn cache-aside and write-through flows, how TTL and LRU eviction decide what stays, and why invalidation is the hard part.",
+  "jwt-authentication":
+    "Learn how a JWT is built from header, payload, and signature, how servers verify it without a session store, and how tampering and expiry are caught.",
+  "rate-limiting":
+    "Learn how token bucket, fixed window, and sliding window limiters decide which requests pass, and where each one lets bursts through.",
+  "vue-reactivity":
+    "Learn how Vue wraps state in a Proxy, records which effect read which property, and re-runs only those effects when a property changes.",
+  "svelte-runes":
+    "Learn how $state, $derived, and $effect form a signal graph and how the Svelte compiler emits direct DOM updates instead of diffing.",
+  "angular-change-detection":
+    "Learn how zone.js triggers change detection, how OnPush prunes the check, and how signals let Angular update only the components that read a value.",
+  "async-await":
+    "Learn how await suspends an async function, why the rest of the function runs as a microtask, and how sequential awaits differ from Promise.all.",
+  "debounce-throttle":
+    "Learn how debounce delays a call until events stop, how throttle caps the call rate, and how both are built from closures and timers.",
+  "state-batching":
+    "Learn how React queues state updates, why updater functions see the latest pending value, and how automatic batching produces one render.",
+  "concurrent-rendering":
+    "Learn how React assigns priority lanes, renders transitions in interruptible slices, and throws away stale work when an urgent update arrives.",
   "event-loop":
     "The JavaScript event loop manages async code using a call stack, microtask queue, and macrotask queue. Learn how setTimeout, Promises, and async/await work with interactive examples.",
   hoisting:
@@ -337,37 +492,43 @@ const TOPIC_THEORY_DESCRIPTIONS: Record<string, string> = {
     "useEffect runs side effects after React commits DOM updates and the browser paints. Learn dependency array behavior, cleanup timing, mount/unmount patterns, and common useEffect recipes.",
 };
 
+/** schema.org TechArticle only defines Beginner and Expert. */
+const PROFICIENCY_LEVELS: Record<Topic["difficulty"], "Beginner" | "Expert"> = {
+  beginner: "Beginner",
+  intermediate: "Beginner",
+  advanced: "Expert",
+};
+
 function dedupeKeywords(...keywordGroups: string[][]): string[] {
-  return [...new Set(keywordGroups.flat().map((k) => k.trim()).filter(Boolean))];
+  return [
+    ...new Set(
+      keywordGroups
+        .flat()
+        .map((k) => k.trim())
+        .filter(Boolean),
+    ),
+  ];
 }
 
+/**
+ * Curated keywords only. Search engines ignore the meta keywords tag, so
+ * generated "X explained", "X faq" combinations added nothing but bytes.
+ * The list still feeds the TechArticle keywords in structured data.
+ */
 export function getTopicKeywords(topic: Topic): string[] {
-  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
-  const lowerTitle = topic.title.toLowerCase();
-  const lowerCategory = categoryLabel.toLowerCase();
-
   return dedupeKeywords(
-    GLOBAL_KEYWORDS,
+    [topic.title, topic.id.replace(/-/g, " ")],
+    TOPIC_KEYWORDS[topic.id as TopicId],
     CATEGORY_KEYWORDS[topic.category],
-    [topic.title, topic.id.replace(/-/g, " "), `${topic.title} explained`],
-    TOPIC_KEYWORDS[topic.id] ?? [],
-    THEORY_INTENT_KEYWORDS.map((intent) => `${topic.title} ${intent}`),
-    [
-      `what is ${lowerTitle} in ${lowerCategory}`,
-      `${lowerTitle} ${lowerCategory} explained`,
-      `${lowerTitle} interview questions`,
-      `${lowerTitle} visualizer`,
-      `${lowerTitle} visualization`,
-    ],
   );
 }
 
 export function getTopicDescription(topic: Topic): string {
-  return TOPIC_THEORY_DESCRIPTIONS[topic.id] ?? topic.description;
+  return TOPIC_THEORY_DESCRIPTIONS[topic.id as TopicId];
 }
 
 export function createTopicMetadata(topic: Topic): Metadata {
-  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
+  const categoryLabel = CATEGORIES[topic.category].label;
   const title = `${topic.title} in ${categoryLabel}, Visualized`;
   const canonicalUrl = `${SITE_URL}${topic.route}`;
   const keywords = getTopicKeywords(topic);
@@ -396,28 +557,18 @@ export function createTopicMetadata(topic: Topic): Metadata {
       siteName: SITE_NAME,
       type: "article",
       locale: "en_US",
-      images: [
-        {
-          url: OPEN_GRAPH_IMAGE_URL,
-          width: SOCIAL_IMAGE_WIDTH,
-          height: SOCIAL_IMAGE_HEIGHT,
-          alt: SOCIAL_IMAGE_ALT,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [TWITTER_IMAGE_URL],
     },
   };
 }
 
 export function createTopicStructuredData(topic: Topic, summary?: string) {
-  const categoryLabel = topic.category === "javascript" ? "JavaScript" : "React";
-  const categoryRoute =
-    topic.category === "javascript" ? "/javascript" : "/react";
+  const categoryLabel = CATEGORIES[topic.category].label;
+  const categoryRoute = CATEGORIES[topic.category].route;
   const canonicalUrl = `${SITE_URL}${topic.route}`;
 
   const articleSchema = {
@@ -428,8 +579,7 @@ export function createTopicStructuredData(topic: Topic, summary?: string) {
     url: canonicalUrl,
     inLanguage: "en-US",
     keywords: getTopicKeywords(topic).join(", "),
-    proficiencyLevel:
-      topic.difficulty === "beginner" ? "Beginner" : "Intermediate",
+    proficiencyLevel: PROFICIENCY_LEVELS[topic.difficulty],
     about: {
       "@type": "Thing",
       name: topic.title,
@@ -469,4 +619,35 @@ export function createTopicStructuredData(topic: Topic, summary?: string) {
   };
 
   return [articleSchema, breadcrumbSchema];
+}
+
+export function createCategoryMetadata(
+  category: CategoryConfig,
+  topicCount: number,
+): Metadata {
+  const title = category.indexTitle;
+  const description = `Explore ${topicCount} interactive ${category.label} visualizations. ${category.description}`;
+  const canonicalUrl = `${SITE_URL}${category.route}`;
+
+  return {
+    title,
+    description,
+    keywords: dedupeKeywords(category.indexKeywords, category.keywords),
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: canonicalUrl,
+      siteName: SITE_NAME,
+      type: "website",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+    },
+  };
 }

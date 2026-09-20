@@ -4,7 +4,7 @@ interface FiberHookPanelProps {
   fiberState: FiberHookState | null;
 }
 
-export function FiberHookPanel({ fiberState }: FiberHookPanelProps) {
+export const FiberHookPanel = ({ fiberState }: FiberHookPanelProps) => {
   if (!fiberState) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -40,7 +40,9 @@ export function FiberHookPanel({ fiberState }: FiberHookPanelProps) {
             <span className="text-slate-400">cursor</span>
             <span className="text-slate-500">-&gt;</span>
             {fiberState.currentHookIndex !== null ? (
-              <span className="text-amber-400">Hook #{fiberState.currentHookIndex}</span>
+              <span className="text-amber-400">
+                Hook #{fiberState.currentHookIndex}
+              </span>
             ) : (
               <span className="text-slate-500">reset</span>
             )}
@@ -49,4 +51,4 @@ export function FiberHookPanel({ fiberState }: FiberHookPanelProps) {
       </div>
     </div>
   );
-}
+};

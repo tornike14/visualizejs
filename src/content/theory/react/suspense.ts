@@ -25,7 +25,7 @@ export const suspenseTheory: TopicTheoryContent = {
     {
       title: "Wrapping every component in its own Suspense boundary",
       explanation:
-        "Too many boundaries cause a staggered \"popcorn\" loading effect where content pops in one piece at a time, creating a poor user experience.",
+        'Too many boundaries cause a staggered "popcorn" loading effect where content pops in one piece at a time, creating a poor user experience.',
       fix: "Group related content within a single boundary. Use nested boundaries only when parts of the page should reveal independently (e.g., main content vs comments).",
     },
     {
@@ -42,7 +42,8 @@ export const suspenseTheory: TopicTheoryContent = {
         "Suspense relies on the thrown-Promise protocol: a component (or its data source) throws a Promise during render. React catches it at the nearest Suspense boundary. This is different from returning a loading state; the component literally cannot finish rendering yet.",
     },
     {
-      question: "What happens when multiple children in one Suspense boundary are loading?",
+      question:
+        "What happens when multiple children in one Suspense boundary are loading?",
       answer:
         "The boundary waits for all pending Promises to resolve before revealing any content. This prevents partial UI from appearing and ensures siblings render together in a single commit, avoiding layout shifts.",
     },
@@ -69,8 +70,8 @@ export const suspenseTheory: TopicTheoryContent = {
   relatedTopicIds: [
     "render-cycle",
     "fiber-tree",
-    "reconciliation",
     "server-components",
+    "concurrent-rendering",
     "error-boundaries",
   ],
 };

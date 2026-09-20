@@ -1,7 +1,7 @@
 import type { PhaseDetail } from "../types";
 
 /** Detail panel: shows what's happening inside the active EC */
-export function PhaseDetailPanel({ detail }: { detail: PhaseDetail }) {
+export const PhaseDetailPanel = ({ detail }: { detail: PhaseDetail }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
@@ -24,4 +24,4 @@ export function PhaseDetailPanel({ detail }: { detail: PhaseDetail }) {
       </div>
     </div>
   );
-}
+};

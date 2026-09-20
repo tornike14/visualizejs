@@ -520,7 +520,7 @@ export const EXAMPLES: FiberTreeExample[] = [
       },
       {
         descriptionHtml:
-          "Work loop complete. The <span class=\"hl-api\">work-in-progress tree</span> is ready. React can now commit changes to the DOM.",
+          'Work loop complete. The <span class="hl-api">work-in-progress tree</span> is ready. React can now commit changes to the DOM.',
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         tree: {
@@ -582,7 +582,7 @@ export const EXAMPLES: FiberTreeExample[] = [
     steps: [
       {
         descriptionHtml:
-          "A fiber is selected as the current <span class=\"hl-api\">unit of work</span>. React checks whether it has pending state or prop changes.",
+          'A fiber is selected as the current <span class="hl-api">unit of work</span>. React checks whether it has pending state or prop changes.',
         activeLine: 2,
         doneLines: [1],
         tree: {
@@ -597,9 +597,7 @@ export const EXAMPLES: FiberTreeExample[] = [
                   id: "counter",
                   label: "<Counter>",
                   highlight: "active",
-                  children: [
-                    { id: "span", label: "<span>" },
-                  ],
+                  children: [{ id: "span", label: "<span>" }],
                 },
               ],
             },
@@ -634,9 +632,7 @@ export const EXAMPLES: FiberTreeExample[] = [
                   id: "counter",
                   label: "<Counter>",
                   highlight: "active",
-                  children: [
-                    { id: "span", label: "<span>" },
-                  ],
+                  children: [{ id: "span", label: "<span>" }],
                 },
               ],
             },
@@ -656,7 +652,7 @@ export const EXAMPLES: FiberTreeExample[] = [
       },
       {
         descriptionHtml:
-          "The component returns new JSX. React <span class=\"hl-task\">reconciles</span> the returned children against the existing fiber children.",
+          'The component returns new JSX. React <span class="hl-task">reconciles</span> the returned children against the existing fiber children.',
         activeLine: 4,
         doneLines: [1, 2, 3],
         tree: {
@@ -693,7 +689,7 @@ export const EXAMPLES: FiberTreeExample[] = [
       },
       {
         descriptionHtml:
-          "Reconciliation complete. Now React determines the <span class=\"hl-stack\">next unit of work</span>. Rule 1: if a child exists, process it next.",
+          'Reconciliation complete. Now React determines the <span class="hl-stack">next unit of work</span>. Rule 1: if a child exists, process it next.',
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         tree: {

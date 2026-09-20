@@ -53,7 +53,8 @@ export const promisesTheory: TopicTheoryContent = {
         "Yes. Thrown errors in then callbacks reject the next Promise in the chain, and catch can handle that rejection.",
     },
     {
-      question: "What is the difference between Promise.all and Promise.allSettled?",
+      question:
+        "What is the difference between Promise.all and Promise.allSettled?",
       answer:
         "Promise.all fails fast on the first rejection, while Promise.allSettled waits for all Promises and returns each outcome.",
     },
@@ -63,5 +64,5 @@ export const promisesTheory: TopicTheoryContent = {
         "No. async/await is syntax built on top of Promises; underlying scheduling and resolution behavior still follows Promise rules.",
     },
   ],
-  relatedTopicIds: ["event-loop", "closures", "generators", "type-coercion"],
+  relatedTopicIds: ["event-loop", "async-await", "closures", "generators"],
 };

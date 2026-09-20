@@ -53,7 +53,8 @@ export const ErrorStatePanel = ({
               )}
               {b.fallbackLabel && (
                 <span>
-                  fallback: <span className="text-cyan-400">{b.fallbackLabel}</span>
+                  fallback:{" "}
+                  <span className="text-cyan-400">{b.fallbackLabel}</span>
                 </span>
               )}
             </div>

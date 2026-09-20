@@ -1,4 +1,7 @@
-import { createKindBadgeClass, createKindLabel } from "@/lib/visualization-helpers";
+import {
+  createKindBadgeClass,
+  createKindLabel,
+} from "@/lib/visualization-helpers";
 import type { ReferenceExample, ReferenceKind, ReferenceStep } from "./types";
 import type { SourceLine } from "@/types/visualization";
 
@@ -6,7 +9,7 @@ import type { SourceLine } from "@/types/visualization";
 
 export function getEffectiveData(
   example: ReferenceExample,
-  activeMethodId: string
+  activeMethodId: string,
 ): { codeLines: SourceLine[]; steps: ReferenceStep[] } {
   if (example.kind !== "deep") {
     return { codeLines: example.codeLines, steps: example.steps };

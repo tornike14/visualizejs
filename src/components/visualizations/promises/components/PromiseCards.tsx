@@ -18,7 +18,7 @@ export const PromiseCards = ({ promises }: { promises: PromiseObj[] }) => {
           key={`${p.name}-${p.state}-${index}`}
           className={cn(
             "viz-slide-in rounded-lg border px-3 py-2.5",
-            PROMISE_STATE_BORDER[p.state]
+            PROMISE_STATE_BORDER[p.state],
           )}
         >
           <div className="flex items-center justify-between">
@@ -28,7 +28,7 @@ export const PromiseCards = ({ promises }: { promises: PromiseObj[] }) => {
                 "rounded-full px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider",
                 p.state === "pending" && "bg-slate-500/20 text-slate-400",
                 p.state === "fulfilled" && "bg-emerald-500/20 text-emerald-300",
-                p.state === "rejected" && "bg-rose-500/20 text-rose-300"
+                p.state === "rejected" && "bg-rose-500/20 text-rose-300",
               )}
             >
               {p.state}

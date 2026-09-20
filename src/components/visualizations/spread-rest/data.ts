@@ -28,7 +28,12 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: true, tone: "amber" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -38,8 +43,18 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: true, tone: "cyan" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: true,
+            tone: "cyan",
+          },
         ],
       },
       {
@@ -49,9 +64,24 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: true, tone: "emerald" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: true,
+            tone: "emerald",
+          },
         ],
       },
       {
@@ -61,10 +91,30 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: false, tone: "emerald" },
-          { name: "copy", value: '["apple", "banana"]', isNew: true, tone: "violet" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "copy",
+            value: '["apple", "banana"]',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -74,23 +124,63 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: [],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: false, tone: "emerald" },
-          { name: "copy", value: '["apple", "banana", "cherry"]', isNew: true, tone: "violet" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "copy",
+            value: '["apple", "banana", "cherry"]',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>console.log(all)</code> shows all four elements from the combined spread.',
+          "<code>console.log(all)</code> shows all four elements from the combined spread.",
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["[apple, banana, carrot, pea]"],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: false, tone: "emerald" },
-          { name: "copy", value: '["apple", "banana", "cherry"]', isNew: false, tone: "violet" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "copy",
+            value: '["apple", "banana", "cherry"]',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -100,23 +190,67 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["[apple, banana, carrot, pea]", "[apple, banana]"],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: false, tone: "emerald" },
-          { name: "copy", value: '["apple", "banana", "cherry"]', isNew: false, tone: "violet" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "copy",
+            value: '["apple", "banana", "cherry"]',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>console.log(copy)</code> shows the three-element copy. <strong>Key takeaway:</strong> array spread expands elements into a new array. It creates a shallow copy, so the original is not mutated.',
+          "<code>console.log(copy)</code> shows the three-element copy. <strong>Key takeaway:</strong> array spread expands elements into a new array. It creates a shallow copy, so the original is not mutated.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
-        consoleOutput: ["[apple, banana, carrot, pea]", "[apple, banana]", "[apple, banana, cherry]"],
+        consoleOutput: [
+          "[apple, banana, carrot, pea]",
+          "[apple, banana]",
+          "[apple, banana, cherry]",
+        ],
         bindings: [
-          { name: "fruits", value: '["apple", "banana"]', isNew: false, tone: "amber" },
-          { name: "vegs", value: '["carrot", "pea"]', isNew: false, tone: "cyan" },
-          { name: "all", value: '["apple", "banana", "carrot", "pea"]', isNew: false, tone: "emerald" },
-          { name: "copy", value: '["apple", "banana", "cherry"]', isNew: false, tone: "violet" },
+          {
+            name: "fruits",
+            value: '["apple", "banana"]',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "vegs",
+            value: '["carrot", "pea"]',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "all",
+            value: '["apple", "banana", "carrot", "pea"]',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "copy",
+            value: '["apple", "banana", "cherry"]',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
     ],
@@ -146,7 +280,12 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: true, tone: "amber" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -156,8 +295,18 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: true, tone: "cyan" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: true,
+            tone: "cyan",
+          },
         ],
       },
       {
@@ -167,9 +316,24 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: false, tone: "cyan" },
-          { name: "config", value: '{ theme: "dark", lang: "en", fontSize: 14 }', isNew: true, tone: "emerald" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "config",
+            value: '{ theme: "dark", lang: "en", fontSize: 14 }',
+            isNew: true,
+            tone: "emerald",
+          },
         ],
       },
       {
@@ -179,10 +343,30 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: false, tone: "cyan" },
-          { name: "config", value: '{ theme: "dark", lang: "en", fontSize: 14 }', isNew: false, tone: "emerald" },
-          { name: "updated", value: '{ theme: "dark", lang: "fr", fontSize: 14 }', isNew: true, tone: "violet" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "config",
+            value: '{ theme: "dark", lang: "en", fontSize: 14 }',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "updated",
+            value: '{ theme: "dark", lang: "fr", fontSize: 14 }',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -192,10 +376,30 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ['{ theme: "dark", lang: "en", fontSize: 14 }'],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: false, tone: "cyan" },
-          { name: "config", value: '{ theme: "dark", lang: "en", fontSize: 14 }', isNew: false, tone: "emerald" },
-          { name: "updated", value: '{ theme: "dark", lang: "fr", fontSize: 14 }', isNew: false, tone: "violet" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "config",
+            value: '{ theme: "dark", lang: "en", fontSize: 14 }',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "updated",
+            value: '{ theme: "dark", lang: "fr", fontSize: 14 }',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -203,25 +407,72 @@ export const EXAMPLES: SpreadRestExample[] = [
           '<code>console.log(updated)</code> shows <code>lang: "fr"</code> overriding the spread value.',
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
-        consoleOutput: ['{ theme: "dark", lang: "en", fontSize: 14 }', '{ theme: "dark", lang: "fr", fontSize: 14 }'],
+        consoleOutput: [
+          '{ theme: "dark", lang: "en", fontSize: 14 }',
+          '{ theme: "dark", lang: "fr", fontSize: 14 }',
+        ],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: false, tone: "cyan" },
-          { name: "config", value: '{ theme: "dark", lang: "en", fontSize: 14 }', isNew: false, tone: "emerald" },
-          { name: "updated", value: '{ theme: "dark", lang: "fr", fontSize: 14 }', isNew: false, tone: "violet" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "config",
+            value: '{ theme: "dark", lang: "en", fontSize: 14 }',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "updated",
+            value: '{ theme: "dark", lang: "fr", fontSize: 14 }',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>console.log(defaults)</code> is unchanged. Spread always creates a <strong>new</strong> object. <strong>Key takeaway:</strong> object spread copies properties left to right, later values override earlier ones. This is ideal for merging defaults with overrides.',
+          "<code>console.log(defaults)</code> is unchanged. Spread always creates a <strong>new</strong> object. <strong>Key takeaway:</strong> object spread copies properties left to right, later values override earlier ones. This is ideal for merging defaults with overrides.",
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 5, 6],
-        consoleOutput: ['{ theme: "dark", lang: "en", fontSize: 14 }', '{ theme: "dark", lang: "fr", fontSize: 14 }', '{ theme: "light", lang: "en" }'],
+        consoleOutput: [
+          '{ theme: "dark", lang: "en", fontSize: 14 }',
+          '{ theme: "dark", lang: "fr", fontSize: 14 }',
+          '{ theme: "light", lang: "en" }',
+        ],
         bindings: [
-          { name: "defaults", value: '{ theme: "light", lang: "en" }', isNew: false, tone: "amber" },
-          { name: "prefs", value: '{ theme: "dark", fontSize: 14 }', isNew: false, tone: "cyan" },
-          { name: "config", value: '{ theme: "dark", lang: "en", fontSize: 14 }', isNew: false, tone: "emerald" },
-          { name: "updated", value: '{ theme: "dark", lang: "fr", fontSize: 14 }', isNew: false, tone: "violet" },
+          {
+            name: "defaults",
+            value: '{ theme: "light", lang: "en" }',
+            isNew: false,
+            tone: "amber",
+          },
+          {
+            name: "prefs",
+            value: '{ theme: "dark", fontSize: 14 }',
+            isNew: false,
+            tone: "cyan",
+          },
+          {
+            name: "config",
+            value: '{ theme: "dark", lang: "en", fontSize: 14 }',
+            isNew: false,
+            tone: "emerald",
+          },
+          {
+            name: "updated",
+            value: '{ theme: "dark", lang: "fr", fontSize: 14 }',
+            isNew: false,
+            tone: "violet",
+          },
         ],
       },
     ],
@@ -296,8 +547,7 @@ export const EXAMPLES: SpreadRestExample[] = [
         ],
       },
       {
-        descriptionHtml:
-          "Outputs <code>30</code>.",
+        descriptionHtml: "Outputs <code>30</code>.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         consoleOutput: ["6", "30"],
@@ -356,7 +606,12 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: true, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
@@ -366,9 +621,19 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: true, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: true, tone: "violet" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: true,
+            tone: "violet",
+          },
         ],
       },
       {
@@ -378,25 +643,60 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: true, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: true,
+            tone: "amber",
+          },
         ],
       },
       {
         descriptionHtml:
-          '<code>{ name, ...details }</code> extracts <code>name</code> into its own variable and collects <strong>all remaining properties</strong> into a new <code>details</code> object. This is a clean way to separate known properties from the rest.',
+          "<code>{ name, ...details }</code> extracts <code>name</code> into its own variable and collects <strong>all remaining properties</strong> into a new <code>details</code> object. This is a clean way to separate known properties from the rest.",
         activeLine: 4,
         doneLines: [1, 2, 3],
         consoleOutput: [],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: false, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: true, tone: "emerald" },
-          { name: "details", value: '{ age: 30, role: "dev" }', isNew: true, tone: "pink" },
+          {
+            name: "details",
+            value: '{ age: 30, role: "dev" }',
+            isNew: true,
+            tone: "pink",
+          },
         ],
       },
       {
@@ -406,12 +706,32 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["red"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: false, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "emerald" },
-          { name: "details", value: '{ age: 30, role: "dev" }', isNew: false, tone: "pink" },
+          {
+            name: "details",
+            value: '{ age: 30, role: "dev" }',
+            isNew: false,
+            tone: "pink",
+          },
         ],
       },
       {
@@ -421,12 +741,32 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["red", "[green, blue, yellow]"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: false, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "emerald" },
-          { name: "details", value: '{ age: 30, role: "dev" }', isNew: false, tone: "pink" },
+          {
+            name: "details",
+            value: '{ age: 30, role: "dev" }',
+            isNew: false,
+            tone: "pink",
+          },
         ],
       },
       {
@@ -436,12 +776,32 @@ export const EXAMPLES: SpreadRestExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ["red", "[green, blue, yellow]", "Alice"],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: false, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "emerald" },
-          { name: "details", value: '{ age: 30, role: "dev" }', isNew: false, tone: "pink" },
+          {
+            name: "details",
+            value: '{ age: 30, role: "dev" }',
+            isNew: false,
+            tone: "pink",
+          },
         ],
       },
       {
@@ -449,14 +809,39 @@ export const EXAMPLES: SpreadRestExample[] = [
           '<code>console.log(details)</code> outputs the remaining properties: <code>{ age: 30, role: "dev" }</code>. <strong>Key takeaway:</strong> rest in destructuring collects leftover elements (arrays) or properties (objects). It always creates a new array or object, not a reference to the original.',
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6, 7],
-        consoleOutput: ["red", "[green, blue, yellow]", "Alice", '{ age: 30, role: "dev" }'],
+        consoleOutput: [
+          "red",
+          "[green, blue, yellow]",
+          "Alice",
+          '{ age: 30, role: "dev" }',
+        ],
         bindings: [
-          { name: "colors", value: '["red", "green", "blue", "yellow"]', isNew: false, tone: "amber" },
+          {
+            name: "colors",
+            value: '["red", "green", "blue", "yellow"]',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "primary", value: '"red"', isNew: false, tone: "cyan" },
-          { name: "others", value: '["green", "blue", "yellow"]', isNew: false, tone: "violet" },
-          { name: "user", value: '{ name: "Alice", age: 30, role: "dev" }', isNew: false, tone: "amber" },
+          {
+            name: "others",
+            value: '["green", "blue", "yellow"]',
+            isNew: false,
+            tone: "violet",
+          },
+          {
+            name: "user",
+            value: '{ name: "Alice", age: 30, role: "dev" }',
+            isNew: false,
+            tone: "amber",
+          },
           { name: "name", value: '"Alice"', isNew: false, tone: "emerald" },
-          { name: "details", value: '{ age: 30, role: "dev" }', isNew: false, tone: "pink" },
+          {
+            name: "details",
+            value: '{ age: 30, role: "dev" }',
+            isNew: false,
+            tone: "pink",
+          },
         ],
       },
     ],

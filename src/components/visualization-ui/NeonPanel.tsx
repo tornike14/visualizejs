@@ -38,26 +38,26 @@ const TONE_STYLES: Record<NeonTone, { header: string; dot: string }> = {
   },
 };
 
-export function NeonPanel({
+export const NeonPanel = ({
   title,
   tone,
   children,
   className,
   bodyClassName,
-}: NeonPanelProps) {
+}: NeonPanelProps) => {
   const toneStyles = TONE_STYLES[tone];
 
   return (
     <section
       className={cn(
         "overflow-hidden rounded-3xl border border-[color:var(--app-border)] bg-[color:var(--app-surface-strong)]/90 shadow-[0_12px_30px_rgba(2,6,23,0.45)] backdrop-blur-sm",
-        className
+        className,
       )}
     >
       <header
         className={cn(
           "flex items-center gap-3 border-b border-[color:var(--app-border)] px-4 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.26em] text-slate-100",
-          toneStyles.header
+          toneStyles.header,
         )}
       >
         <span className={cn("h-2.5 w-2.5 rounded-full", toneStyles.dot)} />
@@ -66,4 +66,4 @@ export function NeonPanel({
       <div className={cn("p-4", bodyClassName)}>{children}</div>
     </section>
   );
-}
+};

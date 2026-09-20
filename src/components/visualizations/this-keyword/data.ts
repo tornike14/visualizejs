@@ -23,7 +23,7 @@ export const EXAMPLES: ThisExample[] = [
     steps: [
       {
         descriptionHtml:
-          'Create the <code>user</code> object with a <code>name</code> property and a <code>greet</code> method. No function calls yet, so <code>this</code> has no binding.',
+          "Create the <code>user</code> object with a <code>name</code> property and a <code>greet</code> method. No function calls yet, so <code>this</code> has no binding.",
         activeLine: 1,
         doneLines: [],
         objects: [
@@ -41,7 +41,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>user.greet()</code> is called. The key is the <strong>dot</strong> before <code>greet</code> - the object to the left of the dot determines <code>this</code>.',
+          "<code>user.greet()</code> is called. The key is the <strong>dot</strong> before <code>greet</code> - the object to the left of the dot determines <code>this</code>.",
         activeLine: 8,
         doneLines: [1, 2, 3, 4, 5, 6],
         objects: [
@@ -87,7 +87,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          'Now <code>user.greet</code> is extracted into a standalone variable <code>greetFn</code>. The function reference is copied, but the object binding is <strong>not</strong> carried along.',
+          "Now <code>user.greet</code> is extracted into a standalone variable <code>greetFn</code>. The function reference is copied, but the object binding is <strong>not</strong> carried along.",
         activeLine: 9,
         doneLines: [1, 2, 3, 4, 5, 6, 8],
         objects: [
@@ -105,7 +105,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>greetFn()</code> is called - no dot, no object in front. This is a <strong>plain function call</strong>.',
+          "<code>greetFn()</code> is called - no dot, no object in front. This is a <strong>plain function call</strong>.",
         activeLine: 10,
         doneLines: [1, 2, 3, 4, 5, 6, 8, 9],
         objects: [
@@ -128,7 +128,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          'Inside <code>greet()</code> again, but now <code>this</code> is <code>undefined</code> (strict mode). The binding was <strong>lost</strong> when the method was extracted. <code>this.name</code> is <code>undefined</code>.',
+          "Inside <code>greet()</code> again, but now <code>this</code> is <code>undefined</code> (strict mode). The binding was <strong>lost</strong> when the method was extracted. <code>this.name</code> is <code>undefined</code>.",
         activeLine: 4,
         doneLines: [1, 2, 3, 5, 6, 8, 9, 10],
         objects: [
@@ -151,7 +151,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> The value of <code>this</code> depends on <strong>how</strong> the function is called, not where it is defined. <code>obj.method()</code> binds <code>this</code> to <code>obj</code>. A plain <code>func()</code> call loses the binding.',
+          "<strong>Key takeaway:</strong> The value of <code>this</code> depends on <strong>how</strong> the function is called, not where it is defined. <code>obj.method()</code> binds <code>this</code> to <code>obj</code>. A plain <code>func()</code> call loses the binding.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 8, 9, 10],
         objects: [
@@ -193,7 +193,7 @@ export const EXAMPLES: ThisExample[] = [
     steps: [
       {
         descriptionHtml:
-          'Declare a standalone <code>greet</code> function that references <code>this.name</code>. On its own, <code>this</code> would be <code>undefined</code> - we will control it explicitly.',
+          "Declare a standalone <code>greet</code> function that references <code>this.name</code>. On its own, <code>this</code> would be <code>undefined</code> - we will control it explicitly.",
         activeLine: 1,
         doneLines: [],
         objects: [],
@@ -202,7 +202,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          'Create two objects: <code>alice</code> and <code>bob</code>. Neither has a <code>greet</code> method - we will borrow the standalone function.',
+          "Create two objects: <code>alice</code> and <code>bob</code>. Neither has a <code>greet</code> method - we will borrow the standalone function.",
         activeLine: 5,
         doneLines: [1, 2, 3],
         objects: [
@@ -297,7 +297,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>boundGreet()</code> - even though this is a <strong>plain call</strong> (no dot, no explicit context), <code>this</code> is still <code>alice</code> because <code>bind</code> locks it permanently.',
+          "<code>boundGreet()</code> - even though this is a <strong>plain call</strong> (no dot, no explicit context), <code>this</code> is still <code>alice</code> because <code>bind</code> locks it permanently.",
         activeLine: 11,
         doneLines: [1, 2, 3, 5, 6, 8, 9, 10],
         objects: [
@@ -322,7 +322,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> <code>call</code> and <code>apply</code> invoke immediately with a chosen <code>this</code>. <code>bind</code> returns a new function with <code>this</code> permanently locked - even future plain calls cannot override it.',
+          "<strong>Key takeaway:</strong> <code>call</code> and <code>apply</code> invoke immediately with a chosen <code>this</code>. <code>bind</code> returns a new function with <code>this</code> permanently locked - even future plain calls cannot override it.",
         activeLine: null,
         doneLines: [1, 2, 3, 5, 6, 8, 9, 10, 11],
         objects: [
@@ -366,7 +366,7 @@ export const EXAMPLES: ThisExample[] = [
     steps: [
       {
         descriptionHtml:
-          'Declare <code>User</code> as a constructor function. By convention, constructor names start with a capital letter.',
+          "Declare <code>User</code> as a constructor function. By convention, constructor names start with a capital letter.",
         activeLine: 1,
         doneLines: [],
         objects: [],
@@ -395,7 +395,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>console.log(this)</code> - <code>this</code> is the new empty object. It has no properties yet.',
+          "<code>console.log(this)</code> - <code>this</code> is the new empty object. It has no properties yet.",
         activeLine: 2,
         doneLines: [1, 7, 9],
         objects: [
@@ -415,7 +415,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>this.name = name</code> - the <code>name</code> property is added to the new object via <code>this</code>. The object is being built up step by step.',
+          "<code>this.name = name</code> - the <code>name</code> property is added to the new object via <code>this</code>. The object is being built up step by step.",
         activeLine: 3,
         doneLines: [1, 2, 7, 9],
         objects: [
@@ -435,7 +435,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>this.greet = function()...</code> - a <code>greet</code> method is attached to the new object. The constructor finishes, and <code>new</code> returns this object as <code>alice</code>.',
+          "<code>this.greet = function()...</code> - a <code>greet</code> method is attached to the new object. The constructor finishes, and <code>new</code> returns this object as <code>alice</code>.",
         activeLine: 4,
         doneLines: [1, 2, 3, 7, 9],
         objects: [
@@ -458,7 +458,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>alice.greet()</code> - now this is a regular method call with <strong>implicit binding</strong>. The dot rule applies: <code>this</code> is <code>alice</code>.',
+          "<code>alice.greet()</code> - now this is a regular method call with <strong>implicit binding</strong>. The dot rule applies: <code>this</code> is <code>alice</code>.",
         activeLine: 10,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 9],
         objects: [
@@ -481,7 +481,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> <code>new</code> does three things: (1) creates a fresh empty object, (2) binds <code>this</code> to it inside the constructor, (3) returns the object. After construction, the dot rule (implicit binding) applies as usual.',
+          "<strong>Key takeaway:</strong> <code>new</code> does three things: (1) creates a fresh empty object, (2) binds <code>this</code> to it inside the constructor, (3) returns the object. After construction, the dot rule (implicit binding) applies as usual.",
         activeLine: 11,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 9, 10],
         objects: [
@@ -523,7 +523,7 @@ export const EXAMPLES: ThisExample[] = [
     steps: [
       {
         descriptionHtml:
-          'Create the <code>team</code> object with a <code>name</code>, a <code>members</code> array, and a <code>show</code> method.',
+          "Create the <code>team</code> object with a <code>name</code>, a <code>members</code> array, and a <code>show</code> method.",
         activeLine: 1,
         doneLines: [],
         objects: [
@@ -542,7 +542,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<code>team.show()</code> is called. Implicit binding: the dot rule means <code>this</code> inside <code>show</code> will be <code>team</code>.',
+          "<code>team.show()</code> is called. Implicit binding: the dot rule means <code>this</code> inside <code>show</code> will be <code>team</code>.",
         activeLine: 11,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         objects: [
@@ -566,7 +566,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          'Inside <code>show()</code>, <code>this</code> is <code>team</code>. The <code>forEach</code> callback is an <strong>arrow function</strong> - it does not create its own <code>this</code> binding.',
+          "Inside <code>show()</code>, <code>this</code> is <code>team</code>. The <code>forEach</code> callback is an <strong>arrow function</strong> - it does not create its own <code>this</code> binding.",
         activeLine: 5,
         doneLines: [1, 2, 3, 8, 9, 11],
         objects: [
@@ -590,7 +590,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          'The arrow function <strong>captures</strong> <code>this</code> from its enclosing scope (<code>show</code>). Since <code>show</code> was called as <code>team.show()</code>, the arrow inherits <code>this = team</code>.',
+          "The arrow function <strong>captures</strong> <code>this</code> from its enclosing scope (<code>show</code>). Since <code>show</code> was called as <code>team.show()</code>, the arrow inherits <code>this = team</code>.",
         activeLine: 5,
         doneLines: [1, 2, 3, 8, 9, 11],
         objects: [
@@ -662,7 +662,7 @@ export const EXAMPLES: ThisExample[] = [
       },
       {
         descriptionHtml:
-          '<strong>Key takeaway:</strong> Arrow functions inherit <code>this</code> from the enclosing function scope at the time they are defined. If <code>forEach</code> used a regular <code>function</code> instead, <code>this</code> would be <code>undefined</code> - the classic gotcha arrow functions were designed to fix.',
+          "<strong>Key takeaway:</strong> Arrow functions inherit <code>this</code> from the enclosing function scope at the time they are defined. If <code>forEach</code> used a regular <code>function</code> instead, <code>this</code> would be <code>undefined</code> - the classic gotcha arrow functions were designed to fix.",
         activeLine: null,
         doneLines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11],
         objects: [

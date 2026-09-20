@@ -1,5 +1,5 @@
 import type { ExampleOption } from "@/components/visualization-ui/ExampleSelector";
-import type { SourceLine } from "@/types/visualization";
+import type { SourceLine, BaseStep } from "@/types/visualization";
 
 export type GCKind = "algorithm" | "leak" | "weak";
 
@@ -18,10 +18,7 @@ export interface HeapObject {
   status: "alive" | "unreachable" | "collected";
 }
 
-export interface GCStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface GCStep extends BaseStep {
   consoleOutput: string[];
   roots: GCRoot[];
   heapObjects: HeapObject[];

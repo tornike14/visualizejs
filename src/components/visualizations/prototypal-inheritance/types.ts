@@ -1,4 +1,8 @@
-import type { SourceLine, ChainHighlight } from "@/types/visualization";
+import type {
+  SourceLine,
+  ChainHighlight,
+  BaseStep,
+} from "@/types/visualization";
 
 export type ExampleKind = "object-create" | "constructor" | "lookup";
 
@@ -14,10 +18,7 @@ export interface ProtoObject {
   activeProperty?: string;
 }
 
-export interface ProtoStep {
-  descriptionHtml: string;
-  activeLine: number | null;
-  doneLines: number[];
+export interface ProtoStep extends BaseStep {
   chain: ProtoObject[];
   activeLink?: number;
   consoleOutput: string[];

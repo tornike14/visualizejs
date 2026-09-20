@@ -41,7 +41,12 @@ export const STEPS: ECStep[] = [
         phase: "creation",
         thisValue: "window",
         variableEnv: [
-          { name: "language", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "language",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
           { name: "greet", value: "fn()", kind: "function", initialized: true },
           { name: "run", value: "fn()", kind: "function", initialized: true },
         ],
@@ -110,7 +115,12 @@ export const STEPS: ECStep[] = [
         phase: "creation",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "result",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -155,7 +165,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "result",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -200,7 +215,12 @@ export const STEPS: ECStep[] = [
         thisValue: "window",
         variableEnv: [
           { name: "name", value: '"World"', kind: "param", initialized: true },
-          { name: "message", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "message",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -211,7 +231,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "result",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -261,7 +286,12 @@ export const STEPS: ECStep[] = [
         thisValue: "window",
         variableEnv: [
           { name: "name", value: '"World"', kind: "param", initialized: true },
-          { name: "message", value: '"JS, World"', kind: "var", initialized: true },
+          {
+            name: "message",
+            value: '"JS, World"',
+            kind: "var",
+            initialized: true,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -272,7 +302,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "result",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -322,7 +357,12 @@ export const STEPS: ECStep[] = [
         thisValue: "window",
         variableEnv: [
           { name: "name", value: '"World"', kind: "param", initialized: true },
-          { name: "message", value: '"JS, World"', kind: "var", initialized: true },
+          {
+            name: "message",
+            value: '"JS, World"',
+            kind: "var",
+            initialized: true,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -333,7 +373,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: "undefined", kind: "var", initialized: false },
+          {
+            name: "result",
+            value: "undefined",
+            kind: "var",
+            initialized: false,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -374,7 +419,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: '"JS, World"', kind: "var", initialized: true },
+          {
+            name: "result",
+            value: '"JS, World"',
+            kind: "var",
+            initialized: true,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -412,7 +462,12 @@ export const STEPS: ECStep[] = [
         phase: "execution",
         thisValue: "window",
         variableEnv: [
-          { name: "result", value: '"JS, World"', kind: "var", initialized: true },
+          {
+            name: "result",
+            value: '"JS, World"',
+            kind: "var",
+            initialized: true,
+          },
         ],
         outerEnvLabel: "Global EC",
       },
@@ -465,7 +520,7 @@ export const STEPS: ECStep[] = [
   // Step 10: Summary
   {
     descriptionHtml:
-      '<strong>Key takeaway:</strong> Every function call creates a new EC with a <strong>creation phase</strong> (hoisting + this binding + outer env link) then an <strong>execution phase</strong> (line-by-line). Contexts stack (LIFO) and pop on return. The Global EC is always at the bottom.',
+      "<strong>Key takeaway:</strong> Every function call creates a new EC with a <strong>creation phase</strong> (hoisting + this binding + outer env link) then an <strong>execution phase</strong> (line-by-line). Contexts stack (LIFO) and pop on return. The Global EC is always at the bottom.",
     activeLine: null,
     doneLines: [1, 3, 4, 5, 6, 10, 11, 14],
     highlightLines: [],

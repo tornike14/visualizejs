@@ -52,9 +52,9 @@ console.log('End');`,
 };
 
 export function isSandboxEnabled(topicId: string): boolean {
-  return topicId in SANDBOX_CONFIGS;
+  return Object.hasOwn(SANDBOX_CONFIGS, topicId);
 }
 
 export function getSandboxConfig(topicId: string): SandboxConfig | null {
-  return SANDBOX_CONFIGS[topicId] ?? null;
+  return isSandboxEnabled(topicId) ? SANDBOX_CONFIGS[topicId] : null;
 }

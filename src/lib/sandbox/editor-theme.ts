@@ -87,4 +87,7 @@ const highlightStyle = HighlightStyle.define([
   { tag: tags.regexp, color: "#f472b6" },
 ]);
 
-export const visualizeJsTheme = [editorTheme, syntaxHighlighting(highlightStyle)];
+export const visualizeJsTheme = [
+  editorTheme,
+  syntaxHighlighting(highlightStyle),
+];

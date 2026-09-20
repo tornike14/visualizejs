@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { StackFrame } from "../types";
 import { FRAME_TONE_MAP } from "../helpers";
 
-export function StackPanel({ frames }: { frames: StackFrame[] }) {
+export const StackPanel = ({ frames }: { frames: StackFrame[] }) => {
   if (frames.length === 0) {
     return (
       <p className="pt-5 text-center font-mono text-xs tracking-[0.22em] text-slate-500/60">
@@ -18,8 +18,7 @@ export function StackPanel({ frames }: { frames: StackFrame[] }) {
       {reversed.map((frame, visualIdx) => {
         const frameIdx = frames.length - 1 - visualIdx;
         const isTop = visualIdx === 0;
-        const toneClass =
-          FRAME_TONE_MAP[frameIdx] ?? FRAME_TONE_MAP[3];
+        const toneClass = FRAME_TONE_MAP[frameIdx] ?? FRAME_TONE_MAP[3];
 
         return (
           <div
@@ -27,7 +26,7 @@ export function StackPanel({ frames }: { frames: StackFrame[] }) {
             className={cn(
               "viz-slide-in rounded-lg border px-3 py-2.5",
               toneClass,
-              isTop && "ring-1 ring-amber-400/30"
+              isTop && "ring-1 ring-amber-400/30",
             )}
           >
             <div className="mb-1.5 flex items-center gap-2">
@@ -56,4 +55,4 @@ export function StackPanel({ frames }: { frames: StackFrame[] }) {
       })}
     </div>
   );
-}
+};

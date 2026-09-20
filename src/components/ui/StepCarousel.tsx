@@ -37,7 +37,9 @@ export const StepCarousel = <TItem,>({
 }: StepCarouselProps<TItem>) => {
   const hasItems = items.length > 0;
   const maxIndex = Math.max(items.length - 1, 0);
-  const currentIndex = hasItems ? Math.min(Math.max(activeIndex, 0), maxIndex) : 0;
+  const currentIndex = hasItems
+    ? Math.min(Math.max(activeIndex, 0), maxIndex)
+    : 0;
   const isFirstItem = currentIndex === 0;
   const isLastItem = currentIndex === maxIndex;
 

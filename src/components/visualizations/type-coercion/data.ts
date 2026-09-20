@@ -24,7 +24,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [],
         consoleOutput: ["true"],
         coercionOps: [
-          { label: '"5" (string) converts to 5 (number)', result: "Coerced", color: "amber" },
+          {
+            label: '"5" (string) converts to 5 (number)',
+            result: "Coerced",
+            color: "amber",
+          },
           { label: "5 == 5", result: "true", color: "emerald" },
         ],
       },
@@ -35,7 +39,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1],
         consoleOutput: ["true", "false"],
         coercionOps: [
-          { label: "Types: string vs number", result: "Different types", color: "red" },
+          {
+            label: "Types: string vs number",
+            result: "Different types",
+            color: "red",
+          },
           { label: "No coercion performed", result: "false", color: "red" },
         ],
       },
@@ -46,7 +54,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2],
         consoleOutput: ["true", "false", "true"],
         coercionOps: [
-          { label: "false (boolean) converts to 0 (number)", result: "Coerced", color: "amber" },
+          {
+            label: "false (boolean) converts to 0 (number)",
+            result: "Coerced",
+            color: "amber",
+          },
           { label: "0 == 0", result: "true", color: "emerald" },
         ],
       },
@@ -57,7 +69,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["true", "false", "true", "false"],
         coercionOps: [
-          { label: "Types: number vs boolean", result: "Different types", color: "red" },
+          {
+            label: "Types: number vs boolean",
+            result: "Different types",
+            color: "red",
+          },
           { label: "No coercion performed", result: "false", color: "red" },
         ],
       },
@@ -68,8 +84,16 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["true", "false", "true", "false", "true"],
         coercionOps: [
-          { label: '"" (string) converts to 0 (number)', result: "Coerced", color: "amber" },
-          { label: "false (boolean) converts to 0 (number)", result: "Coerced", color: "amber" },
+          {
+            label: '"" (string) converts to 0 (number)',
+            result: "Coerced",
+            color: "amber",
+          },
+          {
+            label: "false (boolean) converts to 0 (number)",
+            result: "Coerced",
+            color: "amber",
+          },
           { label: "0 == 0", result: "true", color: "emerald" },
         ],
       },
@@ -80,7 +104,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ["true", "false", "true", "false", "true", "false"],
         coercionOps: [
-          { label: "Types: string vs boolean", result: "Different types", color: "red" },
+          {
+            label: "Types: string vs boolean",
+            result: "Different types",
+            color: "red",
+          },
           { label: "No coercion performed", result: "false", color: "red" },
         ],
       },
@@ -112,7 +140,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [],
         consoleOutput: [],
         coercionOps: [
-          { label: "0 (number) is falsy", result: "Boolean(0) = false", color: "red" },
+          {
+            label: "0 (number) is falsy",
+            result: "Boolean(0) = false",
+            color: "red",
+          },
           { label: "if block skipped", result: "not executed", color: "red" },
         ],
       },
@@ -123,7 +155,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1],
         consoleOutput: [],
         coercionOps: [
-          { label: '"" (empty string) is falsy', result: 'Boolean("") = false', color: "red" },
+          {
+            label: '"" (empty string) is falsy',
+            result: 'Boolean("") = false',
+            color: "red",
+          },
           { label: "if block skipped", result: "not executed", color: "red" },
         ],
       },
@@ -134,7 +170,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2],
         consoleOutput: [],
         coercionOps: [
-          { label: "null is falsy", result: "Boolean(null) = false", color: "red" },
+          {
+            label: "null is falsy",
+            result: "Boolean(null) = false",
+            color: "red",
+          },
           { label: "if block skipped", result: "not executed", color: "red" },
         ],
       },
@@ -145,7 +185,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: [],
         coercionOps: [
-          { label: "undefined is falsy", result: "Boolean(undefined) = false", color: "red" },
+          {
+            label: "undefined is falsy",
+            result: "Boolean(undefined) = false",
+            color: "red",
+          },
           { label: "if block skipped", result: "not executed", color: "red" },
         ],
       },
@@ -156,7 +200,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: [],
         coercionOps: [
-          { label: "NaN is falsy", result: "Boolean(NaN) = false", color: "red" },
+          {
+            label: "NaN is falsy",
+            result: "Boolean(NaN) = false",
+            color: "red",
+          },
           { label: "if block skipped", result: "not executed", color: "red" },
         ],
       },
@@ -167,7 +215,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4, 5],
         consoleOutput: ['"0" is truthy'],
         coercionOps: [
-          { label: '"0" (non-empty string) is truthy', result: 'Boolean("0") = true', color: "emerald" },
+          {
+            label: '"0" (non-empty string) is truthy',
+            result: 'Boolean("0") = true',
+            color: "emerald",
+          },
           { label: "if block executes", result: "logged", color: "emerald" },
         ],
       },
@@ -178,7 +230,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6],
         consoleOutput: ['"0" is truthy', "[] is truthy"],
         coercionOps: [
-          { label: "[] (empty array) is truthy", result: "Boolean([]) = true", color: "emerald" },
+          {
+            label: "[] (empty array) is truthy",
+            result: "Boolean([]) = true",
+            color: "emerald",
+          },
           { label: "if block executes", result: "logged", color: "emerald" },
         ],
       },
@@ -189,7 +245,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4, 5, 6, 7],
         consoleOutput: ['"0" is truthy', "[] is truthy", "{} is truthy"],
         coercionOps: [
-          { label: "{} (empty object) is truthy", result: "Boolean({}) = true", color: "emerald" },
+          {
+            label: "{} (empty object) is truthy",
+            result: "Boolean({}) = true",
+            color: "emerald",
+          },
           { label: "if block executes", result: "logged", color: "emerald" },
         ],
       },
@@ -219,17 +279,25 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [],
         consoleOutput: ["true"],
         coercionOps: [
-          { label: "Special rule: null == undefined", result: "Always true", color: "emerald" },
+          {
+            label: "Special rule: null == undefined",
+            result: "Always true",
+            color: "emerald",
+          },
         ],
       },
       {
         descriptionHtml:
-          "<code>null === undefined</code> is <code>false</code>. Strict equality checks types first: <code>null</code> is type <code>object</code>, <code>undefined</code> is type <code>undefined</code>.",
+          "<code>null === undefined</code> is <code>false</code>. Strict equality checks types first, and <code>null</code> and <code>undefined</code> are two different types, so the comparison stops there.",
         activeLine: 2,
         doneLines: [1],
         consoleOutput: ["true", "false"],
         coercionOps: [
-          { label: "Types: object vs undefined", result: "Different types", color: "red" },
+          {
+            label: "Types: object vs undefined",
+            result: "Different types",
+            color: "red",
+          },
           { label: "No coercion performed", result: "false", color: "red" },
         ],
       },
@@ -240,7 +308,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2],
         consoleOutput: ["true", "false", "false"],
         coercionOps: [
-          { label: "null is not coerced to a number", result: "No conversion", color: "cyan" },
+          {
+            label: "null is not coerced to a number",
+            result: "No conversion",
+            color: "cyan",
+          },
           { label: "null == 0", result: "false", color: "red" },
         ],
       },
@@ -251,7 +323,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["true", "false", "false", "false"],
         coercionOps: [
-          { label: "null is not coerced to a string", result: "No conversion", color: "cyan" },
+          {
+            label: "null is not coerced to a string",
+            result: "No conversion",
+            color: "cyan",
+          },
           { label: 'null == ""', result: "false", color: "red" },
         ],
       },
@@ -263,7 +339,11 @@ export const EXAMPLES: CoercionExample[] = [
         consoleOutput: ["true", "false", "false", "false", "object"],
         coercionOps: [
           { label: "typeof null", result: '"object"', color: "amber" },
-          { label: "Historical bug since JS 1.0", result: "Never fixed", color: "amber" },
+          {
+            label: "Historical bug since JS 1.0",
+            result: "Never fixed",
+            color: "amber",
+          },
         ],
       },
       {
@@ -271,10 +351,25 @@ export const EXAMPLES: CoercionExample[] = [
           '<code>typeof undefined</code> returns <code>"undefined"</code>. <strong>Key takeaway:</strong> use <code>== null</code> to check for both null and undefined, or use <code>===</code> to distinguish them.',
         activeLine: 6,
         doneLines: [1, 2, 3, 4, 5],
-        consoleOutput: ["true", "false", "false", "false", "object", "undefined"],
+        consoleOutput: [
+          "true",
+          "false",
+          "false",
+          "false",
+          "object",
+          "undefined",
+        ],
         coercionOps: [
-          { label: "typeof undefined", result: '"undefined"', color: "emerald" },
-          { label: "Matches its own type name", result: "Consistent", color: "emerald" },
+          {
+            label: "typeof undefined",
+            result: '"undefined"',
+            color: "emerald",
+          },
+          {
+            label: "Matches its own type name",
+            result: "Consistent",
+            color: "emerald",
+          },
         ],
       },
     ],
@@ -304,7 +399,11 @@ export const EXAMPLES: CoercionExample[] = [
         consoleOutput: ["false"],
         coercionOps: [
           { label: "NaN === NaN", result: "false", color: "red" },
-          { label: "IEEE 754: NaN is never equal to anything", result: "Including itself", color: "amber" },
+          {
+            label: "IEEE 754: NaN is never equal to anything",
+            result: "Including itself",
+            color: "amber",
+          },
         ],
       },
       {
@@ -315,7 +414,11 @@ export const EXAMPLES: CoercionExample[] = [
         consoleOutput: ["false", "false"],
         coercionOps: [
           { label: "NaN == NaN", result: "false", color: "red" },
-          { label: "Loose equality cannot help", result: "Still not equal", color: "red" },
+          {
+            label: "Loose equality cannot help",
+            result: "Still not equal",
+            color: "red",
+          },
         ],
       },
       {
@@ -326,7 +429,11 @@ export const EXAMPLES: CoercionExample[] = [
         consoleOutput: ["false", "false", "number"],
         coercionOps: [
           { label: "typeof NaN", result: '"number"', color: "amber" },
-          { label: '"Not-a-Number" is a number', result: "Ironic but true", color: "amber" },
+          {
+            label: '"Not-a-Number" is a number',
+            result: "Ironic but true",
+            color: "amber",
+          },
         ],
       },
       {
@@ -336,7 +443,11 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3],
         consoleOutput: ["false", "false", "number", "true"],
         coercionOps: [
-          { label: 'Number("hello") produces NaN', result: "Coerced first", color: "amber" },
+          {
+            label: 'Number("hello") produces NaN',
+            result: "Coerced first",
+            color: "amber",
+          },
           { label: "isNaN(NaN)", result: "true", color: "emerald" },
         ],
       },
@@ -347,8 +458,16 @@ export const EXAMPLES: CoercionExample[] = [
         doneLines: [1, 2, 3, 4],
         consoleOutput: ["false", "false", "number", "true", "false"],
         coercionOps: [
-          { label: "No coercion performed", result: "Strict check", color: "cyan" },
-          { label: '"hello" is a string, not NaN', result: "false", color: "red" },
+          {
+            label: "No coercion performed",
+            result: "Strict check",
+            color: "cyan",
+          },
+          {
+            label: '"hello" is a string, not NaN',
+            result: "false",
+            color: "red",
+          },
         ],
       },
       {
@@ -359,7 +478,11 @@ export const EXAMPLES: CoercionExample[] = [
         consoleOutput: ["false", "false", "number", "true", "false", "true"],
         coercionOps: [
           { label: "Value is exactly NaN", result: "true", color: "emerald" },
-          { label: "Number.isNaN() is the safe check", result: "Recommended", color: "emerald" },
+          {
+            label: "Number.isNaN() is the safe check",
+            result: "Recommended",
+            color: "emerald",
+          },
         ],
       },
     ],

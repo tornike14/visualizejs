@@ -67,7 +67,8 @@ export const reconciliationTheory: TopicTheoryContent = {
       },
     },
     {
-      question: "What happens when React encounters different element types during reconciliation?",
+      question:
+        "What happens when React encounters different element types during reconciliation?",
       answer:
         "React tears down the entire old subtree (unmounting all components, running cleanup effects, destroying DOM nodes) and builds the new subtree from scratch. No diffing of children occurs across type boundaries.",
     },

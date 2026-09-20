@@ -43,12 +43,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Count: 0"' }],
         },
         activeNodeId: "timer",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" }],
+        effects: [
+          { id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" },
+        ],
         currentPhase: "render",
       },
       {
         descriptionHtml:
-          '<code>useEffect</code> is registered with an <strong>empty dependency array</strong> <code>[]</code>. React stores the effect but does not run it yet.',
+          "<code>useEffect</code> is registered with an <strong>empty dependency array</strong> <code>[]</code>. React stores the effect but does not run it yet.",
         activeLine: 4,
         doneLines: [1, 2],
         consoleOutput: [],
@@ -58,7 +60,9 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Count: 0"' }],
         },
         activeNodeId: "timer",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" }],
+        effects: [
+          { id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" },
+        ],
         currentPhase: "render",
       },
       {
@@ -73,7 +77,9 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Count: 0"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" }],
+        effects: [
+          { id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" },
+        ],
         currentPhase: "paint",
       },
       {
@@ -88,12 +94,19 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Count: 0"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "effect-run", deps: "[]" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "effect-run",
+            deps: "[]",
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
         descriptionHtml:
-          'The interval fires. <code>setCount</code> triggers a re-render. React calls Timer again, count is now 1. The deps array is <code>[]</code>, so the effect is <strong>skipped</strong> (no cleanup, no re-run).',
+          "The interval fires. <code>setCount</code> triggers a re-render. React calls Timer again, count is now 1. The deps array is <code>[]</code>, so the effect is <strong>skipped</strong> (no cleanup, no re-run).",
         activeLine: 7,
         doneLines: [1, 2, 4, 5, 6, 8, 14, 16],
         consoleOutput: ["effect: mounted"],
@@ -101,10 +114,19 @@ export const EXAMPLES: UseEffectExample[] = [
           id: "timer",
           label: "<Timer>",
           highlight: "updated",
-          children: [{ id: "div", label: '<div> "Count: 1"', highlight: "updated" }],
+          children: [
+            { id: "div", label: '<div> "Count: 1"', highlight: "updated" },
+          ],
         },
         activeNodeId: "timer",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[] (unchanged)" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "idle",
+            deps: "[] (unchanged)",
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -117,10 +139,19 @@ export const EXAMPLES: UseEffectExample[] = [
           id: "timer",
           label: "<Timer>",
           highlight: "removed",
-          children: [{ id: "div", label: '<div> "Count: 1"', highlight: "removed" }],
+          children: [
+            { id: "div", label: '<div> "Count: 1"', highlight: "removed" },
+          ],
         },
         activeNodeId: "timer",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "cleanup-run", deps: "[]" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "cleanup-run",
+            deps: "[]",
+          },
+        ],
         currentPhase: "cleanup-run",
       },
       {
@@ -176,12 +207,19 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: "profile",
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["1"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["1"]',
+          },
+        ],
         currentPhase: "render",
       },
       {
         descriptionHtml:
-          '<code>useEffect</code> is registered with <code>[userId]</code>. This is the first render, so the effect will run after paint.',
+          "<code>useEffect</code> is registered with <code>[userId]</code>. This is the first render, so the effect will run after paint.",
         activeLine: 4,
         doneLines: [1, 2],
         consoleOutput: [],
@@ -192,7 +230,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: "profile",
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["1"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["1"]',
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -208,7 +253,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["1"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["1"]',
+          },
+        ],
         currentPhase: "paint",
       },
       {
@@ -224,7 +276,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "effect-run", deps: '["1"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "effect-run",
+            deps: '["1"]',
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
@@ -238,10 +297,19 @@ export const EXAMPLES: UseEffectExample[] = [
           label: "<UserProfile>",
           highlight: "updated",
           props: [{ key: "userId", value: '"1"' }],
-          children: [{ id: "div", label: '<div> "Alice"', highlight: "updated" }],
+          children: [
+            { id: "div", label: '<div> "Alice"', highlight: "updated" },
+          ],
         },
         activeNodeId: "profile",
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["1"] (unchanged)' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["1"] (unchanged)',
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -258,7 +326,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: "profile",
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["2"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["2"]',
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -274,12 +349,19 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Loading..."' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "effect-run", deps: '["2"] (changed)' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "effect-run",
+            deps: '["2"] (changed)',
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
         descriptionHtml:
-          'React compares each dependency value with <code>Object.is</code>. When any value changes, the previous cleanup runs (if any), then the new effect runs. Primitives compare by value; objects compare by reference.',
+          "React compares each dependency value with <code>Object.is</code>. When any value changes, the previous cleanup runs (if any), then the new effect runs. Primitives compare by value; objects compare by reference.",
         activeLine: null,
         doneLines: [1, 2, 4, 5, 6, 7, 9],
         consoleOutput: ["fetching user 1", "fetching user 2"],
@@ -290,7 +372,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Bob"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([userId], ...)", phase: "idle", deps: '["2"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([userId], ...)",
+            phase: "idle",
+            deps: '["2"]',
+          },
+        ],
         currentPhase: "idle",
       },
     ],
@@ -333,7 +422,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Room: general"' }],
         },
         activeNodeId: "chat",
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "idle", deps: '["general"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "idle",
+            deps: '["general"]',
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -349,7 +445,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Room: general"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "effect-run", deps: '["general"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "effect-run",
+            deps: '["general"]',
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
@@ -366,7 +469,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Room: random"' }],
         },
         activeNodeId: "chat",
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "idle", deps: '["random"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "idle",
+            deps: '["random"]',
+          },
+        ],
         currentPhase: "render",
       },
       {
@@ -379,10 +489,20 @@ export const EXAMPLES: UseEffectExample[] = [
           id: "chat",
           label: "<ChatRoom>",
           props: [{ key: "roomId", value: '"random"' }],
-          children: [{ id: "div", label: '<div> "Room: random"', highlight: "updated" }],
+          children: [
+            { id: "div", label: '<div> "Room: random"', highlight: "updated" },
+          ],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "idle", deps: '["random"]', cleanupPending: true }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "idle",
+            deps: '["random"]',
+            cleanupPending: true,
+          },
+        ],
         currentPhase: "paint",
       },
       {
@@ -398,7 +518,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Room: random"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "cleanup-run", deps: '["general"] (prev)' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "cleanup-run",
+            deps: '["general"] (prev)',
+          },
+        ],
         currentPhase: "cleanup-run",
       },
       {
@@ -406,7 +533,11 @@ export const EXAMPLES: UseEffectExample[] = [
           'Then the new effect runs: logs <code>"connect to random"</code> and opens a fresh connection to the new room.',
         activeLine: 3,
         doneLines: [1, 2, 6, 7, 8, 10, 12],
-        consoleOutput: ["connect to general", "disconnect from general", "connect to random"],
+        consoleOutput: [
+          "connect to general",
+          "disconnect from general",
+          "connect to random",
+        ],
         componentTree: {
           id: "chat",
           label: "<ChatRoom>",
@@ -414,7 +545,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Room: random"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "effect-run", deps: '["random"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "effect-run",
+            deps: '["random"]',
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
@@ -422,7 +560,12 @@ export const EXAMPLES: UseEffectExample[] = [
           'On unmount, cleanup runs one last time: <code>"disconnect from random"</code>. Cleanup always runs before the next effect and on unmount. Each cleanup closes over the values from the render it was created in.',
         activeLine: 7,
         doneLines: [1, 2, 3, 4, 6, 8, 10, 12],
-        consoleOutput: ["connect to general", "disconnect from general", "connect to random", "disconnect from random"],
+        consoleOutput: [
+          "connect to general",
+          "disconnect from general",
+          "connect to random",
+          "disconnect from random",
+        ],
         componentTree: {
           id: "chat",
           label: "<ChatRoom>",
@@ -431,7 +574,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [],
         },
         activeNodeId: "chat",
-        effects: [{ id: "e1", label: "useEffect([roomId])", phase: "cleanup-run", deps: '["random"]' }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([roomId])",
+            phase: "cleanup-run",
+            deps: '["random"]',
+          },
+        ],
         currentPhase: "cleanup-run",
       },
     ],
@@ -456,7 +606,10 @@ export const EXAMPLES: UseEffectExample[] = [
       { num: 9, text: '    window.addEventListener("resize", handleResize);' },
       { num: 10, text: "" },
       { num: 11, text: "    return () => {" },
-      { num: 12, text: '      window.removeEventListener("resize", handleResize);' },
+      {
+        num: 12,
+        text: '      window.removeEventListener("resize", handleResize);',
+      },
       { num: 13, text: "    };" },
       { num: 14, text: "  }, []);" },
       { num: 15, text: "" },
@@ -477,7 +630,9 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Width: 1280px"' }],
         },
         activeNodeId: "ws",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" }],
+        effects: [
+          { id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[]" },
+        ],
         currentPhase: "render",
       },
       {
@@ -492,7 +647,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [{ id: "div", label: '<div> "Width: 1280px"' }],
         },
         activeNodeId: undefined,
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "effect-run", deps: "[]" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "effect-run",
+            deps: "[]",
+          },
+        ],
         currentPhase: "effect-run",
       },
       {
@@ -505,15 +667,24 @@ export const EXAMPLES: UseEffectExample[] = [
           id: "ws",
           label: "<WindowSize>",
           highlight: "updated",
-          children: [{ id: "div", label: '<div> "Width: 960px"', highlight: "updated" }],
+          children: [
+            { id: "div", label: '<div> "Width: 960px"', highlight: "updated" },
+          ],
         },
         activeNodeId: "ws",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "idle", deps: "[] (unchanged)" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "idle",
+            deps: "[] (unchanged)",
+          },
+        ],
         currentPhase: "render",
       },
       {
         descriptionHtml:
-          'The component unmounts. Cleanup runs: <code>removeEventListener</code> detaches the handler. No dangling listeners remain.',
+          "The component unmounts. Cleanup runs: <code>removeEventListener</code> detaches the handler. No dangling listeners remain.",
         activeLine: 12,
         doneLines: [1, 2, 3, 4, 6, 7, 8, 9, 11, 14, 16],
         consoleOutput: [],
@@ -524,7 +695,14 @@ export const EXAMPLES: UseEffectExample[] = [
           children: [],
         },
         activeNodeId: "ws",
-        effects: [{ id: "e1", label: "useEffect([], ...)", phase: "cleanup-run", deps: "[]" }],
+        effects: [
+          {
+            id: "e1",
+            label: "useEffect([], ...)",
+            phase: "cleanup-run",
+            deps: "[]",
+          },
+        ],
         currentPhase: "cleanup-run",
       },
       {

@@ -27,7 +27,7 @@ export const modulesImportsTheory: TopicTheoryContent = {
     {
       title: "Reading circular imports at the top level",
       explanation:
-        "When two modules import each other, one will evaluate first and see uninitialized values from the other. Top-level reads of circular imports can produce undefined.",
+        "When two modules import each other, one will evaluate first and see uninitialized values from the other. Top-level reads of circular imports see undefined for var and function-expression bindings, and throw a ReferenceError for let, const, and class bindings.",
       fix: "Move circular reads inside functions that execute after both modules have finished evaluating. Alternatively, restructure the dependency graph to break the cycle.",
     },
     {
@@ -52,7 +52,7 @@ export const modulesImportsTheory: TopicTheoryContent = {
     {
       question: "How does JavaScript handle circular dependencies?",
       answer:
-        "The engine creates module records for all modules in the graph before evaluating any of them. When a circular import is encountered, the engine uses the already-created (but not yet evaluated) module record. Bindings exist but may be uninitialized if the exporting module has not yet run the assignment. This is why circular reads at the top level can see undefined.",
+        "The engine creates module records for all modules in the graph before evaluating any of them. When a circular import is encountered, the engine uses the already-created (but not yet evaluated) module record. Bindings exist but may be uninitialized if the exporting module has not yet run the assignment. A var binding reads as undefined, while a let or const binding throws a ReferenceError because it is still in its temporal dead zone.",
       codeExample: {
         code: `// a.js
 import { b } from "./b.js";
@@ -68,5 +68,11 @@ console.log(a); // undefined (a.js not evaluated yet)`,
     },
   ],
 
-  relatedTopicIds: ["scope-chain", "hoisting", "execution-context", "closures", "event-delegation"],
+  relatedTopicIds: [
+    "scope-chain",
+    "hoisting",
+    "execution-context",
+    "closures",
+    "event-delegation",
+  ],
 };

@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect, type ReactNode } from "react";
+import {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
 import { useIsHoverDevice } from "@/hooks/useIsHoverDevice";
 import { cn } from "@/lib/utils";
 
@@ -11,12 +17,12 @@ interface TooltipProps {
   forceVisible?: boolean;
 }
 
-export function Tooltip({
+export const Tooltip = ({
   label,
   children,
   side = "top",
   forceVisible = false,
-}: TooltipProps) {
+}: TooltipProps) => {
   const [visible, setVisible] = useState(false);
   const isHoverDevice = useIsHoverDevice();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -65,4 +71,4 @@ export function Tooltip({
       )}
     </span>
   );
-}
+};

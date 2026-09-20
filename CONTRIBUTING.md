@@ -1,6 +1,6 @@
 # Contributing to VisualizeJS
 
-Thanks for wanting to help. This project explains JavaScript and React internals through animations, so contributions range from fixing a typo in a theory page to building a whole new topic.
+Thanks for wanting to help. This project explains JavaScript, React, framework, backend, and AI internals through animations, so contributions range from fixing a typo in a theory page to building a whole new topic.
 
 ## Ways to Contribute
 
@@ -21,15 +21,14 @@ npm run dev
 Node 20 or newer. Before opening a pull request:
 
 ```bash
-npm run lint
-npm run build
+npm run verify
 ```
 
 Both must pass. CI runs the same two commands.
 
 ## Project Conventions
 
-These are enforced in review. Most exist because inconsistency between 28 topics is more expensive than it looks.
+These are enforced in review. Most exist because inconsistency between 45 topics is more expensive than it looks.
 
 **Content**
 
@@ -44,7 +43,7 @@ These are enforced in review. Most exist because inconsistency between 28 topics
 - Visualization components need the `"use client"` directive and named exports.
 - Component files target 200 lines, hard limit 300. Split into `components/` when you exceed it. Data files (`data.ts`) are exempt since they hold content.
 - Import panel titles and empty states from `src/lib/visualization/uiCopy.ts`. Never hardcode them.
-- Wrap `setActiveExampleId` in a `handleExampleChange` callback rather than passing the setter to `onSelect` directly.
+- Topics with several examples use `useExampleTopic`, `VisualizationToolbar`, and `ExamplePicker`; do not hand-roll the toolbar or step pill.
 - Code line fading uses the guard `isDone && !isActive`. Never fade an active line.
 
 **Structure**
@@ -59,23 +58,23 @@ helpers.ts       Pure functions used by the panels
 components/      Panel components
 ```
 
-Reconciliation is the reference implementation for React topics. Event Loop is the reference for sandbox mode.
+Reconciliation is the reference implementation for topic structure. Event Loop is the reference for sandbox mode. Attention and HTTP Request Lifecycle show the newer shared primitives (HeatmapGrid, PipelineDiagram, MessageFlow).
 
 ## Adding a Topic
 
-A topic is not finished when the visualization renders. It is registered in several places, and missing one produces a page that half works. Work through all of these.
+A topic is registered in several places. The registries are typed by `TopicId`, which is derived from `src/lib/topics.ts`, so once the topic is registered `npm run typecheck` names every place that still needs an entry.
 
 **1. Topic registry** in [`src/lib/topics.ts`](src/lib/topics.ts)
 
-Add an entry with `id`, `title`, `category`, `route`, `description`, `difficulty`, and `docsUrl`. The `id` is the slug used everywhere else, so pick it carefully.
+Add an entry with `id`, `title`, `category`, `description`, `difficulty`, and `docsUrl`. The route is derived from category and id. The `id` is the slug used everywhere else, so pick it carefully. `category` must be one of the IDs in `src/lib/categories.ts` (see [`docs/categories.md`](docs/categories.md) to add a new category). Set `toolbar: "simple"` if the topic has no example picker, so the loading skeleton matches.
 
-**2. Route** at `src/app/<category>/<topic-id>/page.tsx`
+**2. Component registry** in [`src/components/visualizations/registry.tsx`](src/components/visualizations/registry.tsx)
 
-Copy an existing page. It resolves the topic with `getTopicOrThrow`, lazy-loads the visualization with `next/dynamic`, wraps it in `ErrorBoundary` and `VisualizationPageShell`, and exports `createTopicMetadata(topic)`.
+Add one `dynamic()` entry keyed by the topic id. Routing is generated from the registries by `src/app/[category]/[topic]/page.tsx`; there is no per-topic page file.
 
 **3. Visualization** at `src/components/visualizations/<topic-id>/`
 
-Use `useStepPlayback` from `src/hooks/useStepPlayback.ts` for transport controls. Read [`docs/topic-authoring.md`](docs/topic-authoring.md), or [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) for React topics.
+Use `useExampleTopic`, `VisualizationToolbar`, `ExamplePicker`, and `SourceCodePanel` from the shared scaffold. Read [`docs/topic-authoring.md`](docs/topic-authoring.md), or [`docs/react-topic-authoring.md`](docs/react-topic-authoring.md) for React topics.
 
 **4. Theory content** at `src/content/theory/<category>/<topic-id>.ts`
 
@@ -85,25 +84,20 @@ Implements `TopicTheoryContent`: `summary`, `whatItIs`, `howItWorks`, `commonMis
 
 **5. Theory registry** in [`src/content/theory/index.ts`](src/content/theory/index.ts)
 
-Add the import and the entry in `THEORY_CONTENT_BY_TOPIC_ID`. `VisualizationPageShell` reads this map to render the theory sections beneath the visualization, so a topic missing here renders without any theory.
+Add the import and the entry in `THEORY_CONTENT_BY_TOPIC_ID`. `VisualizationPageShell` reads this map to render the theory sections beneath the visualization.
 
 **6. SEO metadata** in [`src/lib/metadata.ts`](src/lib/metadata.ts)
 
 Add entries to both `TOPIC_KEYWORDS` (4 to 8 search phrases) and `TOPIC_THEORY_DESCRIPTIONS` (one or two sentences, under 160 characters).
 
-**7. Toolbar registry** in [`src/components/layout/VisualizationPageShell.tsx`](src/components/layout/VisualizationPageShell.tsx)
-
-If your topic uses `ExampleSelector`, add its ID to `SELECTOR_TOOLBAR_TOPIC_IDS`. Skipping this makes the loading skeleton the wrong shape.
-
-**8. Inbound links**
+**7. Inbound links**
 
 Add your topic ID to the `relatedTopicIds` of 2 or more existing theory files. A topic nothing links to is a dead end for readers and for search engines. Keep each list within the 3 to 5 range when you do this, swapping out a weaker link if needed.
 
 ### Before You Open the PR
 
 ```bash
-npm run lint
-npm run build
+npm run verify
 ```
 
 Then check that `/your-route` renders with the theory sections below the visualization, the sitemap at `/sitemap.xml` includes the route, and the related topic links at the bottom of the page resolve.
