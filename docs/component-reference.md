@@ -131,6 +131,23 @@ A dotted track between two nodes with glowing dots travelling along it while `ac
 <FlowConnector orientation="vertical" active reverse className="h-4" />
 ```
 
+### CategoryTopicGrid / DifficultyFilter
+
+`src/components/layout/CategoryTopicGrid.tsx` renders a category's topic list
+with a difficulty filter. The selected level lives in the `level` query
+parameter (`?level=beginner`) so a filtered view can be shared, but the page
+stays static: the server and first client render show every topic, and
+`useLocationSearch` (`src/hooks/useLocationSearch.ts`) applies the URL value
+right after hydration through `useSyncExternalStore`. Changing the filter
+rewrites the query with `history.replaceState`, so it never adds history
+entries. The pure helpers (`parseDifficultyParam`, `filterByDifficulty`,
+`countByDifficulty`) live in `src/lib/difficulty.ts`.
+
+`DifficultyFilter` is a `radiogroup` of chips with a count per level. A level
+with no topics in the category renders disabled rather than hidden, so the
+set of chips is the same on every category page. Filtered cards keep their
+registry index number so the "fundamentals to internals" order stays legible.
+
 ### NeonPanel
 
 Themed container with a glowing dot header.
